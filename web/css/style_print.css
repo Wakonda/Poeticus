@@ -1,0 +1,10 @@
+.hidden_print, header#header, aside, footer
+{
+	display: none;
+}
+
+a
+{
+	color: black;
+	text-decoration: none;
+}

@@ -1,0 +1,23 @@
+{% extends generic_layout %}
+
+{% block head_title %}Admin Forme Poétique{% endblock %}
+{% block main_title %}Administration - Forme Poétique{% endblock %}
+
+{% block main_content %}
+	<table>
+		<tr>
+			<th>Titre</th>
+			<td>{{ entity.title }}</td>
+		</tr>
+		<tr>
+			<th>Texte</th>
+			<td>{{ entity.text|raw }}</td>
+		</tr>
+		<tr>
+			<th>Image</th>
+			<td><img src="{{ app.request.basepath }}/photo/poeticform/{{ entity.image }}" alt="" /></td>
+		</tr>
+	</table>
+	<hr>
+	<a href="{{ path('poeticformadmin_edit', { 'id' : entity.id }) }}">Modifier</a> - <a href="{{ path('poeticformadmin_new') }}">Créer</a>
+{% endblock %}

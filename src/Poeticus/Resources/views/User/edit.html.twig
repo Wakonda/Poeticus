@@ -1,0 +1,51 @@
+{% extends generic_layout %}
+
+{% block head_title %}Modification - Compte{% endblock %}
+{% block main_title %}Modifier mon compte{% endblock %}
+
+{% block script_additional %}
+	<script src="{{ app.request.basepath }}/js/CLEditor1_3_0/jquery.cleditor.js" type="text/javascript"></script>
+	<link rel="stylesheet" href="{{ app.request.basepath }}/js/CLEditor1_3_0/jquery.cleditor.css" type="text/css" media="screen" />
+	<script type="text/javascript">
+		$(function()
+		{
+			$("textarea").cleditor({
+				docType: ''
+			});
+		});
+	</script>
+{% endblock %}
+
+{% block main_content %}
+<p class="center">{{ ("photo/user/"~entity.avatar)|max_size_image(app.request.basepath) }}</p>
+<form action="{{ path('user_update', { 'id' : entity.id }) }}" method="post" {{ form_enctype(form) }} novalidate>
+	<table class="form_grid">
+		<tr>
+			<th>{{ form_label(form.username) }}</th>
+			<td><div class="errors">{{ form_errors(form.username) }}</div>{{ form_widget(form.username) }}</td>
+		</tr>
+		<tr>
+			<th>{{ form_label(form.email) }}</th>
+			<td><div class="errors">{{ form_errors(form.email) }}</div>{{ form_widget(form.email) }}</td>
+		</tr>
+		<tr>
+			<th>{{ form_label(form.avatar) }}</th>
+			<td>
+				<p><b><u>Avatar actuel :</u></b> <i>{{ entity.avatar }}</i></p>
+				<div class="errors">{{ form_errors(form.avatar) }}</div>{{ form_widget(form.avatar) }}
+			</td>
+		</tr>
+		<tr>
+			<th>{{ form_label(form.presentation) }}</th>
+			<td><div class="errors">{{ form_errors(form.presentation) }}</div>{{ form_widget(form.presentation) }}</td>
+		</tr>
+		<tr>
+			<th>{{ form_label(form.country) }}</th>
+			<td><div class="errors">{{ form_errors(form.country) }}</div>{{ form_widget(form.country) }}</td>
+		</tr>
+	</table>
+	<hr />
+	{{ form_widget(form.save) }}
+	{{ form_rest(form) }}
+</form>
+{% endblock %}

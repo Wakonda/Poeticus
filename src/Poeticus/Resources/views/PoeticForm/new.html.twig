@@ -1,0 +1,49 @@
+{% extends generic_layout %}
+
+{% block head_title %}Admin Forme Poétique{% endblock %}
+{% block main_title %}Administration - Forme Poétique{% endblock %}
+
+{% block style_additional %}
+	<link rel="stylesheet" type="text/css" href="{{ app.request.basepath }}/js/redactor/css/redactor.css" />
+{% endblock %}
+{% block script_additional %}
+	<script src="{{ app.request.basepath }}/js/redactor/redactor.min.js"></script>
+	<script type="text/javascript">
+		$(function()
+		{
+			$('.redactor').redactor({
+				{% if block('uploadfile_wysiwyg_route') is not empty %}
+					imageUpload: '{{ block('uploadfile_wysiwyg_route') }}',
+				{% endif %}
+				autoresize: false,
+				minHeight: 300,
+				buttons: ['html', '|', 'bold', 'italic', 'deleted', 'underline', '|',
+				'unorderedlist', 'orderedlist', 'outdent', 'indent', '|',
+				'image', 'video', 'file', 'table', 'link', '|', 'fontcolor', 'backcolor', '|', 'alignment', 'aligncenter', 'alignright', 'justify', '|', 'horizontalrule']
+			});
+		});
+	</script>
+{% endblock %}
+
+{% block main_content %}
+<form action="{{ path('poeticformadmin_create') }}" method="post" {{ form_enctype(form) }} novalidate>
+<table class="form_grid">
+		<tr>
+			<th>{{ form_label(form.title) }}</th>
+			<td><div class="errors">{{ form_errors(form.title) }}</div>{{ form_widget(form.title, {'attr':{'class':'full_width'}}) }}</td>
+		</tr>
+		<tr>
+			<th>{{ form_label(form.text) }}</th>
+			<td><div class="errors">{{ form_errors(form.text) }}</div>{{ form_widget(form.text) }}</td>
+		</tr>
+		<tr>
+			<th>{{ form_label(form.image) }}</th>
+			<td><div class="errors">{{ form_errors(form.image) }}</div>{{ form_widget(form.image) }}</td>
+		</tr>
+	</table>
+	<hr />
+	{{ form_widget(form.save) }}
+	{{ form_rest(form) }}
+</form>
+
+{% endblock %}

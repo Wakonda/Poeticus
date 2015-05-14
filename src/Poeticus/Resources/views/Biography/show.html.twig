@@ -1,0 +1,35 @@
+{% extends generic_layout %}
+
+{% block head_title %}Admin Biographie{% endblock %}
+{% block main_title %}Administration - Biographie{% endblock %}
+
+{% block main_content %}
+	<table>
+		<tr>
+			<th>Titre</th>
+			<td>{{ entity.title }}</td>
+		</tr>
+		<tr>
+			<th>Texte</th>
+			<td>{{ entity.text|raw }}</td>
+		</tr>
+		<tr>
+			<th>Date de naissance</th>
+			<td>{{ entity.dayBirth }}/{{ entity.monthBirth }}/{{ entity.yearBirth }}</td>
+		</tr>
+		<tr>
+			<th>Date de décès</th>
+			<td>{{ entity.dayDeath }}/{{ entity.monthDeath }}/{{ entity.yearDeath }}</td>
+		</tr>
+		<tr>
+			<th>Photo</th>
+			<td><p class="center">{{ ("photo/biography/"~entity.photo)|max_size_image(app.request.basepath) }}</p></td>
+		</tr>
+		<tr>
+			<th>Nationalité</th>
+			<td>{{ entity.country|toString('title') }}</td>
+		</tr>
+	</table>
+	<hr>
+	<a href="{{ path('biographyadmin_edit', { 'id' : entity.id }) }}">Modifier</a> - <a href="{{ path('biographyadmin_new') }}">Créer</a>
+{% endblock %}

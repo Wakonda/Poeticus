@@ -1,0 +1,96 @@
+{% extends generic_layout %}
+
+{% block head_title %}Admin Poésie{% endblock %}
+{% block main_title %}Administration - Poésie (Ajout rapide){% endblock %}
+
+{% block script_additional %}
+	<script type="text/javascript">
+		$(function()
+		{
+			$("input#poemfast_unknownReleasedDate").click(function()
+			{
+				if($(this).is(":checked"))
+					$("#poemfast_releasedDate").val("");
+			});
+			$("input#poemfast_unknownReleasedDate").click();
+			
+			$("input#poemfast_releasedDate").keyup(function()
+			{
+				if($(this).val() != "")
+					$("input#poemfast_unknownReleasedDate").prop('checked', false);
+				else
+					$("input#poemfast_unknownReleasedDate").prop('checked', true);
+			});
+			$("input#poemfast_releasedDate").keyup();
+			
+			$("#{{ form.vars['id'] }}_biography").change(function()
+			{
+				$.ajax({
+					type: "POST",
+					url: "{{ path('list_selected_biography') }}",
+					data: { "id" : $(this).val() },
+					success: function(data)
+					{
+						$("#{{ form.vars['id'] }}_country").val(data.country);
+						var collections = data.collections;
+						$("#{{form.vars['id'] }}_collection option").remove();
+						$("#{{form.vars['id'] }}_collection").append('<option value="">Choisissez une option</option>');
+						$.each(collections, function(index, element)
+						{
+							$("#{{form.vars['id'] }}_collection").append('<option value="'+ element.id +'">'+ element.title +'</option>');
+						});
+					}
+				});
+			});
+			
+			$("#{{ form.vars['id'] }}_collection").change(function()
+			{
+				$.ajax({
+					type: "POST",
+					url: "{{ path('list_selected_collection') }}",
+					data: { "id" : $(this).val() },
+					success: function(data)
+					{
+						$("#{{ form.vars['id'] }}_releasedDate").val(data.releasedDate);
+						
+						if(data.releasedDate != "")
+							$('input#{{ form.vars["id"] }}_unknownReleasedDate').prop('checked', false);
+						else
+							$('input#{{ form.vars["id"] }}_unknownReleasedDate').prop('checked', true);
+					}
+				});
+			});
+		});
+	</script>
+{% endblock %}
+
+{% block main_content %}
+<form action="{{ path('poemadmin_addfast') }}" method="post" novalidate>
+	<table class="form_grid">
+		<tr>
+			<th>{{ form_label(form.url) }}</th>
+			<td><div class="errors">{{ form_errors(form.url) }}</div>{{ form_widget(form.url, {'attr':{'class':'full_width'}}) }}</td>
+		</tr>
+		<tr class="biography_row">
+			<th>{{ form_label(form.biography) }}</th>
+			<td><div class="errors">{{ form_errors(form.biography) }}</div>{{ form_widget(form.biography, {'attr':{'class':'full_width'}}) }}</td>
+		</tr>
+		<tr>
+			<th>{{ form_label(form.country) }}</th>
+			<td><div class="errors">{{ form_errors(form.country) }}</div>{{ form_widget(form.country, {'attr':{'class':'full_width'}}) }}</td>
+		</tr>
+		<tr>
+			<th>{{ form_label(form.collection) }}</th>
+			<td><div class="errors">{{ form_errors(form.collection) }}</div>{{ form_widget(form.collection, {'attr':{'class':'full_width'}}) }}</td>
+		</tr>
+		<tr>
+			<th>{{ form_label(form.releasedDate) }}</th>
+			<td><div class="errors">{{ form_errors(form.releasedDate) }}</div>{{ form_widget(form.releasedDate) }}{{ form_widget(form.unknownReleasedDate) }}{{ form_label(form.unknownReleasedDate) }}</td>
+		</tr>
+	</table>
+	<hr />
+	{{ form_widget(form.save) }}
+	{{ form_rest(form) }}
+</form>
+
+{% endblock %}

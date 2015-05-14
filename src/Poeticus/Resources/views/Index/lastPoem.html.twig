@@ -1,0 +1,5 @@
+<ul>
+	{% for entity in entities %}
+		<li><a href="{{ path('read', {'id' : entity.id}) }}" >{{ entity.title }}</a> ({{ entity.biography.title }})</li>
+	{% endfor %}
+</ul>

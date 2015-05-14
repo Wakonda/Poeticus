@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="shortcut icon" href="http://poeticus.esy.es/photo/favicon.jpg">
+		<title>Poéticus - {% block head_title %}{% endblock %}</title>
+		<link rel="stylesheet" type="text/css" href="{{ app.request.basepath }}/css/style.css" media="screen" />
+		<link rel="stylesheet" type="text/css" href="{{ app.request.basepath }}/css/style_print.css" media="print" />
+		<link rel="stylesheet" type="text/css" href="{{ app.request.basepath }}/css/bootstrap-3.3.2-dist/css/bootstrap.min.css" media="screen" />
+		
+		<script src="{{ app.request.basepath }}/js/jquery.js"></script>
+		<script>
+		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		  ga('create', 'UA-12307735-4', 'auto');
+		  ga('send', 'pageview');
+
+		</script>
+		{% block script_additional %}
+		{% endblock %}
+		
+		{% block style_additional %}
+		{% endblock %}
+	</head>
+	<body>
+		<div class="resize"></div>
+		<!-- Div Wrapper Element Starts Here -->
+		<div id="Wrapper">
+			<!-- Header Element Starts Here -->
+			<header id="header">
+				<!-- Hgroup Element Starts Here -->
+				<hgroup id="title">
+					<div id="logo">
+						<img src="{{ app.request.basepath }}/photo/favicon.jpg" alt="logo" />
+						<span>Poéticus</span>
+					</div>
+					<!--<h1>Creating HTML5 <span>Responsive Web Template Using Media Queries</span></h1>-->
+					<h2>Le<small> Monde Magique </small> de la Poésie</h2>
+				</hgroup>
+				<!-- Hgroup Element Ends Here -->
+
+				<!-- Nav Element Starts Here -->
+				<nav class="navigation">
+					<a href="{{ path('index') }}">Accueil</a>
+					<a href="{{ path('byauthors') }}">Auteurs</a>
+					<a href="{{ path('bycollections') }}">Recueils</a>
+					<a href="{{ path('bycountries') }}">Pays</a>
+					<a href="{{ path('bypoeticforms') }}">Formes poétiques</a>
+					<a href="{{ path('bypoemusers') }}">Vos poésies</a>
+				</nav>
+			</header>
+			<!-- Header Element Ends Here -->
+			<!-- Div wrapper2 starts here -->
+			<div id="Wrapper2">
+				<!-- Sidebar Element Starts Here -->
+				<aside id="sidebar-wrapper">
+					<nav class="sidebar">
+						<h1>Dernières poésies</h1>
+						{{ render(app.request.baseUrl ~ '/last_poem') }}
+					</nav>
+
+					<nav class="sidebar">
+						<h1>Publicité</h1>
+						<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+						<!-- Poeticus_right_menu -->
+						<ins class="adsbygoogle"
+							 style="display:inline-block;width:250px;height:250px"
+							 data-ad-client="ca-pub-1951906303386196"
+							 data-ad-slot="5545754940"></ins>
+						<script>
+						(adsbygoogle = window.adsbygoogle || []).push({});
+						</script>
+					</nav>
+					<nav class="sidebar">
+						<h1>Statistiques</h1>
+						{{ render(app.request.baseUrl ~ '/stat_poem') }}
+					</nav>
+
+					<nav class="sidebar">
+						<h1>Espace membre </h1>
+						<ul>
+							{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+								{% if is_granted("ROLE_ADMIN") %}
+									<li><a href="{{ path('admin') }}">Admin</a></li>
+								{% endif %}
+								<li><a href="{{ path('user_show') }}">Mon profil</a></li>
+								<li><a href="{{ path('user_udpatepassword') }}">Modifier mon mot de passe</a></li>
+								<li><a href="{{ path('user_edit') }}">Modifier mon profil</a></li>
+								<li><a href="{{ path('poemuser_new') }}">Ecrire une poésie</a></li>
+								<li><a href="{{ path('admin_logout') }}">Déconnexion</a></li>
+							{% else %}
+								<li><a href="{{ path('login') }}" alt="">Se connecter</a></li>
+								<li><a href="{{ path('user_new') }}" alt="">Créer un compte utilisateur</a></li>
+							{% endif %}
+						</ul>
+					</nav>
+				</aside>
+				<!-- Another Sidebar Element Ends Here -->
+				<!-- Article Element Starts Here -->
+				<article id="contents">
+					<!-- Article's Header Element Starts Here -->
+					<header>
+						<h1>{% block main_title %}Bienvenue sur Poéticus{% endblock %}</h1>
+					</header>
+					
+					{% for message in app.session.getFlashBag.get('message') %}
+						<div class="success">{{ message }}</div>
+					{% endfor %}
+					
+					{% block main_content %}{% endblock %}
+				</article>
+				<!-- Article Element Ends Here -->
+			</div>
+			<!-- Div wrapper2 ends here -->
+
+			<!-- Footer Element Starts Here -->
+			<footer id="copyrights">
+				<p>© 2014 - {{ "now"|date("Y") }} <a href="{{ path('copyright') }}">Poéticus</a></p>
+				<p><a href="{{ path('about') }}">A Propos</a> - <a href="{{ path('contact') }}">Contactez-nous</a></p>
+				<address>
+					<a href="http://wakonda.guru">Wakonda.guru</a>
+				</address>
+			</footer>
+			<!-- Footer Element Ends Here -->
+		</div>
+		<!-- Div Wrapper Element ends Here -->
+	</body>
+</html>

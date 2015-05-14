@@ -1,0 +1,31 @@
+{% extends generic_layout %}
+
+{% block head_title %}Admin Recueil{% endblock %}
+{% block main_title %}Administration - Recueil{% endblock %}
+
+{% block main_content %}
+	<table>
+		<tr>
+			<th>Titre</th>
+			<td>{{ entity.title }}</td>
+		</tr>
+		<tr>
+			<th>Texte</th>
+			<td>{{ entity.text|raw }}</td>
+		</tr>
+		<tr>
+			<th>Date de publication</th>
+			<td>{{ entity.releasedDate }}</td>
+		</tr>
+		<tr>
+			<th>Image</th>
+			<td><p class="center">{{ ("photo/collection/"~entity.image)|max_size_image(app.request.basepath) }}</p></td>
+		</tr>
+		<tr>
+			<th>Auteur</th>
+			<td>{{ entity.biography|toString('title') }}</td>
+		</tr>
+	</table>
+	<hr>
+	<a href="{{ path('collectionadmin_edit', { 'id' : entity.id }) }}">Modifier</a> - <a href="{{ path('collectionadmin_new') }}">Créer</a>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends generic_layout %}
+
+{% block head_title %}Admin Pays{% endblock %}
+{% block main_title %}Administration - Pays{% endblock %}
+
+{% block main_content %}
+<form action="{{ path('countryadmin_update', {'id' : entity.id }) }}" method="post" {{ form_enctype(form) }} novalidate>
+<table class="form_grid">
+		<tr>
+			<th>{{ form_label(form.title) }}</th>
+			<td><div class="errors">{{ form_errors(form.title) }}</div>{{ form_widget(form.title) }}</td>
+		</tr>
+		<tr>
+			<th>{{ form_label(form.internationalName) }}</th>
+			<td><div class="errors">{{ form_errors(form.internationalName) }}</div>{{ form_widget(form.internationalName) }}</td>
+		</tr>
+		<tr>
+			<th>{{ form_label(form.flag) }}</th>
+			<td><p>Photo actuelle : {{ entity.flag }}</p><div class="errors">{{ form_errors(form.flag) }}</div>{{ form_widget(form.flag) }}</td>
+		</tr>
+	</table>
+	<hr />
+	{{ form_widget(form.save) }}
+	{{ form_rest(form) }}
+</form>
+
+{% endblock %}

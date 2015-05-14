@@ -1,0 +1,126 @@
+{% extends generic_layout %}
+
+{% block head_title %}{{ entity.title }}{% endblock %}
+{% block main_title %}{{ entity.title }}{% endblock %}
+
+{% block style_additional %}
+	<link rel="stylesheet" type="text/css" href="{{ app.request.basepath }}/js/jquery.qtip/jquery.qtip.min.css" />
+{% endblock %}
+
+{% block script_additional %}
+<script src="{{ app.request.basepath }}/js/jquery.qtip/jquery.qtip.min.js"></script>
+<script type="text/javascript">
+	$(function()
+	{
+		$("#print_page").click(function()
+		{
+			window.print();
+			
+			return false;
+		});
+		
+		$("div.vote_action").click(function()
+		{
+			initializeProgressValue("{{ path('vote_poem', { 'idPoem' : entity.id }) }}?vote=" + $(this).data("vote"), $(this));
+		});
+		
+		initializeProgressValue("{{ path('vote_poem', { 'idPoem' : entity.id }) }}", null);
+		
+		function initializeProgressValue(url, el)
+		{
+			$.ajax(
+			{
+				type: "GET",
+				url: url,
+				cache: false,
+				success: function(data)
+				{
+					$("progress#avancement").attr("value", data.value);
+					$("progress#avancement").html("Score : " + data.value + "%");
+					$("span#up_values").html(data.up);
+					$("span#down_values").html(data.down);
+
+					if(data.alreadyVoted != "")
+					{
+						el.qtip({
+							content: {
+								text: data.alreadyVoted,
+								title: 'Erreur',
+							},
+							style: { classes: 'qtip-red' },
+							//hide: { when: 'inactive', delay: 3000 }
+						});
+						el.qtip("show");
+						setTimeout(function(){ el.qtip("hide"); }, 3000);
+					}
+				}
+			});
+			return false;
+		}
+	});
+</script>
+{% endblock %}
+
+{% block main_content %}
+	<div>
+		{{ entity.text|raw }}
+	</div>
+	<hr>
+	{% if entity.authorType == "biography" %}
+		<a href="{{ path('author', {'id' : entity.biography.id }) }}" alt="">{{ entity.biography.title }}</a>
+	{% else %}
+		<a href="{{ path('user_show', {'id' : entity.user }) }}" alt="">{{ entity.user }}</a>
+	{% endif %}
+	-
+	<a href="{{ path('country', {'id' : entity.country.id }) }}" alt=""><img class="flag" src="{{ app.request.basepath }}/photo/country/{{ entity.country.flag }}" alt="" height="8" /></a>
+	{% if entity.collection is not null %}
+		-
+		<a class="underline italic" href="{{ path('collection', {'id' : entity.collection.id }) }}" alt="">{{ entity.collection.title }}</a>
+	{% endif %}
+
+	{% if entity.poeticform is not null %}
+		- 
+		<a href="{{ path('poeticform', { 'id' : entity.poeticform.id }) }}" alt="">{{ entity.poeticform.title }}</a>
+	{% endif %}
+	<table class="hidden_print">
+		<tbody>
+			<tr>
+				<td class="reseauSociaux">
+					<a href="{{ path('read_pdf', {'id' : entity.id}) }}"><img src="{{ app.request.basepath }}/photo/pdf.gif" alt="" /></a>
+				</td>
+				<td class="reseauSociaux">
+					<a id="print_page" href="#"><img src="{{ app.request.basepath }}/photo/print.gif" alt="" /></a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<hr>
+	<h2>Votes</h2>
+	<table id="poem_vote" class="hidden_print">
+		<tr>
+			<td>
+				<div  id="up_vote"data-vote="up" class="vote_action" >+</div>
+			</td>
+			<td>
+				<progress id="avancement" value="50" max="100"></progress>
+			</td>
+			<td>
+				<div id="down_vote" data-vote="down" class="vote_action">-</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<span id="up_values">-</span>
+			</td>
+			<td>
+
+			</td>
+			<td>
+				<span id="down_values">-</span>
+			</td>
+		</tr>
+	</table>
+	
+	{{ render(app.request.baseUrl ~ '/comment/' ~ entity.id) }}
+	
+{% endblock %}

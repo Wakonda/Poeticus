@@ -1,0 +1,12 @@
+{% extends generic_layout %}
+
+{% block head_title %}Erreur {{ code }}{% endblock %}
+{% block main_title %}Erreur {{ code }}{% endblock %}
+
+{% block main_content %}
+	{% if code == "404" %}
+		<p>La page à laquelle vous souhaitez accéder n'existe pas (ou plus) !</p>
+	{% else %}
+		<p>Une erreur {{ code }} est survenue. Si le problème persiste, n'hésitez pas à nous <a href="{{ path('contact') }}" alt="">contacter</a> afin que nous puissions le résoudre le plus rapidement possible !</p>
+	{% endif %}
+{% endblock %}

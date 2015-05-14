@@ -1,0 +1,15 @@
+{% extends generic_layout %}
+
+{% block head_title %}Copyright{% endblock %}
+{% block main_title %}Copyright{% endblock %}
+
+{% block main_content %}
+	<p class="center"><img src="{{ app.request.basepath }}/photo/copyright.jpg" alt="" /></p>
+	<div>
+		Poéticus est un site Internet édité par la société Wakonda.guru.
+
+		<h2>Les poésies</h2>
+		La totalité des poésies présentes sur ce site Internet sont libres de droit selon les lois en vigueur dans l’Etat Français. De ce fait elles peuvent être réutilisées à votre guise sur tous types de support !
+		<p class="center"><a href="http://creativecommons.fr/" alt="" target="_blank"><img src="{{ app.request.basepath }}/photo/creative-commons-copyright.jpg" alt="" /></a></p>
+	</div>
+{% endblock %}

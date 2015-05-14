@@ -1,0 +1,149 @@
+{% extends generic_layout %}
+
+{% block head_title %}Admin Poésie{% endblock %}
+{% block main_title %}Administration - Poésie{% endblock %}
+
+{% block style_additional %}
+	<link rel="stylesheet" type="text/css" href="{{ app.request.basepath }}/js/redactor/css/redactor.css" />
+{% endblock %}
+{% block script_additional %}
+	<script src="{{ app.request.basepath }}/js/redactor/redactor.min.js"></script>
+	<script type="text/javascript">
+		$(function()
+		{
+			$('.redactor').redactor({
+				autoresize: false,
+				minHeight: 300,
+				buttons: ['html', '|', 'bold', 'italic', 'deleted', 'underline', '|',
+				'unorderedlist', 'orderedlist', 'outdent', 'indent', '|',
+				'image', 'video', 'file', 'table', 'link', '|', 'fontcolor', 'backcolor', '|', 'alignment', 'aligncenter', 'alignright', 'justify', '|', 'horizontalrule']
+			});
+			
+			$('.authorType_select').change(function()
+			{
+				if($(this).val() == "user")
+				{
+					$("tr.user_row").show();
+					$("tr.biography_row").hide();
+					$("select#poem_biography").val("");
+				}
+				else
+				{
+					$("tr.user_row").hide();
+					$("tr.biography_row").show();
+					$("select#poem_user").val("");
+				}
+			});
+			$('.authorType_select').change();
+			
+			function putReleasedDate(value, load)
+			{
+				if(value != "")
+					$("input#{{ form.vars['id'] }}_unknownReleasedDate").prop('checked', false);
+				else
+					$("input#{{ form.vars['id'] }}_unknownReleasedDate").prop('checked', true);
+			}
+			
+			$("input#{{ form.vars['id'] }}_unknownReleasedDate").click(function()
+			{
+				if($(this).is(":checked"))
+					$("#{{ form.vars['id'] }}_releasedDate").val("");
+			});
+			
+			$("input#{{ form.vars['id'] }}_releasedDate").keyup(function()
+			{
+				putReleasedDate($(this).val(), false);
+			});
+			putReleasedDate("{{ entity.releasedDate }}", true);
+			
+			$("#{{ form.vars['id'] }}_biography").change(function()
+			{
+				$.ajax({
+					type: "POST",
+					url: "{{ path('list_selected_biography') }}",
+					data: { "id" : $(this).val() },
+					success: function(data)
+					{
+						$("#{{ form.vars['id'] }}_country").val(data.country);
+						var collections = data.collections;
+						$("#{{form.vars['id'] }}_collection option").remove();
+						$("#{{form.vars['id'] }}_collection").append('<option value="">Choisissez une option</option>');
+						$.each(collections, function(index, element)
+						{
+							$("#{{form.vars['id'] }}_collection").append('<option value="'+ element.id +'">'+ element.title +'</option>');
+						});
+						if("{{ entity.collection }}" != "")
+							$("#{{ form.vars['id'] }}_collection").val("{{ entity.collection }}");
+					}
+				});
+			});
+			
+			$("#{{ form.vars['id'] }}_collection").change(function()
+			{
+				$.ajax({
+					type: "POST",
+					url: "{{ path('list_selected_collection') }}",
+					data: { "id" : $(this).val() },
+					success: function(data)
+					{
+						$("#{{ form.vars['id'] }}_releasedDate").val(data.releasedDate);
+						
+						if(data.releasedDate != "")
+							$('input#poem_unknownReleasedDate').attr('checked', false);
+						else
+							$('input#poem_unknownReleasedDate').attr('checked', true);
+					}
+				});
+			});
+			$("#{{ form.vars['id'] }}_biography").change();
+			$("#{{ form.vars['id'] }}_collection").change();
+		});
+	</script>
+{% endblock %}
+
+{% block main_content %}
+<form action="{{ path('poemadmin_update', {'id' : entity.id}) }}" method="post" {{ form_enctype(form) }} novalidate>
+	<table class="form_grid">
+		<tr>
+			<th>{{ form_label(form.title) }}</th>
+			<td><div class="errors">{{ form_errors(form.title) }}</div>{{ form_widget(form.title, {'attr':{'class':'full_width'}}) }}</td>
+		</tr>
+		<tr>
+			<th>{{ form_label(form.text) }}</th>
+			<td><div class="errors">{{ form_errors(form.text) }}</div>{{ form_widget(form.text) }}</td>
+		</tr>
+		<tr>
+			<th>{{ form_label(form.poeticform) }}</th>
+			<td><div class="errors">{{ form_errors(form.poeticform) }}</div>{{ form_widget(form.poeticform, {'attr':{'class':'full_width'}}) }}</td>
+		</tr>
+		<tr>
+			<th>{{ form_label(form.authorType) }}</th>
+			<td><div class="errors">{{ form_errors(form.authorType) }}</div>{{ form_widget(form.authorType, {'attr':{'class':'full_width'}}) }}</td>
+		</tr>
+		<tr class="user_row">
+			<th>{{ form_label(form.user) }}</th>
+			<td><div class="errors">{{ form_errors(form.user) }}</div>{{ form_widget(form.user, {'attr':{'class':'full_width'}}) }}</td>
+		</tr>
+		<tr class="biography_row">
+			<th>{{ form_label(form.biography) }}</th>
+			<td><div class="errors">{{ form_errors(form.biography) }}</div>{{ form_widget(form.biography, {'attr':{'class':'full_width'}}) }}</td>
+		</tr>
+		<tr>
+			<th>{{ form_label(form.country) }}</th>
+			<td><div class="errors">{{ form_errors(form.country) }}</div>{{ form_widget(form.country, {'attr':{'class':'full_width'}}) }}</td>
+		</tr>
+		<tr>
+			<th>{{ form_label(form.collection) }}</th>
+			<td><div class="errors">{{ form_errors(form.collection) }}</div>{{ form_widget(form.collection, {'attr':{'class':'full_width'}}) }}</td>
+		</tr>
+		<tr>
+			<th>{{ form_label(form.releasedDate) }}</th>
+			<td><div class="errors">{{ form_errors(form.releasedDate) }}</div>{{ form_widget(form.releasedDate) }}{{ form_widget(form.unknownReleasedDate) }}{{ form_label(form.unknownReleasedDate) }}</td>
+		</tr>
+	</table>
+	<hr />
+	{{ form_widget(form.save) }}
+	{{ form_rest(form) }}
+</form>
+
+{% endblock %}

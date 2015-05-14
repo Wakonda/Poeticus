@@ -1,0 +1,685 @@
+<?php
+
+namespace Poeticus\Repository;
+
+use Doctrine\DBAL\Connection;
+use Poeticus\Entity\Poem;
+
+/**
+ * Poem repository
+ */
+class PoemRepository
+{
+    /**
+     * @var \Doctrine\DBAL\Connection
+     */
+    protected $db;
+
+    public function __construct(Connection $db)
+    {
+        $this->db = $db;
+    }
+
+	public function save($entity, $id = null)
+	{
+		$entityData = array(
+		'title' => $entity->getTitle(),
+        'text'  => $entity->getText(),
+        'releasedDate' => $entity->getReleasedDate(),
+        'authorType' => $entity->getAuthorType(),
+        'poeticForm_id' => ($entity->getPoeticForm() == 0) ? null : $entity->getPoeticForm(),
+        'biography_id' => ($entity->getBiography() == 0) ? null : $entity->getBiography(),
+        'user_id' => ($entity->getUser()->getId() == null) ? null : $entity->getUser()->getId(),
+        'country_id' => ($entity->getCountry() == 0) ? null : $entity->getCountry(),
+        'collection_id' => ($entity->getCollection() == 0) ? null : $entity->getCollection(),
+		'state' => $entity->getState()
+		);
+
+		if(empty($id))
+		{
+			$this->db->insert('poem', $entityData);
+			$id = $this->db->lastInsertId();
+		}
+		else
+			$this->db->update('poem', $entityData, array('id' => $id));
+
+		return $id;
+	}
+	
+    public function find($id, $show = false)
+    {
+        $data = $this->db->fetchAssoc('SELECT * FROM poem WHERE id = ?', array($id));
+
+        return $data ? $this->build($data, $show) : null;
+    }
+	
+    public function findByTable($id, $table, $field = null)
+    {
+		if(empty($id))
+			return null;
+			
+        $data = $this->db->fetchAssoc('SELECT * FROM '.$table.' WHERE id = ?', array($id));
+
+		if(empty($field))
+			return $data;
+		else
+			return $data[$field];
+    }
+	
+	public function getDatatablesForIndex($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $count = false)
+	{
+		$qb = $this->db->createQueryBuilder();
+
+		$aColumns = array( 'pf.id', 'pf.title', 'pf.id');
+		
+		$qb->select("*")
+		   ->from("poem", "pf");
+		
+		if(!empty($sortDirColumn))
+		   $qb->orderBy($aColumns[$sortByColumn[0]], $sortDirColumn[0]);
+		
+		if(!empty($sSearch))
+		{
+			$search = "%".$sSearch."%";
+			$qb->where('pf.title LIKE :search')
+			   ->setParameter('search', $search);
+		}
+		if($count)
+		{
+			$qb->select("COUNT(*) AS count");
+			$results = $qb->execute()->fetchAll();
+			return $results[0]["count"];
+		}
+		else
+			$qb->setFirstResult($iDisplayStart)->setMaxResults($iDisplayLength);
+
+		$dataArray = $qb->execute()->fetchAll();
+		$entitiesArray = array();
+
+        foreach ($dataArray as $data) {
+            $entitiesArray[] = $this->build($data);
+        }
+
+		return $entitiesArray;
+	}
+	
+	public function findIndexSearch($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $datasObject, $count = false)
+	{
+		$aColumns = array( 'pf.title', 'pfb.title', 'pfc.title', 'pf.id');
+		$qb = $this->db->createQueryBuilder();
+
+		$qb->select("pf.*")
+		   ->from("poem", "pf");
+
+		if(!empty($datasObject->title))
+		{
+			$value = "%".$datasObject->title."%";
+			$qb->andWhere("pf.title LIKE :title")
+			   ->setParameter("title", $value);
+		}
+
+		if(!empty($datasObject->text))
+		{
+			$keywords = explode($datasObject->text, ",");
+			$i = 0;
+			foreach($keywords as $keyword)
+			{
+				$keyword = "%".$keyword."%";
+				$qb->andWhere("pf.text LIKE :keyword".$i)
+			       ->setParameter("keyword".$i, $keyword);
+				$i++;
+			}
+		}
+
+		if(!empty($datasObject->author))
+		{
+			$author = "%".$datasObject->author."%";
+			$qb->leftjoin("pf", "biography", "pfb", "pf.biography_id = pfb.id")
+			   ->andWhere("pfb.title LIKE :username")
+			   ->setParameter("username", $author);
+		}
+
+		if(!empty($datasObject->country))
+		{
+			$qb->andWhere("pf.country_id = :country")
+			   ->setParameter("country", $datasObject->country);
+		}
+
+		if(!empty($datasObject->collection))
+		{
+			$collection = "%".$this->findByTable($datasObject->collection, 'collection', 'title')."%";
+			$qb->leftjoin("pf", "collection", "pfco", "pf.collection_id = pfco.id")
+			   ->andWhere("pfco.title LIKE :collection")
+			   ->setParameter("collection", $collection);
+		}
+
+		if(!empty($datasObject->type))
+		{
+			$qb->andWhere("pf.authorType = :type")
+			   ->setParameter("type", $datasObject->type);
+		}
+
+		if(!empty($sortDirColumn))
+		   $qb->orderBy($aColumns[$sortByColumn[0]], $sortDirColumn[0]);
+		
+		if($count)
+		{
+			$qb->select("COUNT(*) AS count");
+			$results = $qb->execute()->fetchAll();
+			return $results[0]["count"];
+		}
+		else
+			$qb->setFirstResult($iDisplayStart)->setMaxResults($iDisplayLength);
+
+		$dataArray = $qb->execute()->fetchAll();
+		
+		$entitiesArray = array();
+
+        foreach ($dataArray as $data) {
+            $entitiesArray[] = $this->build($data, true);
+        }
+
+		return $entitiesArray;
+	}
+	
+	public function getLastEntries()
+	{
+		$qb = $this->db->createQueryBuilder();
+
+		$qb->select("*")
+		   ->from("poem", "pf")
+		   ->where("pf.authorType = 'biography'")
+		   ->setMaxResults(7)
+		   ->orderBy("pf.id", "DESC");
+		   
+		$dataArray = $qb->execute()->fetchAll();
+		$entitiesArray = array();
+
+        foreach ($dataArray as $data) {
+            $entitiesArray[] = $this->build($data, true);
+        }
+			
+		return $entitiesArray;
+	}
+	
+	public function getRandomPoem()
+	{
+		$qb = $this->db->createQueryBuilder();
+
+		$qb->select("COUNT(*) AS countRow")
+		   ->from("poem", "pf");
+		
+		$count = $qb->execute()->fetchObject();
+		$id = rand(1, $count->countRow);
+		
+		$qb = $this->db->createQueryBuilder();
+
+		$qb->select("*")
+		   ->from("poem", "pf")
+		   ->where("pf.id = :id")
+		   ->setParameter("id", $id);
+
+		$result = $qb->execute()->fetch();
+		
+		if(!$result)
+			return $this->getRandomPoem();
+		
+		return $this->build($result, true);
+	}
+
+	public function getPoemByAuthorDatatables($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $authorId, $count = false)
+	{
+		$qb = $this->db->createQueryBuilder();
+
+		$aColumns = array( 'pf.id', 'pf.title', 'pf.id');
+		
+		$qb->select("*")
+		   ->from("poem", "pf")
+		   ->where("pf.biography_id = :id")
+		   ->setParameter("id", $authorId);
+		
+		if(!empty($sortDirColumn))
+		   $qb->orderBy($aColumns[$sortByColumn[0]], $sortDirColumn[0]);
+
+		if(!empty($sSearch))
+		{
+			$search = "%".$sSearch."%";
+			$qb->andWhere('pf.title LIKE :search')
+			   ->setParameter('search', $search);
+		}
+		if($count)
+		{
+			$qb->select("COUNT(*) AS count");
+			$results = $qb->execute()->fetchAll();
+			return $results[0]["count"];
+		}
+		else
+			$qb->setFirstResult($iDisplayStart)->setMaxResults($iDisplayLength);
+
+		$dataArray = $qb->execute()->fetchAll();
+		$entitiesArray = array();
+
+        foreach ($dataArray as $data) {
+            $entitiesArray[] = $this->build($data, true);
+        }
+
+		return $entitiesArray;
+	}
+	
+	protected function build($data, $show = false)
+    {
+        $entity = new Poem();
+
+        $entity->setId($data['id']);
+        $entity->setTitle($data['title']);
+        $entity->setText($data['text']);
+        $entity->setReleasedDate($data['releasedDate']);
+        $entity->setAuthorType($data['authorType']);
+        $entity->setState($data['state']);
+		
+		if($show)
+		{
+			$entity->setPoeticForm($this->findByTable($data['poeticform_id'], 'poeticform'));
+			$entity->setBiography($this->findByTable($data['biography_id'], 'biography'));
+			$entity->setUser($this->findByTable($data['user_id'], 'user', 'username'));
+			$entity->setCountry($this->findByTable($data['country_id'], 'country'));
+			$entity->setCollection($this->findByTable($data['collection_id'], 'collection'));
+		}
+		else
+		{
+			$entity->setPoeticForm($data['poeticform_id']);
+			$entity->setBiography($data['biography_id']);
+			$entity->setUser($data['user_id']);
+			$entity->setCountry($data['country_id']);
+			$entity->setCollection($data['collection_id']);
+		}
+
+        return $entity;
+    }
+	
+    public function findPoemByAuthor($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $count = false)
+    {
+		$qb = $this->db->createQueryBuilder();
+
+		$aColumns = array( 'pf.title', 'COUNT(pf.id)');
+		
+		$qb->select("bp.id AS id, bp.title AS author, COUNT(pf.id) AS number_poems_by_author")
+		   ->from("poem", "pf")
+		   ->where("pf.authorType = 'biography'")
+		   // ->setParameter("authorType", "biography")
+		   ->leftjoin("pf", "biography", "bp", "pf.biography_id = bp.id")
+		   ->groupBy("bp.id");
+		
+		if(!empty($sortDirColumn))
+		   $qb->orderBy($aColumns[$sortByColumn[0]], $sortDirColumn[0]);
+
+		if(!empty($sSearch))
+		{
+			$search = "%".$sSearch."%";
+			$qb->andWhere('bp.title LIKE "'.$search.'"');
+		}
+		if($count)
+		{
+			$countRows = $this->db->executeQuery("SELECT COUNT(*) AS count FROM (".$qb->getSql().") AS SQ");
+			$result = $countRows->fetch();
+
+			return $result["count"];
+		}
+		else
+			$qb->setFirstResult($iDisplayStart)->setMaxResults($iDisplayLength);
+
+		$dataArray = $qb->execute()->fetchAll();
+
+		return $dataArray;
+    }
+	
+    public function findPoemByPoeticForm($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $count = false)
+    {
+		$qb = $this->db->createQueryBuilder();
+
+		$aColumns = array( 'co.title', 'COUNT(pf.id)');
+		
+		$qb->select("co.id AS poeticform_id, co.title AS poeticform, COUNT(pf.id) AS number_poems_by_poeticform")
+		   ->from("poem", "pf")
+		   ->where("pf.authorType = 'biography'")
+		   // ->setParameter("authorType", "")
+		   ->innerjoin("pf", "poeticform", "co", "pf.poeticform_id = co.id")
+		   ->groupBy("co.id");
+		
+		if(!empty($sortDirColumn))
+		   $qb->orderBy($aColumns[$sortByColumn[0]], $sortDirColumn[0]);
+
+		if(!empty($sSearch))
+		{
+			$search = "%".$sSearch."%";
+			$qb->andWhere('co.title LIKE "'.$search.'"');
+		}
+		if($count)
+		{
+			$countRows = $this->db->executeQuery("SELECT COUNT(*) AS count FROM (".$qb->getSql().") AS SQ");
+			$result = $countRows->fetch();
+
+			return $result["count"];
+		}
+		else
+			$qb->setFirstResult($iDisplayStart)->setMaxResults($iDisplayLength);
+
+		$dataArray = $qb->execute()->fetchAll();
+
+		return $dataArray;
+    }
+	
+	public function getPoemByPoeticFormDatatables($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $collectionId, $count = false)
+	{
+		$qb = $this->db->createQueryBuilder();
+
+		$aColumns = array( 'pf.title');
+		
+		$qb->select("pf.title AS poem_title, pf.id AS poem_id")
+		   ->from("poem", "pf")
+		   ->where("pf.poeticform_id = :id")
+		   ->setParameter("id", $collectionId)
+		   ->andWhere("pf.authorType = :authorType")
+		   ->setParameter("authorType", "biography");
+		
+		if(!empty($sortDirColumn))
+		   $qb->orderBy($aColumns[$sortByColumn[0]], $sortDirColumn[0]);
+
+		if(!empty($sSearch))
+		{
+			$search = "%".$sSearch."%";
+			$qb->andWhere('pf.title LIKE :search')
+			   ->setParameter('search', $search);
+		}
+		if($count)
+		{
+			$qb->select("COUNT(*) AS count");
+			$results = $qb->execute()->fetchAll();
+			return $results[0]["count"];
+		}
+		else
+			$qb->setFirstResult($iDisplayStart)->setMaxResults($iDisplayLength);
+
+		$dataArray = $qb->execute()->fetchAll();
+
+		return $dataArray;
+	}
+	
+    public function findPoemByCollection($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $count = false)
+    {
+		$qb = $this->db->createQueryBuilder();
+
+		$aColumns = array( 'co.title', 'bp.title', 'COUNT(pf.id)');
+		
+		$qb->select("bp.id AS author_id, co.id AS collection_id, bp.title AS author, co.title AS collection, COUNT(pf.id) AS number_poems_by_collection")
+		   ->from("poem", "pf")
+		   ->leftjoin("pf", "biography", "bp", "pf.biography_id = bp.id")
+		   ->innerjoin("pf", "collection", "co", "pf.collection_id = co.id")
+		   ->where("pf.authorType = 'biography'")
+		   // ->setParameter("authorType", "biography")
+		   ->groupBy("co.id");
+		
+		if(!empty($sortDirColumn))
+		   $qb->orderBy($aColumns[$sortByColumn[0]], $sortDirColumn[0]);
+
+		if(!empty($sSearch))
+		{
+			$search = "%".$sSearch."%";
+			$qb->andWhere('co.title LIKE "'.$search.'"');
+		}
+		if($count)
+		{
+			$countRows = $this->db->executeQuery("SELECT COUNT(*) AS count FROM (".$qb->getSql().") AS SQ");
+			$result = $countRows->fetch();
+
+			return $result["count"];
+		}
+		else
+			$qb->setFirstResult($iDisplayStart)->setMaxResults($iDisplayLength);
+
+		$dataArray = $qb->execute()->fetchAll();
+
+		return $dataArray;
+    }
+
+	public function getPoemByCollectionDatatables($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $collectionId, $count = false)
+	{
+		$qb = $this->db->createQueryBuilder();
+
+		$aColumns = array( 'pf.title');
+		
+		$qb->select("pf.title AS poem_title, pf.id AS poem_id")
+		   ->from("poem", "pf")
+		   ->where("pf.collection_id = :id")
+		   ->setParameter("id", $collectionId)
+		   ->andWhere("pf.authorType = :authorType")
+		   ->setParameter("authorType", "biography")
+		   ;
+		
+		if(!empty($sortDirColumn))
+		   $qb->orderBy($aColumns[$sortByColumn[0]], $sortDirColumn[0]);
+
+		if(!empty($sSearch))
+		{
+			$search = "%".$sSearch."%";
+			$qb->andWhere('pf.title LIKE :search')
+			   ->setParameter('search', $search);
+		}
+		if($count)
+		{
+			$qb->select("COUNT(*) AS count");
+			$results = $qb->execute()->fetchAll();
+			return $results[0]["count"];
+		}
+		else
+			$qb->setFirstResult($iDisplayStart)->setMaxResults($iDisplayLength);
+
+		$dataArray = $qb->execute()->fetchAll();
+
+		return $dataArray;
+	}
+	
+    public function findPoemByCountry($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $count = false)
+    {
+		$qb = $this->db->createQueryBuilder();
+
+		$aColumns = array( 'co.title', 'COUNT(pf.id)');
+		
+		$qb->select("co.id AS country_id, co.title AS country_title, COUNT(pf.id) AS number_poems_by_country")
+		   ->from("poem", "pf")
+		   ->where("pf.authorType = 'biography'")
+		   // ->setParameter("authorType", "biography")
+		   ->innerjoin("pf", "country", "co", "pf.country_id = co.id")
+			   ->groupBy("co.id")
+		   ;
+		
+		if(!empty($sortDirColumn))
+		   $qb->orderBy($aColumns[$sortByColumn[0]], $sortDirColumn[0]);
+
+		if(!empty($sSearch))
+		{
+			$search = "%".$sSearch."%";
+			$qb->andWhere('co.title LIKE "'.$search.'"');
+		}
+		if($count)
+		{
+			$countRows = $this->db->executeQuery("SELECT COUNT(*) AS count FROM (".$qb->getSql().") AS SQ");
+			$result = $countRows->fetch();
+
+			return $result["count"];
+		}
+		else
+			$qb->setFirstResult($iDisplayStart)->setMaxResults($iDisplayLength);
+
+		$dataArray = $qb->execute()->fetchAll();
+
+		return $dataArray;
+    }
+	
+    public function findPoemByPoemUser($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $count = false)
+    {
+		$qb = $this->db->createQueryBuilder();
+
+		$aColumns = array( 'pf.title', 'u.username');
+		
+		$qb->select("pf.id AS poem_id, pf.title AS poem_title, u.username AS username, u.id AS user_id")
+		   ->from("poem", "pf")
+		   ->where("pf.authorType = 'user'")
+		   ->join("pf", "user", "u", "pf.user_id = u.id")
+		   ->andWhere("pf.state = 0")
+		   ;
+		
+		if(!empty($sortDirColumn))
+		   $qb->orderBy($aColumns[$sortByColumn[0]], $sortDirColumn[0]);
+
+		if(!empty($sSearch))
+		{
+			$search = "%".$sSearch."%";
+			$qb->andWhere('pf.title LIKE "'.$search.'"');
+		}
+		if($count)
+		{
+			$qb->select("COUNT(*) AS count");
+			$results = $qb->execute()->fetchAll();
+
+			return $results[0]["count"];
+		}
+		else
+			$qb->setFirstResult($iDisplayStart)->setMaxResults($iDisplayLength);
+
+		$dataArray = $qb->execute()->fetchAll();
+
+		return $dataArray;
+    }
+	
+	public function getPoemByCountryDatatables($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $countryId, $count = false)
+	{
+		$qb = $this->db->createQueryBuilder();
+
+		$aColumns = array( 'pf.id', 'pf.title', 'pf.id');
+		
+		$qb->select("pf.title AS poem_title, bi.title AS biography_title, pf.id AS poem_id, bi.id AS biography_id")
+		   ->from("poem", "pf")
+		   ->innerjoin("pf", "biography", "bi", "pf.biography_id = bi.id")
+		   ->where("pf.country_id = :id")
+		   ->setParameter("id", $countryId)
+		   ->andWhere("pf.authorType = :authorType")
+		   ->setParameter("authorType", "biography")
+		   ;
+		
+		if(!empty($sortDirColumn))
+		   $qb->orderBy($aColumns[$sortByColumn[0]], $sortDirColumn[0]);
+
+		if(!empty($sSearch))
+		{
+			$search = "%".$sSearch."%";
+			$qb->andWhere('pf.title LIKE :search')
+			   ->setParameter('search', $search);
+		}
+		if($count)
+		{
+			$qb->select("COUNT(*) AS count");
+			$results = $qb->execute()->fetchAll();
+			return $results[0]["count"];
+		}
+		else
+			$qb->setFirstResult($iDisplayStart)->setMaxResults($iDisplayLength);
+
+		$dataArray = $qb->execute()->fetchAll();
+
+		return $dataArray;
+	}
+
+	public function checkForDoubloon($entity)
+	{
+		$qb = $this->db->createQueryBuilder();
+
+		$qb->select("COUNT(*) AS number")
+		   ->from("poem", "pf")
+		   ->where("pf.title = :title")
+		   ->setParameter('title', $entity->getTitle())
+		   ->andWhere("pf.biography_id = :biographyId")
+		   ->setParameter("biographyId", $entity->getBiography());
+
+		if($entity->getId() != null)
+		{
+			$qb->andWhere("pf.id != :id")
+			   ->setParameter("id", $entity->getId());
+		}
+		$results = $qb->execute()->fetchAll();
+		
+		return $results[0]["number"];
+	}
+	
+	public function getStat()
+	{
+		$qbPoem = $this->db->createQueryBuilder();
+
+		$qbPoem->select("COUNT(*) AS count_poem")
+			   ->from("poem", "pf");
+		
+		$resultPoem = $qbPoem->execute()->fetchAll();
+		
+		$qbBio = $this->db->createQueryBuilder();
+
+		$qbBio->select("COUNT(*) AS count_biography")
+		      ->from("biography", "bp");
+		
+		$resultBio = $qbBio->execute()->fetchAll();
+		
+		$qbCo = $this->db->createQueryBuilder();
+
+		$qbCo->select("COUNT(*) AS count_collection")
+		      ->from("collection", "bp");
+		
+		$resultCo = $qbCo->execute()->fetchAll();
+		
+		return array("count_poem" => $resultPoem[0]["count_poem"], "count_biography" => $resultBio[0]["count_biography"], "count_collection" => $resultCo[0]["count_collection"]);
+	}
+
+	public function findPoemByUser($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $username, $currentUser, $count = false)
+	{
+		$qb = $this->db->createQueryBuilder();
+
+		$aColumns = array( 'pf.id', 'pf.title', 'pf.state', 'pf.id');
+		
+		$qb->select("pf.*")
+		   ->from("poem", "pf")
+		   ->leftjoin("pf", "user", "pfu", "pf.user_id = pfu.id")
+		   ->where("pfu.username = :username")
+		   ->setParameter("username", $username)
+		   ->andWhere("pf.state <> 2");
+		
+		if($username != $currentUser->getUsername())
+		{
+			$qb->andWhere("pf.state = 0");
+		}
+		
+		if(!empty($sortDirColumn))
+		   $qb->orderBy($aColumns[$sortByColumn[0]], $sortDirColumn[0]);
+		
+		if(!empty($sSearch))
+		{
+			$search = "%".$sSearch."%";
+			$qb->andhere('pf.title LIKE :search')
+			   ->setParameter('search', $search);
+		}
+		if($count)
+		{
+			$qb->select("COUNT(*) AS count");
+			$results = $qb->execute()->fetchAll();
+			return $results[0]["count"];
+		}
+		else
+			$qb->setFirstResult($iDisplayStart)->setMaxResults($iDisplayLength);
+
+		$dataArray = $qb->execute()->fetchAll();
+		$entitiesArray = array();
+
+        foreach ($dataArray as $data) {
+            $entitiesArray[] = $this->build($data);
+        }
+
+		return $entitiesArray;
+	}
+}

@@ -1,0 +1,25 @@
+{% extends generic_layout %}
+
+{% block head_title %}Contact{% endblock %}
+{% block main_title %}Contactez nous !{% endblock %}
+
+{% block main_content %}
+	<form action="{{ path('contact_send') }}" method="post" {{ form_enctype(form) }} novalidate>
+		<table class="form_grid">
+				<tr>
+					<th>{{ form_label(form.mail) }}</th>
+					<td><div class="errors">{{ form_errors(form.mail) }}</div>{{ form_widget(form.mail, {'attr':{'class':'full_width'}}) }}</td>
+				</tr>
+				<tr>
+					<th>{{ form_label(form.subject) }}</th>
+					<td><div class="errors">{{ form_errors(form.subject) }}</div>{{ form_widget(form.subject, {'attr':{'class':'full_width'}}) }}</td>
+				</tr>
+				<tr>
+					<th>{{ form_label(form.message) }}</th>
+					<td><div class="errors">{{ form_errors(form.message) }}</div>{{ form_widget(form.message) }}</td>
+				</tr>
+		</table>
+		{{ form_widget(form.send) }}
+		{{ form_rest(form) }}
+	</form>
+{% endblock %}
