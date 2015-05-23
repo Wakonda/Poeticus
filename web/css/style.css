@@ -169,6 +169,16 @@ article
 	color: #8b8585;
 }
 
+#logo a {
+	color: #8b8585;
+	text-decoration: none;
+}
+
+#logo a:hover {
+	color: #23527c;
+	text-decoration: none;
+}
+
 #logo img {
 	height: 80px;
 	vertical-align: middle;
