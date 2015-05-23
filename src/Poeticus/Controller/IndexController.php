@@ -42,7 +42,7 @@ class IndexController
 	public function indexSearchAction(Request $request, Application $app)
 	{
 		$search = $request->request->get("index_search");
-// die(var_dump($search));
+
 		return $app['twig']->render('Index/resultIndexSearch.html.twig', array('search' => json_encode($search)));
 	}
 	
@@ -550,7 +550,7 @@ class IndexController
 			$row = array();
 
 			$show = $app['url_generator']->generate('country', array('id' => $entity['country_id']));
-			$row[] = '<a href="'.$show.'" alt="Show">'.$entity['country_title'].'</a>';
+			$row[] = '<a href="'.$show.'" alt="Show"><img src="'.$request->getBaseUrl().'/photo/country/'.$entity['flag'].'" class="flag" /> '.$entity['country_title'].'</a>';
 
 			$row[] = $entity['number_poems_by_country'];
 
@@ -588,7 +588,7 @@ class IndexController
 
 		$entities = $app['repository.poem']->findPoemByPoemUser($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch);
 		$iTotal = $app['repository.poem']->findPoemByPoemUser($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, true);
-// die(var_dump($entities));
+
 		$output = array(
 			"sEcho" => $request->query->get('sEcho'),
 			"iTotalRecords" => $iTotal,

@@ -485,7 +485,7 @@ class PoemRepository
 
 		$aColumns = array( 'co.title', 'COUNT(pf.id)');
 		
-		$qb->select("co.id AS country_id, co.title AS country_title, COUNT(pf.id) AS number_poems_by_country")
+		$qb->select("co.id AS country_id, co.title AS country_title, COUNT(pf.id) AS number_poems_by_country, co.flag AS flag")
 		   ->from("poem", "pf")
 		   ->where("pf.authorType = 'biography'")
 		   // ->setParameter("authorType", "biography")
