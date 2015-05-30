@@ -88,9 +88,6 @@ class UserController implements ControllerProviderInterface
 
 		$this->checkForDoubloon($entity, $form, $app);
 
-		if($entity->getAvatar() == null)
-			$form->get("avatar")->addError(new FormError('Ce champ ne peut pas être vide'));
-		
 		if($form->isValid())
 		{
 			if(!is_null($entity->getAvatar()))
@@ -99,7 +96,7 @@ class UserController implements ControllerProviderInterface
 				$entity->getAvatar()->move("photo/user/", $image);
 				$entity->setAvatar($image);
 			}
-			
+
 			$ph = new PasswordHash();
 			$salt = $ph->create_hash($entity->getPassword());
 			

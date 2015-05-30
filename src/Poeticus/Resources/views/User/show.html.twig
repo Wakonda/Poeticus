@@ -106,7 +106,14 @@
 	{% for message in app.session.getFlashBag.get('new_password') %}
 		<div class="success">{{ message }}</div>
 	{% endfor %}
-	<p class="center">{{ ("photo/user/"~entity.avatar)|max_size_image(app.request.basepath) }}</p>
+	
+	<p class="center">
+	{% if entity.avatar is null %}
+		<img src="{{ entity.gravatar }}" alt="" id="gravatar" />
+	{% else %}
+		{{ ("photo/user/"~entity.avatar)|max_size_image(app.request.basepath) }}
+	{% endif %}
+	</p>
 	<table id="user">
 		<tr>
 			<th>Login</th>

@@ -3,6 +3,7 @@
 namespace Poeticus\Service;
 
 use Poeticus\Service\Captcha;
+use Poeticus\Service\Gravatar;
 
 class PoeticusExtension extends \Twig_Extension
 {
@@ -28,7 +29,8 @@ class PoeticusExtension extends \Twig_Extension
 	
 	public function getFunctions() {
 		return array(
-			'captcha' => new \Twig_Function_Method($this, 'generateCaptcha')
+			'captcha' => new \Twig_Function_Method($this, 'generateCaptcha'),
+			'gravatar' => new \Twig_Function_Method($this, 'generateGravatar')
 		);
 	}
 
@@ -66,7 +68,7 @@ class PoeticusExtension extends \Twig_Extension
 
 		return '<img src="'.$basePath.'/'.$img.'" alt="" style="max-width: '.$width.'px;" />';
 	}
-	
+
 	public function generateCaptcha()
 	{
 		$captcha = new Captcha($this->app);
@@ -80,5 +82,12 @@ class PoeticusExtension extends \Twig_Extension
 			$word = $captcha->numberRandom($length);
 		
 		return $captcha->generate($word);
+	}
+
+	public function generateGravatar()
+	{
+		$gr = new Gravatar();
+
+		return $gr->getURLGravatar();
 	}
 }

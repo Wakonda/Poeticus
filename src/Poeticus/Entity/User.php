@@ -56,6 +56,12 @@ class User implements AdvancedUserInterface
 
     /**
      *
+     * @var string
+     */
+    protected $gravatar;
+
+    /**
+     *
      * @var text
      */
     protected $presentation;
@@ -186,6 +192,16 @@ class User implements AdvancedUserInterface
     public function setAvatar($avatar)
     {
         $this->avatar = $avatar;
+    }
+	
+	public function getGravatar()
+    {
+        return $this->gravatar;
+    }
+
+    public function setGravatar($gravatar)
+    {
+        $this->gravatar = $gravatar;
     }
 
     public function getPresentation()

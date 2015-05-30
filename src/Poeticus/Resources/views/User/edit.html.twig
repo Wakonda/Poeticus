@@ -12,12 +12,34 @@
 			$("textarea").cleditor({
 				docType: ''
 			});
+			
+			$("span#reload_gravatar").click(function()
+			{
+				$.ajax({
+					type: "GET",
+					url: "{{ path('gravatar') }}",
+					cache: false,
+					success: function(data)
+					{
+						$("img#gravatar").attr("src", data.new_gravatar);
+						$("#user_gravatar").val(data.new_gravatar);
+					}
+				});
+			});
+			
+			$("#user_gravatar").val($("img#gravatar").attr("src"));
 		});
 	</script>
 {% endblock %}
 
 {% block main_content %}
-<p class="center">{{ ("photo/user/"~entity.avatar)|max_size_image(app.request.basepath) }}</p>
+<p class="center">
+{% if entity.avatar is null %}
+	<img src="{{ entity.gravatar }}" alt="" id="gravatar" />
+{% else %}
+	{{ ("photo/user/"~entity.avatar)|max_size_image(app.request.basepath) }}
+{% endif %}
+</p>
 <form action="{{ path('user_update', { 'id' : entity.id }) }}" method="post" {{ form_enctype(form) }} novalidate>
 	<table class="form_grid">
 		<tr>
@@ -31,8 +53,13 @@
 		<tr>
 			<th>{{ form_label(form.avatar) }}</th>
 			<td>
-				<p><b><u>Avatar actuel :</u></b> <i>{{ entity.avatar }}</i></p>
-				<div class="errors">{{ form_errors(form.avatar) }}</div>{{ form_widget(form.avatar) }}
+				<p><b><u>Avatar actuel :</u></b> <i>{{ (entity.avatar is null) ? "Gravatar" : entity.avatar }}</i></p>
+				<p class="underline italic">Sélectionnez un fichier</p>
+				<div class="errors">{{ form_errors(form.avatar) }}</div>
+				{{ form_widget(form.avatar) }}
+				<p class="bold underline">OU</p>
+				<p class="italic underline">Utilisez un gravatar</p>
+				<img src="{{ entity.gravatar }}" alt="gravatar" id="gravatar" /> <span class="glyphicon glyphicon-refresh reload" id="reload_gravatar"></span>
 			</td>
 		</tr>
 		<tr>

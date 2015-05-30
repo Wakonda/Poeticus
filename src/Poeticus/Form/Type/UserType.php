@@ -30,9 +30,13 @@ class UserType extends AbstractType
             ->add('email', 'email', array(
                 'constraints' => new Assert\NotBlank(), 'label' => 'Email'
             ))
-            
+
 			->add('avatar', 'file', array(
                 'data_class' => null, 'label' => 'Avatar', 'required' => false
+            ))
+
+			->add('gravatar', 'hidden', array(
+                'label' => 'Avatar', 'required' => false
             ))
 			
 			->add('presentation', 'textarea', array(
@@ -48,7 +52,7 @@ class UserType extends AbstractType
 										    'choices' => $countryArray
 											))
 			
-			->add('captcha', 'text', array('label' => 'Recopiez le mot contenu dans l\'image', "mapped" => false, "attr" => array("class" => "captcha_word"), 'constraints' => new Assert\NotBlank()))
+			
             ->add('save', 'submit', array('label' => 'Sauvegarder', "attr" => array("class" => "btn btn-success")));
 			
 		if(!$this->ifEdit)
@@ -63,6 +67,7 @@ class UserType extends AbstractType
 					'first_options'  => array('label' => 'Mot de passe'),
 					'second_options' => array('label' => 'Mot de passe (validation)'),
 				))
+				->add('captcha', 'text', array('label' => 'Recopiez le mot contenu dans l\'image', "mapped" => false, "attr" => array("class" => "captcha_word"), 'constraints' => new Assert\NotBlank()))
 			;
 		}
     }

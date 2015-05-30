@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Poeticus\Form\Type\IndexSearchType;
 use Poeticus\Service\MailerPoeticus;
 use Poeticus\Service\Captcha;
+use Poeticus\Service\Gravatar;
 
 use Poeticus\Entity\Poem;
 use Poeticus\Form\Type\PoemUserType;
@@ -726,7 +727,7 @@ class IndexController
 		
 		return new Response();
 	}
-	
+
 	public function reloadCaptchaAction(Request $request, Application $app)
 	{
 		$captcha = new Captcha($app);
@@ -741,7 +742,17 @@ class IndexController
 
 		$response = new Response(json_encode(array("new_captcha" => $captcha->generate($word))));
 		$response->headers->set('Content-Type', 'application/json');
-		
+
+		return $response;
+	}
+
+	public function reloadGravatarAction(Request $request, Application $app)
+	{
+		$gr = new Gravatar();
+
+		$response = new Response(json_encode(array("new_gravatar" => $gr->getURLGravatar())));
+		$response->headers->set('Content-Type', 'application/json');
+
 		return $response;
 	}
 }

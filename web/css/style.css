@@ -147,7 +147,7 @@ article
 	line-height:21px;
 }
 
-#contents img:not(.votes_result_user) {
+#contents img:not(.votes_result_user):not(#gravatar) {
 	-moz-box-shadow: 2px 2px 10px #ccc;
 	-webkit-box-shadow: 2px 2px 5px #ccc;
 	box-shadow: 2px 2px 10px #ccc;
@@ -445,11 +445,12 @@ article#contents header h1 img#flag_title
 }
 #contents img.flag
 {
-	border: none;
-	width: auto;
+	border: none !important;
+	width: auto !important;
 	height: 13px;
 	margin-top: 0px;
 	border-radius: 0 !important;
+	box-shadow: none !important;
 }
 
 /********* SUCCES *************/
@@ -686,12 +687,12 @@ table#poem_statistics  tr td:first-child {
 }
 
 /******** CAPTCHA **********/
-span#reload_captcha {
+span.reload {
 	font-size: 35px;
 	color: red;
 	cursor: pointer;
 }
 
-span#reload_captcha:hover {
+span.reload:hover {
 	color: green;
 }

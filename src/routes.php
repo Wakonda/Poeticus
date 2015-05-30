@@ -126,6 +126,10 @@ $app->get('/stat_poem', 'controllers.index:statPoemAction')
 // CAPTCHA
 $app->get('/captcha', 'controllers.index:reloadCaptchaAction')
 	->bind('captcha');
+
+// GRAVATAR
+$app->get('/gravatar', 'controllers.index:reloadGravatarAction')
+	->bind('gravatar');
 	
 // COMMENT
 $app->get('/comment/{poemId}', 'controllers.comment:indexAction')

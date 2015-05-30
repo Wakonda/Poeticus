@@ -85,6 +85,7 @@ class UserRepository
         $entity->setPresentation($data['presentation']);
 		$entity->setToken($data['token']);
 		$entity->setSalt($data['salt']);
+		$entity->setGravatar($data['gravatar']);
 		$entity->setExpiredAt(\DateTime::createFromFormat('Y-m-d H:i:s', $data['expired_at']));
 		
 		if($show)
@@ -136,28 +137,25 @@ class UserRepository
 			   ->setParameter("id", $entity->getId());
 		}
 		$results = $qb->execute()->fetchAll();
-		
+
 		return $results[0]["number"];
 	}
 
 	public function save($entity, $id = null)
 	{
-		// die(var_dump());
-		// die(var_dump(\DateTime::createFromFormat('Y-m-d H:i:s', $entity->getExpiredAt())));
-		$country = ($entity->getCountry() == 0) ? null : $entity->getCountry();
-		
 		$entityData = array(
 		'username' => $entity->getUsername(),
         'password'  => $entity->getPassword(),
         'email' => $entity->getEmail(),
         'avatar' => $entity->getAvatar(),
         'presentation' => $entity->getPresentation(),
-		'country_id' => (empty($country)) ? null : $country["id"],
+		'country_id' => $entity->getCountry(),
         'salt' => $entity->getSalt(),
         'token' => $entity->getToken(),
         'enabled' => $entity->getEnabled(),
         'expired_at' => $entity->getExpiredAt()->format('Y-m-d H:i:s'),
-        'roles' => implode(",", $entity->getRoles())
+        'roles' => implode(",", $entity->getRoles()),
+		'gravatar' => $entity->getGravatar()
 		);
 
 		if(empty($id))
