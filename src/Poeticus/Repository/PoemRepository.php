@@ -301,7 +301,7 @@ class PoemRepository
     {
 		$qb = $this->db->createQueryBuilder();
 
-		$aColumns = array( 'pf.title', 'COUNT(pf.id)');
+		$aColumns = array( 'bp.title', 'COUNT(pf.id)');
 		
 		$qb->select("bp.id AS id, bp.title AS author, COUNT(pf.id) AS number_poems_by_author")
 		   ->from("poem", "pf")
