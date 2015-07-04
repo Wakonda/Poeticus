@@ -26,7 +26,7 @@ class UserController implements ControllerProviderInterface
 
 		if($request->query->get("t") != null)
 		{
-			$entity = $app['repository.user']->findByToken($request->query->get("t"), true);
+			$entity = $app['repository.user']->findByToken($request->query->get("t"), false);
 			
 			$now = new \Datetime();
 

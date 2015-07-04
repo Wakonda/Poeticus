@@ -14,7 +14,7 @@ $app['db.options'] = array(
     'driver'   => 'pdo_mysql',
     'host'     => '127.0.0.1',
     'port'     => null,
-    'dbname'   => 'ap4_culture',
+    'dbname'   => 'poeticus',
 	'charset'  => 'utf8',
     'password' => null,
 );

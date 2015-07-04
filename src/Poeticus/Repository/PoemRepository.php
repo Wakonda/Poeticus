@@ -222,7 +222,7 @@ class PoemRepository
 		$result = $qb->execute()->fetch();
 		
 		if(!$result)
-			return $this->getRandomPoem();
+			return null;
 		
 		return $this->build($result, true);
 	}
