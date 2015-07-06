@@ -19,10 +19,7 @@
 			ga('create', 'UA-12307735-4', 'auto');
 			ga('send', 'pageview');
 
-			// Resize "aside" and "article" tags
-			$(function() {
-				$("article#contents").height($("aside#sidebar-wrapper").height());
-			});
+
 		</script>
 		{% block script_additional %}
 		{% endblock %}
@@ -134,5 +131,17 @@
 			<!-- Footer Element Ends Here -->
 		</div>
 		<!-- Div Wrapper Element ends Here -->
+		<script>
+			// Resize "aside" and "article" tags
+			$(function() {
+				var articleHeight = $("article#contents").height();
+				var asideHeight = $("aside#sidebar-wrapper").height();
+
+				if(asideHeight > articleHeight)
+					$("article#contents").height(asideHeight);
+				else
+					$("aside#sidebar-wrapper").height(articleHeight);
+			});
+		</script>
 	</body>
 </html>

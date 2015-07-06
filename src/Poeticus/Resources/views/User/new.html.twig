@@ -4,6 +4,10 @@
 {% block main_title %}Créer un compte{% endblock %}
 
 {% block script_additional %}
+	<script src="{{ app.request.basepath }}/js/StrengthPasswordCalculation/zxcvbn.js" type="text/javascript"></script>
+	<script src="{{ app.request.basepath }}/js/StrengthPasswordCalculation/StrengthPasswordCalculation.js" type="text/javascript"></script>
+	<link rel="stylesheet" href="{{ app.request.basepath }}/js/StrengthPasswordCalculation/StrengthPasswordCalculation.css" type="text/css" media="screen" />
+	
 	<script src="{{ app.request.basepath }}/js/CLEditor1_3_0/jquery.cleditor.js" type="text/javascript"></script>
 	<link rel="stylesheet" href="{{ app.request.basepath }}/js/CLEditor1_3_0/jquery.cleditor.css" type="text/css" media="screen" />
 	<script type="text/javascript">
@@ -43,6 +47,9 @@
 			$("#user_gravatar").val($("img#gravatar").attr("src"));
 			
 			$("input.captcha_word").val("");
+			
+			// Calculation of the strenght of password
+			$("#user_password_first").StrengthPasswordCalculation();
 		});
 	</script>
 {% endblock %}
