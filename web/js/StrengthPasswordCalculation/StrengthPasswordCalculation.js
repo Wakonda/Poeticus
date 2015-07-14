@@ -65,16 +65,19 @@
 				{
 					ms = parseInt(timeArray[1]);
 				}
-				var sec_num = parseInt(seconds, 10); // don't forget the second param
+				var sec_num = parseInt(seconds, 10);
+				
+				var intlNumber = new Intl.NumberFormat([options.language]);
+				
 				var hours   = Math.floor(sec_num / 3600);
 				var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
 				var seconds = sec_num - (hours * 3600) - (minutes * 60);
 
 				var time = new Array();
 				
-				time.push((parseInt(hours) == 0) ? "" : hours+'h');
-				time.push((parseInt(minutes) == 0) ? "" : minutes+'min');
-				time.push((parseInt(seconds) == 0) ? "" : seconds+'s');
+				time.push((parseInt(hours) == 0) ? "" : intlNumber.format(hours) + 'h');
+				time.push((parseInt(minutes) == 0) ? "" : minutes + 'min');
+				time.push((parseInt(seconds) == 0) ? "" : seconds + 's');
 				time.push((parseInt(ms) == 0) ? "" : ms + 'ms');
 
 				return time.join(" ").trim();
