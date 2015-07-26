@@ -29,10 +29,10 @@ class PoemRepository
         'authorType' => $entity->getAuthorType(),
         'poeticForm_id' => ($entity->getPoeticForm() == 0) ? null : $entity->getPoeticForm(),
         'biography_id' => ($entity->getBiography() == 0) ? null : $entity->getBiography(),
-        'user_id' => ($entity->getUser()->getId() == null) ? null : $entity->getUser()->getId(),
+        'user_id' => (!is_object($entity->getUser())) ? $entity->getUser() : $entity->getUser()->getId(),
         'country_id' => ($entity->getCountry() == 0) ? null : $entity->getCountry(),
         'collection_id' => ($entity->getCollection() == 0) ? null : $entity->getCollection(),
-		'state' => $entity->getState()
+		'state' => (empty($entity->getState())) ? 0 : $entity->getState()
 		);
 
 		if(empty($id))
@@ -231,12 +231,15 @@ class PoemRepository
 	{
 		$qb = $this->db->createQueryBuilder();
 
-		$aColumns = array( 'pf.id', 'pf.title', 'pf.id');
+		$aColumns = array( 'pf.title', 'co.title');
 		
-		$qb->select("*")
+		$qb->select("pf.*")
 		   ->from("poem", "pf")
+		   ->from("collection", "co")
 		   ->where("pf.biography_id = :id")
-		   ->setParameter("id", $authorId);
+		   ->setParameter("id", $authorId)
+		   ->andWhere("(pf.collection_id = co.id OR pf.collection_id IS NULL)")
+		   ->groupBy("pf.id");
 		
 		if(!empty($sortDirColumn))
 		   $qb->orderBy($aColumns[$sortByColumn[0]], $sortDirColumn[0]);
@@ -637,7 +640,7 @@ class PoemRepository
 		return array("count_poem" => $resultPoem[0]["count_poem"], "count_biography" => $resultBio[0]["count_biography"], "count_collection" => $resultCo[0]["count_collection"]);
 	}
 
-	public function findPoemByUser($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $username, $currentUser, $count = false)
+	public function findPoemByUserAndAuhorType($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $username, $currentUser, $authorType, $count = false)
 	{
 		$qb = $this->db->createQueryBuilder();
 
@@ -648,8 +651,10 @@ class PoemRepository
 		   ->leftjoin("pf", "user", "pfu", "pf.user_id = pfu.id")
 		   ->where("pfu.username = :username")
 		   ->setParameter("username", $username)
-		   ->andWhere("pf.state <> 2");
-		
+		   ->andWhere("pf.state <> 2")
+		   ->andWhere('pf.authorType = :authorType')
+		   ->setParameter('authorType', $authorType);
+
 		if($username != $currentUser->getUsername())
 		{
 			$qb->andWhere("pf.state = 0");

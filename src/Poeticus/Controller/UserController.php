@@ -366,8 +366,8 @@ class UserController implements ControllerProviderInterface
 			}
 		}
 
-		$entities = $app['repository.poem']->findPoemByUser($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $username, $this->getCurrentUser($app));
-		$iTotal = $app['repository.poem']->findPoemByUser($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $username, $this->getCurrentUser($app), true);
+		$entities = $app['repository.poem']->findPoemByUserAndAuhorType($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $username, $this->getCurrentUser($app), 'user');
+		$iTotal = $app['repository.poem']->findPoemByUserAndAuhorType($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $username, $this->getCurrentUser($app), 'user', true);
 
 		$output = array(
 			"sEcho" => $request->query->get('sEcho'),

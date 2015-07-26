@@ -28,7 +28,7 @@ class IndexController
 		// $test->setSubject("ok");
 		// $test->setSendTo("amatukami@hotmail.fr");
 		// $test->send();
-		
+
 		$form = $this->createForm($app, null);
 		$random = $app['repository.poem']->getRandomPoem();
 		
@@ -225,7 +225,7 @@ class IndexController
 			"iTotalDisplayRecords" => $iTotal,
 			"aaData" => array()
 		);
-		// die(var_dump($entities));
+
 		foreach($entities as $entity)
 		{
 			$row = array();
@@ -714,7 +714,7 @@ class IndexController
 	{
 		$id = $request->query->get("id");
 		
-		$entity = $app['repository.poem']->find($id, true);
+		$entity = $app['repository.poem']->find($id, false);
 		$entity->setState(2);
 		
 		$entity->setText(nl2br($entity->getText()));
@@ -722,7 +722,7 @@ class IndexController
 		$user = $app['repository.user']->findByUsernameOrEmail($user->getUsername());
 
 		$entity->setUser($user);
-		
+
 		$app['repository.poem']->save($entity, $id);
 		
 		return new Response();

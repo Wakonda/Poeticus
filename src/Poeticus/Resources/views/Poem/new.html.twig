@@ -7,7 +7,7 @@
 	<script type="text/javascript">
 		$(function()
 		{
-			$('.authorType_select').change(function()
+			$('#poem_authorType').change(function()
 			{
 				if($(this).val() == "user")
 				{
@@ -22,7 +22,7 @@
 					$("select#poem_user").val("");
 				}
 			});
-			$('.authorType_select').change();
+			$('#poem_authorType').change();
 			
 			$("input#poem_unknownReleasedDate").click(function()
 			{

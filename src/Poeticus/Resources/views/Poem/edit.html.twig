@@ -19,7 +19,7 @@
 				'image', 'video', 'file', 'table', 'link', '|', 'fontcolor', 'backcolor', '|', 'alignment', 'aligncenter', 'alignright', 'justify', '|', 'horizontalrule']
 			});
 			
-			$('.authorType_select').change(function()
+			$('#poem_authorType').change(function()
 			{
 				if($(this).val() == "user")
 				{
@@ -34,7 +34,7 @@
 					$("select#poem_user").val("");
 				}
 			});
-			$('.authorType_select').change();
+			$('#poem_authorType').change();
 			
 			function putReleasedDate(value, load)
 			{
