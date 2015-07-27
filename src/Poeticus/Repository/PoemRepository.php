@@ -190,6 +190,7 @@ class PoemRepository
 		   ->from("poem", "pf")
 		   ->where("pf.authorType = 'biography'")
 		   ->setMaxResults(7)
+		   ->andWhere("pf.state = 0")
 		   ->orderBy("pf.id", "DESC");
 		   
 		$dataArray = $qb->execute()->fetchAll();
@@ -217,7 +218,10 @@ class PoemRepository
 		$qb->select("*")
 		   ->from("poem", "pf")
 		   ->where("pf.id = :id")
-		   ->setParameter("id", $id);
+		   ->setParameter("id", $id)
+		   ->andWhere("pf.state = 0")
+		   ->andWhere("pf.authorType = :authorType")
+		   ->setParameter("authorType", "biography");
 
 		$result = $qb->execute()->fetch();
 		

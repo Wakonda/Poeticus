@@ -170,12 +170,40 @@ class PoemAdminController
 
 		if($form->isValid())
 		{
-			$content = file_get_html($req["url"]);
-			$title = $content->find('h1'); 
-			$text = $content->find('p[class=last]'); 
+			$url = $req["url"];
+			$url_array = parse_url($url);
+			
+			$content = file_get_html($url);
 
-			$entity->setTitle(utf8_encode(html_entity_decode($title[0]->plaintext)));
-			$entity->setText(str_replace(' class="last"', '', $text[0]->outertext));
+			if(base64_encode($url_array['host']) == 'd3d3LnBvZXNpZS53ZWJuZXQuZnI=')
+			{
+				$title = $content->find('h1'); 
+				$text = $content->find('p[class=last]'); 
+
+				$entity->setTitle((html_entity_decode($title[0]->plaintext)));
+				$entity->setText(str_replace(' class="last"', '', $text[0]->outertext));
+			}
+			elseif(base64_encode($url_array['host']) == 'd3d3LnBvZXNpZS1mcmFuY2Fpc2UuZnI=')
+			{
+				$title_node = $content->find('article h1');
+				$title_str = $title_node[0]->plaintext;
+				$title_array = explode(":", $title_str);
+				$title = trim($title_array[1]);
+				
+				$text_node = $content->find('div.postpoetique p');
+				$text_init = strip_tags($text_node[0]->plaintext, "<br><br /><br/>");
+				$text_array = explode("\n", $text_init);
+				$text = "";
+				
+				foreach($text_array as $line) {
+					$text = $text."<br>".trim($line);
+				}
+				$text = preg_replace('/^(<br>)+/', '', $text);
+				
+				$entity->setTitle($title);
+				$entity->setText($text);
+			}
+			
 			$entity->setAuthorType("biography");
 			
 			$id = $app['repository.poem']->save($entity);

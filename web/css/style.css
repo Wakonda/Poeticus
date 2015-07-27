@@ -386,6 +386,10 @@ table.form_grid th, table.form_grid td {
 	padding-bottom: 10px;
 }
 
+table.form_grid {
+	width: 98%;
+}
+
 form .full_width
 {
 	width: 100%;
