@@ -138,7 +138,7 @@
 		</tr>
 		<tr>
 			<th>{{ form_label(form.releasedDate) }}</th>
-			<td><div class="errors">{{ form_errors(form.releasedDate) }}</div>{{ form_widget(form.releasedDate) }}{{ form_widget(form.unknownReleasedDate) }}{{ form_label(form.unknownReleasedDate) }}</td>
+			<td><div class="errors">{{ form_errors(form.releasedDate) }}</div>{{ form_widget(form.releasedDate, {'attr':{'class':'year'}}) }} {{ form_widget(form.unknownReleasedDate) }} {{ form_label(form.unknownReleasedDate) }}</td>
 		</tr>
 	</table>
 	<hr />

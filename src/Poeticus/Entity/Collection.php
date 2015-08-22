@@ -40,6 +40,12 @@ class Collection
      */
     protected $biography;
 	
+	/**
+	 *
+	 * @var text
+	 */
+	protected $widgetProduct;
+	
     public function getId()
     {
         return $this->id;
@@ -98,5 +104,15 @@ class Collection
     public function setBiography($biography)
     {
         $this->biography = $biography;
+    }
+
+    public function getWidgetProduct()
+    {
+        return $this->widgetProduct;
+    }
+
+    public function setWidgetProduct($widgetProduct)
+    {
+        $this->widgetProduct = $widgetProduct;
     }
 }

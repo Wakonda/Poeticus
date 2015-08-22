@@ -31,7 +31,7 @@ class PoemFastType extends AbstractType
                 'constraints' => new Assert\NotBlank(), 'label' => 'URL', 'mapped' => false
             ))
 
-			->add('releasedDate', 'text', array(
+			->add('releasedDate', 'integer', array(
                 'label' => 'Date de publication'
             ))
 			

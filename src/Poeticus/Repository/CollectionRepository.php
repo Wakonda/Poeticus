@@ -27,7 +27,8 @@ class CollectionRepository
 		'text' => $entity->getText(),
 		'releasedDate' => $entity->getReleasedDate(),
 		'biography_id' => ($entity->getBiography() == 0) ? null : $entity->getBiography(),
-		'image' => $entity->getImage()
+		'image' => $entity->getImage(),
+		'widgetProduct' => $entity->getWidgetProduct()
 		);
 
 		if(empty($id))
@@ -93,6 +94,7 @@ class CollectionRepository
         $entity->setText($data['text']);
 		$entity->setReleasedDate($data['releasedDate']);
         $entity->setImage($data['image']);
+		$entity->setWidgetProduct($data['widgetProduct']);
 
 		if($show)
 		{
@@ -155,6 +157,9 @@ class CollectionRepository
 
 	public function checkForDoubloon($entity)
 	{
+		if($entity->getTitle() == null or $entity->getBiography() == null)
+			return 0;
+
 		$qb = $this->db->createQueryBuilder();
 
 		$qb->select("COUNT(*) AS number")

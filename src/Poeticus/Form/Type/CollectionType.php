@@ -30,7 +30,7 @@ class CollectionType extends AbstractType
 			->add('image', 'file', array('data_class' => null, "label" => "Image", "required" => false
             ))
 			
-			->add('releasedDate', 'text', array(
+			->add('releasedDate', 'integer', array(
                 'label' => 'Date de publication'
             ))
 			
@@ -45,6 +45,8 @@ class CollectionType extends AbstractType
 											'empty_value' => 'Choisissez une option',
 										    'choices' => $biographyArray
 											))
+			
+			->add('widgetProduct', 'textarea', array('required' => false, 'label' => 'Code produit'))
 			
             ->add('save', 'submit', array('label' => 'Sauvegarder'))
 			;

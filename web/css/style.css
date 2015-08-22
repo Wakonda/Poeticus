@@ -404,8 +404,16 @@ label.required:after
 textarea.text
 {
 	height: 228px;
-	width: 449px;
+	width: 100%;
 	resize:vertical;
+}
+
+input.year {
+	width: 85px !important;
+}
+
+input.day, input.month {
+	width: 65px !important;
 }
 
 /***** GENERIC CLASS **************/
@@ -417,6 +425,11 @@ button[type="submit"]
 .center
 {
 	text-align: center;
+}
+
+.center-iframe iframe{
+	display: block;
+    margin: 0 auto;
 }
 
 .underline

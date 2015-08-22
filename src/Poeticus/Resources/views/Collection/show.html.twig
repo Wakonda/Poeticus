@@ -25,6 +25,10 @@
 			<th>Auteur</th>
 			<td>{{ entity.biography|toString('title') }}</td>
 		</tr>
+		<tr>
+			<th>Code produit</th>
+			<td>{{ entity.widgetProduct|raw }}</td>
+		</tr>
 	</table>
 	<hr>
 	<a href="{{ path('collectionadmin_edit', { 'id' : entity.id }) }}">Modifier</a> - <a href="{{ path('collectionadmin_new') }}">Créer</a>

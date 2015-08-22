@@ -56,7 +56,7 @@
 		</tr>
 		<tr>
 			<th>{{ form_label(form.releasedDate) }}</th>
-			<td><div class="errors">{{ form_errors(form.releasedDate) }}</div>{{ form_widget(form.releasedDate) }}{{ form_widget(form.unknownReleasedDate) }}{{ form_label(form.unknownReleasedDate) }}</td>
+			<td><div class="errors">{{ form_errors(form.releasedDate) }}</div>{{ form_widget(form.releasedDate, {'attr':{'class':'year'}}) }} {{ form_widget(form.unknownReleasedDate) }} {{ form_label(form.unknownReleasedDate) }}</td>
 		</tr>
 		<tr>
 			<th>{{ form_label(form.image) }}</th>
@@ -65,6 +65,10 @@
 		<tr>
 			<th>{{ form_label(form.biography) }}</th>
 			<td><div class="errors">{{ form_errors(form.biography) }}</div>{{ form_widget(form.biography, {'attr':{'class':'full_width'}}) }}</td>
+		</tr>
+		<tr>
+			<th>{{ form_label(form.widgetProduct) }}</th>
+			<td><div class="errors">{{ form_errors(form.widgetProduct) }}</div>{{ form_widget(form.widgetProduct, {'attr':{'class':'text'}}) }}</td>
 		</tr>
 	</table>
 	<hr />

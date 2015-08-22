@@ -39,7 +39,7 @@ class PoemType extends AbstractType
 			->add('text', 'textarea', array(
                 'constraints' => new Assert\NotBlank(), 'attr' => array('class' => 'redactor'), 'label' => 'Texte'
             ))
-			->add('releasedDate', 'text', array(
+			->add('releasedDate', 'integer', array(
                 'label' => 'Date de publication'
             ))
 			

@@ -19,21 +19,21 @@
 				'image', 'video', 'file', 'table', 'link', '|', 'fontcolor', 'backcolor', '|', 'alignment', 'aligncenter', 'alignright', 'justify', '|', 'horizontalrule']
 			});
 			
-			$("input#poem_unknownReleasedDate").click(function()
+			$("input#{{ form.vars['id'] }}_unknownReleasedDate").click(function()
 			{
 				if($(this).is(":checked"))
-					$("#poem_releasedDate").val("");
+					$("#{{ form.vars['id'] }}_releasedDate").val("");
 			});
-			$("input#poem_unknownReleasedDate").click();
+			$("input#{{ form.vars['id'] }}_unknownReleasedDate").click();
 			
-			$("input#poem_releasedDate").keyup(function()
+			$("input#{{ form.vars['id'] }}_releasedDate").keyup(function()
 			{
 				if($(this).val() != "")
-					$("input#poem_unknownReleasedDate").prop('checked', false);
+					$("input#{{ form.vars['id'] }}_unknownReleasedDate").prop('checked', false);
 				else
-					$("input#poem_unknownReleasedDate").prop('checked', true);
+					$("input#{{ form.vars['id'] }}_unknownReleasedDate").prop('checked', true);
 			});
-			$("input#poem_releasedDate").keyup();
+			$("input#{{ form.vars['id'] }}_releasedDate").keyup();
 		});
 	</script>
 {% endblock %}
@@ -51,7 +51,7 @@
 		</tr>
 		<tr>
 			<th>{{ form_label(form.releasedDate) }}</th>
-			<td><div class="errors">{{ form_errors(form.releasedDate) }}</div>{{ form_widget(form.releasedDate) }}{{ form_widget(form.unknownReleasedDate) }}{{ form_label(form.unknownReleasedDate) }}</td>
+			<td><div class="errors">{{ form_errors(form.releasedDate) }}</div>{{ form_widget(form.releasedDate, {'attr':{'class':'year'}}) }} {{ form_widget(form.unknownReleasedDate) }} {{ form_label(form.unknownReleasedDate) }}</td>
 		</tr>
 		<tr>
 			<th>{{ form_label(form.image) }}</th>
@@ -60,6 +60,10 @@
 		<tr class="biography_row">
 			<th>{{ form_label(form.biography) }}</th>
 			<td><div class="errors">{{ form_errors(form.biography) }}</div>{{ form_widget(form.biography, {'attr':{'class':'full_width'}}) }}</td>
+		</tr>
+		<tr>
+			<th>{{ form_label(form.widgetProduct) }}</th>
+			<td><div class="errors">{{ form_errors(form.widgetProduct) }}</div>{{ form_widget(form.widgetProduct, {'attr':{'class':'text'}}) }}</td>
 		</tr>
 	</table>
 	<hr />
