@@ -496,6 +496,10 @@ article#contents header h1 img#flag_title
 	text-align: center;
 }
 
+.error_content {
+	text-align: left !important;
+}
+
 /****** USER ******/
 table#user
 {

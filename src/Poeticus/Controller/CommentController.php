@@ -26,9 +26,7 @@ class CommentController
 		$entity = new Comment();
         $form = $app['form.factory']->create(new CommentType(), $entity);
 		$form->handleRequest($request);
-		
-		
-		
+
 		if($form->isValid())
 		{
 			$user = $app['security']->getToken()->getUser();

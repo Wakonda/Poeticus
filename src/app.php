@@ -103,12 +103,12 @@ $app->error(function (\Exception $e, $code) use ($app) {
         default:
             $message = 'We are sorry, but something went terribly wrong.';
     }
+	// die("ok");
+	// $redirect = $app['url_generator']->generate('error', array('code' => $code));
 	
-				$redirect = $app['url_generator']->generate('error', array('code' => $code));
+	return $app['twig']->render('Index/error.html.twig', array('code' => $code, 'message' => $e->getMessage()));
 
-			return $app->redirect($redirect);
-
-    return new Response($message, $code);
+	return $app->redirect($redirect);
 });
 
 $app->before(function () use ($app) {

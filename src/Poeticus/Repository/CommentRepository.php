@@ -82,7 +82,7 @@ class CommentRepository
 
 	public function countAllComments()
 	{
-		$countRows = $this->db->executeQuery("SELECT COUNT(*) AS count FROM Comment");
+		$countRows = $this->db->executeQuery("SELECT COUNT(*) AS count FROM comment");
 		$result = $countRows->fetch();
 
 		return $result["count"];

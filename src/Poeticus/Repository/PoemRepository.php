@@ -32,7 +32,7 @@ class PoemRepository
         'user_id' => (!is_object($entity->getUser())) ? $entity->getUser() : $entity->getUser()->getId(),
         'country_id' => ($entity->getCountry() == 0) ? null : $entity->getCountry(),
         'collection_id' => ($entity->getCollection() == 0) ? null : $entity->getCollection(),
-		'state' => (empty($entity->getState())) ? 0 : $entity->getState()
+		'state' => ($entity->getState() == null) ? 0 : $entity->getState()
 		);
 
 		if(empty($id))
@@ -413,7 +413,7 @@ class PoemRepository
 	}
 	
     public function findPoemByCollection($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $count = false)
-    {
+    {die("ok");
 		$qb = $this->db->createQueryBuilder();
 
 		$aColumns = array( 'co.title', 'bp.title', 'COUNT(pf.id)');

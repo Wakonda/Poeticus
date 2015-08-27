@@ -35,11 +35,6 @@ class IndexController
         return $app['twig']->render('Index/index.html.twig', array('form' => $form->createView(), 'random' => $random));
     }
 	
-	public function errorAction(Request $request, Application $app, $code)
-	{
-		return $app['twig']->render('Index/error.html.twig', array('code' => $code));
-	}
-	
 	public function indexSearchAction(Request $request, Application $app)
 	{
 		$search = $request->request->get("index_search");
