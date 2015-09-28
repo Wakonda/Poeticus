@@ -416,6 +416,10 @@ input.day, input.month {
 	width: 65px !important;
 }
 
+input[type=search] {
+	border: solid 1px darkgrey;
+}
+
 /***** GENERIC CLASS **************/
 button[type="submit"]
 {
@@ -737,4 +741,15 @@ table.admin_show td, table.admin_show th {
     border: 1px solid black;
 	padding-left: 10px;
 	padding-right: 10px;
+}
+
+input[type="search"] {
+ -webkit-box-sizing: content-box;
+ -moz-box-sizing: content-box;
+ box-sizing: content-box;
+ -webkit-appearance: searchfield;
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+-webkit-appearance: searchfield-cancel-button;
 }

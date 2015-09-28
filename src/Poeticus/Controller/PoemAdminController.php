@@ -111,6 +111,8 @@ class PoemAdminController
 	public function editAction(Request $request, Application $app, $id)
 	{
 		$entity = $app['repository.poem']->find($id);
+		
+		$entity->setText(strip_tags($entity->getText()));
 		$form = $this->createForm($app, $entity);
 	
 		return $app['twig']->render('Poem/edit.html.twig', array('form' => $form->createView(), 'entity' => $entity));
@@ -129,6 +131,7 @@ class PoemAdminController
 		
 		if($form->isValid())
 		{
+			$entity->setText('<p>'.nl2br($entity->getText()).'</p>');
 			$id = $app['repository.poem']->save($entity, $id);
 
 			$redirect = $app['url_generator']->generate('poemadmin_show', array('id' => $id));

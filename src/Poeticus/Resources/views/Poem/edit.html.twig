@@ -3,22 +3,10 @@
 {% block head_title %}Admin Poésie{% endblock %}
 {% block main_title %}Administration - Poésie{% endblock %}
 
-{% block style_additional %}
-	<link rel="stylesheet" type="text/css" href="{{ app.request.basepath }}/js/redactor/css/redactor.css" />
-{% endblock %}
 {% block script_additional %}
-	<script src="{{ app.request.basepath }}/js/redactor/redactor.min.js"></script>
 	<script type="text/javascript">
 		$(function()
 		{
-			$('.redactor').redactor({
-				autoresize: false,
-				minHeight: 300,
-				buttons: ['html', '|', 'bold', 'italic', 'deleted', 'underline', '|',
-				'unorderedlist', 'orderedlist', 'outdent', 'indent', '|',
-				'image', 'video', 'file', 'table', 'link', '|', 'fontcolor', 'backcolor', '|', 'alignment', 'aligncenter', 'alignright', 'justify', '|', 'horizontalrule']
-			});
-			
 			$('#poem_authorType').change(function()
 			{
 				if($(this).val() == "user")
@@ -110,7 +98,7 @@
 		</tr>
 		<tr>
 			<th>{{ form_label(form.text) }}</th>
-			<td><div class="errors">{{ form_errors(form.text) }}</div>{{ form_widget(form.text) }}</td>
+			<td><div class="errors">{{ form_errors(form.text) }}</div>{{ form_widget(form.text, { 'attr' : { 'class' : 'text' }}) }}</td>
 		</tr>
 		<tr>
 			<th>{{ form_label(form.poeticform) }}</th>

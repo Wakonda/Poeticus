@@ -413,7 +413,7 @@ class PoemRepository
 	}
 	
     public function findPoemByCollection($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $count = false)
-    {die("ok");
+    {
 		$qb = $this->db->createQueryBuilder();
 
 		$aColumns = array( 'co.title', 'bp.title', 'COUNT(pf.id)');
