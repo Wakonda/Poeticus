@@ -186,4 +186,33 @@ class BiographyRepository
 		else
 			return $data[$field];
     }
+
+	// Combobox
+	public function getDatasCombobox($params, $count = false)
+	{
+		$qb = $this->db->createQueryBuilder();
+		
+		$params['offset']  = ($params['page_num'] - 1) * $params['per_page'];
+
+		$qb->select("b.id, b.title")
+		   ->from("biography", "b")
+		   ->where("b.title LIKE :title")
+		   ->setParameter("title", "%".implode(' ', $params['q_word'])."%")
+		   ->setMaxResults($params['per_page'])
+		   ->setFirstResult($params['offset'])
+		   ;
+		
+		if($count)
+		{
+			$qb->select("COUNT(b.id)")
+			   ->from("biography", "b")
+			   ->where("b.title LIKE :title")
+			   ->setParameter("title", "%".implode(' ', $params['q_word'])."%")
+			   ;
+			   
+			return $qb->execute()->fetchColumn();
+		}
+
+		return $qb->execute()->fetchAll();
+	}
 }

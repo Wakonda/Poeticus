@@ -70,6 +70,7 @@ class PoemType extends AbstractType
 											'empty_value' => 'Choisissez une option',
 										    'choices' => $userArray
 											))
+
 			->add('biography', 'choice', array(
 											'label' => 'Biographie', 
 											'multiple' => false, 
@@ -77,6 +78,7 @@ class PoemType extends AbstractType
 											'empty_value' => 'Choisissez une option',
 										    'choices' => $biographyArray
 											))
+											
 			->add('country', 'choice', array(
 											'label' => 'Pays', 
 											'multiple' => false, 

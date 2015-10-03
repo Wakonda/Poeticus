@@ -303,6 +303,9 @@ $app->get('/admin/poem/newfast', 'controllers.poemadmin:newFastAction')
 $app->post('/admin/poem/addfast', 'controllers.poemadmin:addFastAction')
     ->bind('poemadmin_addfast');
 
+$app->get('/admin/poem/get_biographies', 'controllers.poemadmin:getBiographiesByAjaxAction')
+	->bind('poemadmin_getbiographiesbyajax');
+
 // ADMIN CONTACT FORM
 $app->get('/admin/contact/index', 'controllers.contactadmin:indexAction')
     ->bind('contactadmin_index');

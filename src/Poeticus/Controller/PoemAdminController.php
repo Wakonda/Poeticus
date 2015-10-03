@@ -259,7 +259,6 @@ class PoemAdminController
 		if($id != "")
 		{
 			$entity = $app['repository.collection']->find($id);
-			// die(var_dump($entity));	
 			$finalArray = array("releasedDate" => $entity->getReleasedDate());
 		}
 		else
@@ -269,7 +268,7 @@ class PoemAdminController
 		$response->headers->set('Content-Type', 'application/json');
 		return $response;
 	}
-	
+
 	private function createForm($app, $entity)
 	{
 		$poeticForms = $app['repository.poeticform']->findAllForChoice();
