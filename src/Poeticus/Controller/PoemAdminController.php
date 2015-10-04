@@ -222,7 +222,7 @@ class PoemAdminController
 	public function listSelectedBiographyAction(Request $request, Application $app)
 	{
 		$id = $request->request->get("id");
-		
+
 		if($id != "")
 		{
 			$entity = $app['repository.biography']->find($id);
@@ -268,7 +268,60 @@ class PoemAdminController
 		$response->headers->set('Content-Type', 'application/json');
 		return $response;
 	}
+	
+	public function getBiographiesByAjaxAction(Request $request, Application $app)
+	{//die("llll");
+		$bdd = new \PDO('mysql:host=localhost;dbname=poeticus;charset=utf8', 'root', '');
+		// die(var_dump($_GET["pkey_val"]));
+		if(array_key_exists("pkey_val", $_GET)) {
+			 if(empty($_GET["pkey_val"]) or $_GET["pkey_val"] == 0)
+				 return json_encode(array());
+	$response = $bdd->query('SELECT id, title FROM biography WHERE id = '.$_GET["pkey_val"]);
+	$res = $response->fetch();
+	
+	$resObj = new \stdClass();
+	$resObj->id = $res["id"];
+	$resObj->name = $res["title"];
 
+	return json_encode($resObj);
+}
+
+$p = array(
+  'db_table'     => $_GET['db_table'],
+  'page_num'     => $_GET['page_num'],
+  'per_page'     => $_GET['per_page'],
+  'and_or'       => $_GET['and_or'],
+  'order_by'     => $_GET['order_by'],
+  'search_field' => $_GET['search_field'],
+  'q_word'       => $_GET['q_word']
+);
+
+$p['offset']  = ($p['page_num'] - 1) * $p['per_page'];
+
+
+
+$response = $bdd->query('SELECT id, title FROM biography WHERE title LIKE "%'.current($p['q_word']).'%" LIMIT '.$p['per_page'].' OFFSET '.$p['offset']);
+
+$count = $bdd->query('SELECT COUNT(*) FROM biography WHERE title LIKE "%'.current($p['q_word']).'%"');
+
+$r = array();
+$genericObject = new \stdClass();
+
+foreach($response->fetchAll() as $res) {
+	$obj = new \stdClass();
+	$obj->id = $res['id'];
+	$obj->name = $res['title'];
+	
+	$r[] = $obj;
+}
+
+$resObj = new \stdClass();
+$resObj->result = $r;
+$resObj->cnt_whole = $count->fetchColumn();
+
+return json_encode($resObj);
+	}
+	
 	private function createForm($app, $entity)
 	{
 		$poeticForms = $app['repository.poeticform']->findAllForChoice();
