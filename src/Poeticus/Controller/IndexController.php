@@ -621,6 +621,11 @@ class IndexController
 		return $app['twig']->render('Index/copyright.html.twig');
 	}
 	
+	public function cookieAction(Request $request, Application $app)
+	{
+		return $app['twig']->render('Index/cookie.html.twig');
+	}
+	
 	private function createForm($app, $entity)
 	{
 		$countryForms = $app['repository.country']->findAllForChoice();
