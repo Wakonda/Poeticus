@@ -15,9 +15,9 @@ class ContactType extends AbstractType
             ->add('mail', 'text', array('constraints' => array(new Assert\Email(), new Assert\NotBlank()), "label" => "Email"))
             ->add('subject', 'text', array('constraints' => new Assert\NotBlank(), "label" => "Sujet"))
 			->add('message', 'textarea', array(
-                'constraints' => new Assert\NotBlank(), "label" => "Texte", 'attr' => array('class' => 'redactor')
+                'constraints' => new Assert\NotBlank(), "label" => "Texte", 'attr' => array('class' => 'text')
             ))
-			->add('send', 'submit', array('label' => 'Envoyer'))
+			->add('send', 'submit', array('label' => 'Envoyer', 'attr' => array('class' => 'btn btn-success')))
 			;
     }
 

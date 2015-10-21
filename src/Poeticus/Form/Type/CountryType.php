@@ -19,7 +19,7 @@ class CountryType extends AbstractType
             ))
 			->add('flag', 'file', array('data_class' => null, "label" => "Drapeau", "required" => false
             ))
-            ->add('save', 'submit', array('label' => 'Sauvegarder'))
+            ->add('save', 'submit', array('label' => 'Sauvegarder', 'attr' => array('class' => 'btn btn-success')))
 			;
     }
 

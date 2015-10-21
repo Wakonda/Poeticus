@@ -64,7 +64,7 @@ class PoemFastType extends AbstractType
 										    'choices' => $collectionArray
 											))
 			
-            ->add('save', 'submit', array('label' => 'Ajouter'));
+            ->add('save', 'submit', array('label' => 'Ajouter', 'attr' => array('class' => 'btn btn-success')));
     }
 
     public function getName()

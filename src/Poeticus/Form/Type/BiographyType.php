@@ -42,7 +42,7 @@ class BiographyType extends AbstractType
 											'empty_value' => 'Choisissez une option',
 										    'choices' => $countryArray
 											))	
-            ->add('save', 'submit', array('label' => 'Sauvegarder'))
+            ->add('save', 'submit', array('label' => 'Sauvegarder', 'attr' => array('class' => 'btn btn-success')))
 			;
     }
 

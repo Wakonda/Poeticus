@@ -20,7 +20,7 @@ class UpdatePasswordType extends AbstractType
 				'second_options' => array('label' => 'Mot de passe (validation)'),
 			))
 			
-            ->add('save', 'submit', array('label' => 'Sauvegarder'));
+            ->add('save', 'submit', array('label' => 'Sauvegarder', 'attr' => array('class' => 'btn btn-success')));
     }
 
     public function getName()

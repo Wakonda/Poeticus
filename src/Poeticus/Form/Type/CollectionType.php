@@ -48,7 +48,7 @@ class CollectionType extends AbstractType
 			
 			->add('widgetProduct', 'textarea', array('required' => false, 'label' => 'Code produit'))
 			
-            ->add('save', 'submit', array('label' => 'Sauvegarder'))
+            ->add('save', 'submit', array('label' => 'Sauvegarder', 'attr' => array('class' => 'btn btn-success')))
 			;
     }
 

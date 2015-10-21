@@ -98,7 +98,7 @@ class PoemType extends AbstractType
 										    'choices' => $collectionArray
 											))
 			
-            ->add('save', 'submit', array('label' => 'Sauvegarder'));
+            ->add('save', 'submit', array('label' => 'Sauvegarder', 'attr' => array('class' => 'btn btn-success')));
     }
 
     public function getName()
