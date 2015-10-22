@@ -36,10 +36,13 @@
 
 {% block main_content %}
 	<p class="center">{{ ("photo/biography/"~entity.photo)|max_size_image(app.request.basepath) }}</p>
-	<div>
-		{{ entity.text|raw }}
+	<br>
+	{{ entity.text|raw }}
+	<table class="show">
 		{% if entity.dayBirth is not null or entity.monthBirth is not null or entity.yearBirth is not null %}
-			<span class="bold">Date de naissance : </span>
+			<tr>
+			<th><span class="bold">Date de naissance : </span></th>
+			<td>
 			{% if entity.dayBirth is not null and entity.monthBirth is not null and entity.yearBirth is not null %}
 				{{ entity.dayBirth~" "~entity.monthBirth|text_month~" "~entity.yearBirth }}
 			{% elseif entity.monthBirth is not null and entity.yearBirth is not null %}
@@ -47,10 +50,13 @@
 			{% else %}
 				{{ entity.yearBirth }}
 			{% endif %}
-			<br />
+			</td>
+			</tr>
 		{% endif %}
 		{% if entity.dayDeath is not null or entity.monthDeath is not null or entity.yearDeath is not null %}
-			<span class="bold">Date de décès : </span>
+			<tr>
+			<th><span class="bold">Date de décès : </span></th>
+			<td>
 			{% if entity.dayDeath is not null and entity.monthDeath is not null and entity.yearDeath is not null %}
 				{{ entity.dayDeath~" "~entity.monthDeath|text_month~" "~entity.yearDeath }}
 			{% elseif entity.monthDeath is not null and entity.yearDeath is not null %}
@@ -58,10 +64,11 @@
 			{% else %}
 				{{ entity.yearDeath }}
 			{% endif %}
+			</td>
+			</tr>
 		{% endif %}
-		<br>
-		<span class="bold">Nationalité : </span> {{ entity.country|toString('title') }}
-	</div>
+		<tr><th><span class="bold">Nationalité : </span></th><td>{{ entity.country|toString('title') }}</td></tr>
+	</table>
 	<hr>
 	<h3>Ses poésies</h3>
 		<table class="index_directories display">

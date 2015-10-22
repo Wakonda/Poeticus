@@ -759,3 +759,8 @@ div.ac_container div.ac_button img {
 	border: none !important;
 	width: auto !important;
 }
+
+/** Table Show **/
+table.show th {
+	padding-right: 10px;
+}

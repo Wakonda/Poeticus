@@ -54,7 +54,11 @@ class PoeticusExtension extends \Twig_Extension
 	
 	public function maxSizeImage($img, $basePath, array $options = null)
 	{
+		if(!file_exists($img))
+			return '<img src="'.$basePath.'/photo/640px-Starry_Night_Over_the_Rhone.jpg" alt="" style="max-width: 400px" />';
+		
 		$imageSize = getimagesize($img);
+
 		$width = $imageSize[0];
 		$height = $imageSize[1];
 		
