@@ -169,6 +169,10 @@ $app["controllers.poemadmin"] = $app -> share(function($app) {
     return new Poeticus\Controller\PoemAdminController();
 });
 
+$app["controllers.useradmin"] = $app -> share(function($app) {
+    return new Poeticus\Controller\UserAdminController();
+});
+
 $app["controllers.admin"] = $app -> share(function($app) {
     return new Poeticus\Controller\AdminController();
 });

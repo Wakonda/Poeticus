@@ -318,3 +318,16 @@ $app->get('/admin/contact/indexdatatables', 'controllers.contactadmin:indexDatat
 
 $app->get('/admin/contact/show/{id}', 'controllers.contactadmin:showAction')
     ->bind('contactadmin_show');
+	
+// ADMIN USER
+$app->get('/admin/user/index', 'controllers.useradmin:indexAction')
+    ->bind('useradmin_index');
+
+$app->get('/admin/user/indexdatatables', 'controllers.useradmin:indexDatatablesAction')
+    ->bind('useradmin_indexdatatables');
+
+$app->get('/admin/user/show/{id}', 'controllers.useradmin:showAction')
+    ->bind('useradmin_show');
+
+$app->get('/admin/user/enabled/{id}/{state}', 'controllers.useradmin:enabledAction')
+    ->bind('useradmin_enabled');
