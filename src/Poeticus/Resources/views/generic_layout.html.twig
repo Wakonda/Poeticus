@@ -32,6 +32,10 @@
 		
 		{% block style_additional %}
 		{% endblock %}
+		
+		<style>
+
+		</style>
 	</head>
 	<body>
 		<div class="resize"></div>
@@ -150,14 +154,26 @@
 		<!-- Div Wrapper Element ends Here -->
 		<script>
 			// Resize "aside" and "article" tags
-			$(function() {
+			function resizeAsideArticle() {
 				var articleHeight = $("article#contents").height();
 				var asideHeight = $("aside#sidebar-wrapper").height();
 
-				if(asideHeight > articleHeight)
-					$("article#contents").height(asideHeight);
-				else
-					$("aside#sidebar-wrapper").height(articleHeight);
+				if(asideHeight < articleHeight) {
+					$("article#contents").css("border-left", "1px solid #ccc");
+					$("aside").css("border-right", "none");
+				} else {
+					$("aside").css("border-right", "1px solid #ccc");
+					$("article#contents").css("border-left", "none");
+				}
+			}
+			
+			$(function() {
+				resizeAsideArticle();
+			});
+			
+			$( document ).ajaxComplete(function() {
+				resizeAsideArticle();
+
 			});
 		</script>
 	</body>
