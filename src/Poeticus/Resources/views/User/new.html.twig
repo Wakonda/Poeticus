@@ -55,6 +55,7 @@
 {% endblock %}
 
 {% block main_content %}
+{% form_theme form 'Form/fields.html.twig' %}
 <form action="{{ path('user_create') }}" method="post" {{ form_enctype(form) }} novalidate>
 	<table class="form_grid">
 		<tr>
@@ -101,7 +102,7 @@
 		</tr>
 	</table>
 	<hr />
-	{{ form_widget(form.save) }}
+	{{ form_widget(form.save, {'icon': 'fa-save'}) }}
 	{{ form_rest(form) }}
 </form>
 {% endblock %}

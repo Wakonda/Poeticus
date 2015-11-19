@@ -40,6 +40,7 @@
 	{{ ("photo/user/"~entity.avatar)|max_size_image(app.request.basepath) }}
 {% endif %}
 </p>
+{% form_theme form 'Form/fields.html.twig' %}
 <form action="{{ path('user_update', { 'id' : entity.id }) }}" method="post" {{ form_enctype(form) }} novalidate>
 	<table class="form_grid">
 		<tr>
@@ -72,7 +73,7 @@
 		</tr>
 	</table>
 	<hr />
-	{{ form_widget(form.save) }}
+	{{ form_widget(form.save, {'icon': 'fa-save'}) }}
 	{{ form_rest(form) }}
 </form>
 {% endblock %}

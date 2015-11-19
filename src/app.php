@@ -43,9 +43,8 @@ $app->register(new Silex\Provider\SecurityServiceProvider(), array(
 	'security.role_hierarchy' => $app['security.role_hierarchy'],
 	'security.access_rules' => $app['security.access_rules']
 ));
+
 $app->register(new Silex\Provider\RememberMeServiceProvider());
-
-
 
 $app->register(new Silex\Provider\TranslationServiceProvider(), array(
     'locale' => 'fr',
@@ -71,6 +70,8 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
     // 'twig.form.templates' => array('form_div_layout.html.twig', 'form_div_layout.html.twig'),
     'twig.path' => array(__DIR__ . '/Poeticus/Resources/views')
 ));
+
+
 
 $app['twig']->addGlobal("dev", 1);
 
@@ -196,6 +197,12 @@ $app["controllers.poemvote"] = $app -> share(function($app) {
 $app["controllers.comment"] = $app -> share(function($app) {
     return new Poeticus\Controller\CommentController();
 });
+
+$app['form.type.extensions'] = $app->share($app->extend('form.type.extensions', function ($extensions) use ($app) {
+    $extensions[] = new Poeticus\Form\Extension\ButtonTypeIconExtension();
+    return $extensions;
+}));
+
 
 // SwiftMailer
 // See http://silex.sensiolabs.org/doc/providers/swiftmailer.html

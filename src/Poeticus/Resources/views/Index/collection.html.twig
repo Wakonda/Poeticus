@@ -40,8 +40,16 @@
 	<p class="center">{{ ("photo/collection/"~entity.image)|max_size_image(app.request.basepath) }}</p>
 	<div>
 		{% set biography = entity.biography %}
-		<p><span class="bold underline">Auteur :</span> <a href="{{ path('author', { 'id' : biography['id'] }) }}" alt="">{{ biography['title'] }}</a></p>
-		<p><span class="bold underline">Date de publication :</span> {{ entity.releasedDate }}</p>
+		<table class="show">
+			<tr>
+				<th><span class="bold underline">Auteur :</span></th>
+				<td><a href="{{ path('author', { 'id' : biography['id'] }) }}" alt="">{{ biography['title'] }}</a></td>
+			</tr>
+			<tr>
+				<th><span class="bold underline">Date de publication :</span></th>
+				<td>{{ entity.releasedDate }}</td>
+			</tr>
+		</table>
 		{{ entity.text|raw }}
 	</div>
 	<hr>

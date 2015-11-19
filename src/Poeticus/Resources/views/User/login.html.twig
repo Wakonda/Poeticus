@@ -23,17 +23,17 @@
 			<table class="form_grid">
 				<tr>
 					<th><label for="username" class="required">Pseudo</label></th>
-					<td><input type="text" id="username" name="_username" value="{{ last_username }}" /></td>
+					<td><input type="text" id="username" name="_username" value="{{ last_username }}" class="form-control" /></td>
 				</tr>
 				<tr>
 					<th><label for="password" class="required">Mot de passe</label></th>
-					<td><input type="password" id="password" name="_password" value="" /></td>
+					<td><input type="password" id="password" name="_password" value="" class="form-control" /></td>
 				</tr>
 			</table>
 			<input type="checkbox" id="remember_me" name="_remember_me" value="on" />
 			<label for="remember_me">Se souvenir de moi</label>
 			<br>
-			<button type="submit" class="btn btn-info">Connection</button>
+			<button type="submit" class="btn btn-info"><i class="fa fa-sign-in"></i> Connection</button>
 			<a href="{{ path('user_forgottenpassword') }}" alt="">Mot de passe oublié ?</a>
 		</form>
 	{% endif %}

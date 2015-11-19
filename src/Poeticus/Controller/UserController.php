@@ -67,8 +67,6 @@ class UserController implements ControllerProviderInterface
 
 	public function newAction(Request $request, Application $app)
 	{
-		// $app['session']->set('user', 'dedede');
-		// die($app['session']->get('user'));
 		$entity = new User();
         $form = $this->createForm($app, $entity, false);
 
@@ -122,7 +120,6 @@ class UserController implements ControllerProviderInterface
 			$mailer->send();
 
 			return $app['twig']->render('User/confirmationInscription.html.twig', array('entity' => $entity));
-			// return $app->redirect($app['url_generator']->generate('user_show', array('id' => $id)));
 		}
 
 		return $app['twig']->render('User/new.html.twig', array('form' => $form->createView()));

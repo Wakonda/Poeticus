@@ -8,6 +8,7 @@
 		<link rel="stylesheet" type="text/css" href="{{ app.request.basepath }}/css/style.css" media="screen" />
 		<link rel="stylesheet" type="text/css" href="{{ app.request.basepath }}/css/style_print.css" media="print" />
 		<link rel="stylesheet" type="text/css" href="{{ app.request.basepath }}/css/bootstrap-3.3.2-dist/css/bootstrap.min.css" media="screen" />
+		<link rel="stylesheet" type="text/css" href="{{ app.request.basepath }}/css/font-awesome/css/font-awesome.min.css" />
 		
 		<script src="{{ app.request.basepath }}/js/jquery.js"></script>
 		<script src="{{ app.request.basepath }}/js/cookiechoices/cookiechoices.js"></script>
@@ -58,7 +59,7 @@
 
 				<!-- Nav Element Starts Here -->
 				<nav class="navigation">
-					<a href="{{ path('index') }}">Accueil</a>
+					<a href="{{ path('index') }}"><i class="fa fa-home"></i> Accueil</a>
 					<a href="{{ path('byauthors') }}">Auteurs</a>
 					<a href="{{ path('bycollections') }}">Recueils</a>
 					<a href="{{ path('bycountries') }}">Pays</a>
