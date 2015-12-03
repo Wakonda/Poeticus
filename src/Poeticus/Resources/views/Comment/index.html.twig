@@ -88,10 +88,13 @@
 {% if is_granted('IS_AUTHENTICATED_FULLY') == false and is_granted('IS_AUTHENTICATED_REMEMBERED') == false %}
 	Vous devez être connecté pour pouvoir écrire un commentaire
 {% endif %}
+{% form_theme form 'Form/fields.html.twig' %}
 <form action="" method="post" id="form_comment" novalidate>
 	<div class="error_message"></div>
 	{{ form_label(form.text) }}
 	{{ form_widget(form.text) }}
+	<br>
+	{{ form_widget(form.save, {'icon': 'fa-commenting'}) }}
 	{{ form_rest(form) }}
 </form>
 <br>

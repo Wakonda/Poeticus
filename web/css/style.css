@@ -218,9 +218,6 @@ content: '\201D';
 }
 #copyrights{
 	border-top:3px solid #CCC;border-bottom:3px solid #CCC;
-	/*background-color: #ffffab;
-	padding-left: 10px;
-	padding-bottom: 5px;*/
 }
 #copyrights p{ float:left; margin:10px 15px 0px 0px;}
 
@@ -403,17 +400,19 @@ label.required:after
 
 textarea.text
 {
-	height: 228px;
+	height: 228px !important;
 	width: 100%;
 	resize:vertical;
 }
 
 input.year {
 	width: 85px !important;
+	display: inherit;
 }
 
 input.day, input.month {
 	width: 65px !important;
+	display: inherit;
 }
 
 input[type=search] {

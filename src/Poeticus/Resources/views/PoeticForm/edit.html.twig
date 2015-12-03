@@ -26,11 +26,12 @@
 {% endblock %}
 
 {% block main_content %}
+{% form_theme form 'Form/fields.html.twig' %}
 <form action="{{ path('poeticformadmin_update', {'id' : entity.id }) }}" method="post" {{ form_enctype(form) }} novalidate>
 <table class="form_grid">
 		<tr>
 			<th>{{ form_label(form.title) }}</th>
-			<td><div class="errors">{{ form_errors(form.title) }}</div>{{ form_widget(form.title, {'attr':{'class':'full_width'}}) }}</td>
+			<td><div class="errors">{{ form_errors(form.title) }}</div>{{ form_widget(form.title, {'attr':{'class':'full_width form-control'}}) }}</td>
 		</tr>
 		<tr>
 			<th>{{ form_label(form.text) }}</th>
@@ -42,7 +43,7 @@
 		</tr>
 	</table>
 	<hr />
-	{{ form_widget(form.save) }}
+	{{ form_widget(form.save, {'icon': 'fa-save'}) }}
 	{{ form_rest(form) }}
 </form>
 
