@@ -9,15 +9,15 @@
 		<table class="form_grid">
 				<tr>
 					<th>{{ form_label(form.mail) }}</th>
-					<td><div class="errors">{{ form_errors(form.mail) }}</div>{{ form_widget(form.mail, {'attr':{'class':'full_width'}}) }}</td>
+					<td><div class="errors">{{ form_errors(form.mail) }}</div>{{ form_widget(form.mail, {'attr':{'class':'full_width form-control'}}) }}</td>
 				</tr>
 				<tr>
 					<th>{{ form_label(form.subject) }}</th>
-					<td><div class="errors">{{ form_errors(form.subject) }}</div>{{ form_widget(form.subject, {'attr':{'class':'full_width'}}) }}</td>
+					<td><div class="errors">{{ form_errors(form.subject) }}</div>{{ form_widget(form.subject, {'attr':{'class':'full_width form-control'}}) }}</td>
 				</tr>
 				<tr>
 					<th>{{ form_label(form.message) }}</th>
-					<td><div class="errors">{{ form_errors(form.message) }}</div>{{ form_widget(form.message) }}</td>
+					<td><div class="errors">{{ form_errors(form.message) }}</div>{{ form_widget(form.message, {'attr':{'class':'text form-control'}}) }}</td>
 				</tr>
 		</table>
 		{{ form_widget(form.send, {'icon': 'fa-send'}) }}

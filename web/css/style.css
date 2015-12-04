@@ -763,3 +763,14 @@ div.ac_container div.ac_button img {
 table.show th {
 	padding-right: 10px;
 }
+
+/** Publicité **/
+div.advert {
+	width: 100%;
+	margin-top: 20px;
+}
+
+/** Datatables **/
+.datatables-bt {
+	display: initial !important;
+}

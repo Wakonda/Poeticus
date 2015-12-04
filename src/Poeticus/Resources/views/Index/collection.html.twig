@@ -12,9 +12,10 @@
 {% block script_additional %}
 	<script src="{{ app.request.basepath }}/js/datatables-responsive-master/files/1.10/js/datatables.responsive.js"></script>
 	<script src="{{ app.request.basepath }}/js/DataTables-1.10.0/media/js/jquery.dataTables.js" type="text/javascript"></script>
+	<script src="{{ app.request.basepath }}/js/datatables.extension.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		$(function ()
-		{
+		{	
 			oTable = $('table.index_directories').dataTable( {
 				"oLanguage": {
 					"sUrl": "{{ app.request.basepath }}/js/DataTables-1.10.0/language/dataTables.fr.txt"
@@ -62,6 +63,8 @@
 		</tbody>
 	</table>
 	<hr>
-	<h3>Acheter ce recueil</h3>
-	<div class="center-iframe">{{ entity.widgetProduct|raw }}</div>
+	{% if entity.widgetProduct|raw is not null %}
+		<h3>Acheter ce recueil</h3>
+		<div class="center-iframe">{{ entity.widgetProduct|raw }}</div>
+	{% endif %}
 {% endblock %}

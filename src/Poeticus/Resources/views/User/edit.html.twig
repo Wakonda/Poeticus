@@ -45,11 +45,11 @@
 	<table class="form_grid">
 		<tr>
 			<th>{{ form_label(form.username) }}</th>
-			<td><div class="errors">{{ form_errors(form.username) }}</div>{{ form_widget(form.username) }}</td>
+			<td><div class="errors">{{ form_errors(form.username) }}</div>{{ form_widget(form.username, {'attr':{'class':'form-control'}}) }}</td>
 		</tr>
 		<tr>
 			<th>{{ form_label(form.email) }}</th>
-			<td><div class="errors">{{ form_errors(form.email) }}</div>{{ form_widget(form.email) }}</td>
+			<td><div class="errors">{{ form_errors(form.email) }}</div>{{ form_widget(form.email, {'attr':{'class':'form-control'}}) }}</td>
 		</tr>
 		<tr>
 			<th>{{ form_label(form.avatar) }}</th>
@@ -69,7 +69,7 @@
 		</tr>
 		<tr>
 			<th>{{ form_label(form.country) }}</th>
-			<td><div class="errors">{{ form_errors(form.country) }}</div>{{ form_widget(form.country) }}</td>
+			<td><div class="errors">{{ form_errors(form.country) }}</div>{{ form_widget(form.country, {'attr':{'class':'form-control'}}) }}</td>
 		</tr>
 	</table>
 	<hr />
