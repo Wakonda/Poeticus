@@ -1,0 +1,31 @@
+{% extends generic_layout %}
+
+{% block head_title %}Version{% endblock %}
+{% block main_title %}Version{% endblock %}
+
+{% block main_content %}
+	<p class="center"><img src="{{ app.request.basepath }}/photo/version.png" alt="" class="medium" /></p>
+	<div>
+		<table class="table table-bordered">
+			<thead>
+				<tr class="active">
+					<th>Version</th>
+					<th>Date de sortie</th>
+					<th>Lire</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>1.0</td>
+					<td>2014</td>
+					<td>-</td>
+				</tr>
+				<tr>
+					<td>1.1</td>
+					<td>1<sup>er</sup> décembre 2015</td>
+					<td><a href="{{ app.request.basepath }}/photo/version/poeticusv11.pdf" target="_blank">Lire</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+{% endblock %}
