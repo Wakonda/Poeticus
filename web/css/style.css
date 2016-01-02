@@ -155,6 +155,10 @@ article
 	border-radius:6px;
 	width:80%;
 }
+
+#contents img.medium {
+	width: 50% !important;
+}
 #contents h1{ padding:5px 0px;}
 
 #sidebar-wrapper {
@@ -422,6 +426,10 @@ input[type=search] {
 /***** GENERIC CLASS **************/
 button[type="submit"]
 {
+	cursor: pointer;
+}
+
+.pointer {
 	cursor: pointer;
 }
 

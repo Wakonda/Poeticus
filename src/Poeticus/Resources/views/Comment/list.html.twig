@@ -1,7 +1,7 @@
 
 {% for entity in entities %}
 	<div class="comment_header"><b>{{entity.user }}</b> - <i>le {{ entity.createdAt|date("d/m/Y à H:i:s") }}</i></div>
-	<div class="comment"><p>{{entity.text }}</p></div>
+	<div class="comment"><p>{{entity.text|raw }}</p></div>
 {% endfor %}
 
 {% if number_pages > 1 %}

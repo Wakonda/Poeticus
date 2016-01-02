@@ -61,7 +61,7 @@ class CommentController
 	
 	private function getParametersComment($request, $app)
 	{
-		$max_comment_by_page = 3;
+		$max_comment_by_page = 7;
 		$page = $request->query->get("page");
 		$totalComments = $app['repository.comment']->countAllComments();
 		$number_pages = ceil($totalComments / $max_comment_by_page);

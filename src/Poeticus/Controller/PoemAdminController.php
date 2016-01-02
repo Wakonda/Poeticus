@@ -175,10 +175,10 @@ class PoemAdminController
 		{
 			$url = $req["url"];
 			$url_array = parse_url($url);
-			
+
 			$content = file_get_html($url);
 
-			if(base64_encode($url_array['host']) == 'd3d3LnBvZXNpZS53ZWJuZXQuZnI=')
+			if(base64_encode($url_array['host']) == 'cG9lc2llLndlYm5ldC5mcg==')
 			{
 				$title = $content->find('h1'); 
 				$text = $content->find('p[class=last]'); 

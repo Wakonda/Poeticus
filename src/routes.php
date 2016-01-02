@@ -81,6 +81,9 @@ $app->get('/about', 'controllers.index:aboutAction')
 $app->get('/copyright', 'controllers.index:copyrightAction')
 	->bind('copyright');
 
+$app->get('/version', 'controllers.index:versionAction')
+    ->bind('version');
+
 $app->get('/cookie', 'controllers.index:cookieAction')
 	->bind('cookie');
 
