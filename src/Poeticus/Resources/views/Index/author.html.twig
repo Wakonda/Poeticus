@@ -68,7 +68,7 @@
 			</td>
 			</tr>
 		{% endif %}
-		<tr><th><span class="bold">Nationalité : </span></th><td>{{ entity.country|toString('title') }}</td></tr>
+		<tr><th><span class="bold">Nationalité : </span></th><td><img class="flag" src="{{ app.request.basepath }}/photo/country/{{ entity.country.flag }}" /> {{ entity.country|toString('title') }}</td></tr>
 	</table>
 	<hr>
 	<h3>Ses poésies</h3>

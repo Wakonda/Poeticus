@@ -38,14 +38,17 @@ class PoemFastType extends AbstractType
 			->add('unknownReleasedDate', 'checkbox', array(
                 'mapped' => false, 'label' => 'Date inconnue'
             ))
-			->add('biography', 'choice', array(
+            ->add('biography', 'text', array(
+                'label' => 'Biographie'
+            ))
+			/*->add('biography', 'choice', array(
 											'label' => 'Biographie', 
 											'multiple' => false, 
 											'expanded' => false,
 											'empty_value' => 'Choisissez une option',
 											'constraints' => array(new Assert\NotBlank()),
 										    'choices' => $biographyArray
-											))
+											))*/
 			->add('country', 'choice', array(
 											'label' => 'Pays', 
 											'multiple' => false, 

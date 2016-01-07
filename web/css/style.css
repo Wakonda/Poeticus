@@ -475,6 +475,7 @@ article#contents header h1 img#flag_title
 {
 	border: none !important;
 	width: auto !important;
+	max-width: 20px;
 	height: 13px;
 	margin-top: 0px;
 	border-radius: 0 !important;

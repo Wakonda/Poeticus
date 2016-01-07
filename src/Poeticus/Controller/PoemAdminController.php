@@ -112,7 +112,8 @@ class PoemAdminController
 	{
 		$entity = $app['repository.poem']->find($id);
 		
-		$entity->setText(strip_tags($entity->getText()));
+		$text = str_ireplace(array('<br>','<br/>','<br />'),"\r\n", $entity->getText());
+		$entity->setText(strip_tags($text));
 		$form = $this->createForm($app, $entity);
 	
 		return $app['twig']->render('Poem/edit.html.twig', array('form' => $form->createView(), 'entity' => $entity));

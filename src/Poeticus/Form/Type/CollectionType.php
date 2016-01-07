@@ -38,13 +38,17 @@ class CollectionType extends AbstractType
                 'mapped' => false, 'label' => 'Date inconnue'
             ))
 			
-			->add('biography', 'choice', array(
+			/*->add('biography', 'choice', array(
 											'label' => 'Biographie', 
 											'multiple' => false, 
 											'expanded' => false,
 											'empty_value' => 'Choisissez une option',
 										    'choices' => $biographyArray
-											))
+											))*/
+											
+            ->add('biography', 'text', array(
+                'label' => 'Biographie'
+            ))
 			
 			->add('widgetProduct', 'textarea', array('required' => false, 'label' => 'Code produit'))
 			

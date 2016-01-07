@@ -9,24 +9,11 @@
 
 {% block script_additional %}
 	<script src="{{ app.request.basepath }}/js/jquery.ajax-combobox-master/dist/jquery.ajax-combobox.js"></script>
+	<script src="{{ app.request.basepath }}/js/combobox.js"></script>
 	<script type="text/javascript">
 		$(function()
 		{
-			$('.combobox').ajaxComboBox(
-				'{{ path("poemadmin_getbiographiesbyajax") }}',
-				{
-					lang: 'fr',
-					db_table: 'biography',
-					per_page: 20,
-					navi_num: 10,
-					no_image: true,
-					init_record: $("#{{ form.vars['id'] }}_biography").val()
-				}
-			).bind('foo', function(e, is_enter_key) {
-				if(!is_enter_key) {
-					$("#{{ form.vars['id'] }}_biography").change();
-				}
-			});
+			setComboboxEdit('{{ path("poemadmin_getbiographiesbyajax") }}', 'biography', "#{{ form.vars['id'] }}_biography");
 		
 			$('#poem_authorType').change(function()
 			{

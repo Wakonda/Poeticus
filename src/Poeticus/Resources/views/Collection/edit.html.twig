@@ -5,12 +5,17 @@
 
 {% block style_additional %}
 	<link rel="stylesheet" type="text/css" href="{{ app.request.basepath }}/js/redactor/css/redactor.css" />
+	<link rel="stylesheet" type="text/css" href="{{ app.request.basepath }}/js/jquery.ajax-combobox-master/dist/jquery.ajax-combobox.css" media="screen" />
 {% endblock %}
 {% block script_additional %}
 	<script src="{{ app.request.basepath }}/js/redactor/redactor.min.js"></script>
+	<script src="{{ app.request.basepath }}/js/jquery.ajax-combobox-master/dist/jquery.ajax-combobox.js"></script>
+	<script src="{{ app.request.basepath }}/js/combobox.js"></script>
 	<script type="text/javascript">
 		$(function()
 		{
+			setComboboxEdit('{{ path("poemadmin_getbiographiesbyajax") }}', 'biography', "#{{ form.vars['id'] }}_biography");
+
 			$('.redactor').redactor({
 				autoresize: false,
 				minHeight: 300,
@@ -65,7 +70,7 @@
 		</tr>
 		<tr>
 			<th>{{ form_label(form.biography) }}</th>
-			<td><div class="errors">{{ form_errors(form.biography) }}</div>{{ form_widget(form.biography, {'attr':{'class':'full_width form-control'}}) }}</td>
+			<td><div class="errors">{{ form_errors(form.biography) }}</div>{{ form_widget(form.biography, {'attr':{'class':'full_width combobox'}}) }}</td>
 		</tr>
 		<tr>
 			<th>{{ form_label(form.widgetProduct) }}</th>
