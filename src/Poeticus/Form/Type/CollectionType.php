@@ -27,7 +27,7 @@ class CollectionType extends AbstractType
 			->add('text', 'textarea', array(
                 'constraints' => new Assert\NotBlank(), "label" => "Texte", 'attr' => array('class' => 'redactor')
             ))
-			->add('image', 'file', array('data_class' => null, "label" => "Image", "required" => false
+			->add('image', 'file', array('data_class' => null, "label" => "Image", "required" => true
             ))
 			
 			->add('releasedDate', 'integer', array(

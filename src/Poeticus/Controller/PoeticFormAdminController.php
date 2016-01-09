@@ -78,6 +78,9 @@ class PoeticFormAdminController
         $form = $app['form.factory']->create(new PoeticFormType(), $entity);
 		$form->handleRequest($request);
 
+		if($entity->getImage() == null)
+			$form->get("image")->addError(new FormError('Ce champ ne peut pas être vide'));
+		
 		if($form->isValid())
 		{
 			$image = uniqid()."_".$entity->getImage()->getClientOriginalName();

@@ -27,7 +27,7 @@ class BiographyType extends AbstractType
 			->add('text', 'textarea', array(
                 'constraints' => new Assert\NotBlank(), "label" => "Texte", 'attr' => array('class' => 'redactor')
             ))
-			->add('photo', 'file', array('data_class' => null, "label" => "Photo", "required" => false))
+			->add('photo', 'file', array('data_class' => null, "label" => "Photo", "required" => true))
 			->add('dayBirth', 'integer', array("label" => "Date de naissance", "required" => false))
 			->add('monthBirth', 'integer', array("label" => "", "required" => false))
 			->add('yearBirth', 'integer', array("label" => "", "required" => false))

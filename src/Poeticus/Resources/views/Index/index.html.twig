@@ -5,9 +5,12 @@
 {% block script_additional %}
 	<script src="{{ app.request.basepath }}/js/jquery-ui-1.11.0/jquery-ui.min.js"></script>	
 	<script src="{{ app.request.basepath }}/js/tag-it-master/js/tag-it.min.js"></script>
+
 	<script type="text/javascript">
 		$(function()
 		{
+			setComboboxNew('{{ path("poemadmin_getbiographiesbyajax") }}', 'biography', "#{{ form.vars['id'] }}_biography");
+		
 			$(".tagit").tagit({
 				allowSpaces: true
 			});

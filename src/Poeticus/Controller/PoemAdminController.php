@@ -184,7 +184,10 @@ class PoemAdminController
 				$title = $content->find('h1'); 
 				$text = $content->find('p[class=last]'); 
 
-				$entity->setTitle((html_entity_decode($title[0]->plaintext)));
+				$title = html_entity_decode($title[0]->plaintext);
+				$title = (preg_match('!!u', $title)) ? $title : utf8_encode($title);
+				
+				$entity->setTitle($title);
 				$entity->setText(str_replace(' class="last"', '', $text[0]->outertext));
 			}
 			elseif(base64_encode($url_array['host']) == 'd3d3LnBvZXNpZS1mcmFuY2Fpc2UuZnI=')
@@ -271,56 +274,51 @@ class PoemAdminController
 	}
 	
 	public function getBiographiesByAjaxAction(Request $request, Application $app)
-	{//die("llll");
-		$bdd = new \PDO('mysql:host=localhost;dbname=poeticus;charset=utf8', 'root', '');
-		// die(var_dump($_GET["pkey_val"]));
-		if(array_key_exists("pkey_val", $_GET)) {
-			 if(empty($_GET["pkey_val"]) or $_GET["pkey_val"] == 0)
-				 return json_encode(array());
-	$response = $bdd->query('SELECT id, title FROM biography WHERE id = '.$_GET["pkey_val"]);
-	$res = $response->fetch();
-	
-	$resObj = new \stdClass();
-	$resObj->id = $res["id"];
-	$resObj->name = $res["title"];
+	{
+		if($request->query->has("pkey_val")) {
+			if(empty($request->query->has("pkey_val")))
+				return json_encode(array());
 
-	return json_encode($resObj);
-}
+			$parameters = array("pkey_val" => $request->query->get("pkey_val"));
+			$response = $app['repository.biography']->getDatasCombobox($parameters);
+			
+			$resObj = new \stdClass();
+			$resObj->id = $response["id"];
+			$resObj->name = $response["title"];
 
-$p = array(
-  'db_table'     => $_GET['db_table'],
-  'page_num'     => $_GET['page_num'],
-  'per_page'     => $_GET['per_page'],
-  'and_or'       => $_GET['and_or'],
-  'order_by'     => $_GET['order_by'],
-  'search_field' => $_GET['search_field'],
-  'q_word'       => $_GET['q_word']
-);
+			return json_encode($resObj);
+		}
 
-$p['offset']  = ($p['page_num'] - 1) * $p['per_page'];
+		$parameters = array(
+		  'db_table'     => $request->query->get('db_table'),
+		  'page_num'     => $request->query->get('page_num'),
+		  'per_page'     => $request->query->get('per_page'),
+		  'and_or'       => $request->query->get('and_or'),
+		  'order_by'     => $request->query->get('order_by'),
+		  'search_field' => $request->query->get('search_field'),
+		  'q_word'       => $request->query->get('q_word')
+		);
 
+		$parameters['offset']  = ($parameters['page_num'] - 1) * $parameters['per_page'];
 
+		$response = $app['repository.biography']->getDatasCombobox($parameters);
+		$count = $app['repository.biography']->getDatasCombobox($parameters, true);
 
-$response = $bdd->query('SELECT id, title FROM biography WHERE title LIKE "%'.current($p['q_word']).'%" LIMIT '.$p['per_page'].' OFFSET '.$p['offset']);
+		$results = array();
 
-$count = $bdd->query('SELECT COUNT(*) FROM biography WHERE title LIKE "%'.current($p['q_word']).'%"');
+		foreach($response as $res) {
+			$obj = new \stdClass();
+			$obj->id = $res['id'];
+			$obj->name = $res['title'];
+			
+			$results[] = $obj;
+		}
 
-$r = array();
-$genericObject = new \stdClass();
+		$resObj = new \stdClass();
+		$resObj->result = $results;
+		$resObj->cnt_whole = $count;
 
-foreach($response->fetchAll() as $res) {
-	$obj = new \stdClass();
-	$obj->id = $res['id'];
-	$obj->name = $res['title'];
-	
-	$r[] = $obj;
-}
-
-$resObj = new \stdClass();
-$resObj->result = $r;
-$resObj->cnt_whole = $count->fetchColumn();
-
-return json_encode($resObj);
+		return json_encode($resObj);
 	}
 	
 	private function createForm($app, $entity)

@@ -79,6 +79,9 @@ class CollectionAdminController
 		$form->handleRequest($request);
 		
 		$this->checkForDoubloon($entity, $form, $app);
+		
+		if($entity->getImage() == null)
+			$form->get("image")->addError(new FormError('Ce champ ne peut pas être vide'));
 
 		if($form->isValid())
 		{

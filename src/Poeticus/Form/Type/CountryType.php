@@ -17,7 +17,7 @@ class CountryType extends AbstractType
 			->add('internationalName', 'text', array(
                 'constraints' => new Assert\NotBlank(), "label" => "Nom international", 'attr' => array('class' => 'redactor')
             ))
-			->add('flag', 'file', array('data_class' => null, "label" => "Drapeau", "required" => false
+			->add('flag', 'file', array('data_class' => null, "label" => "Drapeau", "required" => true
             ))
             ->add('save', 'submit', array('label' => 'Sauvegarder', 'attr' => array('class' => 'btn btn-success')))
 			;

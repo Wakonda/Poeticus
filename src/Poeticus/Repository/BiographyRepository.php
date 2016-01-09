@@ -127,13 +127,6 @@ class BiographyRepository
 		$dataArray = $qb->execute()->fetchAll();
 		
 		return $dataArray;
-		$entitiesArray = array();
-
-        foreach ($dataArray as $data) {
-            $entitiesArray[] = $this->build($data, true);
-        }
-			
-		return $entitiesArray;
 	}
 	
 	public function findAllForChoice()
@@ -191,6 +184,16 @@ class BiographyRepository
 	public function getDatasCombobox($params, $count = false)
 	{
 		$qb = $this->db->createQueryBuilder();
+		
+		if(array_key_exists("pkey_val", $params))
+		{
+			$qb->select("b.id, b.title")
+			   ->from("biography", "b")
+			   ->where('b.id = :id')
+			   ->setParameter('id', $params['pkey_val']);
+			   
+			return $qb->execute()->fetch();
+		}
 		
 		$params['offset']  = ($params['page_num'] - 1) * $params['per_page'];
 

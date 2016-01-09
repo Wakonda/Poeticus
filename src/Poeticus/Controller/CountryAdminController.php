@@ -50,7 +50,7 @@ class CountryAdminController
 			$row = array();
 			$row[] = $entity->getId();
 			$row[] = $entity->getTitle();
-			// die(var_dump($entity->getTitle()));
+
 			$show = $app['url_generator']->generate('countryadmin_show', array('id' => $entity->getId()));
 			$edit = $app['url_generator']->generate('countryadmin_edit', array('id' => $entity->getId()));
 			
@@ -78,6 +78,9 @@ class CountryAdminController
         $form = $app['form.factory']->create(new CountryType(), $entity);
 		$form->handleRequest($request);
 
+		if($entity->getFlag() == null)
+			$form->get("flag")->addError(new FormError('Ce champ ne peut pas être vide'));
+		
 		if($form->isValid())
 		{
 			$image = uniqid()."_".$entity->getFlag()->getClientOriginalName();
