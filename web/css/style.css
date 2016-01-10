@@ -443,19 +443,20 @@ button[type="submit"]
     margin: 0 auto;
 }
 
-.underline
-{
+.underline {
 	text-decoration: underline;
 }
 
-.italic
-{
+.italic {
 	font-style: italic;
 }
 
-.bold
-{
+.bold {
 	font-weight: bold;
+}
+
+.right {
+	float: right;
 }
 
 input:not([type='checkbox']) {
@@ -782,4 +783,16 @@ div.advert {
 /** Datatables **/
 .datatables-bt {
 	display: initial !important;
+}
+
+/** Poem Browsing **/
+div#poem_browsing {
+	font-size: 19px;
+}
+
+div#poem_browsing i {
+	vertical-align: middle;
+}
+div#poem_browsing a:hover {
+	text-decoration: none;
 }

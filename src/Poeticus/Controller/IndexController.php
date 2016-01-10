@@ -86,14 +86,29 @@ class IndexController
 
 		$response = new Response(json_encode($output));
 		$response->headers->set('Content-Type', 'application/json');
+
 		return $response;
 	}
 
 	public function readAction(Request $request, Application $app, $id)
 	{
 		$entity = $app['repository.poem']->find($id, true);
+		
+		$params = array();
+		
+		if($entity->isBiography()) {
+			$biography = $entity->getBiography();
+			$params["author"] = $biography['id'];
+			$params["field"] = "biography_id";
+		}
+		else {
+			$params["author"] = $app['repository.user']->findByName($entity->getUser())->getId();
+			$params["field"] = "user_id";			
+		}
 
-		return $app['twig']->render('Index/read.html.twig', array('entity' => $entity));
+		$browsingPoems = $app['repository.poem']->browsingPoemShow($params, $id);
+
+		return $app['twig']->render('Index/read.html.twig', array('entity' => $entity, 'browsingPoems' => $browsingPoems));
 	}
 
 	public function readPDFAction(Request $request, Application $app, $id)

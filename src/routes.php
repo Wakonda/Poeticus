@@ -110,7 +110,8 @@ $app->post('comment/create/{poemId}', 'controllers.comment:createAction')
 	->assert('poemId', '\d+')
 	->bind('comment_create');
 
-$app->get('comment/load', 'controllers.comment:loadCommentAction')
+$app->get('comment/load/{poemId}', 'controllers.comment:loadCommentAction')
+	->assert('poemId', '\d+')
 	->bind('comment_load');
 	
 // POEMVOTE

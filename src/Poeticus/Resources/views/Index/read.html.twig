@@ -47,8 +47,7 @@
 								text: data.alreadyVoted,
 								title: 'Erreur',
 							},
-							style: { classes: 'qtip-red' },
-							//hide: { when: 'inactive', delay: 3000 }
+							style: { classes: 'qtip-red' }
 						});
 						el.qtip("show");
 						setTimeout(function(){ el.qtip("hide"); }, 3000);
@@ -57,6 +56,27 @@
 			});
 			return false;
 		}
+		
+		$("#poem_browsing span#next_data a").qtip({
+			content: {
+				text: $('#poem_browsing span#next_data').data('navTitle'),
+				title: $('#poem_browsing span#next_data').data('navAction') + ' <i class="fa fa-arrow-circle-right"></i>'
+			},
+			position : {
+					my: 'top right',
+					at: 'bottom left'
+			},
+			style: { classes: 'qtip-tipped' }
+		});
+		
+		$("#poem_browsing span#previous_data a").qtip({
+			content: {
+				text: $('#poem_browsing span#previous_data').data('navTitle'),
+				title: '<i class="fa fa-arrow-circle-left"></i> ' + $('#poem_browsing span#previous_data').data('navAction')
+			},
+
+			style: { classes: 'qtip-tipped' }
+		});
 	});
 </script>
 {% endblock %}
@@ -94,12 +114,26 @@
 			</tr>
 		</tbody>
 	</table>
+
+	{% if(browsingPoems['previous'] is not empty or browsingPoems['next'] is not empty) %}
+		<hr>
+		<div id="poem_browsing">
+			{% if(browsingPoems['previous'] is not empty) %}
+				<span data-nav-action="Précédent" data-nav-title="{{ browsingPoems['previous']['title'] }}" id="previous_data"><a href="{{ path('read', {'id' : browsingPoems['previous']['id']}) }}"><i class="fa fa-arrow-circle-left"></i> Précédent</a></span>
+			{% endif %}
+			
+			{% if(browsingPoems['next'] is not empty) %}
+				<span data-nav-action="Suivant" data-nav-title="{{ browsingPoems['next']['title'] }}" class="right" id="next_data"><a href="{{ path('read', {'id' : browsingPoems['next']['id']}) }}">Suivant <i class="fa fa-arrow-circle-right"></i></a></span>
+			{% endif %}
+		</div>
+		<div style="clear: both;"></div>
+	{% endif %}
 	<hr>
 	<h2>Votes</h2>
 	<table id="poem_vote" class="hidden_print">
 		<tr>
 			<td>
-				<div  id="up_vote"data-vote="up" class="vote_action" >+</div>
+				<div id="up_vote"data-vote="up" class="vote_action" >+</div>
 			</td>
 			<td>
 				<progress id="avancement" value="50" max="100"></progress>

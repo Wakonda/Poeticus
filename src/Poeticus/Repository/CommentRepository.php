@@ -80,23 +80,31 @@ class CommentRepository
         return $entity;
     }
 
-	public function countAllComments()
+	public function countAllComments($poemId)
 	{
-		$countRows = $this->db->executeQuery("SELECT COUNT(*) AS count FROM comment");
-		$result = $countRows->fetch();
+		$qb = $this->db->createQueryBuilder();
+		
+		$qb->select("COUNT(*) AS count")
+		   ->from('comment', 'c')
+		   ->where('c.poem_id = :poemId')
+		   ->setParameter('poemId', $poemId);
+
+		$result = $qb->execute()->fetch();
 
 		return $result["count"];
 	}
 	
-	public function displayComments($max_comment_by_page, $first_message_to_display)
+	public function displayComments($poemId, $max_comment_by_page, $first_message_to_display)
 	{
 		$qb = $this->db->createQueryBuilder();
 
 		$qb->select("*")
-		   ->from("comment", "pf")
-			->setMaxResults($max_comment_by_page)
-			->setFirstResult($first_message_to_display)
-			->orderBy("created_at", "DESC");
+		   ->from("comment", "c")
+		   ->where('c.poem_id = :poemId')
+		   ->setParameter('poemId', $poemId)
+		   ->setMaxResults($max_comment_by_page)
+		   ->setFirstResult($first_message_to_display)
+		   ->orderBy("c.created_at", "DESC");
 
 		$dataArray = $qb->execute()->fetchAll();
 		$entitiesArray = array();

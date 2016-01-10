@@ -38,7 +38,7 @@
 			$.ajax(
 			{
 				type: "GET",
-				url: "{{ path('comment_load') }}?page=1",
+				url: "{{ path('comment_load', { poemId: poemId }) }}?page=1",
 				cache: false,
 				success: function(data)
 				{
@@ -52,7 +52,7 @@
 			$.ajax(
 			{
 				type: "GET",
-				url: "{{ path('comment_load') }}?page=" + $(this).data("followpage"),
+				url: "{{ path('comment_load', { poemId: poemId }) }}?page=" + $(this).data("followpage"),
 				cache: false,
 				success: function(data)
 				{

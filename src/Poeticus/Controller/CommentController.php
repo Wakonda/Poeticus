@@ -17,7 +17,7 @@ class CommentController
     {
 		$entity = new Comment();
         $form = $app['form.factory']->create(new CommentType(), $entity);
-		
+
         return $app['twig']->render('Comment/index.html.twig', array('poemId' => $poemId, 'form' => $form->createView()));
     }
 	
@@ -46,7 +46,7 @@ class CommentController
 		else
 			$error = "Ce champ ne doit pas être vide";	
 		
-		$params = $this->getParametersComment($request, $app);
+		$params = $this->getParametersComment($request, $app, $poemId);
 		
 		$response = new Response(json_encode(array("content" => $app['twig']->render('Comment/list.html.twig', $params), "error" => $error)));
 		$response->headers->set('Content-Type', 'application/json');
@@ -54,20 +54,20 @@ class CommentController
 		return $response;
 	}
 	
-	public function loadCommentAction(Request $request, Application $app)
+	public function loadCommentAction(Request $request, Application $app, $poemId)
 	{
-		return $app['twig']->render('Comment/list.html.twig', $this->getParametersComment($request, $app));
+		return $app['twig']->render('Comment/list.html.twig', $this->getParametersComment($request, $app, $poemId));
 	}
 	
-	private function getParametersComment($request, $app)
+	private function getParametersComment($request, $app, $poemId)
 	{
 		$max_comment_by_page = 7;
 		$page = $request->query->get("page");
-		$totalComments = $app['repository.comment']->countAllComments();
+		$totalComments = $app['repository.comment']->countAllComments($poemId);
 		$number_pages = ceil($totalComments / $max_comment_by_page);
 		$first_message_to_display = ($page - 1) * $max_comment_by_page;
 		
-		$entities = $app['repository.comment']->displayComments($max_comment_by_page, $first_message_to_display);
+		$entities = $app['repository.comment']->displayComments($poemId, $max_comment_by_page, $first_message_to_display);
 		
 		return array("entities" => $entities, "page" => $page, "number_pages" => $number_pages);
 	}

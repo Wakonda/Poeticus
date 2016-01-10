@@ -691,4 +691,34 @@ class PoemRepository
 
 		return $entitiesArray;
 	}
+	
+	public function browsingPoemShow($params, $poemId)
+	{
+		// Previous
+		$subqueryPrevious = 'p.id = (SELECT MAX(p2.id) FROM poem p2 WHERE p2.id < '.$poemId.')';
+		$qb_previous = $this->db->createQueryBuilder();
+		
+		$qb_previous->select("p.id, p.title")
+		   ->from("poem", "p")
+		   ->where('p.'.$params["field"].' = :biographyId')
+		   ->setParameter('biographyId', $params["author"])
+		   ->andWhere($subqueryPrevious);
+		   
+		// Next
+		$subqueryNext = 'p.id = (SELECT MIN(p2.id) FROM poem p2 WHERE p2.id > '.$poemId.')';
+		$qb_next = $this->db->createQueryBuilder();
+		
+		$qb_next->select("p.id, p.title")
+		   ->from("poem", "p")
+		   ->where('p.'.$params["field"].' = :biographyId')
+		   ->setParameter('biographyId', $params["author"])
+		   ->andWhere($subqueryNext);
+		
+		$res = array(
+			"previous" => $qb_previous->execute()->fetch(),
+			"next" => $qb_next->execute()->fetch()
+		);
+
+		return $res;
+	}
 }
