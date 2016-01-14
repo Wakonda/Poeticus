@@ -116,8 +116,8 @@
 	</table>
 
 	{% if(browsingPoems['previous'] is not empty or browsingPoems['next'] is not empty) %}
-		<hr>
-		<div id="poem_browsing">
+		<div id="poem_browsing" class="hidden_print">
+			<hr>
 			{% if(browsingPoems['previous'] is not empty) %}
 				<span data-nav-action="Précédent" data-nav-title="{{ browsingPoems['previous']['title'] }}" id="previous_data"><a href="{{ path('read', {'id' : browsingPoems['previous']['id']}) }}"><i class="fa fa-arrow-circle-left"></i> Précédent</a></span>
 			{% endif %}
@@ -128,32 +128,35 @@
 		</div>
 		<div style="clear: both;"></div>
 	{% endif %}
-	<hr>
-	<h2>Votes</h2>
-	<table id="poem_vote" class="hidden_print">
-		<tr>
-			<td>
-				<div id="up_vote"data-vote="up" class="vote_action" >+</div>
-			</td>
-			<td>
-				<progress id="avancement" value="50" max="100"></progress>
-			</td>
-			<td>
-				<div id="down_vote" data-vote="down" class="vote_action">-</div>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<span id="up_values">-</span>
-			</td>
-			<td>
+	
+	<div class="hidden_print">
+		<hr>
+		<h2>Votes</h2>
+		<table id="poem_vote">
+			<tr>
+				<td>
+					<div id="up_vote"data-vote="up" class="vote_action" >+</div>
+				</td>
+				<td>
+					<progress id="avancement" value="50" max="100"></progress>
+				</td>
+				<td>
+					<div id="down_vote" data-vote="down" class="vote_action">-</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<span id="up_values">-</span>
+				</td>
+				<td>
 
-			</td>
-			<td>
-				<span id="down_values">-</span>
-			</td>
-		</tr>
-	</table>
+				</td>
+				<td>
+					<span id="down_values">-</span>
+				</td>
+			</tr>
+		</table>
+	</div>
 	
 	{{ render(app.request.baseUrl ~ '/comment/' ~ entity.id) }}
 {% endblock %}

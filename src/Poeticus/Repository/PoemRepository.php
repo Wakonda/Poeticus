@@ -243,7 +243,7 @@ class PoemRepository
 		   ->where("pf.biography_id = :id")
 		   ->setParameter("id", $authorId)
 		   ->andWhere("(pf.collection_id = co.id OR pf.collection_id IS NULL)")
-		   ->groupBy("pf.id");
+		   ;
 		
 		if(!empty($sortDirColumn))
 		   $qb->orderBy($aColumns[$sortByColumn[0]], $sortDirColumn[0]);
@@ -257,11 +257,16 @@ class PoemRepository
 		if($count)
 		{
 			$qb->select("COUNT(*) AS count");
-			$results = $qb->execute()->fetchAll();
-			return $results[0]["count"];
+			$results = $qb->execute()->fetch();
+
+			return $results["count"];
 		}
 		else
-			$qb->setFirstResult($iDisplayStart)->setMaxResults($iDisplayLength);
+		{
+			$qb->groupBy("pf.id")
+			   ->setFirstResult($iDisplayStart)
+			   ->setMaxResults($iDisplayLength);
+		}
 
 		$dataArray = $qb->execute()->fetchAll();
 		$entitiesArray = array();
