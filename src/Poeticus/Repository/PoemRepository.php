@@ -618,9 +618,9 @@ class PoemRepository
 			$qb->andWhere("pf.id != :id")
 			   ->setParameter("id", $entity->getId());
 		}
-		$results = $qb->execute()->fetchAll();
+		$results = $qb->execute()->fetch();
 		
-		return $results[0]["number"];
+		return $results["number"];
 	}
 	
 	public function getStat()

@@ -171,8 +171,7 @@ class PoemAdminController
 
 		if(!empty($req["url"]) and !filter_var($req["url"], FILTER_VALIDATE_URL))
 			$form->get("url")->addError(new FormError('L\'URL ne semble pas être valide !'));
-
-		if($form->isValid())
+		else
 		{
 			$url = $req["url"];
 			$url_array = parse_url($url);
@@ -213,8 +212,13 @@ class PoemAdminController
 			
 			$entity->setAuthorType("biography");
 			
-			$id = $app['repository.poem']->save($entity);
+			if($app['repository.poem']->checkForDoubloon($entity) >= 1)
+				$form->get("url")->addError(new FormError('Cette entrée existe déjà !'));
+		}
 
+		if($form->isValid())
+		{
+			$id = $app['repository.poem']->save($entity);
 			$redirect = $app['url_generator']->generate('poemadmin_show', array('id' => $id));
 
 			return $app->redirect($redirect);
