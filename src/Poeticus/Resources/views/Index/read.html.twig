@@ -105,11 +105,46 @@
 	<table class="hidden_print">
 		<tbody>
 			<tr>
-				<td class="reseauSociaux">
+				<td class="socialNetwork">
 					<a href="{{ path('read_pdf', {'id' : entity.id}) }}"><img src="{{ app.request.basepath }}/photo/pdf.gif" alt="" /></a>
 				</td>
-				<td class="reseauSociaux">
+				<td class="socialNetwork">
 					<a id="print_page" href="#"><img src="{{ app.request.basepath }}/photo/print.gif" alt="" /></a>
+				</td>
+				<td class="socialNetwork" id="twitter">
+					<a href="https://twitter.com/share" class="twitter-share-button" data-via="Wakonda1" id="TwitterShareButton1">Tweet</a>
+					<script type="text/javascript">!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+					<script type="text/javascript">
+						$(function(){
+							var ValidMe=document.getElementById("TwitterShareButton1");
+							ValidMe.setAttribute("data-count","horizontal");
+							ValidMe.setAttribute("data-text", "Poéticus - {{ entity.title }}");
+						});
+					</script>
+				</td>
+				<td class="socialNetwork">
+					<div id="fb-root"></div>
+					<script type="text/javascript">(function(d, s, id) {
+					  var js, fjs = d.getElementsByTagName(s)[0];
+					  if (d.getElementById(id)) return;
+					  js = d.createElement(s); js.id = id;
+					  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+					  fjs.parentNode.insertBefore(js, fjs);
+					}(document, 'script', 'facebook-jssdk'));</script>
+					<div class="fb-like" data-send="true" data-layout="button_count" data-width="450" data-show-faces="true"></div>
+				</td>
+				<td class="socialNetwork" id="googlePlus">
+					<!-- Place this tag where you want the +1 button to render. -->
+					<div class="g-plusone" data-size="medium"></div>
+
+					<!-- Place this tag after the last +1 button tag. -->
+					<script type="text/javascript">
+					  (function() {
+						var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+						po.src = 'https://apis.google.com/js/plusone.js';
+						var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+					  })();
+					</script>
 				</td>
 			</tr>
 		</tbody>

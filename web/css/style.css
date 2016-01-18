@@ -796,3 +796,15 @@ div#poem_browsing i {
 div#poem_browsing a:hover {
 	text-decoration: none;
 }
+
+/** Social network **/
+td.socialNetwork {
+	padding-left: 5px;
+}
+
+td.socialNetwork#twitter {
+	padding-top: 7px;
+}
+td.socialNetwork#googlePlus {
+	padding-top: 6px;
+}
