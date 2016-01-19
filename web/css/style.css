@@ -365,7 +365,7 @@ width:80px;
 #logo{ font-family: Magneto, "Times New Roman", "Script MT Bold"; font-size: 60px; }
 
 /*** FORM ***/
-table.form_grid  tbody tr td div.errors ul
+table.form_grid  tbody tr td div.errors ul, div.errors ul
 {
 	list-style: none;
 	border: solid 1px red;
@@ -375,7 +375,7 @@ table.form_grid  tbody tr td div.errors ul
 	padding-right: 5px !important;
 }
 
-table.form_grid  tbody tr td div.errors ul li
+table.form_grid  tbody tr td div.errors ul li, div.errors ul li
 {
 	text-align: center;
 }
@@ -486,8 +486,10 @@ article#contents header h1 img#flag_title
 /********* SUCCES *************/
 .error, .success
 {
-	padding-left: 5px;
-	padding-right: 5px;
+	padding-left: 7px;
+	padding-right: 7px;
+	padding-top: 3px;
+	padding-bottom: 3px;
 	margin-bottom: 15px;
 }
 

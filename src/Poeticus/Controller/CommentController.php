@@ -27,11 +27,17 @@ class CommentController
         $form = $app['form.factory']->create(new CommentType(), $entity);
 		$form->handleRequest($request);
 
+		$user = $app['security']->getToken()->getUser();
+		
+		if(!empty($user) and is_object($user))
+			$user = $app['repository.user']->findByUsernameOrEmail($user->getUsername());
+		else
+		{
+			$form->get("text")->addError(new FormError('Vous devez être connecté pour pouvoir poster un commentaire'));
+		}
+
 		if($form->isValid())
 		{
-			$user = $app['security']->getToken()->getUser();
-			$user = $app['repository.user']->findByUsernameOrEmail($user->getUsername());
-			
 			$entity->setUser($user);
 			
 			$poem = $app['repository.poem']->find($poemId);
@@ -45,13 +51,10 @@ class CommentController
 		}
 		else
 			$error = "Ce champ ne doit pas être vide";	
-		
-		$params = $this->getParametersComment($request, $app, $poemId);
-		
-		$response = new Response(json_encode(array("content" => $app['twig']->render('Comment/list.html.twig', $params), "error" => $error)));
-		$response->headers->set('Content-Type', 'application/json');
 
-		return $response;
+		$params = $this->getParametersComment($request, $app, $poemId);
+
+		return $app['twig']->render('Comment/form.html.twig', array("form" => $form->createView(), "test" => "lll;;;"));
 	}
 	
 	public function loadCommentAction(Request $request, Application $app, $poemId)
