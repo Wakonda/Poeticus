@@ -39,6 +39,7 @@
 
 {% block main_content %}
 	<p class="center">{{ ("photo/collection/"~entity.image)|max_size_image(app.request.basepath) }}</p>
+	<br>
 	<div>
 		{% set biography = entity.biography %}
 		<table class="show">
@@ -51,6 +52,7 @@
 				<td>{{ entity.releasedDate }}</td>
 			</tr>
 		</table>
+		<br>
 		{{ entity.text|raw }}
 	</div>
 	<hr>

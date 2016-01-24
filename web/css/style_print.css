@@ -15,8 +15,6 @@ article {
 	font-style: italic;
 }
 
-.hidden_print, header#header, aside, footer {
-	display: none;
-
+.hidden_print, header#header, aside, footer, a.back-to-top {
+	display: none !important;
 }
-

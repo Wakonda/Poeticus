@@ -1,5 +1,10 @@
 <ul>
 	{% for entity in entities %}
-		<li><a href="{{ path('read', {'id' : entity.id}) }}" >{{ entity.title }}</a> ({{ entity.biography.title }})</li>
+		<li>
+			<a href="{{ path('read', {'id' : entity.id}) }}" >{{ entity.title }}</a>
+			<br>
+			<i class="fa fa-chevron-circle-right"></i> 
+			<span class="bold">{{ entity.biography.title }}</span>
+		</li>
 	{% endfor %}
 </ul>
