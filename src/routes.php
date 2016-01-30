@@ -93,6 +93,13 @@ $app->get('/admin', 'controllers.admin:indexAction')
 $app->get('/stat_poem', 'controllers.index:statPoemAction')
 	->bind('stat_poem');
 
+// SITEMAP
+$app->get('/sitemap.xml', 'controllers.sitemap:sitemapAction')
+    ->bind('sitemap');
+
+$app->get('/generate_sitemap', 'controllers.sitemap:generateAction')
+    ->bind('generate_sitemap');
+
 // CAPTCHA
 $app->get('/captcha', 'controllers.index:reloadCaptchaAction')
 	->bind('captcha');

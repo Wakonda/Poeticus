@@ -280,7 +280,9 @@ class PoemAdminController
 	public function getBiographiesByAjaxAction(Request $request, Application $app)
 	{
 		if($request->query->has("pkey_val")) {
-			if(empty($request->query->has("pkey_val")))
+			$pkeyVal = $request->query->has("pkey_val");
+			
+			if(empty($pkeyVal))
 				return json_encode(array());
 
 			$parameters = array("pkey_val" => $request->query->get("pkey_val"));

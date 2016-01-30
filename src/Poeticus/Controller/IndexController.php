@@ -22,6 +22,12 @@ class IndexController
 {
     public function indexAction(Request $request, Application $app)
     {
+		// Generate XML
+		// die(var_dump($app['routes']));
+		// $entity = $app['repository.poem']->findAll();
+		// die(var_dump($entity));
+		// die(var_dump($app['routes']->get('read')->compile()));
+
 		// test
 		// $test = new MailerPoeticus($app['swiftmailer.options']);
 		// $test->setBody("ok");

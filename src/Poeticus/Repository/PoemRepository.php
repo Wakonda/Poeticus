@@ -53,6 +53,24 @@ class PoemRepository
         return $data ? $this->build($data, $show) : null;
     }
 	
+    public function findAll($show = false)
+    {
+		$qb = $this->db->createQueryBuilder();
+
+		$qb->select("pf.*")
+		   ->from("poem", "pf");
+
+		$dataArray = $qb->execute()->fetchAll();
+
+		$entitiesArray = array();
+
+        foreach ($dataArray as $data) {
+            $entitiesArray[] = $this->build($data, true);
+        }
+
+        return $entitiesArray;
+    }
+	
     public function findByTable($id, $table, $field = null)
     {
 		if(empty($id))

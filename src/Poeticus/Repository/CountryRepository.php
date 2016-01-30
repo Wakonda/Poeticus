@@ -46,6 +46,24 @@ class CountryRepository
         return $data ? $this->build($data) : null;
     }
 	
+    public function findAll($show = false)
+    {
+		$qb = $this->db->createQueryBuilder();
+
+		$qb->select("co.*")
+		   ->from("country", "co");
+
+		$dataArray = $qb->execute()->fetchAll();
+
+		$entitiesArray = array();
+
+        foreach ($dataArray as $data) {
+            $entitiesArray[] = $this->build($data, true);
+        }
+
+        return $entitiesArray;
+    }
+	
 	public function getDatatablesForIndex($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $count = false)
 	{
 		$qb = $this->db->createQueryBuilder();

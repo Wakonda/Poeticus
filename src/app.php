@@ -3,8 +3,7 @@
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-// use Symfony\Component\ClassLoader\UniversalClassLoader;
-// $app->register(new Silex\Provider\SecurityServiceProvider());
+
 // Register service providers.
 $app->register(new Silex\Provider\ServiceControllerServiceProvider());
 
@@ -67,7 +66,6 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
         'cache' => isset($app['twig.options.cache']) ? $app['twig.options.cache'] : false,
         'strict_variables' => true,
     ),
-    // 'twig.form.templates' => array('form_div_layout.html.twig', 'form_div_layout.html.twig'),
     'twig.path' => array(__DIR__ . '/Poeticus/Resources/views')
 ));
 
@@ -85,11 +83,6 @@ $app['repository.poem'] = $app->share(function ($app) {
     return new Poeticus\Repository\PoemRepository($app['db']);
 });
 
-// Register custom services.
-$app['soundcloud'] = $app->share(function ($app) {
-    return new Poeticus\Service\SoundCloud();
-});
-
 // Register the error handler.
 $app->error(function (\Exception $e, $code) use ($app) {
 
@@ -104,12 +97,8 @@ $app->error(function (\Exception $e, $code) use ($app) {
         default:
             $message = 'We are sorry, but something went terribly wrong.';
     }
-	// die("ok");
-	// $redirect = $app['url_generator']->generate('error', array('code' => $code));
 	
 	return $app['twig']->render('Index/error.html.twig', array('code' => $code, 'message' => $e->getMessage()));
-
-	return $app->redirect($redirect);
 });
 
 $app->before(function () use ($app) {
@@ -198,11 +187,14 @@ $app["controllers.comment"] = $app -> share(function($app) {
     return new Poeticus\Controller\CommentController();
 });
 
+$app["controllers.sitemap"] = $app -> share(function($app) {
+	return new Poeticus\Controller\SitemapController();
+});
+
 $app['form.type.extensions'] = $app->share($app->extend('form.type.extensions', function ($extensions) use ($app) {
     $extensions[] = new Poeticus\Form\Extension\ButtonTypeIconExtension();
     return $extensions;
 }));
-
 
 // SwiftMailer
 // See http://silex.sensiolabs.org/doc/providers/swiftmailer.html
