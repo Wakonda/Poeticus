@@ -166,7 +166,7 @@ class CollectionRepository
 		   ->from("collection", "co")
 		   ->where("co.biography_id = :biographyId")
 		   ->setParameter("biographyId", $authorId)
-		   ->orderBy("biography_id", "ASC");
+		   ->orderBy("title", "ASC");
 
 		$results = $qb->execute()->fetchAll();
 		

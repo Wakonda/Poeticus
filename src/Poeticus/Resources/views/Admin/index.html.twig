@@ -3,6 +3,10 @@
 {% block head_title %}Administration{% endblock %}
 {% block main_title %}Administration{% endblock %}
 
+{% block meta_tag %}
+<meta name="robots" content="noindex,nofollow" />
+{% endblock %}
+
 {% block style_additional %}
 	<link rel="stylesheet" href="{{ app.request.basepath }}/js/DataTables-1.10.0/media/css/jquery.dataTables.css" type="text/css" media="screen" />
 {% endblock %}

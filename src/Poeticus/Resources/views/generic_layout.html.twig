@@ -4,6 +4,12 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="google-site-verification" content="mVbu4CCtykAXHkuZC4oxd330guO7Ci4ZwsFdirIo9MQ" />
+		<meta name="description" content="Poéticus est une encyclopédie francophone regroupant les plus beaux poèmes qui ont façonné l'univers féerique et passionnant de la littérature." />
+		<meta name="keywords" content="po&eacute;sie, po&egrave;me, litt&eacute;rature, vers, prose, po&egrave;te, recueil, ha&iuml;ku, art po&eacute;tique" />
+		{% block meta_tag %}
+		<meta name="robots" content="index,follow" />
+		{% endblock %}
+
 		<link rel="shortcut icon" href="http://poeticus.esy.es/photo/favicon.jpg">
 		<title>Poéticus - {% block head_title %}{% endblock %}</title>
 		<link rel="stylesheet" type="text/css" href="{{ app.request.basepath }}/css/style.css" media="screen" />
