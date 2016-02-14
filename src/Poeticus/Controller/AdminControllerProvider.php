@@ -29,10 +29,6 @@ class AdminControllerProvider implements ControllerProviderInterface
 			return $app['twig']->render('new.html.twig', array('form' => $form->createView()));
 		});
 
-		
-
-
         return $controllers;
     }
-
 }

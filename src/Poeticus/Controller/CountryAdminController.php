@@ -67,7 +67,7 @@ class CountryAdminController
     public function newAction(Request $request, Application $app)
     {
 		$entity = new Country();
-        $form = $app['form.factory']->create(new CountryType(), $entity);
+        $form = $app['form.factory']->create(CountryType::class, $entity);
 
 		return $app['twig']->render('Country/new.html.twig', array('form' => $form->createView()));
     }
@@ -75,7 +75,7 @@ class CountryAdminController
 	public function createAction(Request $request, Application $app)
 	{
 		$entity = new Country();
-        $form = $app['form.factory']->create(new CountryType(), $entity);
+        $form = $app['form.factory']->create(CountryType::class, $entity);
 		$form->handleRequest($request);
 
 		if($entity->getFlag() == null)
@@ -106,7 +106,7 @@ class CountryAdminController
 	public function editAction(Request $request, Application $app, $id)
 	{
 		$entity = $app['repository.country']->find($id);
-		$form = $app['form.factory']->create(new CountryType(), $entity);
+		$form = $app['form.factory']->create(CountryType::class, $entity);
 	
 		return $app['twig']->render('Country/edit.html.twig', array('form' => $form->createView(), 'entity' => $entity));
 	}
@@ -115,7 +115,7 @@ class CountryAdminController
 	{
 		$entity = $app['repository.country']->find($id);
 		$currentImage = $entity->getFlag();
-		$form = $app['form.factory']->create(new CountryType(), $entity);
+		$form = $app['form.factory']->create(CountryType::class, $entity);
 		$form->handleRequest($request);
 		
 		if($form->isValid())

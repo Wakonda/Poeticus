@@ -15,8 +15,7 @@ class SitemapController
     public function generateAction(Request $request, Application $app)
     {
 		$url_base = $request->getUriForPath("/");
-		
-		
+
 		$sg = new SitemapGenerator($url_base, array("image" => true));
 		
 		// Generic

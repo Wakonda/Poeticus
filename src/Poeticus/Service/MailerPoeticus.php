@@ -27,7 +27,6 @@ class MailerPoeticus
 	
 	public function send()
 	{
-		// die(var_dump($this->transport));
 		$mailer = \Swift_Mailer::newInstance($this->createTransport());
 
 		$message = \Swift_Message::newInstance()

@@ -23,9 +23,6 @@ class ComposerAutoloaderInitb27761b3d6fab86a98f01b6b53e13f58
         self::$loader = $loader = new \Composer\Autoload\ClassLoader();
         spl_autoload_unregister(array('ComposerAutoloaderInitb27761b3d6fab86a98f01b6b53e13f58', 'loadClassLoader'));
 
-        $vendorDir = dirname(__DIR__);
-        $baseDir = dirname($vendorDir);
-
         $map = require __DIR__ . '/autoload_namespaces.php';
         foreach ($map as $namespace => $path) {
             $loader->set($namespace, $path);
@@ -44,15 +41,19 @@ class ComposerAutoloaderInitb27761b3d6fab86a98f01b6b53e13f58
         $loader->register(true);
 
         $includeFiles = require __DIR__ . '/autoload_files.php';
-        foreach ($includeFiles as $file) {
-            composerRequireb27761b3d6fab86a98f01b6b53e13f58($file);
+        foreach ($includeFiles as $fileIdentifier => $file) {
+            composerRequireb27761b3d6fab86a98f01b6b53e13f58($fileIdentifier, $file);
         }
 
         return $loader;
     }
 }
 
-function composerRequireb27761b3d6fab86a98f01b6b53e13f58($file)
+function composerRequireb27761b3d6fab86a98f01b6b53e13f58($fileIdentifier, $file)
 {
-    require $file;
+    if (empty($GLOBALS['__composer_autoload_files'][$fileIdentifier])) {
+        require $file;
+
+        $GLOBALS['__composer_autoload_files'][$fileIdentifier] = true;
+    }
 }

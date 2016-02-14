@@ -6,39 +6,37 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class CollectionType extends AbstractType
 {
-	private $biographyArray;
-
-	public function __construct($biographyArray)
-	{
-		$this->biographyArray = $biographyArray;
-	}
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-		$biographyArray = $this->biographyArray;
+		$biographyArray = $options["biographies"];
 
         $builder
-            ->add('title', 'text', array(
+            ->add('title', TextType::class, array(
                 'constraints' => new Assert\NotBlank(), "label" => "Titre"
             ))
-			->add('text', 'textarea', array(
+			->add('text', Textarea::class, array(
                 'constraints' => new Assert\NotBlank(), "label" => "Texte", 'attr' => array('class' => 'redactor')
             ))
-			->add('image', 'file', array('data_class' => null, "label" => "Image", "required" => true
+			->add('image', FileType:class, array('data_class' => null, "label" => "Image", "required" => true
             ))
 			
-			->add('releasedDate', 'integer', array(
+			->add('releasedDate', IntegerType::class, array(
                 'label' => 'Date de publication'
             ))
 			
-			->add('unknownReleasedDate', 'checkbox', array(
+			->add('unknownReleasedDate', CheckboxType::class, array(
                 'mapped' => false, 'label' => 'Date inconnue'
             ))
 			
-			/*->add('biography', 'choice', array(
+			/*->add('biography', ChoiceType::class, array(
 											'label' => 'Biographie', 
 											'multiple' => false, 
 											'expanded' => false,
@@ -46,16 +44,26 @@ class CollectionType extends AbstractType
 										    'choices' => $biographyArray
 											))*/
 											
-            ->add('biography', 'text', array(
+            ->add('biography', TextType::class, array(
                 'label' => 'Biographie'
             ))
 			
-			->add('widgetProduct', 'textarea', array('required' => false, 'label' => 'Code produit'))
+			->add('widgetProduct', Textarea::class, array('required' => false, 'label' => 'Code produit'))
 			
-            ->add('save', 'submit', array('label' => 'Sauvegarder', 'attr' => array('class' => 'btn btn-success')))
+            ->add('save', SubmitType::class, array('label' => 'Sauvegarder', 'attr' => array('class' => 'btn btn-success')))
 			;
     }
 
+	/**
+	 * {@inheritdoc}
+	 */
+	public function configureOptions(OptionsResolver $resolver)
+	{
+		$resolver->setDefaults(array(
+			"biographies" => null
+		));
+	}
+	
     public function getName()
     {
         return 'collection';

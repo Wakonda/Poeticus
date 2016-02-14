@@ -92,6 +92,15 @@ $app->get('/admin', 'controllers.admin:indexAction')
 
 $app->get('/stat_poem', 'controllers.index:statPoemAction')
 	->bind('stat_poem');
+	
+// SEND POEM
+$app->get('send_poem/index/{poemId}', 'controllers.sendpoem:indexAction')
+	->assert('poemId', '\d+')
+	->bind('send_poem');
+
+$app->post('send_poem/send/{poemId}', 'controllers.sendpoem:sendAction')
+	->assert('poemId', '\d+')
+	->bind('send_poem_go');
 
 // SITEMAP
 $app->get('/sitemap.xml', 'controllers.sitemap:sitemapAction')

@@ -459,6 +459,10 @@ button[type="submit"]
 	float: right;
 }
 
+.displayNone {
+	display: none;
+}
+
 input:not([type='checkbox']) {
 	width: 100%;
 }

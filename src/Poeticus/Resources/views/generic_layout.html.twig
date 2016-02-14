@@ -10,7 +10,8 @@
 		<meta name="robots" content="index,follow" />
 		{% endblock %}
 
-		<link rel="shortcut icon" href="http://poeticus.esy.es/photo/favicon.jpg">
+		<link rel="shortcut icon" href="{{ app.request.getUriForPath('/') }}photo/favicon.jpg">
+		<link rel="alternate" href="{{ app.request.getUriForPath('/') }}" hreflang="fr-fr" />
 		<title>Poéticus - {% block head_title %}{% endblock %}</title>
 		<link rel="stylesheet" type="text/css" href="{{ app.request.basepath }}/css/style.css" media="screen" />
 		<link rel="stylesheet" type="text/css" href="{{ app.request.basepath }}/css/style_print.css" media="print" />

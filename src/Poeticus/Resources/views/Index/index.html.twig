@@ -24,7 +24,7 @@
 {% block main_content %}
 	<h2>Rechercher une poésie</h2>
 	{% form_theme form 'Form/fields.html.twig' %}
-	<form action="{{ path('index_search') }}" method="post" {{ form_enctype(form) }} novalidate>
+	{{ form_start(form, {'method' : 'post', 'action' : path('index_search') , 'attr': {'novalidate': 'novalidate'} }) }}
 		<table class="form_grid">
 				<tr>
 					<th>{{ form_label(form.title) }}</th>
@@ -54,7 +54,7 @@
 		<br>
 		{{ form_widget(form.search, {'icon': 'fa-search'}) }}
 		{{ form_rest(form) }}
-	</form>
+	{{ form_end(form) }}
 	<hr class="flare">
 	<h2>Poésie au hasard</h2>
 	{% if random is not null %}

@@ -655,7 +655,7 @@ class IndexController
 	private function createForm($app, $entity)
 	{
 		$countryForms = $app['repository.country']->findAllForChoice();
-		$form = $app['form.factory']->create(new IndexSearchType($countryForms), null);
+		$form = $app['form.factory']->create(IndexSearchType::class, null, array("countries" => $countryForms));
 		
 		return $form;
 	}
@@ -664,7 +664,7 @@ class IndexController
 	public function poemUserNewAction(Request $request, Application $app)
 	{
 		$entity = new Poem();
-		$form = $app['form.factory']->create(new PoemUserType(), null);
+		$form = $app['form.factory']->create(PoemUserType::class, null);
 
 		return $app['twig']->render("Index/poemUserNew.html.twig", array("form" => $form->createView()));
 	}
@@ -672,7 +672,7 @@ class IndexController
 	public function poemUserCreateAction(Request $request, Application $app)
 	{
 		$entity = new Poem();
-		$form = $app['form.factory']->create(new PoemUserType(), $entity);
+		$form = $app['form.factory']->create(PoemUserType::class, $entity);
 		$form->handleRequest($request);
 		
 		if(array_key_exists("draft", $request->request->get($form->getName())))
@@ -704,7 +704,7 @@ class IndexController
 	public function poemUserEditAction(Request $request, Application $app, $id)
 	{
 		$entity = $app['repository.poem']->find($id, true);
-		$form = $app['form.factory']->create(new PoemUserType(), $entity);
+		$form = $app['form.factory']->create(PoemUserType::class, $entity);
 
 		return $app['twig']->render("Index/poemUserEdit.html.twig", array("form" => $form->createView(), "entity" => $entity));
 	}

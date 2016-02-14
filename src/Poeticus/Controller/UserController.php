@@ -176,7 +176,7 @@ class UserController implements ControllerProviderInterface
 	public function updatePasswordAction(Request $request, Application $app)
 	{
 		$entity = $app['repository.user']->findByName($this->getCurrentUser($app)->getUsername(), false);
-		$form = $app['form.factory']->create(new UpdatePasswordType(), $entity);
+		$form = $app['form.factory']->create(UpdatePasswordType::class, $entity);
 		
 		return $app['twig']->render('User/updatepassword.html.twig', array('form' => $form->createView(), 'entity' => $entity));
 	}
@@ -184,7 +184,7 @@ class UserController implements ControllerProviderInterface
 	public function updatePasswordSaveAction(Request $request, Application $app)
 	{
 		$entity = $app['repository.user']->findByName($this->getCurrentUser($app)->getUsername(), false);
-        $form = $app['form.factory']->create(new UpdatePasswordType(), $entity);
+        $form = $app['form.factory']->create(UpdatePasswordType::class, $entity);
 		$form->handleRequest($request);
 
 		if($form->isValid())
@@ -207,14 +207,14 @@ class UserController implements ControllerProviderInterface
 	
 	public function forgottenPasswordAction(Request $request, Application $app)
 	{
-		$form = $app['form.factory']->create(new ForgottenPasswordType(), null);
+		$form = $app['form.factory']->create(ForgottenPasswordType::class, null);
 	
 		return $app['twig']->render('User/forgottenpassword.html.twig', array('form' => $form->createView()));
 	}
 	
 	public function forgottenPasswordSendAction(Request $request, Application $app)
 	{
-        $form = $app['form.factory']->create(new ForgottenPasswordType(), null);
+        $form = $app['form.factory']->create(ForgottenPasswordType::class, null);
 		$form->handleRequest($request);
 	
 		$formArray = $request->request->get("forgottenpassword");
@@ -271,7 +271,7 @@ class UserController implements ControllerProviderInterface
 	private function createForm($app, $entity, $ifEdit)
 	{
 		$countryForms = $app['repository.country']->findAllForChoice();
-		$form = $app['form.factory']->create(new UserType($countryForms, $ifEdit), $entity);
+		$form = $app['form.factory']->create(UserType::class, $entity, array('countries' => $countryForms, 'edit' => $ifEdit));
 		
 		return $form;
 	}

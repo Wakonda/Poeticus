@@ -5,6 +5,8 @@ namespace Poeticus\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class PoemUserType extends AbstractType
 {
@@ -15,15 +17,15 @@ class PoemUserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', 'text', array(
+            ->add('title', TextType::class, array(
                 'constraints' => new Assert\NotBlank(), 'label' => 'Titre'
             ))
-			->add('text', 'textarea', array(
+			->add(TextType::class, 'textarea', array(
                 'constraints' => new Assert\NotBlank(), 'attr' => array('class' => 'redactor'), 'label' => 'Texte'
             ))
 			
-            ->add('save', 'submit', array('label' => 'Sauvegarder', 'attr' => array('class' => 'btn btn-success')))
-            ->add('draft', 'submit', array('label' => 'Brouillon', 'attr' => array('class' => 'btn btn-primary')));
+            ->add('save', SubmitType::class, array('label' => 'Sauvegarder', 'attr' => array('class' => 'btn btn-success')))
+            ->add('draft', SubmitType::class, array('label' => 'Brouillon', 'attr' => array('class' => 'btn btn-primary')));
     }
 
     public function getName()

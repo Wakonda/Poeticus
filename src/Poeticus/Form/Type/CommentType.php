@@ -6,16 +6,18 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class CommentType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('text', 'textarea', array(
+            ->add('text', TextareaType::class, array(
                 'constraints' => new Assert\NotBlank(), 'label' => 'Message'
             ))		
-            ->add('save', 'submit', array('label' => 'Envoyer', 'attr' => array('class' => 'btn btn-success')));
+            ->add('save', SubmitType::class, array('label' => 'Envoyer', 'attr' => array('class' => 'btn btn-success')));
     }
 
     public function getName()

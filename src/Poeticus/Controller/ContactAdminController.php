@@ -63,6 +63,7 @@ class ContactAdminController
 
 		$response = new Response(json_encode($output));
 		$response->headers->set('Content-Type', 'application/json');
+
 		return $response;
 	}
 	

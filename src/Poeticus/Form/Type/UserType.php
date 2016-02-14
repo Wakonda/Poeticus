@@ -6,59 +6,59 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class UserType extends AbstractType
 {
-	private $countryArray;
-	private $ifEdit;
-
-	public function __construct($countryArray, $ifEdit)
-	{
-		$this->countryArray = $countryArray;
-		$this->ifEdit = $ifEdit;
-	}
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-		$countryArray = $this->countryArray;
+		$countryArray = $options['countries'];
+		$ifEdit = $options['edit'];
 
         $builder
-            ->add('username', 'text', array(
+            ->add('username', TextType::class, array(
                 'constraints' => new Assert\NotBlank(), 'label' => 'Pseudo'
             ))
 
-            ->add('email', 'email', array(
+            ->add('email', EmailType::class, array(
                 'constraints' => new Assert\NotBlank(), 'label' => 'Email'
             ))
 
-			->add('avatar', 'file', array(
+			->add('avatar', FileType::class, array(
                 'data_class' => null, 'label' => 'Avatar', 'required' => false
             ))
 
-			->add('gravatar', 'hidden', array(
+			->add('gravatar', HiddenType::class, array(
                 'label' => 'Avatar', 'required' => false
             ))
 			
-			->add('presentation', 'textarea', array(
+			->add('presentation', TextareaType::class, array(
                 'constraints' => new Assert\NotBlank(), 'label' => 'Présentation'
             ))
 			
-			->add('country', 'choice', array(
+			->add('country', ChoiceType::class, array(
 											'label' => 'Pays', 
 											'multiple' => false, 
 											'expanded' => false,
 											'constraints' => array(new Assert\NotBlank()),
-											'empty_value' => 'Choisissez une option',
+											'placeholder' => 'Choisissez une option',
 										    'choices' => $countryArray
 											))
 			
 			
-            ->add('save', 'submit', array('label' => 'Sauvegarder', "attr" => array("class" => "btn btn-success")));
+            ->add('save', SubmitType::class, array('label' => 'Sauvegarder', "attr" => array("class" => "btn btn-success")));
 			
 		if(!$this->ifEdit)
 		{
 			$builder
-				->add('password', 'repeated', array(
+				->add('password', RepeatedType::class, array(
 					'label' => 'Mot de passe',
 					'type' => 'password',
 					'invalid_message' => 'Les mots de passe doivent correspondre',
@@ -67,11 +67,22 @@ class UserType extends AbstractType
 					'first_options'  => array('label' => 'Mot de passe'),
 					'second_options' => array('label' => 'Mot de passe (validation)'),
 				))
-				->add('captcha', 'text', array('label' => 'Recopiez le mot contenu dans l\'image', "mapped" => false, "attr" => array("class" => "captcha_word"), 'constraints' => new Assert\NotBlank()))
+				->add('captcha', TextType::class, array('label' => 'Recopiez le mot contenu dans l\'image', "mapped" => false, "attr" => array("class" => "captcha_word"), 'constraints' => new Assert\NotBlank()))
 			;
 		}
     }
 
+	/**
+	 * {@inheritdoc}
+	 */
+	public function configureOptions(OptionsResolver $resolver)
+	{
+		$resolver->setDefaults(array(
+			"edit" => null,
+			"countries" => null
+		));
+	}
+	
     public function getName()
     {
         return 'user';

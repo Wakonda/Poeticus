@@ -16,7 +16,7 @@ class CommentController
     public function indexAction(Request $request, Application $app, $poemId)
     {
 		$entity = new Comment();
-        $form = $app['form.factory']->create(new CommentType(), $entity);
+        $form = $app['form.factory']->create(CommentType::class, $entity);
 
         return $app['twig']->render('Comment/index.html.twig', array('poemId' => $poemId, 'form' => $form->createView()));
     }
@@ -24,7 +24,7 @@ class CommentController
 	public function createAction(Request $request, Application $app, $poemId)
 	{
 		$entity = new Comment();
-        $form = $app['form.factory']->create(new CommentType(), $entity);
+        $form = $app['form.factory']->create(CommentType::class, $entity);
 		$form->handleRequest($request);
 
 		$user = $app['security']->getToken()->getUser();

@@ -6,69 +6,75 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class PoemFastType extends AbstractType
 {
-	private $biographyArray;
-	private $countryArray;
-	private $collectionArray;
-
-	public function __construct($biographyArray, $countryArray, $collectionArray)
-	{
-		$this->biographyArray = $biographyArray;
-		$this->countryArray = $countryArray;
-		$this->collectionArray = $collectionArray;
-	}
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-		$biographyArray = $this->biographyArray;
-		$countryArray = $this->countryArray;
-		$collectionArray = $this->collectionArray;
+		$biographyArray = $options['biographies'];
+		$countryArray = $options['countries'];
+		$collectionArray = $options['collections'];
 
         $builder
-			->add('url', 'text', array(
+			->add('url', TextType::class, array(
                 'constraints' => new Assert\NotBlank(), 'label' => 'URL', 'mapped' => false
             ))
 
-			->add('releasedDate', 'integer', array(
+			->add('releasedDate', IntegerType::class, array(
                 'label' => 'Date de publication'
             ))
 			
-			->add('unknownReleasedDate', 'checkbox', array(
+			->add('unknownReleasedDate', CheckboxType::class, array(
                 'mapped' => false, 'label' => 'Date inconnue'
             ))
-            ->add('biography', 'text', array(
+            ->add('biography', TextType::class, array(
                 'label' => 'Biographie'
             ))
-			/*->add('biography', 'choice', array(
+			/*->add('biography', ChoiceType::class, array(
 											'label' => 'Biographie', 
 											'multiple' => false, 
 											'expanded' => false,
-											'empty_value' => 'Choisissez une option',
+											'placeholder' => 'Choisissez une option',
 											'constraints' => array(new Assert\NotBlank()),
 										    'choices' => $biographyArray
 											))*/
-			->add('country', 'choice', array(
+			->add('country', ChoiceType::class, array(
 											'label' => 'Pays', 
 											'multiple' => false, 
 											'expanded' => false,
 											'constraints' => array(new Assert\NotBlank()),
-											'empty_value' => 'Choisissez une option',
+											'placeholder' => 'Choisissez une option',
 										    'choices' => $countryArray
 											))
 											
-			->add('collection', 'choice', array(
+			->add('collection', ChoiceType::class, array(
 											'label' => 'Recueil', 
 											'multiple' => false,
 											'required' => false,
 											'expanded' => false,
-											'empty_value' => 'Choisissez une option',
+											'placeholder' => 'Choisissez une option',
 										    'choices' => $collectionArray
 											))
 			
-            ->add('save', 'submit', array('label' => 'Ajouter', 'attr' => array('class' => 'btn btn-success')));
+            ->add('save', SubmitType::class, array('label' => 'Ajouter', 'attr' => array('class' => 'btn btn-success')));
     }
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function configureOptions(OptionsResolver $resolver)
+	{
+		$resolver->setDefaults(array(
+			"biographies" => null,
+			"countries" => null,
+			"collections" => null
+		));
+	}
 
     public function getName()
     {

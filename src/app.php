@@ -14,6 +14,7 @@ $app->register(new Silex\Provider\ValidatorServiceProvider());
 $app->register(new Silex\Provider\UrlGeneratorServiceProvider());
 $app->register(new Silex\Provider\TranslationServiceProvider());
 $app->register(new Silex\Provider\SwiftmailerServiceProvider());
+$app->register(new Silex\Provider\HttpFragmentServiceProvider());
 // 
 
 $app['security.role_hierarchy'] = array(
@@ -191,6 +192,10 @@ $app["controllers.sitemap"] = $app -> share(function($app) {
 	return new Poeticus\Controller\SitemapController();
 });
 
+$app["controllers.sendpoem"] = $app -> share(function($app) {
+	return new Poeticus\Controller\SendPoemController();
+});
+
 $app['form.type.extensions'] = $app->share($app->extend('form.type.extensions', function ($extensions) use ($app) {
     $extensions[] = new Poeticus\Form\Extension\ButtonTypeIconExtension();
     return $extensions;
@@ -204,6 +209,7 @@ $app['swiftmailer.options'] = array(
     'username' => 'amatukami66@gmail.com',
     'password' => 'rclens66',
     'encryption' => 'ssl'
+	// 'sender_address' => 'cccc@yopmail.com'
 );
 
 return $app;

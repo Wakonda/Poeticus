@@ -6,35 +6,34 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class BiographyType extends AbstractType
 {
-	private $countryArray;
-
-	public function __construct($countryArray)
-	{
-		$this->countryArray = $countryArray;
-	}
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-		$countryArray = $this->countryArray;
+		$countryArray = $options["countries"];
 
         $builder
-            ->add('title', 'text', array(
+            ->add('title', TextType::class, array(
                 'constraints' => new Assert\NotBlank(), "label" => "Titre"
             ))
-			->add('text', 'textarea', array(
+			->add('text', TextareaType::class, array(
                 'constraints' => new Assert\NotBlank(), "label" => "Texte", 'attr' => array('class' => 'redactor')
             ))
-			->add('photo', 'file', array('data_class' => null, "label" => "Photo", "required" => true))
-			->add('dayBirth', 'integer', array("label" => "Date de naissance", "required" => false))
-			->add('monthBirth', 'integer', array("label" => "", "required" => false))
-			->add('yearBirth', 'integer', array("label" => "", "required" => false))
-			->add('dayDeath', 'integer', array("label" => "Date de décès", "required" => false))
-			->add('monthDeath', 'integer', array("label" => "", "required" => false))
-			->add('yearDeath', 'integer', array("label" => "", "required" => false))
-			->add('country', 'choice', array(
+			->add('photo', FileType::class, array('data_class' => null, "label" => "Photo", "required" => true))
+			->add('dayBirth', IntegerType::class, array("label" => "Date de naissance", "required" => false))
+			->add('monthBirth', IntegerType::class, array("label" => "", "required" => false))
+			->add('yearBirth', IntegerType::class, array("label" => "", "required" => false))
+			->add('dayDeath', IntegerType::class, array("label" => "Date de décès", "required" => false))
+			->add('monthDeath', IntegerType::class, array("label" => "", "required" => false))
+			->add('yearDeath', IntegerType::class, array("label" => "", "required" => false))
+			->add('country', ChoiceType::class, array(
 											'label' => 'Pays', 
 											'multiple' => false, 
 											'expanded' => false,
@@ -42,10 +41,20 @@ class BiographyType extends AbstractType
 											'empty_value' => 'Choisissez une option',
 										    'choices' => $countryArray
 											))	
-            ->add('save', 'submit', array('label' => 'Sauvegarder', 'attr' => array('class' => 'btn btn-success')))
+            ->add('save', SubmitType::class, array('label' => 'Sauvegarder', 'attr' => array('class' => 'btn btn-success')))
 			;
     }
 
+	/**
+	 * {@inheritdoc}
+	 */
+	public function configureOptions(OptionsResolver $resolver)
+	{
+		$resolver->setDefaults(array(
+			"countries" => null
+		));
+	}
+	
     public function getName()
     {
         return 'biography';

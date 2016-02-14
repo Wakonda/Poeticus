@@ -18,7 +18,7 @@ class UserAdminController
 	}
 
 	public function indexDatatablesAction(Request $request, Application $app)
-	{//die("ooo");
+	{
 		$iDisplayStart = $request->query->get('iDisplayStart');
 		$iDisplayLength = $request->query->get('iDisplayLength');
 		$sSearch = $request->query->get('sSearch');

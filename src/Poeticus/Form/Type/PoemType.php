@@ -6,48 +6,39 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class PoemType extends AbstractType
 {
-	private $poeticFormArray;
-	private $userArray;
-	private $biographyArray;
-	private $countryArray;
-	private $collectionArray;
-
-	public function __construct($poeticFormArray, $userArray, $biographyArray, $countryArray, $collectionArray)
-	{
-		$this->poeticFormArray = $poeticFormArray;
-		$this->userArray = $userArray;
-		$this->biographyArray = $biographyArray;
-		$this->countryArray = $countryArray;
-		$this->collectionArray = $collectionArray;
-	}
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-		$poeticFormArray = $this->poeticFormArray;
-		$userArray = $this->userArray;
-		$biographyArray = $this->biographyArray;
-		$countryArray = $this->countryArray;
-		$collectionArray = $this->collectionArray;
+		$poeticFormArray = $options["poeticForms"];
+		$userArray = $options["users"];
+		$biographyArray = $options["biographies"];
+		$countryArray = $options["countries"];
+		$collectionArray = $options["collections"];
 
         $builder
-            ->add('title', 'text', array(
+            ->add('title', TextType::class, array(
                 'constraints' => new Assert\NotBlank(), 'label' => 'Titre'
             ))
-			->add('text', 'textarea', array(
+			->add('text', TextareaType::class, array(
                 'constraints' => new Assert\NotBlank(), 'attr' => array('class' => 'redactor'), 'label' => 'Texte'
             ))
-			->add('releasedDate', 'integer', array(
+			->add('releasedDate', IntegerType::class, array(
                 'label' => 'Date de publication'
             ))
 			
-			->add('unknownReleasedDate', 'checkbox', array(
+			->add('unknownReleasedDate', CheckboxType::class, array(
                 'mapped' => false, 'label' => 'Date inconnue'
             ))
 			
-            ->add('authorType', 'choice', array(
+            ->add('authorType', ChoiceType::class, array(
 											'label' => 'Type d\'auteur', 
 											'multiple' => false, 
 											'expanded' => false,
@@ -55,52 +46,66 @@ class PoemType extends AbstractType
 										    'choices' => array("biography" => "Biographie", "user" => "Utilisateur"),
 											'attr' => array('class' => 'authorType_select')
 											))
-            ->add('poeticform', 'choice', array(
+            ->add('poeticform', ChoiceType::class, array(
 											'label' => 'Forme poétique', 
 											'multiple' => false,
 											'required' => false,
 											'expanded' => false,
-											'empty_value' => 'Choisissez une option',
+											'placeholder' => 'Choisissez une option',
 											'choices' => $poeticFormArray
 											))
-			->add('user', 'choice', array(
+			->add('user', ChoiceType::class, array(
 											'label' => 'Utilisateur', 
 											'multiple' => false, 
 											'expanded' => false,
-											'empty_value' => 'Choisissez une option',
+											'placeholder' => 'Choisissez une option',
 										    'choices' => $userArray
 											))
-            ->add('biography', 'text', array(
+            ->add('biography', TextType::class, array(
                 'label' => 'Biographie'
             ))
-			/*->add('biography', 'choice', array(
+			/*->add('biography', ChoiceType::class, array(
 											'label' => 'Biographie', 
 											'multiple' => false, 
 											'expanded' => false,
-											'empty_value' => 'Choisissez une option',
+											'placeholder' => 'Choisissez une option',
 										    'choices' => $biographyArray
 											))*/
 											
-			->add('country', 'choice', array(
+			->add('country', ChoiceType::class, array(
 											'label' => 'Pays', 
 											'multiple' => false, 
 											'expanded' => false,
 											'constraints' => array(new Assert\NotBlank()),
-											'empty_value' => 'Choisissez une option',
+											'placeholder' => 'Choisissez une option',
 										    'choices' => $countryArray
 											))		
-			->add('collection', 'choice', array(
+			->add('collection', ChoiceType::class, array(
 											'label' => 'Recueil', 
 											'multiple' => false,
 											'required' => false,
 											'expanded' => false,
-											'empty_value' => 'Choisissez une option',
+											'placeholder' => 'Choisissez une option',
 										    'choices' => $collectionArray
 											))
 			
-            ->add('save', 'submit', array('label' => 'Sauvegarder', 'attr' => array('class' => 'btn btn-success')));
+            ->add('save', SubmitType::class, array('label' => 'Sauvegarder', 'attr' => array('class' => 'btn btn-success')));
     }
 
+	/**
+	 * {@inheritdoc}
+	 */
+	public function configureOptions(OptionsResolver $resolver)
+	{
+		$resolver->setDefaults(array(
+			"biographies" => null,
+			"countries" => null,
+			"collections" => null,
+			"poeticForms" => null,
+			"users" => null
+		));
+	}
+	
     public function getName()
     {
         return 'poem';

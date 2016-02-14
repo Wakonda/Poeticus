@@ -61,6 +61,7 @@ class BiographyAdminController
 
 		$response = new Response(json_encode($output));
 		$response->headers->set('Content-Type', 'application/json');
+
 		return $response;
 	}
 
@@ -146,7 +147,7 @@ class BiographyAdminController
 	{
 		$countryForms = $app['repository.country']->findAllForChoice();
 		
-		$form = $app['form.factory']->create(new BiographyType($countryForms), $entity);
+		$form = $app['form.factory']->create(BiographyType::class, $entity, array("countries" => $countryForms));
 		
 		return $form;
 	}

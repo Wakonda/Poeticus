@@ -5,13 +5,15 @@ namespace Poeticus\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class UpdatePasswordType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-			->add('password', 'repeated', array(
+			->add('password', RepeatedType::class, array(
 				'label' => 'Nouveau mot de passe',
 				'type' => 'password',
 				'invalid_message' => 'Les mots de passe doivent correspondre',
@@ -20,7 +22,7 @@ class UpdatePasswordType extends AbstractType
 				'second_options' => array('label' => 'Mot de passe (validation)'),
 			))
 			
-            ->add('save', 'submit', array('label' => 'Sauvegarder', 'attr' => array('class' => 'btn btn-success')));
+            ->add('save', SubmitType::class, array('label' => 'Sauvegarder', 'attr' => array('class' => 'btn btn-success')));
     }
 
     public function getName()
