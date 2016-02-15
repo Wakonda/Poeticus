@@ -119,6 +119,9 @@ $app['repository.biography'] = $app->share(function ($app) {
 $app['repository.collection'] = $app->share(function ($app) {
     return new Poeticus\Repository\CollectionRepository($app['db']);
 });
+$app['repository.version'] = $app->share(function ($app) {
+    return new Poeticus\Repository\VersionRepository($app['db']);
+});
 $app['repository.poem'] = $app->share(function ($app) {
     return new Poeticus\Repository\PoemRepository($app['db']);
 });
@@ -174,6 +177,10 @@ $app["controllers.contact"] = $app -> share(function($app) {
 
 $app["controllers.contactadmin"] = $app -> share(function($app) {
     return new Poeticus\Controller\ContactAdminController();
+});
+
+$app["controllers.versionadmin"] = $app -> share(function($app) {
+    return new Poeticus\Controller\VersionAdminController();
 });
 
 $app["controllers.user"] = $app -> share(function($app) {

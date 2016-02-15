@@ -298,6 +298,28 @@ $app->get('/admin/collection/edit/{id}', 'controllers.collectionadmin:editAction
 $app->post('/admin/collection/upate/{id}', 'controllers.collectionadmin:updateAction')
     ->bind('collectionadmin_update');
 
+// ADMIN VERSION
+$app->get('/admin/version/index', 'controllers.versionadmin:indexAction')
+    ->bind('versionadmin_index');
+
+$app->get('/admin/version/indexdatatables', 'controllers.versionadmin:indexDatatablesAction')
+    ->bind('versionadmin_indexdatatables');
+
+$app->get('/admin/version/new', 'controllers.versionadmin:newAction')
+    ->bind('versionadmin_new');
+
+$app->post('/admin/version/create', 'controllers.versionadmin:createAction')
+    ->bind('versionadmin_create');
+
+$app->get('/admin/version/show/{id}', 'controllers.versionadmin:showAction')
+    ->bind('versionadmin_show');
+
+$app->get('/admin/version/edit/{id}', 'controllers.versionadmin:editAction')
+    ->bind('versionadmin_edit');
+
+$app->post('/admin/version/upate/{id}', 'controllers.collectionadmin:updateAction')
+    ->bind('versionadmin_update');
+
 // ADMIN POEM
 $app->get('/admin/poem/index', 'controllers.poemadmin:indexAction')
     ->bind('poemadmin_index');

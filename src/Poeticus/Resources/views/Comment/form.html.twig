@@ -1,5 +1,6 @@
 {% form_theme form 'Form/fields.html.twig' %}
-<form action="" method="post" id="form_comment" novalidate>
+
+{{ form_start(form, {'method' : 'post', 'action' : '', 'attr': {'novalidate': 'novalidate'} }) }}
 	<div class="error_message"></div>
 	{{ form_label(form.text) }}
 	<div class="errors">{{ form_errors(form.text) }}</div>
@@ -7,4 +8,4 @@
 	<br>
 	{{ form_widget(form.save, {'icon': 'fa-commenting'}) }}
 	{{ form_rest(form) }}
-</form>
+{{ form_end(form) }}

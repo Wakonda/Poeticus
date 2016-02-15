@@ -50,7 +50,8 @@
 
 {% block main_content %}
 {% form_theme form 'Form/fields.html.twig' %}
-<form action="{{ path('collectionadmin_update', {'id' : entity.id }) }}" method="post" {{ form_enctype(form) }} novalidate>
+
+{{ form_start(form, {'method' : 'post', 'action' : path('collectionadmin_update', {'id' : entity.id }), 'attr': {'novalidate': 'novalidate'} }) }}
 <table class="form_grid">
 		<tr>
 			<th>{{ form_label(form.title) }}</th>
@@ -80,6 +81,6 @@
 	<hr />
 	{{ form_widget(form.save, {'icon': 'fa-save'}) }}
 	{{ form_rest(form) }}
-</form>
+{{ form_end(form) }}
 
 {% endblock %}
