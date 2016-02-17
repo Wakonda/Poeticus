@@ -50,7 +50,7 @@ class VersionAdminController
 			$row = array();
 			$row[] = $entity->getId();
 			$row[] = $entity->getVersionNumber();
-			$row[] = $entity->getReleaseDate();
+			$row[] = $entity->getReleaseDate()->format('d/m/Y');
 			
 			$show = $app['url_generator']->generate('versionadmin_show', array('id' => $entity->getId()));
 			$edit = $app['url_generator']->generate('versionadmin_edit', array('id' => $entity->getId()));

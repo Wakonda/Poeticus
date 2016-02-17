@@ -22,15 +22,17 @@ class PoeticusExtension extends \Twig_Extension
         return array(
             "var_dump"        => new \Twig_Filter_Method($this, "var_dump"),
             "toString"        => new \Twig_Filter_Method($this, "getStringObject"),
-            "text_month"        => new \Twig_Filter_Method($this, "text_month"),
-            "max_size_image"        => new \Twig_Filter_Method($this, "maxSizeImage", array('is_safe' => array('html'))),
+            "text_month"      => new \Twig_Filter_Method($this, "text_month"),
+            "max_size_image"  => new \Twig_Filter_Method($this, "maxSizeImage", array('is_safe' => array('html'))),
+            "date_letter"  => new \Twig_Filter_Method($this, "dateLetter", array('is_safe' => array('html')))
         );
     }
 	
 	public function getFunctions() {
 		return array(
 			'captcha' => new \Twig_Function_Method($this, 'generateCaptcha'),
-			'gravatar' => new \Twig_Function_Method($this, 'generateGravatar')
+			'gravatar' => new \Twig_Function_Method($this, 'generateGravatar'),
+			'number_version' => new \Twig_Function_Method($this, 'getCurrentVersion')
 		);
 	}
 
@@ -72,6 +74,17 @@ class PoeticusExtension extends \Twig_Extension
 
 		return '<img src="'.$basePath.'/'.$img.'" alt="" style="max-width: '.$width.'px;" />';
 	}
+	
+	public function dateLetter($date)
+	{
+		$arrayMonth = array("janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre");
+		
+		$month = $arrayMonth[$date->format("n") - 1];
+		
+		$day = ($date->format("j") == 1) ? $date->format("j")."<sup>er</sup>" : $date->format("j");
+		
+		return $day." ".$month." ".$date->format("Y");
+	}
 
 	public function generateCaptcha()
 	{
@@ -93,5 +106,10 @@ class PoeticusExtension extends \Twig_Extension
 		$gr = new Gravatar();
 
 		return $gr->getURLGravatar();
+	}
+	
+	public function getCurrentVersion()
+	{
+		return $this->app['repository.version']->getCurrentVersion();
 	}
 }

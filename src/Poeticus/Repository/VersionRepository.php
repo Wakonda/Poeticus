@@ -106,11 +106,25 @@ class VersionRepository
         $entity = new Version();
         $entity->setId($data['id']);
         $entity->setVersionNumber($data['versionNumber']);
-        $entity->setReleaseDate($data['releaseDate']);
+        $entity->setReleaseDate(new \DateTime($data['releaseDate']));
         $entity->setFile($data['file']);
 
         return $entity;
     }
+	
+	public function getCurrentVersion()
+	{
+		$qb = $this->db->createQueryBuilder();
+		
+		$qb->select("v.versionNumber AS version")
+		   ->from("version", "v")
+		   ->orderBy("v.id", "DESC")
+		   ->setMaxResults(1);
+		   
+		$res = $qb->execute()->fetch();
+		
+		return $res["version"];
+	}
 	
 	public function checkForDoubloon($entity)
 	{

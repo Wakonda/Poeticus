@@ -34,7 +34,7 @@ class IndexController
 		// $test->setSubject("ok");
 		// $test->setSendTo("amatukami@hotmail.fr");
 		// $test->send();
-
+		
 		$form = $this->createForm($app, null);
 		$random = $app['repository.poem']->getRandomPoem();
 		
@@ -649,7 +649,9 @@ class IndexController
 	
 	public function versionAction(Request $request, Application $app)
 	{
-		return $app['twig']->render('Index/version.html.twig');
+		$entities = $app['repository.version']->findAll();
+		
+		return $app['twig']->render('Index/version.html.twig', array('entities' => $entities));
 	}
 	
 	private function createForm($app, $entity)

@@ -15,16 +15,19 @@
 				</tr>
 			</thead>
 			<tbody>
+				{% for entity in entities %}
 				<tr>
-					<td>1.0</td>
-					<td>2014</td>
-					<td>-</td>
+					<td>{{ entity.versionNumber }}</td>
+					<td>{{ entity.releaseDate|date_letter }}</td>
+					<td>
+						{% if entity.file is not empty %}
+							<a href="{{ app.request.basepath }}/photo/version/{{ entity.file }}">Lire</a>
+						{% else %}
+							-
+						{% endif %}
+					</td>
 				</tr>
-				<tr>
-					<td>1.1</td>
-					<td>1<sup>er</sup> décembre 2015</td>
-					<td><a href="{{ app.request.basepath }}/photo/version/poeticusv11.pdf" target="_blank">Lire</a></td>
-				</tr>
+				{% endfor %}
 			</tbody>
 		</table>
 	</div>
