@@ -4,6 +4,7 @@ namespace Poeticus\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -55,12 +56,11 @@ class UserType extends AbstractType
 			
             ->add('save', SubmitType::class, array('label' => 'Sauvegarder', "attr" => array("class" => "btn btn-success")));
 			
-		if(!$this->ifEdit)
+		if(!$ifEdit)
 		{
 			$builder
 				->add('password', RepeatedType::class, array(
 					'label' => 'Mot de passe',
-					'type' => 'password',
 					'invalid_message' => 'Les mots de passe doivent correspondre',
 					'constraints' => new Assert\NotBlank(),
 					'options' => array('required' => true),

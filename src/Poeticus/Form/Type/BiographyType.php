@@ -4,6 +4,7 @@ namespace Poeticus\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -38,7 +39,7 @@ class BiographyType extends AbstractType
 											'multiple' => false, 
 											'expanded' => false,
 											'constraints' => array(new Assert\NotBlank()),
-											'empty_value' => 'Choisissez une option',
+											'placeholder' => 'Choisissez une option',
 										    'choices' => $countryArray
 											))	
             ->add('save', SubmitType::class, array('label' => 'Sauvegarder', 'attr' => array('class' => 'btn btn-success')))

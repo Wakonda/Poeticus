@@ -219,4 +219,7 @@ $app['swiftmailer.options'] = array(
 	// 'sender_address' => 'cccc@yopmail.com'
 );
 
+// Global
+$app['web_directory'] = realpath(__DIR__."/../web");
+
 return $app;

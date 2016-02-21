@@ -28,7 +28,8 @@ class Captcha
 		
 		$size = 80;
 		$margin = 60;
-		$font = $request->server->get('DOCUMENT_ROOT').$request->getBaseUrl().'/font/Edmundsbury_Serif.ttf';
+
+		$font = $this->app['web_directory'].'/font/Edmundsbury_Serif.ttf';
 
 		$matrix_blur = array(
 			array(1,1,1),
