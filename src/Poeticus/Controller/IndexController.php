@@ -475,6 +475,26 @@ class IndexController
 		$response->headers->set('Content-Type', 'application/json');
 		return $response;
 	}
+	
+	public function readCollectionPDFAction(Request $request, Application $app, $collectionId, $biographyId)
+	{
+		$biography = $app['repository.biography']->find($biographyId);
+		$collection = $app['repository.collection']->find($collectionId, true);
+		$entities = $app['repository.collection']->getAllPoemsByCollectionAndAuthorForPdf($collectionId);
+
+		$content = $app['twig']->render('Index/pdf_poem_collection.html.twig', array('biography' => $biography, 'collection' => $collection, 'entities' => $entities));
+
+		$html2pdf = new \HTML2PDF('P','A4','fr');
+		$html2pdf->WriteHTML($content);
+		$html2pdf->createIndex('Sommaire', 25, 12, false, true, 2, "times");
+		
+		$file = $html2pdf->Output('poem.pdf');
+
+		$response = new Response($file);
+		$response->headers->set('Content-Type', 'application/pdf');
+
+		return $response;
+	}
 
 	// COUNTRY
 	public function countryAction(Request $request, Application $app, $id)

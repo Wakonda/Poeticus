@@ -446,7 +446,6 @@ class PoemRepository
 		   ->leftjoin("pf", "biography", "bp", "pf.biography_id = bp.id")
 		   ->innerjoin("pf", "collection", "co", "pf.collection_id = co.id")
 		   ->where("pf.authorType = 'biography'")
-		   // ->setParameter("authorType", "biography")
 		   ->groupBy("co.id");
 		
 		if(!empty($sortDirColumn))

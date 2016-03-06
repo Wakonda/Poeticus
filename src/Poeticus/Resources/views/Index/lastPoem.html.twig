@@ -3,8 +3,10 @@
 		<li>
 			<a href="{{ path('read', {'id' : entity.id}) }}" >{{ entity.title }}</a>
 			<br>
-			<i class="fa fa-chevron-circle-right"></i> 
-			<span class="bold">{{ entity.biography.title }}</span>
+			{% if entity.biography is not empty %}
+				<i class="fa fa-chevron-circle-right"></i> 
+				<span class="bold">{{ entity.biography.title }}</span>
+			{% endif %}
 		</li>
 	{% endfor %}
 </ul>

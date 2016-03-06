@@ -55,6 +55,15 @@
 		<br>
 		{{ entity.text|raw }}
 	</div>
+	<table class="hidden_print">
+		<tbody>
+			<tr>
+				<td class="socialNetwork">
+					<a href="{{ path('collection_pdf', {'collectionId' : entity.id, 'biographyId' : biography['id']}) }}" alt=""><img src="{{ app.request.basepath }}/photo/pdf.gif" alt="" /></a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
 	<hr>
 	<h3>Poésies contenues dans ce recueil</h3>
 		<table class="index_directories display">

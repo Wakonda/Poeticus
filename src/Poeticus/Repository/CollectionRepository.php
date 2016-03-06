@@ -196,4 +196,16 @@ class CollectionRepository
 		
 		return $results[0]["number"];
 	}
+	
+	public function getAllPoemsByCollectionAndAuthorForPdf($id)
+	{
+		$qb = $this->db->createQueryBuilder();
+		
+		$qb->select("pf.title, pf.text, pf.releasedDate")
+		   ->from("poem", "pf")
+		   ->where("pf.collection_id = :collectionId")
+		   ->setParameter('collectionId', $id);
+		   
+		return $qb->execute()->fetchAll();
+	}
 }

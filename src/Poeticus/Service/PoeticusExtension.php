@@ -24,7 +24,8 @@ class PoeticusExtension extends \Twig_Extension
             "toString"        => new \Twig_Filter_Method($this, "getStringObject"),
             "text_month"      => new \Twig_Filter_Method($this, "text_month"),
             "max_size_image"  => new \Twig_Filter_Method($this, "maxSizeImage", array('is_safe' => array('html'))),
-            "date_letter"  => new \Twig_Filter_Method($this, "dateLetter", array('is_safe' => array('html')))
+            "date_letter"  	  => new \Twig_Filter_Method($this, "dateLetter", array('is_safe' => array('html'))),
+            "remove_control_characters"  => new \Twig_Filter_Method($this, "removeControlCharacters")
         );
     }
 	
@@ -54,10 +55,12 @@ class PoeticusExtension extends \Twig_Extension
 		return $arrayMonth[intval($monthInt) - 1];
 	}
 	
-	public function maxSizeImage($img, $basePath, array $options = null)
+	public function maxSizeImage($img, $basePath, array $options = null, $isPDF = false)
 	{
+		$basePath = ($isPDF) ? '' : $basePath.'/';
+		
 		if(!file_exists($img))
-			return '<img src="'.$basePath.'/photo/640px-Starry_Night_Over_the_Rhone.jpg" alt="" style="max-width: 400px" />';
+			return '<img src="'.$basePath.'photo/640px-Starry_Night_Over_the_Rhone.jpg" alt="" style="max-width: 400px" />';
 		
 		$imageSize = getimagesize($img);
 
@@ -72,7 +75,7 @@ class PoeticusExtension extends \Twig_Extension
 			$width = $max_width;
 		}
 
-		return '<img src="'.$basePath.'/'.$img.'" alt="" style="max-width: '.$width.'px;" />';
+		return '<img src="'.$basePath.$img.'" alt="" style="max-width: '.$width.'px;" />';
 	}
 	
 	public function dateLetter($date)
@@ -86,6 +89,11 @@ class PoeticusExtension extends \Twig_Extension
 		return $day." ".$month." ".$date->format("Y");
 	}
 
+	public function removeControlCharacters($string)
+	{
+		return preg_replace("/[^a-zA-Z0-9 .\-_;!:?äÄöÖüÜß<>='\"]/", "", $string);
+	}
+	
 	public function generateCaptcha()
 	{
 		$captcha = new Captcha($this->app);

@@ -38,7 +38,10 @@ $app->get('/collection/{id}', 'controllers.index:collectionAction')
 	
 $app->get('/collection_poem_datatables/{collectionId}', 'controllers.index:collectionDatatablesAction')
 	->bind('collection_poem_datatables');
-	
+
+$app->get('/collection_pdf/{collectionId}/{biographyId}', 'controllers.index:readCollectionPDFAction')
+	->bind('collection_pdf');
+
 $app->get('/bycollections', 'controllers.index:byCollectionsAction')
     ->bind('bycollections');
 	

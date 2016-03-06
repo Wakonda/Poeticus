@@ -19,6 +19,14 @@
 		text-align: justify;
 	}
 	
+	.center {
+		text-align: center;
+	}
+	
+	.bold {
+		font-weight: bold;
+	}
+	
 	#header_title
 	{
 		font-family: "Script MT Bold", "Time New Roman", serif !important;
@@ -32,7 +40,6 @@
 </style>
 
 <page backtop="14mm" backbottom="14mm" backleft="10mm" backright="10mm" style="font-size: 12pt">
-
     <page_footer>
         <table class="page_footer">
             <tr>
@@ -48,15 +55,31 @@
             </tr>
         </table>
     </page_footer>
+	<h1 class="center">{{ collection.title }}</h1>
+	<p class="center">{{ ("photo/collection/"~collection.image)|max_size_image(app.request.basepath, null, true) }}</p>
+	<h2 class="center">{{ collection.biography['title']|remove_control_characters }}</h2>
+	{% if collection.releasedDate is not empty %}
+		<p class="center bold">{{ collection.releasedDate }}</p>
+	{% endif %}
 </page>
 
-<h1>{{ entity.title }}</h1>
-<br />
-{{ entity.text|raw }}
-<br />
-<hr style="height: 1px"/>
-{{ entity.biography.title|remove_control_characters }} - <img class="flag" src="photo/country/{{ entity.country.flag }}" alt="" height="16" />
-{% if entity.collection is not null %}
-	-
-	<span class="underline italic">{{ entity.collection.title }}</span>
-{% endif %}
+
+<page pageset="old">
+	<bookmark title="Sommaire" level="0" ></bookmark>
+</page>
+
+<page pageset="old">
+	<bookmark title="L'auteur" level="0" ></bookmark><h1>L'auteur</h1>
+	<h2 class="center">{{ biography.title|remove_control_characters }}</h2>
+	<p class="center">{{ ("photo/biography/"~biography.photo)|max_size_image(app.request.basepath, null, true) }}</p>
+	{{ biography.text|raw }}
+</page>
+
+{% for entity in entities %}
+<page pageset="old">
+    <bookmark title="{{ entity.title }}" level="0" ></bookmark><h1>{{ entity.title }}</h1>
+    <div class="niveau">
+        {{ entity.text|raw }}
+    </div>
+</page>
+{% endfor %}
