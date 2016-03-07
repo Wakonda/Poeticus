@@ -160,7 +160,7 @@ class BiographyRepository
 		
 		foreach($results as $result)
 		{
-			$choiceArray[$result["id"]] = $result["title"];
+			$choiceArray[$result["title"]] = $result["id"];
 		}
 		
         return $choiceArray;

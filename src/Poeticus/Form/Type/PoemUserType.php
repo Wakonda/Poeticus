@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class PoemUserType extends AbstractType
@@ -20,7 +21,7 @@ class PoemUserType extends AbstractType
             ->add('title', TextType::class, array(
                 'constraints' => new Assert\NotBlank(), 'label' => 'Titre'
             ))
-			->add(TextType::class, 'textarea', array(
+			->add('text', TextareaType::class, array(
                 'constraints' => new Assert\NotBlank(), 'attr' => array('class' => 'redactor'), 'label' => 'Texte'
             ))
 			

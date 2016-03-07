@@ -33,7 +33,7 @@ class UserRepository
 		
 		foreach($results as $result)
 		{
-			$choiceArray[$result["id"]] = $result["username"];
+			$choiceArray[$result["username"]] = $result["id"];
 		}
 		
         return $choiceArray;

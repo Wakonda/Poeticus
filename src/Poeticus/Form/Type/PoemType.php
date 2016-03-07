@@ -44,7 +44,7 @@ class PoemType extends AbstractType
 											'multiple' => false, 
 											'expanded' => false,
 											'constraints' => array(new Assert\NotBlank()),
-										    'choices' => array("biography" => "Biographie", "user" => "Utilisateur"),
+										    'choices' => array("Biographie" => "biography", "Utilisateur" => "user"),
 											'attr' => array('class' => 'authorType_select')
 											))
             ->add('poeticform', ChoiceType::class, array(

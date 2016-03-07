@@ -334,7 +334,7 @@ class PoemAdminController
 		$biographyForms = $app['repository.biography']->findAllForChoice();
 		$countryForms = $app['repository.country']->findAllForChoice();
 		$collectionForms = $app['repository.collection']->findAllForChoice();
-		
+
 		$form = $app['form.factory']->create(PoemType::class, $entity, array('poeticForms' => $poeticForms, 'users' => $userForms, 'biographies' => $biographyForms, 'countries' => $countryForms, 'collections' => $collectionForms));
 		
 		return $form;

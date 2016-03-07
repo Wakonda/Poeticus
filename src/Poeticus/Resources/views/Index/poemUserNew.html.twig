@@ -8,7 +8,7 @@
 
 {% block main_content %}
 {% form_theme form with['Form/fields.html.twig'] %}
-<form action="{{ path('poemuser_create') }}" method="post" {{ form_enctype(form) }} novalidate>
+{{ form_start(form, {'method' : 'post', 'action' : path('poemuser_create'), 'attr': {'novalidate': 'novalidate'} }) }}
 	<table class="form_grid">
 		<tr>
 			<th>{{ form_label(form.title) }}</th>
@@ -23,6 +23,6 @@
 	{{ form_widget(form.save, {'icon': 'fa-save'}) }}
 	{{ form_widget(form.draft, {'icon': 'fa-inbox'}) }}
 	{{ form_rest(form) }}
-</form>
+{{ form_end(form) }}
 
 {% endblock %}
