@@ -244,12 +244,15 @@ class IndexController
 
 		foreach($entities as $entity)
 		{
-			$row = array();
-			$show = $app['url_generator']->generate('author', array('id' => $entity['id']));
-			$row[] = '<a href="'.$show.'" alt="Show">'.$entity['author'].'</a>';
-			$row[] = $entity['number_poems_by_author'];
+			if(!empty($entity['id']))
+			{
+				$row = array();
+				$show = $app['url_generator']->generate('author', array('id' => $entity['id']));
+				$row[] = '<a href="'.$show.'" alt="Show">'.$entity['author'].'</a>';
+				$row[] = $entity['number_poems_by_author'];
 
-			$output['aaData'][] = $row;
+				$output['aaData'][] = $row;
+			}
 		}
 
 		$response = new Response(json_encode($output));
@@ -614,7 +617,7 @@ class IndexController
 		$sortByColumn = array();
 		$sortDirColumn = array();
 			
-		for($i=0 ; $i<intval($request->query->get('iSortingCols')); $i++)
+		for($i=0 ; $i < intval($request->query->get('iSortingCols')); $i++)
 		{
 			if ($request->query->get('bSortable_'.intval($request->query->get('iSortCol_'.$i))) == "true" )
 			{
@@ -652,14 +655,11 @@ class IndexController
 		return $response;
 	}
 	
-	public function aboutAction(Request $request, Application $app)
+	public function pageAction(Request $request, Application $app, $name)
 	{
-		return $app['twig']->render('Index/about.html.twig');
-	}
-	
-	public function copyrightAction(Request $request, Application $app)
-	{
-		return $app['twig']->render('Index/copyright.html.twig');
+		$entity = $app['repository.page']->findByName($name);
+		
+		return $app['twig']->render('Index/page.html.twig', array("entity" => $entity));
 	}
 	
 	public function cookieAction(Request $request, Application $app)

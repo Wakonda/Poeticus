@@ -78,17 +78,11 @@ $app->get('/bypoemusers_datatables', 'controllers.index:byPoemUsersDatatablesAct
 $app->get('/country_poem_datatables/{countryId}', 'controllers.index:countryDatatablesAction')
 	->bind('country_poem_datatables');
 
-$app->get('/about', 'controllers.index:aboutAction')
-	->bind('about');
-
-$app->get('/copyright', 'controllers.index:copyrightAction')
-	->bind('copyright');
+$app->get('/page/{name}', 'controllers.index:pageAction')
+	->bind('page_display');
 
 $app->get('/version', 'controllers.index:versionAction')
     ->bind('version');
-
-$app->get('/cookie', 'controllers.index:cookieAction')
-	->bind('cookie');
 
 $app->get('/admin', 'controllers.admin:indexAction')
 	->bind('admin');
@@ -278,6 +272,28 @@ $app->get('/admin/biography/edit/{id}', 'controllers.biographyadmin:editAction')
 
 $app->post('/admin/biography/upate/{id}', 'controllers.biographyadmin:updateAction')
     ->bind('biographyadmin_update');
+
+// ADMIN PAGE
+$app->get('/admin/page/index', 'controllers.pageadmin:indexAction')
+    ->bind('pageadmin_index');
+
+$app->get('/admin/page/indexdatatables', 'controllers.pageadmin:indexDatatablesAction')
+    ->bind('pageadmin_indexdatatables');
+
+$app->get('/admin/page/new', 'controllers.pageadmin:newAction')
+    ->bind('pageadmin_new');
+
+$app->post('/admin/page/create', 'controllers.pageadmin:createAction')
+    ->bind('pageadmin_create');
+
+$app->get('/admin/page/show/{id}', 'controllers.pageadmin:showAction')
+    ->bind('pageadmin_show');
+
+$app->get('/admin/page/edit/{id}', 'controllers.pageadmin:editAction')
+    ->bind('pageadmin_edit');
+
+$app->post('/admin/page/upate/{id}', 'controllers.pageadmin:updateAction')
+    ->bind('pageadmin_update');
 
 // ADMIN COLLECTION
 $app->get('/admin/collection/index', 'controllers.collectionadmin:indexAction')

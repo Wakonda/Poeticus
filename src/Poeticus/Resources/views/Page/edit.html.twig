@@ -1,0 +1,52 @@
+{% extends generic_layout %}
+
+{% block head_title %}Admin Page{% endblock %}
+{% block main_title %}Administration - Page{% endblock %}
+
+{% block style_additional %}
+	<link rel="stylesheet" type="text/css" href="{{ app.request.basepath }}/js/redactor/css/redactor.css" />
+{% endblock %}
+{% block script_additional %}
+	<script src="{{ app.request.basepath }}/js/redactor/redactor.min.js"></script>
+	<script type="text/javascript">
+		$(function()
+		{
+			$('.redactor').redactor({
+				autoresize: false,
+				minHeight: 300,
+				buttons: ['html', '|', 'bold', 'italic', 'deleted', 'underline', '|',
+				'unorderedlist', 'orderedlist', 'outdent', 'indent', '|',
+				'image', 'video', 'file', 'table', 'link', '|', 'fontcolor', 'backcolor', '|', 'alignment', 'aligncenter', 'alignright', 'justify', '|', 'horizontalrule']
+			});
+		});
+	</script>
+{% endblock %}
+
+{% block main_content %}
+{% form_theme form 'Form/fields.html.twig' %}
+
+{{ form_start(form, {'method' : 'post', 'action' : path('pageadmin_update', {'id' : entity.id }), 'attr': {'novalidate': 'novalidate'} }) }}
+<table class="form_grid">
+		<tr>
+			<th>{{ form_label(form.title) }}</th>
+			<td><div class="errors">{{ form_errors(form.title) }}</div>{{ form_widget(form.title, {'attr':{'class':'form-control'}}) }}</td>
+		</tr>
+		<tr>
+			<th>{{ form_label(form.text) }}</th>
+			<td><div class="errors">{{ form_errors(form.text) }}</div>{{ form_widget(form.text) }}</td>
+		</tr>
+		<tr>
+			<th>{{ form_label(form.internationalName) }}</th>
+			<td><div class="errors">{{ form_errors(form.internationalName) }}</div>{{ form_widget(form.internationalName, {'attr':{'class':'form-control'}}) }}</td>
+		</tr>
+		<tr>
+			<th>{{ form_label(form.photo) }}</th>
+			<td><p>Photo actuelle : {{ entity.photo }}</p><div class="errors">{{ form_errors(form.photo) }}</div>{{ form_widget(form.photo) }}</td>
+		</tr>
+	</table>
+	<hr />
+	{{ form_widget(form.save, {'icon': 'fa-save'}) }}
+	{{ form_rest(form) }}
+{{ form_end(form) }}
+
+{% endblock %}

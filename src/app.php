@@ -137,6 +137,9 @@ $app['repository.poemvote'] = $app->share(function ($app) {
 $app['repository.comment'] = $app->share(function ($app) {
 	return new Poeticus\Repository\CommentRepository($app['db']);
 });
+$app['repository.page'] = $app->share(function ($app) {
+	return new Poeticus\Repository\PageRepository($app['db']);
+});
 
 // Register controllers
 $app["controllers.index"] = $app -> share(function($app) {
@@ -203,6 +206,11 @@ $app["controllers.sendpoem"] = $app -> share(function($app) {
 	return new Poeticus\Controller\SendPoemController();
 });
 
+$app["controllers.pageadmin"] = $app -> share(function($app) {
+	return new Poeticus\Controller\PageAdminController();
+});
+
+// Form extension
 $app['form.type.extensions'] = $app->share($app->extend('form.type.extensions', function ($extensions) use ($app) {
     $extensions[] = new Poeticus\Form\Extension\ButtonTypeIconExtension();
     return $extensions;
@@ -213,10 +221,9 @@ $app['form.type.extensions'] = $app->share($app->extend('form.type.extensions', 
 $app['swiftmailer.options'] = array(
 	'host' => 'smtp.gmail.com',
 	'port' => 465,
-    'username' => 'amatukami66@gmail.com',
-    'password' => 'rclens66',
+    'username' => 'test@gmail.com',
+    'password' => 'test',
     'encryption' => 'ssl'
-	// 'sender_address' => 'cccc@yopmail.com'
 );
 
 // Global

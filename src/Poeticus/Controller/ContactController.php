@@ -14,7 +14,7 @@ class ContactController
 {
     public function indexAction(Request $request, Application $app)
     {
-		$form = $app['form.factory']->create(new ContactType(), null);
+		$form = $app['form.factory']->create(ContactType::class, null);
 
         return $app['twig']->render('Index/contact.html.twig', array('form' => $form->createView()));
     }
@@ -22,7 +22,7 @@ class ContactController
 	public function sendAction(Request $request, Application $app)
 	{
 		$entity = new Contact();
-        $form = $app['form.factory']->create(new ContactType(), $entity);
+        $form = $app['form.factory']->create(ContactType::class, $entity);
 		$form->handleRequest($request);
 
 		if($form->isValid())
