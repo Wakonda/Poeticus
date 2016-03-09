@@ -18,7 +18,7 @@ class PoemVoteController
 		
 		if(!empty($vote))
 		{
-			$user = $app['security']->getToken()->getUser();
+			$user = $app['security.token_storage']->getToken()->getUser();
 			
 			if(is_object($user))
 			{

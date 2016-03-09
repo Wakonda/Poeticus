@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class CollectionType extends AbstractType
@@ -23,10 +24,10 @@ class CollectionType extends AbstractType
             ->add('title', TextType::class, array(
                 'constraints' => new Assert\NotBlank(), "label" => "Titre"
             ))
-			->add('text', Textarea::class, array(
+			->add('text', TextareaType::class, array(
                 'constraints' => new Assert\NotBlank(), "label" => "Texte", 'attr' => array('class' => 'redactor')
             ))
-			->add('image', FileType:class, array('data_class' => null, "label" => "Image", "required" => true
+			->add('image', FileType::class, array('data_class' => null, "label" => "Image", "required" => true
             ))
 			
 			->add('releasedDate', IntegerType::class, array(
@@ -49,7 +50,7 @@ class CollectionType extends AbstractType
                 'label' => 'Biographie'
             ))
 			
-			->add('widgetProduct', Textarea::class, array('required' => false, 'label' => 'Code produit'))
+			->add('widgetProduct', TextareaType::class, array('required' => false, 'label' => 'Code produit'))
 			
             ->add('save', SubmitType::class, array('label' => 'Sauvegarder', 'attr' => array('class' => 'btn btn-success')))
 			;

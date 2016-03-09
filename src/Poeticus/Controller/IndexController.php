@@ -346,19 +346,22 @@ class IndexController
 
 		foreach($entities as $entity)
 		{
-			$row = array();
-
-			if(!empty($entity['poeticform_id']))
+			if(!empty($entity['id']))
 			{
-				$show = $app['url_generator']->generate('poeticform', array('id' => $entity['poeticform_id']));
-				$row[] = '<a href="'.$show.'" alt="Show">'.$entity['poeticform'].'</a>';
+				$row = array();
+
+				if(!empty($entity['poeticform_id']))
+				{
+					$show = $app['url_generator']->generate('poeticform', array('id' => $entity['poeticform_id']));
+					$row[] = '<a href="'.$show.'" alt="Show">'.$entity['poeticform'].'</a>';
+				}
+				else
+					$row[] = "-";
+
+				$row[] = $entity['number_poems_by_poeticform'];
+
+				$output['aaData'][] = $row;
 			}
-			else
-				$row[] = "-";
-
-			$row[] = $entity['number_poems_by_poeticform'];
-
-			$output['aaData'][] = $row;
 		}
 
 		$response = new Response(json_encode($output));
@@ -451,27 +454,30 @@ class IndexController
 
 		foreach($entities as $entity)
 		{
-			$row = array();
-
-			if(!empty($entity['collection_id']))
+			if(!empty($entity['id']))
 			{
-				$show = $app['url_generator']->generate('collection', array('id' => $entity['collection_id']));
-				$row[] = '<a href="'.$show.'" alt="Show">'.$entity['collection'].'</a>';
+				$row = array();
+
+				if(!empty($entity['collection_id']))
+				{
+					$show = $app['url_generator']->generate('collection', array('id' => $entity['collection_id']));
+					$row[] = '<a href="'.$show.'" alt="Show">'.$entity['collection'].'</a>';
+				}
+				else
+					$row[] = "-";
+
+				if(!empty($entity['author_id']))
+				{
+					$show = $app['url_generator']->generate('author', array('id' => $entity['author_id']));
+					$row[] = '<a href="'.$show.'" alt="Show">'.$entity['author'].'</a>';
+				}
+				else
+					$row[] = "-";
+
+				$row[] = $entity['number_poems_by_collection'];
+
+				$output['aaData'][] = $row;
 			}
-			else
-				$row[] = "-";
-
-			if(!empty($entity['author_id']))
-			{
-				$show = $app['url_generator']->generate('author', array('id' => $entity['author_id']));
-				$row[] = '<a href="'.$show.'" alt="Show">'.$entity['author'].'</a>';
-			}
-			else
-				$row[] = "-";
-
-			$row[] = $entity['number_poems_by_collection'];
-
-			$output['aaData'][] = $row;
 		}
 
 		$response = new Response(json_encode($output));
@@ -587,14 +593,17 @@ class IndexController
 
 		foreach($entities as $entity)
 		{
-			$row = array();
+			if(!empty($entity['id']))
+			{
+				$row = array();
 
-			$show = $app['url_generator']->generate('country', array('id' => $entity['country_id']));
-			$row[] = '<a href="'.$show.'" alt="Show"><img src="'.$request->getBaseUrl().'/photo/country/'.$entity['flag'].'" class="flag" /> '.$entity['country_title'].'</a>';
+				$show = $app['url_generator']->generate('country', array('id' => $entity['country_id']));
+				$row[] = '<a href="'.$show.'" alt="Show"><img src="'.$request->getBaseUrl().'/photo/country/'.$entity['flag'].'" class="flag" /> '.$entity['country_title'].'</a>';
 
-			$row[] = $entity['number_poems_by_country'];
+				$row[] = $entity['number_poems_by_country'];
 
-			$output['aaData'][] = $row;
+				$output['aaData'][] = $row;
+			}
 		}
 
 		$response = new Response(json_encode($output));
@@ -638,15 +647,18 @@ class IndexController
 
 		foreach($entities as $entity)
 		{
-			$row = array();
+			if(!empty($entity['id']))
+			{
+				$row = array();
 
-			$show = $app['url_generator']->generate('read', array('id' => $entity['poem_id']));
-			$row[] = '<a href="'.$show.'" alt="Show">'.$entity['poem_title'].'</a>';
+				$show = $app['url_generator']->generate('read', array('id' => $entity['poem_id']));
+				$row[] = '<a href="'.$show.'" alt="Show">'.$entity['poem_title'].'</a>';
 
-			$show = $app['url_generator']->generate('user_show', array('username' => $entity['username']));
-			$row[] = '<a href="'.$show.'" alt="Show">'.$entity['username'].'</a>';
+				$show = $app['url_generator']->generate('user_show', array('username' => $entity['username']));
+				$row[] = '<a href="'.$show.'" alt="Show">'.$entity['username'].'</a>';
 
-			$output['aaData'][] = $row;
+				$output['aaData'][] = $row;
+			}
 		}
 
 		$response = new Response(json_encode($output));
@@ -660,11 +672,6 @@ class IndexController
 		$entity = $app['repository.page']->findByName($name);
 		
 		return $app['twig']->render('Index/page.html.twig', array("entity" => $entity));
-	}
-	
-	public function cookieAction(Request $request, Application $app)
-	{
-		return $app['twig']->render('Index/cookie.html.twig');
 	}
 	
 	public function versionAction(Request $request, Application $app)
@@ -704,7 +711,7 @@ class IndexController
 		
 		if($form->isValid())
 		{
-			$user = $app['security']->getToken()->getUser();
+			$user = $app['security.token_storage']->getToken()->getUser();
 			$user = $app['repository.user']->findByUsernameOrEmail($user->getUsername());
 
 			$entity->setUser($user);
@@ -745,7 +752,7 @@ class IndexController
 		if($form->isValid())
 		{
 			$entity->setText($entity->getText());
-			$user = $app['security']->getToken()->getUser();
+			$user = $app['security.token_storage']->getToken()->getUser();
 			$user = $app['repository.user']->findByUsernameOrEmail($user->getUsername());
 
 			$entity->setUser($user);
@@ -766,7 +773,7 @@ class IndexController
 		$entity->setState(2);
 		
 		$entity->setText(nl2br($entity->getText()));
-		$user = $app['security']->getToken()->getUser();
+		$user = $app['security.token_storage']->getToken()->getUser();
 		$user = $app['repository.user']->findByUsernameOrEmail($user->getUsername());
 
 		$entity->setUser($user);

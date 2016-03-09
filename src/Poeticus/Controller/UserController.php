@@ -304,7 +304,7 @@ class UserController implements ControllerProviderInterface
 	
 	private function getCurrentUser($app)
 	{
-		$token = $app['security']->getToken();
+		$token = $app['security.token_storage']->getToken();
 
 		if(null !== $token)
 			return $token->getUser();
@@ -380,7 +380,7 @@ class UserController implements ControllerProviderInterface
 			$show = $app['url_generator']->generate('read', array('id' => $entity->getId()));
 			$row[] = '<a href="'.$show.'" alt="Show">'.$entity->getTitle().'</a>';
 			
-			if ($app['security']->isGranted('IS_AUTHENTICATED_REMEMBERED') and $this->getCurrentUser($app)->getUsername() == $username) {
+			if ($app['security.token_storage']->isGranted('IS_AUTHENTICATED_REMEMBERED') and $this->getCurrentUser($app)->getUsername() == $username) {
 				$row[] = '<div class="state_poem '.$entity->getStateRealName().'">'.$entity->getStateString().'</div>';
 				$row[] = '<a href="'.$app['url_generator']->generate('poemuser_edit', array("id" => $entity->getId())).'" alt=""><span class="glyphicon glyphicon-pencil">Modifier</span></a> / <a href="#" alt="" data-id="'.$entity->getId().'" class="delete_poem"><span class="glyphicon glyphicon-remove">Supprimer</span></a>';
 			}

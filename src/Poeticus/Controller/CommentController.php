@@ -27,7 +27,7 @@ class CommentController
         $form = $app['form.factory']->create(CommentType::class, $entity);
 		$form->handleRequest($request);
 
-		$user = $app['security']->getToken()->getUser();
+		$user = $app['security.token_storage']->getToken()->getUser();
 		
 		if(!empty($user) and is_object($user))
 			$user = $app['repository.user']->findByUsernameOrEmail($user->getUsername());

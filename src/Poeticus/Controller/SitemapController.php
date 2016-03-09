@@ -20,8 +20,8 @@ class SitemapController
 		
 		// Generic
 		$sg->addItem("", '1.0');
-		$sg->addItem("copyright", '1.0');
-		$sg->addItem("about", '1.0');
+		$sg->addItem("page/copyright", '1.0');
+		$sg->addItem("page/about", '1.0');
 		$sg->addItem("contact", '1.0');
 		$sg->addItem("version", '1.0');
 		
