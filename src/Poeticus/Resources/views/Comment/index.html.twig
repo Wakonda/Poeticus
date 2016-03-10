@@ -4,7 +4,7 @@
 <script type="text/javascript">
 	$(function()
 	{
-		$("#form_comment").submit(function()
+		$('body').on('submit', "#form_comment", function()
 		{
 			var DATA = $(this).serialize();
 
@@ -18,7 +18,8 @@
 				{
 					$("#form_comment_container").html(data);
 					setWysiwyg();
-					//$('#comment_text').trumbowyg('empty');
+					loadComments();
+					$('#comment_text').trumbowyg('empty');
 				}
 			});
 			event.preventDefault();

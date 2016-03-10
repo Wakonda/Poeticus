@@ -1,6 +1,6 @@
 {% form_theme form 'Form/fields.html.twig' %}
 
-{{ form_start(form, {'method' : 'post', 'action' : '', 'attr': {'novalidate': 'novalidate'} }) }}
+{{ form_start(form, {'method' : 'post', 'action' : '', 'attr': {'id': 'form_comment', 'novalidate': 'novalidate'} }) }}
 	<div class="error_message"></div>
 	{{ form_label(form.text) }}
 	<div class="errors">{{ form_errors(form.text) }}</div>

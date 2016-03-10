@@ -11,7 +11,6 @@
 	<script src="{{ app.request.basepath }}/js/DataTables-1.10.0/media/js/jquery.dataTables.js" type="text/javascript"></script>
 	<script src="{{ app.request.basepath }}/js/noty-2.3.4/js/noty/packaged/jquery.noty.packaged.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
-		{# app.security.token.user.username|var_dump #}
 		$(function ()
 		{
 			oTablePoem = $('table.poems_user_datatables').DataTable( {
@@ -133,7 +132,7 @@
 	<table class="poems_user_datatables display">
 		<thead>
 			<th>Titre</th>
-			{% if is_granted("IS_AUTHENTICATED_REMEMBERED") and entity.username == app.security.token.user.username %}
+			{% if is_granted("IS_AUTHENTICATED_REMEMBERED") and entity.username == app.user.username %}
 				<th>Etat</th>
 				<th>Actions</th>
 			{% endif %}

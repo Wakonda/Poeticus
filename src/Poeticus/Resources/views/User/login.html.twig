@@ -5,7 +5,7 @@
 
 {% block main_content %}
 	{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-		Vous êtes déjà connecté en tant que {{ app.security.token.user.username }}
+		Vous êtes déjà connecté en tant que {{ app.user.username }}
 		<a href="{{ path('admin_logout') }}">Déconnexion</a>
 	{% else %}
 		<form action="{{ path('admin_login_check') }}" method="post" novalidate>
