@@ -20,26 +20,29 @@ require_once __DIR__.'/../../simple_html_dom.php';
 
 class IndexController
 {
-    public function indexAction(Request $request, Application $app)
+    public function indexAction(Request $request, Application $app, $test="rr")
     {
-		// Generate XML
-		// die(var_dump($app['routes']));
-		// $entity = $app['repository.poem']->findAll();
-		// die(var_dump($entity));
-		// die(var_dump($app['routes']->get('read')->compile()));
-
 		// test
 		// $test = new MailerPoeticus($app['swiftmailer.options']);
 		// $test->setBody("ok");
 		// $test->setSubject("ok");
 		// $test->setSendTo("amatukami@hotmail.fr");
 		// $test->send();
-		
+
+		// $app['request']->getSession()->set('_locale', 'pt');
+
 		$form = $this->createForm($app, null);
 		$random = $app['repository.poem']->getRandomPoem();
 		
         return $app['twig']->render('Index/index.html.twig', array('form' => $form->createView(), 'random' => $random));
     }
+	
+	public function changeLanguageAction(Request $request, Application $app, $language)
+	{
+		$app['request']->getSession()->set('_locale', $language);
+     
+		return $app->redirect($app["url_generator"]->generate('index'));
+	}
 	
 	public function indexSearchAction(Request $request, Application $app)
 	{
@@ -198,12 +201,16 @@ class IndexController
     {
 		$entities = $app['repository.poem']->getLastEntries();
 
+		$app['locale'] = $app['request']->getLocale();
+
 		return $app['twig']->render('Index/lastPoem.html.twig', array('entities' => $entities));
     }
 
 	public function statPoemAction(Request $request, Application $app)
     {
 		$statistics = $app['repository.poem']->getStat();
+		
+		$app['locale'] = $app['request']->getLocale();
 
 		return $app['twig']->render('Index/statPoem.html.twig', array('statistics' => $statistics));
     }

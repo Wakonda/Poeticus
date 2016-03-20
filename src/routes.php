@@ -2,6 +2,9 @@
 // MAIN
 $app->get('/', 'controllers.index:indexAction')
     ->bind('index');
+
+$app->get('change_language/{language}', 'controllers.index:changeLanguageAction')
+	->bind('change_language');
 	
 $app->get('/error/{code}', 'controllers.index:errorAction')
 	->bind('error');

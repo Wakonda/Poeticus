@@ -851,7 +851,7 @@
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/config/zipball/8c83ff9a2ffbed1e606bc816db11ddc2385a16ee",
+            "url": "https://api.github.com/repos/symfony/config/zipball/38711092665edc06ef55e842942fb813932ff4ac",
             "reference": "8c83ff9a2ffbed1e606bc816db11ddc2385a16ee",
             "shasum": ""
         },
@@ -2586,7 +2586,7 @@
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/855dc0e829fad123966347612b4183e307338c11",
+            "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/9562f8291b98bcd4abd4959ab74f35191d7b34b5",
             "reference": "855dc0e829fad123966347612b4183e307338c11",
             "shasum": ""
         },
@@ -2710,5 +2710,56 @@
         "keywords": [
             "microframework"
         ]
+    },
+    {
+        "name": "symfony/yaml",
+        "version": "v3.0.3",
+        "version_normalized": "3.0.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/yaml.git",
+            "reference": "b5ba64cd67ecd6887f63868fa781ca094bd1377c"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/yaml/zipball/b5ba64cd67ecd6887f63868fa781ca094bd1377c",
+            "reference": "b5ba64cd67ecd6887f63868fa781ca094bd1377c",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.5.9"
+        },
+        "time": "2016-02-23 15:16:06",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "3.0-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Symfony\\Component\\Yaml\\": ""
+            },
+            "exclude-from-classmap": [
+                "/Tests/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
+            }
+        ],
+        "description": "Symfony Yaml Component",
+        "homepage": "https://symfony.com"
     }
 ]

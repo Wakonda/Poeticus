@@ -169,7 +169,6 @@ article
 
 #logo{ 
 	height:80px;
-	/*width:289px;*/
 	color: #8b8585;
 }
 
@@ -294,7 +293,7 @@ width:80px;
 	float: left; font-size:14px;
 	width:30%;clear:both;
 	}
-	#logo{ height:55px; width:200px; margin-left:auto; margin-right:auto;}
+	#logo{ margin-left:auto; margin-right:auto;}
 }
 
 @media screen and (min-width: 421px) and (max-width: 640px) {
@@ -313,7 +312,7 @@ width:80px;
 	float: none; font-size:14px;
 	width:95%;clear:both; 
 	}
-	#logo{ height:55px; width:200px; margin-left:auto; margin-right:auto;}
+	#logo{ margin-left:auto; margin-right:auto;}
 	#logo img { display: none; }
 }
 
@@ -333,7 +332,7 @@ width:80px;
 	float: none; font-size:13px;
 	width:95%;clear:both; 
 	}
-	#logo{ height:41px; width:150px; margin-left:auto; margin-right:auto; margin-bottom: 10px;}
+	#logo{ margin-left:auto; margin-right:auto; margin-bottom: 10px;}
 	#logo img { display: none; }
 }
 @media screen and (min-width: 0px) and (max-width: 319px) {
@@ -351,7 +350,7 @@ width:80px;
 	float: none; font-size:13px;
 	width:95%;clear:both; 
 	}
-	#logo{ no-repeat; height:41px; width:150px; margin-left:auto; margin-right:auto;}
+	#logo{ no-repeat; margin-left:auto; margin-right:auto;}
 	#logo img { display: none; }
 }
 
@@ -813,4 +812,12 @@ td.socialNetwork#twitter {
 }
 td.socialNetwork#googlePlus {
 	padding-top: 6px;
+}
+
+.selected_language {
+	-webkit-filter: brightness(0.6);
+	filter: brightness(0.6);
+	-moz-filter: brightness(0.6);
+	-o-filter: brightness(0.6);
+	-ms-filter: brightness(0.6);
 }

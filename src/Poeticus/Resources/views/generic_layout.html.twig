@@ -68,12 +68,12 @@
 
 				<!-- Nav Element Starts Here -->
 				<nav class="navigation">
-					<a href="{{ path('index') }}"><i class="fa fa-home"></i> Accueil</a>
-					<a href="{{ path('byauthors') }}">Auteurs</a>
-					<a href="{{ path('bycollections') }}">Recueils</a>
-					<a href="{{ path('bycountries') }}">Pays</a>
-					<a href="{{ path('bypoeticforms') }}">Formes poétiques</a>
-					<a href="{{ path('bypoemusers') }}">Vos poésies</a>
+					<a href="{{ path('index') }}"><i class="fa fa-home"></i> {{ 'menu.top.MainPage'|trans }}</a>
+					<a href="{{ path('byauthors') }}">{{ 'menu.top.Authors'|trans }}</a>
+					<a href="{{ path('bycollections') }}">{{ 'menu.top.Collections'|trans }}</a>
+					<a href="{{ path('bycountries') }}">{{ 'menu.top.Countries'|trans }}</a>
+					<a href="{{ path('bypoeticforms') }}">{{ 'menu.top.PoeticForms'|trans }}</a>
+					<a href="{{ path('bypoemusers') }}">{{ 'menu.top.YourPoems'|trans }}</a>
 				</nav>
 			</header>
 			<!-- Header Element Ends Here -->
@@ -82,14 +82,14 @@
 				<!-- Sidebar Element Starts Here -->
 				<aside id="sidebar-wrapper">
 					<nav class="sidebar">
-						<h1>Dernières poésies</h1>
+						<h1>{{ 'menu.left.RecentPoems'|trans }}</h1>
 						{{ render(app.request.baseUrl ~ '/last_poem') }}
 						<span class="follow_on_twitter"><a href="https://twitter.com/poeticus12" class="twitter-follow-button" data-show-count="false" data-lang="fr" data-size="large" data-dnt="true">Suivre @poeticus12</a>
 						<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script></span>
 					</nav>
 
 					<nav class="sidebar">
-						<h1>Publicité</h1>
+						<h1>{{ 'menu.left.Publicity'|trans }}</h1>
 						<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 						<!-- Poeticus_right_menu -->
 						<ins class="adsbygoogle"
@@ -101,26 +101,34 @@
 						</script>
 					</nav>
 					<nav class="sidebar">
-						<h1>Statistiques</h1>
+						<h1>{{ 'menu.left.Statistics'|trans }}</h1>
 						{{ render(app.request.baseUrl ~ '/stat_poem') }}
 					</nav>
 
 					<nav class="sidebar">
-						<h1>Espace membre </h1>
+						<h1>{{ 'menu.left.MemberArea'|trans }}</h1>
 						<ul>
 							{% if is_granted('IS_AUTHENTICATED_FULLY') %}
 								{% if is_granted("ROLE_ADMIN") %}
-									<li><a href="{{ path('admin') }}">Admin</a></li>
+									<li><a href="{{ path('admin') }}">{{ 'menu.left.Admin'|trans }}</a></li>
 								{% endif %}
-								<li><a href="{{ path('user_show') }}">Mon profil</a></li>
-								<li><a href="{{ path('user_udpatepassword') }}">Modifier mon mot de passe</a></li>
-								<li><a href="{{ path('user_edit') }}">Modifier mon profil</a></li>
-								<li><a href="{{ path('poemuser_new') }}">Ecrire une poésie</a></li>
-								<li><a href="{{ path('admin_logout') }}">Déconnexion</a></li>
+								<li><a href="{{ path('user_show') }}">{{ 'menu.left.MyProfile'|trans }}</a></li>
+								<li><a href="{{ path('user_udpatepassword') }}">{{ 'menu.left.ChangeMyPassword'|trans }}</a></li>
+								<li><a href="{{ path('user_edit') }}">{{ 'menu.left.EditProfile'|trans }}</a></li>
+								<li><a href="{{ path('poemuser_new') }}">{{ 'menu.left.WritePoetry'|trans }}</a></li>
+								<li><a href="{{ path('admin_logout') }}">{{ 'menu.left.LogOut'|trans }}</a></li>
 							{% else %}
-								<li><a href="{{ path('login') }}" alt="">Se connecter</a></li>
-								<li><a href="{{ path('user_new') }}" alt="">Créer un compte utilisateur</a></li>
+								<li><a href="{{ path('login') }}" alt="">{{ 'menu.left.LogIn'|trans }}</a></li>
+								<li><a href="{{ path('user_new') }}" alt="">{{ 'menu.left.CreateAccount'|trans }}</a></li>
 							{% endif %}
+						</ul>
+					</nav>
+					
+					<nav class="sidebar">
+						<h1>{{ 'menu.left.Languages'|trans }}</h1>
+							<a href="{{ path('change_language', {'language':'fr'}) }}" title="Français"><img src="{{ app.request.basepath }}/photo/language/fr.png" alt="Fr" width="22" {{ (app.request.locale == "fr") ? 'class="selected_language"' : "" }}></a>
+							| <a href="{{ path('change_language', {'language':'it'}) }}" title="Italiano"><img src="{{ app.request.basepath }}/photo/language/it.png" alt="It" width="22" {{ (app.request.locale == "it") ? 'class="selected_language"' : "" }}></a>
+							| <a href="{{ path('change_language', {'language':'pt'}) }}" title="Português"><img src="{{ app.request.basepath }}/photo/language/pt.png" alt="Pt" width="22" {{ (app.request.locale == "pt") ? 'class="selected_language"' : "" }}></a>
 						</ul>
 					</nav>
 				</aside>
@@ -156,7 +164,7 @@
 			<!-- Footer Element Starts Here -->
 			<footer id="copyrights">
 				<p>© 2014 - {{ "now"|date("Y") }} <a href="{{ path('page_display', {'name' : 'copyright'}) }}">Poéticus</a></p>
-				<p><a href="{{ path('page_display', {'name' : 'about'}) }}">A Propos</a> - <a href="{{ path('contact') }}">Contactez-nous</a> - <a href="{{ path('version') }}">version {{ number_version() }}</a></p>
+				<p><a href="{{ path('page_display', {'name' : 'about'}) }}">{{ 'menu.footer.About'|trans }}</a> - <a href="{{ path('contact') }}">{{ 'menu.footer.ContactUs'|trans }}</a> - <a href="{{ path('version') }}">{{ 'menu.footer.Version'|trans }} {{ number_version() }}</a></p>
 				<address>
 					<a href="http://wakonda.guru">Wakonda.guru</a>
 				</address>
@@ -183,7 +191,6 @@
 			
 			$(function() {
 				$(document).BackToTop();
-
 				resizeAsideArticle();
 			});
 			

@@ -16,6 +16,8 @@ class SendPoemController
     public function indexAction(Request $request, Application $app, $poemId)
     {
 		$form = $app['form.factory']->create(SendPoemType::class, null);
+		
+		$app['locale'] = $app['request']->getLocale();
 
         return $app['twig']->render('Index/send_poem.html.twig', array('form' => $form->createView(), 'poemId' => $poemId));
     }

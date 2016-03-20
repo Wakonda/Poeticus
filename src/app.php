@@ -3,6 +3,7 @@
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Translation\Loader\YamlFileLoader;
 
 // Register service providers.
 $app->register(new Silex\Provider\ServiceControllerServiceProvider());
@@ -47,8 +48,18 @@ $app->register(new Silex\Provider\SecurityServiceProvider(), array(
 $app->register(new Silex\Provider\RememberMeServiceProvider());
 
 $app->register(new Silex\Provider\TranslationServiceProvider(), array(
-    'locale' => 'fr',
+    'locale' => 'fr'
 ));
+
+$app['translator'] = $app->share($app->extend('translator', function($translator, $app) {
+    $translator->addLoader('yaml', new YamlFileLoader());
+
+    $translator->addResource('yaml', __DIR__.'/Poeticus/Resources/translations/fr.yml', 'fr');
+    $translator->addResource('yaml', __DIR__.'/Poeticus/Resources/translations/pt.yml', 'pt');
+    $translator->addResource('yaml', __DIR__.'/Poeticus/Resources/translations/it.yml', 'it');
+
+    return $translator;
+}));
 
 $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
     'db.orm.proxies_namespace'     => 'DoctrineProxy',
@@ -60,6 +71,13 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
     )),
 ));
 
+$app->before(function () use ($app) {
+    if ($locale = $app['request']->get('lang') or $locale  = $app['request']->getSession()->get('_locale')) {
+		$app['locale'] = $locale;
+		$app['request']->setLocale($locale);
+    }
+});
+
 $app->boot();
 
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
@@ -69,8 +87,6 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
     ),
     'twig.path' => array(__DIR__ . '/Poeticus/Resources/views')
 ));
-
-
 
 $app['twig']->addGlobal("dev", 1);
 
