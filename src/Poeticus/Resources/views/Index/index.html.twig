@@ -60,7 +60,11 @@
 	{% if random is not null %}
 	<h3><a href="{{ path('read', {'id' : random.id}) }}" alt="{{ random.title }}">{{ random.title }}</a></h3>
 	<div>
-		{{ random.text|raw }}
+		{% if random.poeticform is not null and random.poeticform.typeContentPoem == constant('Poeticus\\Entity\\PoeticForm::IMAGETYPE') %}
+			{{ ("photo/poem/"~entity.photo)|max_size_image(app.request.basepath) }}
+		{% else %}
+			{{ random.text|raw }}
+		{% endif %}
 		<hr>
 		<a href="{{ path('author', {'id' : random.biography.id }) }}" alt="">{{ random.biography.title }}</a>
 		-

@@ -21,7 +21,7 @@ menu:
         ChangeMyPassword: "Modificare la password"
         EditProfile: "Modifica profilo"
         WritePoetry: "Scrivere poesie"
-        SignOut: "Esci"
+        LogOut: "Esci"
         Admin: "Admin"
     footer:
         About: "A proposito"

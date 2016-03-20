@@ -15,7 +15,7 @@ class PoeticForm
      * @var string
      */
     protected $title;
-	
+
     /**
      *
      * @var text
@@ -24,9 +24,23 @@ class PoeticForm
 
     /**
      *
+     * @var string
+     */
+    protected $typeContentPoem;
+
+    /**
+     *
      * @var image
      */
     protected $image;
+	
+	const IMAGETYPE = "image"; 
+	const TEXTTYPE = "text"; 
+	
+	public function __construct()
+	{
+		$this->typeContentPoem = self::TEXTTYPE;
+	}
 
     public function getId()
     {
@@ -66,5 +80,15 @@ class PoeticForm
     public function setImage($image)
     {
         $this->image = $image;
+    }
+
+    public function getTypeContentPoem()
+    {
+        return $this->typeContentPoem;
+    }
+
+    public function setTypeContentPoem($typeContentPoem)
+    {
+        $this->typeContentPoem = $typeContentPoem;
     }
 }

@@ -32,7 +32,8 @@ class PoemRepository
         'user_id' => (!is_object($entity->getUser())) ? $entity->getUser() : $entity->getUser()->getId(),
         'country_id' => ($entity->getCountry() == 0) ? null : $entity->getCountry(),
         'collection_id' => ($entity->getCollection() == 0) ? null : $entity->getCollection(),
-		'state' => ($entity->getState() == null) ? 0 : $entity->getState()
+		'state' => ($entity->getState() == null) ? 0 : $entity->getState(),
+		'photo' => $entity->getPhoto()
 		);
 
 		if(empty($id))
@@ -306,6 +307,7 @@ class PoemRepository
         $entity->setReleasedDate($data['releasedDate']);
         $entity->setAuthorType($data['authorType']);
         $entity->setState($data['state']);
+        $entity->setPhoto($data['photo']);
 		
 		if($show)
 		{

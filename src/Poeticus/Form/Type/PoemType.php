@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -28,8 +29,16 @@ class PoemType extends AbstractType
             ->add('title', TextType::class, array(
                 'constraints' => new Assert\NotBlank(), 'label' => 'Titre'
             ))
+            ->add('poeticform', ChoiceType::class, array(
+											'label' => 'Forme poétique', 
+											'multiple' => false,
+											'required' => false,
+											'expanded' => false,
+											'placeholder' => 'Choisissez une option',
+											'choices' => $poeticFormArray
+											))
 			->add('text', TextareaType::class, array(
-                'constraints' => new Assert\NotBlank(), 'attr' => array('class' => 'redactor'), 'label' => 'Texte'
+                'attr' => array('class' => 'redactor'), 'label' => 'Texte'
             ))
 			->add('releasedDate', IntegerType::class, array(
                 'label' => 'Date de publication'
@@ -46,14 +55,6 @@ class PoemType extends AbstractType
 											'constraints' => array(new Assert\NotBlank()),
 										    'choices' => array("Biographie" => "biography", "Utilisateur" => "user"),
 											'attr' => array('class' => 'authorType_select')
-											))
-            ->add('poeticform', ChoiceType::class, array(
-											'label' => 'Forme poétique', 
-											'multiple' => false,
-											'required' => false,
-											'expanded' => false,
-											'placeholder' => 'Choisissez une option',
-											'choices' => $poeticFormArray
 											))
 			->add('user', ChoiceType::class, array(
 											'label' => 'Utilisateur', 
@@ -89,7 +90,8 @@ class PoemType extends AbstractType
 											'placeholder' => 'Choisissez une option',
 										    'choices' => $collectionArray
 											))
-			
+			->add('photo', FileType::class, array('data_class' => null, "label" => "Image", "required" => true
+            ))
             ->add('save', SubmitType::class, array('label' => 'Sauvegarder', 'attr' => array('class' => 'btn btn-success')));
     }
 

@@ -21,7 +21,7 @@ menu:
         ChangeMyPassword: "Alterar minha senha"
         EditProfile: "Editar perfil"
         WritePoetry: "Escrever poesia"
-        SignOut: "Sair"
+        LogOut: "Sair"
         Admin: "Administrador"
     footer:
         About: "Sobre"

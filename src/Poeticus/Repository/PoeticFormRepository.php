@@ -25,7 +25,8 @@ class PoeticFormRepository
 		$entityData = array(
 		'title' => $entity->getTitle(),
 		'text' => $entity->getText(),
-		'image' => $entity->getImage()
+		'image' => $entity->getImage(),
+		'typeContentPoem' => $entity->getTypeContentPoem()
 		);
 
 		if(empty($id))
@@ -127,6 +128,7 @@ class PoeticFormRepository
         $poeticForm->setTitle($data['title']);
         $poeticForm->setText($data['text']);
         $poeticForm->setImage($data['image']);
+        $poeticForm->setTypeContentPoem($data['typeContentPoem']);
 
         return $poeticForm;
     }

@@ -91,6 +91,28 @@
 					}
 				});
 			});
+			
+			$("#{{ form.vars['id'] }}_poeticform").change(function()
+			{
+				$.ajax({
+					type: "POST",
+					url: "{{ path('select_poeticform') }}",
+					data: { "id" : $(this).val() },
+					success: function(data)
+					{
+						if(data.typeContentPoem == "{{ constant('Poeticus\\Entity\\PoeticForm::IMAGETYPE') }}") {
+							$("#text_container").hide();
+							$("#photo_container").show();
+						}
+						else {
+							$("#text_container").show();
+							$("#photo_container").hide();
+						}
+					}
+				});
+			});
+
+			$("#{{ form.vars['id'] }}_poeticform").change();
 			$("#{{ form.vars['id'] }}_biography").change();
 			$("#{{ form.vars['id'] }}_collection").change();
 		});
@@ -107,12 +129,16 @@
 			<td><div class="errors">{{ form_errors(form.title) }}</div>{{ form_widget(form.title, {'attr':{'class':'full_width form-control'}}) }}</td>
 		</tr>
 		<tr>
-			<th>{{ form_label(form.text) }}</th>
-			<td><div class="errors">{{ form_errors(form.text) }}</div>{{ form_widget(form.text, { 'attr' : { 'class' : 'text form-control' }}) }}</td>
-		</tr>
-		<tr>
 			<th>{{ form_label(form.poeticform) }}</th>
 			<td><div class="errors">{{ form_errors(form.poeticform) }}</div>{{ form_widget(form.poeticform, {'attr':{'class':'full_width form-control'}}) }}</td>
+		</tr>
+		<tr id="photo_container">
+			<th>{{ form_label(form.photo) }}</th>
+			<td><div class="errors">{{ form_errors(form.photo) }}</div>{{ form_widget(form.photo) }}</td>
+		</tr>
+		<tr id="text_container">
+			<th>{{ form_label(form.text) }}</th>
+			<td><div class="errors">{{ form_errors(form.text) }}</div>{{ form_widget(form.text, { 'attr' : { 'class' : 'text form-control' }}) }}</td>
 		</tr>
 		<tr>
 			<th>{{ form_label(form.authorType) }}</th>

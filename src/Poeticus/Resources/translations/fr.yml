@@ -21,7 +21,7 @@ menu:
         ChangeMyPassword: "Modifier mon mot de passe"
         EditProfile: "Modifier mon profil"
         WritePoetry: "Ecrire une poésie"
-        SignOut: "Déconnexion"
+        LogOut: "Déconnexion"
         Admin: "Admin"
     footer:
         About: "À propos"

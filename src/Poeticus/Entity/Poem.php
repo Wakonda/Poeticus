@@ -69,6 +69,12 @@ class Poem
      * @var integer
      */
     protected $state;
+	
+    /**
+     *
+     * @var string
+     */
+    protected $photo;
 
 	public function getStateString()
 	{
@@ -240,5 +246,15 @@ class Poem
     public function setState($state)
     {
         $this->state = $state;
+    }
+
+    public function getPhoto()
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto($photo)
+    {
+        $this->photo = $photo;
     }
 }

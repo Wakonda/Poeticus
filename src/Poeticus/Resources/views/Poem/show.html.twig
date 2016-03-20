@@ -11,7 +11,13 @@
 		</tr>
 		<tr>
 			<th>Texte</th>
-			<td>{{ entity.text|raw }}</td>
+			<td>
+			{% if entity.poeticform is not null and entity.poeticform.typeContentPoem == constant('Poeticus\\Entity\\PoeticForm::IMAGETYPE') %}
+				{{ ("photo/poem/"~entity.photo)|max_size_image(app.request.basepath) }}
+			{% else %}
+				{{ entity.text|raw }}
+			{% endif %}
+			</td>
 		</tr>
 		<tr>
 			<th>Date de publication</th>

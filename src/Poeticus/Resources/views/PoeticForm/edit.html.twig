@@ -42,6 +42,10 @@
 			<th>{{ form_label(form.image) }}</th>
 			<td><p>Photo actuelle : {{ entity.image }}</p><div class="errors">{{ form_errors(form.image) }}</div>{{ form_widget(form.image) }}</td>
 		</tr>
+		<tr>
+			<th>{{ form_label(form.typeContentPoem) }}</th>
+			<td><div class="errors">{{ form_errors(form.typeContentPoem) }}</div>{{ form_widget(form.typeContentPoem, {'attr':{'class':'full_width form-control'}}) }}</td>
+		</tr>
 	</table>
 	<hr />
 	{{ form_widget(form.save, {'icon': 'fa-save'}) }}

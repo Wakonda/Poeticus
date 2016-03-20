@@ -141,6 +141,9 @@ $app->post('/list_selected_biography', 'controllers.poemadmin:listSelectedBiogra
 $app->post('/list_selected_collection', 'controllers.poemadmin:listSelectedCollectionAction')
 	->bind('list_selected_collection');
 
+$app->post('/select_poeticform', 'controllers.poemadmin:selectPoeticFormAction')
+	->bind('select_poeticform');
+
 $app->get('/user/poem_user_datatables/{username}', 'controllers.user:poemsUserDatatablesAction')
 	->bind('poem_user_datatables');
 
