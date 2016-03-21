@@ -338,7 +338,6 @@ class PoemRepository
 		$qb->select("bp.id AS id, bp.title AS author, COUNT(pf.id) AS number_poems_by_author")
 		   ->from("poem", "pf")
 		   ->where("pf.authorType = 'biography'")
-		   // ->setParameter("authorType", "biography")
 		   ->leftjoin("pf", "biography", "bp", "pf.biography_id = bp.id")
 		   ->groupBy("bp.id");
 		
@@ -371,10 +370,9 @@ class PoemRepository
 
 		$aColumns = array( 'co.title', 'COUNT(pf.id)');
 		
-		$qb->select("co.id AS poeticform_id, co.title AS poeticform, COUNT(pf.id) AS number_poems_by_poeticform")
+		$qb->select("pf.id AS id, co.id AS poeticform_id, co.title AS poeticform, COUNT(pf.id) AS number_poems_by_poeticform")
 		   ->from("poem", "pf")
 		   ->where("pf.authorType = 'biography'")
-		   // ->setParameter("authorType", "")
 		   ->innerjoin("pf", "poeticform", "co", "pf.poeticform_id = co.id")
 		   ->groupBy("co.id");
 		
@@ -443,7 +441,7 @@ class PoemRepository
 
 		$aColumns = array( 'co.title', 'bp.title', 'COUNT(pf.id)');
 		
-		$qb->select("bp.id AS author_id, co.id AS collection_id, bp.title AS author, co.title AS collection, COUNT(pf.id) AS number_poems_by_collection")
+		$qb->select("pf.id AS id, bp.id AS author_id, co.id AS collection_id, bp.title AS author, co.title AS collection, COUNT(pf.id) AS number_poems_by_collection")
 		   ->from("poem", "pf")
 		   ->leftjoin("pf", "biography", "bp", "pf.biography_id = bp.id")
 		   ->innerjoin("pf", "collection", "co", "pf.collection_id = co.id")
@@ -516,10 +514,9 @@ class PoemRepository
 
 		$aColumns = array( 'co.title', 'COUNT(pf.id)');
 		
-		$qb->select("co.id AS country_id, co.title AS country_title, COUNT(pf.id) AS number_poems_by_country, co.flag AS flag")
+		$qb->select("pf.id AS id, co.id AS country_id, co.title AS country_title, COUNT(pf.id) AS number_poems_by_country, co.flag AS flag")
 		   ->from("poem", "pf")
 		   ->where("pf.authorType = 'biography'")
-		   // ->setParameter("authorType", "biography")
 		   ->innerjoin("pf", "country", "co", "pf.country_id = co.id")
 			   ->groupBy("co.id")
 		   ;
