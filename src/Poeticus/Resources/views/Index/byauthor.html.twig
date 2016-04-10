@@ -1,6 +1,6 @@
 {% extends generic_layout %}
 
-{% block head_title %}Par Auteurs{% endblock %}
+{% block head_title %}{{ 'biography.index.ByAuthors'|trans }}{% endblock %}
 
 {% block style_additional %}
 	<link rel="stylesheet" href="{{ app.request.basepath }}/js/DataTables-1.10.0/media/css/jquery.dataTables.css" type="text/css" media="screen" />
@@ -16,7 +16,7 @@
 		{
 			oTable = $('table.index_directories').dataTable( {
 				"oLanguage": {
-					"sUrl": "{{ app.request.basepath }}/js/DataTables-1.10.0/language/dataTables.fr.txt"
+					"sUrl": "{{ app.request.basepath }}/js/DataTables-1.10.0/language/dataTables.{{ app.request.locale }}.txt"
 				},
 				"bFilter": true,
 				"bInfo": false,
@@ -33,13 +33,13 @@
 	</script>
 {% endblock %}
 
-{% block main_title %}Par auteurs{% endblock %}
+{% block main_title %}{{ 'biography.index.ByAuthors'|trans }}{% endblock %}
 
 {% block main_content %}
-		<table class="index_directories display">
+	<table class="index_directories display">
 		<thead>
-			<th>Auteur</th>
-			<th class="phone">Nombre</th>
+			<th>{{ 'biography.table.Author'|trans }}</th>
+			<th class="phone">{{ 'biography.table.Number'|trans }}</th>
 		</thead>
 		<tbody>
 		</tbody>

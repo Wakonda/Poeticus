@@ -16,7 +16,7 @@
 		{
 			oTable = $('table.index_directories').dataTable( {
 				"oLanguage": {
-					"sUrl": "{{ app.request.basepath }}/js/DataTables-1.10.0/language/dataTables.fr.txt"
+					"sUrl": "{{ app.request.basepath }}/js/DataTables-1.10.0/language/dataTables.{{ app.request.locale }}.txt"
 				},
 				"bFilter": true,
 				"bInfo": false,
@@ -42,7 +42,7 @@
 	<table class="show">
 		{% if entity.dayBirth is not null or entity.monthBirth is not null or entity.yearBirth is not null %}
 			<tr>
-			<th><span class="bold">Date de naissance : </span></th>
+			<th><span class="bold">{{ 'biography.field.BirthDate'|trans }} : </span></th>
 			<td>
 			{% if entity.dayBirth is not null and entity.monthBirth is not null and entity.yearBirth is not null %}
 				{{ entity.dayBirth~" "~entity.monthBirth|text_month~" "~entity.yearBirth }}
@@ -56,7 +56,7 @@
 		{% endif %}
 		{% if entity.dayDeath is not null or entity.monthDeath is not null or entity.yearDeath is not null %}
 			<tr>
-			<th><span class="bold">Date de décès : </span></th>
+			<th><span class="bold">{{ 'biography.field.DeathDate'|trans }} : </span></th>
 			<td>
 			{% if entity.dayDeath is not null and entity.monthDeath is not null and entity.yearDeath is not null %}
 				{{ entity.dayDeath~" "~entity.monthDeath|text_month~" "~entity.yearDeath }}
@@ -68,14 +68,14 @@
 			</td>
 			</tr>
 		{% endif %}
-		<tr><th><span class="bold">Nationalité : </span></th><td><img class="flag" src="{{ app.request.basepath }}/photo/country/{{ entity.country.flag }}" /> {{ entity.country|toString('title') }}</td></tr>
+		<tr><th><span class="bold">{{ 'biography.field.Nationality'|trans }} : </span></th><td><img class="flag" src="{{ app.request.basepath }}/photo/country/{{ entity.country.flag }}" /> {{ entity.country|toString('title') }}</td></tr>
 	</table>
 	<hr>
-	<h3>Ses poésies</h3>
+	<h3>{{ 'biography.index.HisPoems'|trans }}</h3>
 		<table class="index_directories display">
 		<thead>
-			<th>Titre</th>
-			<th class="phone">Recueil</th>
+			<th>{{ 'biography.table.Title'|trans }}</th>
+			<th class="phone">{{ 'biography.table.Collection'|trans }}</th>
 		</thead>
 		<tbody>
 		</tbody>

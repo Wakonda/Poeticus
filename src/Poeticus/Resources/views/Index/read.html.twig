@@ -9,6 +9,7 @@
 
 {% block script_additional %}
 <script src="{{ app.request.basepath }}/js/jquery.qtip/jquery.qtip.min.js"></script>
+<script type="text/javascript" src="{{ app.request.basepath }}/js/aterkik-jquery-tweet-highlighted/jquery.tweetHighlighted.js"></script>
 <script type="text/javascript">
 	$(function()
 	{
@@ -77,16 +78,41 @@
 
 			style: { classes: 'qtip-tipped' }
 		});
+		
+		var popupLocation = popupCenter(500, 300);
+		
+		$('div#main_poem_text').tweetHighlighted({
+			node: '<a href="#"><img src="{{ app.request.basepath }}/js/aterkik-jquery-tweet-highlighted/tweet.png" width="90px" height="30px" alt="tweet icon"></a>',
+			cssClass: 'btn btn-primary',
+			minLength: 6,
+			maxLength: 144 * 2,
+			extra: '- {{ url("read", { "id" : entity.id }) }}',
+			via: 'poeticus12',
+			popArgs: 'width=500,height=300,toolbar=0,top=' + popupLocation[0] + ",left=" + popupLocation[1]
+		});
+		
+		function popupCenter(w, h) {
+			var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;
+			var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+
+			var left = ((width / 2) - (w / 2)) + dualScreenLeft;
+			var top = (screen.height/2)-(h/2);
+			
+			return [top, left];
+		}
+
+//alert(top + " "+ screen.height)
 	});
 </script>
 {% endblock %}
 
 {% block main_content %}
 	<div class="displayNone success" id="send_poem_result"></div>
-	<div>
+	<div id="main_poem_text">
 		{{ entity.text|raw }}
 	</div>
 	<hr>
+	<p>
 	{% if entity.authorType == "biography" %}
 		<a href="{{ path('author', {'id' : entity.biography.id }) }}" alt="">{{ entity.biography.title }}</a>
 	{% else %}
@@ -103,6 +129,7 @@
 		- 
 		<a href="{{ path('poeticform', { 'id' : entity.poeticform.id }) }}" alt="">{{ entity.poeticform.title }}</a>
 	{% endif %}
+	</p>
 	<table class="hidden_print">
 		<tbody>
 			<tr>

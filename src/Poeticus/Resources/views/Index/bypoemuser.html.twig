@@ -16,7 +16,7 @@
 		{
 			oTable = $('table.index_directories').dataTable( {
 				"oLanguage": {
-					"sUrl": "{{ app.request.basepath }}/js/DataTables-1.10.0/language/dataTables.fr.txt"
+					"sUrl": "{{ app.request.basepath }}/js/DataTables-1.10.0/language/dataTables.{{ app.request.locale }}.txt"
 				},
 				"bFilter": true,
 				"bInfo": false,

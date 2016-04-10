@@ -15,7 +15,7 @@
 		{
 			oTablePoem = $('table.poems_user_datatables').DataTable( {
 				"oLanguage": {
-					"sUrl": "{{ app.request.basepath }}/js/DataTables-1.10.0/language/dataTables.fr.txt"
+					"sUrl": "{{ app.request.basepath }}/js/DataTables-1.10.0/language/dataTables.{{ app.request.locale }}.txt"
 				},
 				"bFilter": true,
 				"bInfo": true,
@@ -70,7 +70,7 @@
 
 			$('table.comments_user_datatables').dataTable( {
 				"oLanguage": {
-					"sUrl": "{{ app.request.basepath }}/js/DataTables-1.10.0/language/dataTables.fr.txt"
+					"sUrl": "{{ app.request.basepath }}/js/DataTables-1.10.0/language/dataTables.{{ app.request.locale }}.txt"
 				},
 				"bFilter": true,
 				"bInfo": true,
@@ -85,7 +85,7 @@
 			
 			$('table.votes_user_datatables').dataTable( {
 				"oLanguage": {
-					"sUrl": "{{ app.request.basepath }}/js/DataTables-1.10.0/language/dataTables.fr.txt"
+					"sUrl": "{{ app.request.basepath }}/js/DataTables-1.10.0/language/dataTables.{{ app.request.locale }}.txt"
 				},
 				"bFilter": true,
 				"bInfo": true,

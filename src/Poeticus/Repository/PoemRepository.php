@@ -275,7 +275,7 @@ class PoemRepository
 		}
 		if($count)
 		{
-			$qb->select("COUNT(*) AS count");
+			$qb->select("COUNT(DISTINCT pf.id) AS count");
 			$results = $qb->execute()->fetch();
 
 			return $results["count"];

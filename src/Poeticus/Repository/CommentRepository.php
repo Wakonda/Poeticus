@@ -97,6 +97,8 @@ class CommentRepository
 	public function displayComments($poemId, $max_comment_by_page, $first_message_to_display)
 	{
 		$qb = $this->db->createQueryBuilder();
+		
+		$first_message_to_display = ($first_message_to_display < 0) ? 0 : $first_message_to_display;
 
 		$qb->select("*")
 		   ->from("comment", "c")

@@ -27,3 +27,16 @@ menu:
         About: "A proposito"
         ContactUs: "Contattaci"
         Version: "Versione"
+biography:
+    index:
+        ByAuthors: "Per autore"
+        HisPoems: "Le sue poesie"
+    field:
+        BirthDate: "Data di nascita"
+        DeathDate: "Data della morte"
+        Nationality: "Nazionalità"
+    table:
+        Number: "Numero"
+        Author: "Autore"
+        Title: "Titolo"
+        Collection: "Raccolta"
