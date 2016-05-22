@@ -243,6 +243,7 @@ $app['swiftmailer.options'] = array(
 );
 
 // Global
+$app['languages'] = array('fr' => 'fr_FR', 'it' => 'it_IT', 'pt' => 'pt_PT');
 $app['web_directory'] = realpath(__DIR__."/../web");
 
 return $app;

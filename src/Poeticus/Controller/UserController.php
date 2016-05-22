@@ -216,15 +216,13 @@ class UserController implements ControllerProviderInterface
 	{
         $form = $app['form.factory']->create(ForgottenPasswordType::class, null);
 		$form->handleRequest($request);
-	
-		$formArray = $request->request->get("forgottenpassword");
 
-		$params = $request->request->get("forgottenpassword");
+		$params = $request->request->get("forgotten_password");
 
 		if($params["captcha"] != "" and $app["session"]->get("captcha_word") != $params["captcha"])
 			$form->get("captcha")->addError(new FormError('Le mot doit correspondre à l\'image'));
-		
-		$entity = $app['repository.user']->findByUsernameOrEmail($formArray["emailUsername"]);
+
+		$entity = $app['repository.user']->findByUsernameOrEmail($params["emailUsername"]);
 		
 		if(empty($entity))
 			$form->get("emailUsername")->addError(new FormError("Le nom d'utilisateur ou l'adresse email n'existe pas"));

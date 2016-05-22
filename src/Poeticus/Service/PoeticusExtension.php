@@ -33,7 +33,8 @@ class PoeticusExtension extends \Twig_Extension
 		return array(
 			'captcha' => new \Twig_Function_Method($this, 'generateCaptcha'),
 			'gravatar' => new \Twig_Function_Method($this, 'generateGravatar'),
-			'number_version' => new \Twig_Function_Method($this, 'getCurrentVersion')
+			'number_version' => new \Twig_Function_Method($this, 'getCurrentVersion'),
+			'current_url' => new \Twig_Function_Method($this, 'getCurrentURL')
 		);
 	}
 
@@ -119,5 +120,10 @@ class PoeticusExtension extends \Twig_Extension
 	public function getCurrentVersion()
 	{
 		return $this->app['repository.version']->getCurrentVersion();
+	}
+	
+	public function getCurrentURL($server)
+	{
+		return $server->get("REQUEST_SCHEME").'://'.$server->get("SERVER_NAME").$server->get("REQUEST_URI");
 	}
 }
