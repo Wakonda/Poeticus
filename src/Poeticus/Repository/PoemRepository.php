@@ -128,7 +128,8 @@ class PoemRepository
 		$qb = $this->db->createQueryBuilder();
 
 		$qb->select("pf.*")
-		   ->from("poem", "pf");
+		   ->from("poem", "pf")
+		   ->leftjoin("pf", "country", "pfc", "pf.country_id = pfc.id");
 
 		if(!empty($datasObject->title))
 		{
