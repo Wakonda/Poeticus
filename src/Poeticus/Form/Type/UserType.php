@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class UserType extends AbstractType
@@ -60,6 +61,7 @@ class UserType extends AbstractType
 		{
 			$builder
 				->add('password', RepeatedType::class, array(
+					'type' => PasswordType::class,
 					'label' => 'Mot de passe',
 					'invalid_message' => 'Les mots de passe doivent correspondre',
 					'constraints' => new Assert\NotBlank(),

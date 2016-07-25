@@ -194,7 +194,6 @@ class IndexController
 		$response->headers->set('Content-Type', 'application/json');
 		return $response;
 	}
-	
 	// ENDAUTHOR
 
 	public function lastPoemAction(Request $request, Application $app)

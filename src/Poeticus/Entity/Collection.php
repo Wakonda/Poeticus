@@ -46,6 +46,12 @@ class Collection
 	 */
 	protected $widgetProduct;
 	
+	/**
+	 *
+	 * @var \Poeticus\Entity\Language
+	 */
+	protected $language
+	
     public function getId()
     {
         return $this->id;
@@ -115,4 +121,14 @@ class Collection
     {
         $this->widgetProduct = $widgetProduct;
     }
+
+	public function getLanguage()
+	{
+		return $this->language;
+	}
+	
+	public function setLanguage($language)
+	{
+		$this->language = $language;
+	}
 }

@@ -62,9 +62,15 @@ class Biography
 
     /**
      *
-     * @var \Poetic\Entity\Country
+     * @var \Poeticus\Entity\Country
      */
     protected $country;
+	
+	/**
+	 *
+	 * @var \Poeticus\Entity\Language
+	 */
+	protected $language
 	
     public function getId()
     {
@@ -175,4 +181,14 @@ class Biography
     {
         $this->country = $country;
     }
+	
+	public function getLanguage()
+	{
+		return $this->language;
+	}
+	
+	public function setLanguage($language)
+	{
+		$this->language = $language;
+	}
 }
