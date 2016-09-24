@@ -30,6 +30,16 @@ menu:
 main:
     index:
         WelcomeTo: "Bem-vindo ao Poéticus"
+        Search: "Cercare la poesia"
+    field:
+        Title: "Titolo"
+        Keywords: "Parola chiave"
+        Author: "Autore"
+        Country: "Paese"
+        Collection: "Raccolta"
+        PoeticForm: "Forma poetica"
+        ChooseAnOption: "Seleziona una delle opzioni"
+        Search: "Cercare"
 biography:
     index:
         ByAuthors: "Per autore"
@@ -101,3 +111,12 @@ user:
         OR: "O"
         SelectFile: "Selezionare un file"
         UseGravatar: "Utilizza un gravatar"
+        PasswordsMustMatch: "Le password devono corrispondere"
+forgottenPassword:
+    index:
+        ResetPassword: "Reimposta password"
+        NewPasswordSend: "Compila uno dei campi per ricevere una password temporanea tramite email."
+    field:
+        EmailUsername: "Indirizzo email o Nome utente"
+        Captcha: "Inserisci il testo che vedi sull'immagine"
+        Send: "Reimposta password"

@@ -1,6 +1,6 @@
 {% extends generic_layout %}
 
-{% block head_title %}Accueil{% endblock %}
+{% block head_title %}Poéticus{% endblock %}
 
 {% block script_additional %}
 	<script src="{{ app.request.basepath }}/js/jquery-ui-1.11.0/jquery-ui.min.js"></script>	
@@ -22,7 +22,7 @@
 {% endblock %}
 
 {% block main_content %}
-	<h2>Rechercher une poésie</h2>
+	<h2>{{ 'main.index.Search'|trans }}</h2>
 	{% form_theme form 'Form/fields.html.twig' %}
 	{{ form_start(form, {'method' : 'post', 'action' : path('index_search') , 'attr': {'novalidate': 'novalidate'} }) }}
 		<table class="form_grid">

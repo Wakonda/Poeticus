@@ -18,22 +18,22 @@ class IndexSearchType extends AbstractType
 		$countryArray = $options["countries"];
 	
         $builder
-            ->add('title', TextType::class, array("label" => "Titre", "required" => false))
-			->add('text', TextareaType::class, array("label" => "Mots-clés", "required" => false, "attr" => array("class" => "tagit full_width")))
-			->add('author', TextType::class, array("label" => "Auteur", "required" => false))
+            ->add('title', TextType::class, array("label" => "main.field.Title", "required" => false))
+			->add('text', TextareaType::class, array("label" => "main.field.Keywords", "required" => false, "attr" => array("class" => "tagit full_width")))
+			->add('author', TextType::class, array("label" => "main.field.Author", "required" => false))
 			->add('country', ChoiceType::class, array(
-											'label' => 'Pays', 
+											'label' => 'main.field.Country', 
 											'required' => false, 
-											'placeholder' => 'Sélectionnez un pays', 
+											'placeholder' => 'main.field.ChooseAnOption', 
 											'multiple' => false, 
 											'expanded' => false,
 											'constraints' => array(new Assert\NotBlank()),
 										    'choices' => $countryArray))
 			
 			
-			->add('collection', TextType::class, array("label" => "Recueil", "required" => false))
-			->add('type', ChoiceType::class, array("label" => "Type", "choices" => array("biography" => "Grands auteurs", "user" => "Vos poésies"), "required" => false, "expanded" => false, "multiple" => false, "placeholder" => "Tous"))
-            ->add('search', SubmitType::class, array('label' => 'Rechercher', "attr" => array("class" => "btn btn-primary")))
+			->add('collection', TextType::class, array("label" => "main.field.Collection", "required" => false))
+			->add('type', ChoiceType::class, array("label" => "main.field.PoeticForm", "choices" => array("biography" => "Grands auteurs", "user" => "Vos poésies"), "required" => false, "expanded" => false, "multiple" => false, "placeholder" => "main.field.ChooseAnOption"))
+            ->add('search', SubmitType::class, array('label' => 'main.field.Search', "attr" => array("class" => "btn btn-primary")))
 			;
     }
 	

@@ -63,23 +63,23 @@
 {{ form_start(form, {'method' : 'post', 'action' : path('user_create'), 'attr': {'novalidate': 'novalidate'} }) }}
 	<table class="form_grid">
 		<tr>
-			<th>{{ form_label(form.username, 'user.createAccount.Pseudo') }}</th>
+			<th>{{ form_label(form.username) }}</th>
 			<td><div class="errors">{{ form_errors(form.username) }}</div>{{ form_widget(form.username, {'attr':{'class':'form-control'}}) }}</td>
 		</tr>
 		<tr>
-			<th>{{ form_label(form.password, 'user.createAccount.Password') }}</th>
+			<th>{{ form_label(form.password) }}</th>
 			<td><div class="errors">{{ form_errors(form.password.first) }}</div>{{ form_widget(form.password.first, {'attr':{'class':'form-control'}}) }}</td>
 		</tr>
 		<tr>
-			<th>{{ form_label(form.password.second, 'user.createAccount.PasswordValidation') }}</th>
+			<th>{{ form_label(form.password.second) }}</th>
 			<td><div class="errors">{{ form_errors(form.password.second) }}</div>{{ form_widget(form.password.second, {'attr':{'class':'form-control'}}) }}</td>
 		</tr>
 		<tr>
-			<th>{{ form_label(form.email, 'user.createAccount.Email') }}</th>
+			<th>{{ form_label(form.email) }}</th>
 			<td><div class="errors">{{ form_errors(form.email) }}</div>{{ form_widget(form.email, {'attr':{'class':'form-control'}}) }}</td>
 		</tr>
 		<tr>
-			<th>{{ form_label(form.avatar, 'user.createAccount.Avatar') }}</th>
+			<th>{{ form_label(form.avatar) }}</th>
 			<td>
 				<p class="underline italic">{{ 'user.createAccount.SelectFile'|trans }}</p>
 				<div class="errors">{{ form_errors(form.avatar) }}</div>
@@ -90,15 +90,15 @@
 			</td>
 		</tr>
 		<tr>
-			<th>{{ form_label(form.presentation, 'user.createAccount.Description') }}</th>
+			<th>{{ form_label(form.presentation) }}</th>
 			<td><div class="errors">{{ form_errors(form.presentation) }}</div>{{ form_widget(form.presentation) }}</td>
 		</tr>
 		<tr>
-			<th>{{ form_label(form.country, 'user.createAccount.Country') }}</th>
+			<th>{{ form_label(form.country) }}</th>
 			<td><div class="errors">{{ form_errors(form.country) }}</div>{{ form_widget(form.country, {'attr':{'class':'form-control'}}) }}</td>
 		</tr>
 		<tr>
-			<th>{{ form_label(form.captcha, 'user.createAccount.Captcha') }}</th>
+			<th>{{ form_label(form.captcha) }}</th>
 			<td>
 				<div class="errors">{{ form_errors(form.captcha) }}</div>{{ form_widget(form.captcha, { 'attr': { 'placeholder':'Recopiez le mot contenu dans l\'image', 'class':'form-control' }}) }}
 				<p><img src='data:image/png;base64,{{ captcha() }}' id="captcha" /> <span class="glyphicon glyphicon-refresh reload" id="reload_captcha"></span></p>
@@ -106,7 +106,7 @@
 		</tr>
 	</table>
 	<hr />
-	{{ form_widget(form.save, {'icon': 'fa-save', 'label': 'user.createAccount.CreateSave'}) }}
+	{{ form_widget(form.save, {'icon': 'fa-save'}) }}
 	{{ form_rest(form) }}
 {{ form_end(form) }}
 {% endblock %}
