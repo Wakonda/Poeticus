@@ -27,6 +27,9 @@ menu:
         About: "À propos"
         ContactUs: "Contactez-nous"
         Version: "Version"
+main:
+    index:
+        WelcomeTo: "Bienvenue sur Poéticus"
 biography:
     index:
         ByAuthors: "Par auteurs"
@@ -40,3 +43,61 @@ biography:
         Author: "Auteur"
         Title: "Titre"
         Collection: "Recueil"
+collection:
+    index:
+        ByCollections: "Par recueils"
+    field:
+        Author: "Auteur"
+        PublicationDate: "Date de pubblication"
+        PoemsInThisCollection: "Poésies contenues dans ce recueil"
+        BuyThisCollection: "Acheter ce recueil"
+    table:
+        Number: "Nombre"
+        Author: "Auteur"
+        Collection: "Recueil"
+        Title: "Titre"
+country:
+    index:
+        ByCountries: "Par pays"
+    table:
+        Number: "Nombre"
+        Author: "Auteur"
+        Country: "Pays"
+        Title: "Titre"
+poeticForm:
+    index:
+        ByPoeticForms: "Par formes poétiques"
+    table:
+        PoeticForm: "Forme poétique"
+        Number: "Nombre"
+        Title: "Titre"
+yourPoems:
+    index:
+        YourPoems: "Vos poèmes"
+    table:
+        Author: "Auteur"
+        Title: "Titre"
+user:
+    login:
+        Pseudo: "Pseudo"
+        Password: "Mot de passe"
+        RememberMe: "Se souvenir de moi"
+        LogIn: "Connexion"
+        LogIn: "Se déconnecter"
+        ForgottenPassword: "Mot de passe oublié ?"
+        PasswordOrUserForgotten: "Pseudo ou mot de passe incorect"
+        YouAreLoggedInAs: "Vous êtes déjà connecté en tant que"
+    createAccount:
+        CreateAccount: "Créer un compte"
+        Pseudo: "Pseudo"
+        Password: "Mot de passe"
+        PasswordValidation: "Mot de passe (validation)"
+        Email: "Email"
+        Avatar: "Avatar"
+        Description: "Présentation"
+        Country: "Pays"
+        Captcha: "Recopiez le mot contenu dans l'image"
+        CreateSave: "Créer votre compte"
+        OR: "OU"
+        SelectFile: "Sélectionnez un fichier"
+        UseGravatar: "Utilisez un gravatar"

@@ -133,8 +133,7 @@ class IndexController
 		$response->headers->set('Content-Type', 'application/pdf');
 
 		return $response;
-	}
-	
+	}	
 	
 	// AUTHOR
 	public function authorAction(Request $request, Application $app, $id)

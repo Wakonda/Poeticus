@@ -38,7 +38,7 @@ class Page
 	 *
 	 * @var \Poeticus\Entity\Language
 	 */
-	protected $language
+	protected $language;
 	
     public function getId()
     {

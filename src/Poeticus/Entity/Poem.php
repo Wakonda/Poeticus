@@ -75,6 +75,12 @@ class Poem
      * @var string
      */
     protected $photo;
+	
+	/**
+	 *
+	 * @var \Poeticus\Entity\Language
+	 */
+	protected $language;
 
 	public function getStateString()
 	{
@@ -257,4 +263,14 @@ class Poem
     {
         $this->photo = $photo;
     }
+
+	public function getLanguage()
+	{
+		return $this->language;
+	}
+	
+	public function setLanguage($language)
+	{
+		$this->language = $language;
+	}
 }

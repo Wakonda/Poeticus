@@ -33,6 +33,12 @@ class PoeticForm
      * @var image
      */
     protected $image;
+
+	/**
+	 *
+	 * @var \Poeticus\Entity\Language
+	 */
+	protected $language;
 	
 	const IMAGETYPE = "image"; 
 	const TEXTTYPE = "text"; 
@@ -91,4 +97,14 @@ class PoeticForm
     {
         $this->typeContentPoem = $typeContentPoem;
     }
+
+	public function getLanguage()
+	{
+		return $this->language;
+	}
+	
+	public function setLanguage($language)
+	{
+		$this->language = $language;
+	}
 }

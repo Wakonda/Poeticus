@@ -19,6 +19,7 @@ class BiographyType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 		$countryArray = $options["countries"];
+		$languageArray = $options["languages"];
 
         $builder
             ->add('title', TextType::class, array(
@@ -35,13 +36,21 @@ class BiographyType extends AbstractType
 			->add('monthDeath', IntegerType::class, array("label" => "", "required" => false))
 			->add('yearDeath', IntegerType::class, array("label" => "", "required" => false))
 			->add('country', ChoiceType::class, array(
-											'label' => 'Pays', 
-											'multiple' => false, 
-											'expanded' => false,
-											'constraints' => array(new Assert\NotBlank()),
-											'placeholder' => 'Choisissez une option',
-										    'choices' => $countryArray
-											))	
+				'label' => 'Pays', 
+				'multiple' => false, 
+				'expanded' => false,
+				'constraints' => array(new Assert\NotBlank()),
+				'placeholder' => 'Choisissez une option',
+				'choices' => $countryArray
+			))
+			->add('language', ChoiceType::class, array(
+				'label' => 'Langue',
+				'multiple' => false,
+				'expanded' => false,
+				'constraints' => array(new Assert\NotBlank()),
+				'placeholder' => 'Choisissez une option',
+				'choices' => $languageArray
+			))
             ->add('save', SubmitType::class, array('label' => 'Sauvegarder', 'attr' => array('class' => 'btn btn-success')))
 			;
     }
@@ -52,7 +61,8 @@ class BiographyType extends AbstractType
 	public function configureOptions(OptionsResolver $resolver)
 	{
 		$resolver->setDefaults(array(
-			"countries" => null
+			"countries" => null,
+			"languages" => null
 		));
 	}
 	

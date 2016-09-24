@@ -156,6 +156,9 @@ $app['repository.comment'] = $app->share(function ($app) {
 $app['repository.page'] = $app->share(function ($app) {
 	return new Poeticus\Repository\PageRepository($app['db']);
 });
+$app['repository.language'] = $app->share(function ($app) {
+	return new Poeticus\Repository\LanguageRepository($app['db']);
+});
 
 // Register controllers
 $app["controllers.index"] = $app -> share(function($app) {
@@ -235,10 +238,10 @@ $app['form.type.extensions'] = $app->share($app->extend('form.type.extensions', 
 // SwiftMailer
 // See http://silex.sensiolabs.org/doc/providers/swiftmailer.html
 $app['swiftmailer.options'] = array(
-	'host' => 'smtp.gmail.com',
+	'host' => 'smtp.yopmail.com',
 	'port' => 465,
     'username' => 'test@yopmail.com',
-    'password' => 'test',
+    'password' => '***',
     'encryption' => 'ssl'
 );
 

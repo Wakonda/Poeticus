@@ -10,7 +10,7 @@
 
 {% set authorPoem = (entity.isBiography()) ? entity.biography.title : entity.user.username %}
 
-<p>{{ senderName }} (<a href="mailto:{{ entity.recipientMail }}">{{ entity.recipientMail }}</a>) vous a envoyé ce poème écrit par <b>{{ authorPoem }}</b> et intitulé <u><i>{{ entity.title }}</i></u>.</p>
+<p>{{ senderName }} (<a href="mailto:{{ data.yourMail }}">{{ data.yourMail }}</a>) vous a envoyé ce poème écrit par <b>{{ authorPoem }}</b> et intitulé <u><i>{{ entity.title }}</i></u>.</p>
 
 {{ data.message|raw }}
 

@@ -133,7 +133,7 @@
 				<article id="contents">
 					<!-- Article's Header Element Starts Here -->
 					<header>
-						<h1>{% block main_title %}Bienvenue sur Poéticus{% endblock %}</h1>
+						<h1>{% block main_title %}{{ 'main.index.WelcomeTo'|trans }}{% endblock %}</h1>
 					</header>
 					
 					{% for message in app.session.getFlashBag.get('message') %}
@@ -142,7 +142,7 @@
 					
 					{% block main_content %}{% endblock %}
 					<div class="advert">
-					<p class="subtitle">Publicité</p>
+					<p class="subtitle">{{ 'menu.left.Publicity'|trans }}</p>
 					<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 					<!-- poeticus_down -->
 					<ins class="adsbygoogle"
@@ -160,7 +160,7 @@
 
 			<!-- Footer Element Starts Here -->
 			<footer id="copyrights">
-				<p>© 2014 - {{ "now"|date("Y") }} <a href="{{ path('page_display', {'name' : 'copyright'}) }}">Poéticus</a></p>
+				<p>© {{ ("2014" == "now"|date("Y")) ? "2014" : "2014 - " ~ "now"|date("Y") }} <a href="{{ path('page_display', {'name' : 'copyright'}) }}">Poéticus</a></p>
 				<p><a href="{{ path('page_display', {'name' : 'about'}) }}">{{ 'menu.footer.About'|trans }}</a> - <a href="{{ path('contact') }}">{{ 'menu.footer.ContactUs'|trans }}</a> - <a href="{{ path('version') }}">{{ 'menu.footer.Version'|trans }} {{ number_version() }}</a></p>
 				<address>
 					<a href="http://wakonda.guru">Wakonda.guru</a>

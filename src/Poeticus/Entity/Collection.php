@@ -50,7 +50,7 @@ class Collection
 	 *
 	 * @var \Poeticus\Entity\Language
 	 */
-	protected $language
+	protected $language;
 	
     public function getId()
     {

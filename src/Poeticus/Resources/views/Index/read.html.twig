@@ -101,7 +101,9 @@
 			return [top, left];
 		}
 
-//alert(top + " "+ screen.height)
+		$('#send_poem_modal').on('hidden.bs.modal', function () {
+			$("#send_poem_form .errors").remove();
+		});
 	});
 </script>
 {% endblock %}
@@ -182,7 +184,7 @@
 	</table>
 
 	<!-- Modal -->
-	<div class="modal fade" id="send_poem_modal" tabindex="-1" role="dialog" aria-labelledby="sendPoemModalLabel">
+	<div class="modal fade hidden_print" id="send_poem_modal" tabindex="-1" role="dialog" aria-labelledby="sendPoemModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">

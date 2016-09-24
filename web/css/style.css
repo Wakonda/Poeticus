@@ -519,25 +519,25 @@ article#contents header h1 img#flag_title
 }
 
 /****** USER ******/
-table#user
+table#generic_info
 {
 	border-collapse: collapse;
 	width: 100%;
 }
 
-table#user td, table#user th
+table#generic_info td, table#generic_info th
 {
 	border: solid 1px black;
 	text-align: center;
 }
 
-table#user th
+table#generic_info th
 {
 	background-color: #add8e6;
 	width: 30%
 }
 
-table#user td
+table#generic_info td
 {
 	width: 70%
 }

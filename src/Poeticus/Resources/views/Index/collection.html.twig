@@ -44,11 +44,11 @@
 		{% set biography = entity.biography %}
 		<table class="show">
 			<tr>
-				<th><span class="bold underline">Auteur :</span></th>
+				<th><span class="bold underline">{{ 'collection.field.Author'|trans }} :</span></th>
 				<td><a href="{{ path('author', { 'id' : biography['id'] }) }}" alt="">{{ biography['title'] }}</a></td>
 			</tr>
 			<tr>
-				<th><span class="bold underline">Date de publication :</span></th>
+				<th><span class="bold underline">{{ 'collection.field.PublicationDate'|trans }} :</span></th>
 				<td>{{ entity.releasedDate }}</td>
 			</tr>
 		</table>
@@ -65,17 +65,17 @@
 		</tbody>
 	</table>
 	<hr>
-	<h3>Poésies contenues dans ce recueil</h3>
+	<h3>{{ 'collection.field.PoemsInThisCollection'|trans }}</h3>
 		<table class="index_directories display">
 		<thead>
-			<th>Titre</th>
+			<th>{{ 'collection.table.Title'|trans }}</th>
 		</thead>
 		<tbody>
 		</tbody>
 	</table>
 	<hr>
 	{% if entity.widgetProduct|raw is not null %}
-		<h3>Acheter ce recueil</h3>
+		<h3>{{ 'collection.field.BuyThisCollection'|trans }}</h3>
 		<div class="center-iframe">{{ entity.widgetProduct|raw }}</div>
 	{% endif %}
 {% endblock %}

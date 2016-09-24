@@ -27,6 +27,9 @@ menu:
         About: "A proposito"
         ContactUs: "Contattaci"
         Version: "Versione"
+main:
+    index:
+        WelcomeTo: "Bem-vindo ao Poéticus"
 biography:
     index:
         ByAuthors: "Per autore"
@@ -40,3 +43,61 @@ biography:
         Author: "Autore"
         Title: "Titolo"
         Collection: "Raccolta"
+collection:
+    index:
+        ByCollections: "Per collezioni"
+    field:
+        Author: "Autore"
+        PublicationDate: "Data di pubblicazione"
+        PoemsInThisCollection: "Poesie in questa raccolta"
+        BuyThisCollection: "Compra questo libro"
+    table:
+        Number: "Numero"
+        Author: "Autore"
+        Collection: "Raccolta"
+        Title: "Titolo"
+country:
+    index:
+        ByCountries: "Per paese"
+    table:
+        Number: "Numero"
+        Author: "Autore"
+        Country: "Paese"
+        Title: "Titolo"
+poeticForm:
+    index:
+        ByPoeticForms: "Per forme poetiche"
+    table:
+        PoeticForm: "Forma poetica"
+        Number: "Numero"
+        Title: "Titolo"
+yourPoems:
+    index:
+        YourPoems: "Le vostre poesie"
+    table:
+        Author: "Autore"
+        Title: "Titolo"
+user:
+    login:
+        Pseudo: "Nome utente"
+        Password: "Password"
+        RememberMe: "Mantienimi collegato"
+        LogIn: "Entra"
+        LogOut: "Esci"
+        ForgottenPassword: "Hai dimenticato la password?"
+        PasswordOrUserForgotten: "La password inserita non è corretta. Riprovare."
+        YouAreLoggedInAs: "Sei già connesso come"
+    createAccount:
+        CreateAccount: "Registrati"
+        Pseudo: "Nome utente"
+        Password: "Password"
+        PasswordValidation: "Conferma password"
+        Email: "Indirizzo di posta elettronica"
+        Avatar: "Avatar"
+        Description: "Presentazione"
+        Country: "Paese"
+        Captcha: "Inserisci il testo che vedi sull'immagine"
+        CreateSave: "Crea la tua utenza"
+        OR: "O"
+        SelectFile: "Selezionare un file"
+        UseGravatar: "Utilizza un gravatar"

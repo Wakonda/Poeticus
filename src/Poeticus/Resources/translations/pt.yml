@@ -27,6 +27,9 @@ menu:
         About: "Sobre"
         ContactUs: "Fale conosco"
         Version: "Versão"
+main:
+    index:
+        WelcomeTo: "Bem-vindo ao Poéticus"
 biography:
     index:
         ByAuthors: "Por autores"
@@ -40,3 +43,61 @@ biography:
         Author: "Autor"
         Title: "Título"
         Collection: "Colectânea"
+collection:
+    index:
+        ByCollections: "Por coleções"
+    field:
+        Author: "Autor"
+        PublicationDate: "Data de publicação"
+        PoemsInThisCollection: "Poemas nesta coleção"
+        BuyThisCollection: "Comprar este livro"
+    table:
+        Number: "Número"
+        Author: "Autor"
+        Collection: "Colectânea"
+        Title: "Título"
+country:
+    index:
+        ByCountries: "Por países"
+    table:
+        Number: "Número"
+        Author: "Autor"
+        Country: "País"
+        Title: "Título"
+poeticForm:
+    index:
+        ByPoeticForms: "Por formas poéticas"
+    table:
+        PoeticForm: "Forma poética"
+        Number: "Número"
+        Title: "Título"
+yourPoems:
+    index:
+        YourPoems: "Seus poemas"
+    table:
+        Author: "Autor"
+        Title: "Título"
+user:
+    login:
+        Pseudo: "Nome de utilizador(a)"
+        Password: "Palavra-passe"
+        RememberMe: "Manter-me autenticado"
+        LogIn: "Entrar"
+        LogOut: "Sair"
+        ForgottenPassword: "Esqueceu-se da sua palavra-passe?"
+        PasswordOrUserForgotten: "Existem problemas com alguns dos dados introduzidos"
+        YouAreLoggedInAs: "Você já está conectado como"
+    createAccount:
+        CreateAccount: "Criar conta"
+        Pseudo: "Nome de utilizador(a)"
+        Password: "Palavra-passe"
+        PasswordValidation: "Confirme a palavra-passe"
+        Email: "Endereço de correio eletrónico"
+        Avatar: "Avatar"
+        Description: "Apresentação"
+        Country: "País"
+        Captcha: "Digite o texto que vê na imagem"
+        CreateSave: "Crie a sua conta"
+        OR: "OU"
+        SelectFile: "Selecione um arquivo"
+        UseGravatar: "Use um gravatar"

@@ -146,8 +146,9 @@ class BiographyAdminController
 	private function createForm($app, $entity)
 	{
 		$countryForms = $app['repository.country']->findAllForChoice();
+		$languageForms = $app['repository.language']->findAllForChoice();
 		
-		$form = $app['form.factory']->create(BiographyType::class, $entity, array("countries" => $countryForms));
+		$form = $app['form.factory']->create(BiographyType::class, $entity, array("countries" => $countryForms, "languages" => $languageForms));
 		
 		return $form;
 	}
