@@ -1,7 +1,7 @@
 {% extends generic_layout %}
 
-{% block head_title %}Admin Recueil{% endblock %}
-{% block main_title %}Administration - Recueil{% endblock %}
+{% block head_title %}{{ 'menu.left.Admin'|trans }} - {{ 'admin.index.Collection'|trans }}{% endblock %}
+{% block main_title %}{{ 'menu.left.Admin'|trans }} - {{ 'admin.index.Collection'|trans }}{% endblock %}
 
 {% block style_additional %}
 	<link rel="stylesheet" href="{{ app.request.basepath }}/js/DataTables-1.10.0/media/css/jquery.dataTables.css" type="text/css" media="screen" />
@@ -35,12 +35,12 @@
 	<table class="index_directories display">
 		<thead>
 			<th>Id</th>
-			<th>Titre</th>
-			<th>Action</th>
+			<th>{{ 'admin.table.Title'|trans }}</th>
+			<th>{{ 'admin.table.Action'|trans }}</th>
 		</thead>
 		<tbody>
 		</tbody>
 	</table>
 	<hr>
-	<a href="{{ path('collectionadmin_new') }}"><i class="fa fa-plus-square"></i> Créer</a>
+	<a href="{{ path('collectionadmin_new') }}"><i class="fa fa-plus-square"></i> {{ 'admin.index.Create'|trans }}</a>
 {% endblock %}

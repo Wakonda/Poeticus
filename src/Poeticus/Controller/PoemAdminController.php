@@ -49,6 +49,8 @@ class PoemAdminController
 			"aaData" => array()
 		);
 		
+		$translator = $app['translator'];
+		
 		foreach($entities as $entity)
 		{
 			$row = array();
@@ -58,7 +60,7 @@ class PoemAdminController
 			$show = $app['url_generator']->generate('poemadmin_show', array('id' => $entity->getId()));
 			$edit = $app['url_generator']->generate('poemadmin_edit', array('id' => $entity->getId()));
 			
-			$row[] = '<a href="'.$show.'" alt="Show">Lire</a> - <a href="'.$edit.'" alt="Edit">Modifier</a>';
+			$row[] = '<a href="'.$show.'" alt="Show">'.$translator->trans('admin.index.Read').'</a> - <a href="'.$edit.'" alt="Edit">'.$translator->trans('admin.index.Update').'</a>';
 
 			$output['aaData'][] = $row;
 		}

@@ -45,6 +45,8 @@ class UserAdminController
 			"aaData" => array()
 		);
 		
+		$translator = $app['translator'];
+		
 		foreach($entities as $entity)
 		{
 			$row = array();
@@ -53,7 +55,7 @@ class UserAdminController
 			
 			$show = $app['url_generator']->generate('useradmin_show', array('id' => $entity->getId()));
 			
-			$row[] = '<a href="'.$show.'" alt="Show">Lire</a>';
+			$row[] = '<a href="'.$show.'" alt="Show">'.$translator->trans('admin.index.Read').'</a>';
 
 			$output['aaData'][] = $row;
 		}

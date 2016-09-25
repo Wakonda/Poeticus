@@ -1,7 +1,7 @@
 {% extends generic_layout %}
 
-{% block head_title %}Administration{% endblock %}
-{% block main_title %}Administration{% endblock %}
+{% block head_title %}{{ 'menu.left.Admin'|trans }}{% endblock %}
+{% block main_title %}{{ 'menu.left.Admin'|trans }}{% endblock %}
 
 {% block meta_tag %}
 <meta name="robots" content="noindex,nofollow" />
@@ -34,41 +34,41 @@
 	<table class="index_admin display">
 		<thead>
 			<tr>
-				<th>Titre</th>
-				<th>Actions</th>
+				<th>{{ 'admin.table.Title'|trans }}</th>
+				<th>{{ 'admin.table.Action'|trans }}</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr>
-				<td><a href="{{ path('poeticformadmin_index') }}" alt="">Forme poétique</a></td>
-				<td><a href="{{ path('poeticformadmin_new') }}" alt="">Création</a></td>
+				<td><a href="{{ path('poeticformadmin_index') }}" alt="">{{ 'admin.index.PoeticForm'|trans }}</a></td>
+				<td><a href="{{ path('poeticformadmin_new') }}" alt="">{{ 'admin.index.Create'|trans }}</a></td>
 			</tr>
 			<tr>
-				<td><a href="{{ path('countryadmin_index') }}" alt="">Pays</a></td>
-				<td><a href="{{ path('countryadmin_new') }}" alt="">Création</a></td>
+				<td><a href="{{ path('countryadmin_index') }}" alt="">{{ 'admin.index.Country'|trans }}</a></td>
+				<td><a href="{{ path('countryadmin_new') }}" alt="">{{ 'admin.index.Create'|trans }}</a></td>
 			</tr>
 			<tr>
-				<td><a href="{{ path('collectionadmin_index') }}" alt="">Recueil</a></td>
-				<td><a href="{{ path('collectionadmin_new') }}" alt="">Création</a></td>
+				<td><a href="{{ path('collectionadmin_index') }}" alt="">{{ 'admin.index.Collection'|trans }}</a></td>
+				<td><a href="{{ path('collectionadmin_new') }}" alt="">{{ 'admin.index.Create'|trans }}</a></td>
 			</tr>
 			<tr>
-				<td><a href="{{ path('biographyadmin_index') }}" alt="">Biographie</a></td>
-				<td><a href="{{ path('biographyadmin_new') }}" alt="">Création</a></td>
+				<td><a href="{{ path('biographyadmin_index') }}" alt="">{{ 'admin.index.Biography'|trans }}</a></td>
+				<td><a href="{{ path('biographyadmin_new') }}" alt="">{{ 'admin.index.Create'|trans }}</a></td>
 			</tr>
 			<tr>
-				<td><a href="{{ path('poemadmin_index') }}" alt="">Poésie</a></td>
-				<td><a href="{{ path('poemadmin_new') }}" alt="">Création</a> - <a href="{{ path('poemadmin_newfast') }}" alt="">Création rapide</a></td>
+				<td><a href="{{ path('poemadmin_index') }}" alt="">{{ 'admin.index.Poem'|trans }}</a></td>
+				<td><a href="{{ path('poemadmin_new') }}" alt="">{{ 'admin.index.Create'|trans }}</a> - <a href="{{ path('poemadmin_newfast') }}" alt="">{{ 'admin.index.QuicklyCreation'|trans }}</a></td>
 			</tr>
 			<tr>
-				<td><a href="{{ path('versionadmin_index') }}" alt="">Version</a></td>
-				<td><a href="{{ path('versionadmin_new') }}" alt="">Création</a></td>
+				<td><a href="{{ path('versionadmin_index') }}" alt="">{{ 'admin.index.Version'|trans }}</a></td>
+				<td><a href="{{ path('versionadmin_new') }}" alt="">{{ 'admin.index.Create'|trans }}</a></td>
 			</tr>
 			<tr>
-				<td><a href="{{ path('pageadmin_index') }}" alt="">Page</a></td>
-				<td><a href="{{ path('pageadmin_new') }}" alt="">Création</a></td>
+				<td><a href="{{ path('pageadmin_index') }}" alt="">{{ 'admin.index.Page'|trans }}</a></td>
+				<td><a href="{{ path('pageadmin_new') }}" alt="">{{ 'admin.index.Create'|trans }}</a></td>
 			</tr>
 			<tr>
-				<td><a href="{{ path('contactadmin_index') }}" alt="">Contact</a></td>
+				<td><a href="{{ path('contactadmin_index') }}" alt="">{{ 'admin.index.Contact'|trans }}</a></td>
 				<td>-</td>
 			</tr>
 			<tr>
@@ -78,5 +78,5 @@
 		</tbody>
 	</table>
 	<hr>
-	<a href="{{ path('generate_sitemap') }}" class="btn btn-info"><i class="fa fa-sitemap"></i> Générer le Sitemap</a>
+	<a href="{{ path('generate_sitemap') }}" class="btn btn-info"><i class="fa fa-sitemap"></i> {{ 'admin.index.GenerateSitemap'|trans }}</a>
 {% endblock %}

@@ -21,6 +21,8 @@ class ContactAdminController
 		$iDisplayLength = $request->query->get('iDisplayLength');
 		$sSearch = $request->query->get('sSearch');
 
+		$translator = $app['translator'];
+		
 		$sortByColumn = array();
 		$sortDirColumn = array();
 			
@@ -50,13 +52,13 @@ class ContactAdminController
 			$row[] = $entity->getSubject();
 			
 			if($entity->getReadMessage() == 1)
-				$row[] = "Oui";
+				$row[] = $translator->trans('admin.index.Yes');
 			else
-				$row[] = "Non";
+				$row[] = $translator->trans('admin.index.No');
 			
 			$show = $app['url_generator']->generate('contactadmin_show', array('id' => $entity->getId()));
 			
-			$row[] = '<a href="'.$show.'" alt="Show">Lire</a>';
+			$row[] = '<a href="'.$show.'" alt="Show">'.$translator->trans('admin.index.Read').'</a>';
 
 			$output['aaData'][] = $row;
 		}

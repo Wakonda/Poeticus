@@ -1,7 +1,7 @@
 {% extends generic_layout %}
 
-{% block head_title %}Admin Membre{% endblock %}
-{% block main_title %}Administration - Membre{% endblock %}
+{% block head_title %}{{ 'menu.left.Admin'|trans }} - {{ 'admin.index.Member'|trans }}{% endblock %}
+{% block main_title %}{{ 'menu.left.Admin'|trans }} - {{ 'admin.index.Member'|trans }}{% endblock %}
 
 {% block style_additional %}
 	<link rel="stylesheet" href="{{ app.request.basepath }}/js/DataTables-1.10.0/media/css/jquery.dataTables.css" type="text/css" media="screen" />
@@ -35,8 +35,8 @@
 <table class="index_directories display">
 	<thead>
 		<th>Id</th>
-		<th>Pseudo</th>
-		<th>Action</th>
+		<th>{{ 'admin.table.Pseudo'|trans }}</th>
+		<th>{{ 'admin.table.Action'|trans }}</th>
 	</thead>
 	<tbody>
 	</tbody>

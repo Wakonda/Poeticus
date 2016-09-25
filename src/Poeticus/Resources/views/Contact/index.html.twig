@@ -1,7 +1,7 @@
 {% extends generic_layout %}
 
-{% block head_title %}Admin Contact{% endblock %}
-{% block main_title %}Administration - Contact{% endblock %}
+{% block head_title %}{{ 'menu.left.Admin'|trans }} - {{ 'admin.index.Contact'|trans }}{% endblock %}
+{% block main_title %}{{ 'menu.left.Admin'|trans }} - {{ 'admin.index.Contact'|trans }}{% endblock %}
 
 {% block style_additional %}
 	<link rel="stylesheet" href="{{ app.request.basepath }}/js/DataTables-1.10.0/media/css/jquery.dataTables.css" type="text/css" media="screen" />
@@ -35,9 +35,9 @@
 <table class="index_directories display">
 	<thead>
 		<th>Id</th>
-		<th>Sujet</th>
-		<th>Lu ?</th>
-		<th>Action</th>
+		<th>{{ 'admin.table.Subject'|trans }}</th>
+		<th>{{ 'admin.table.ReadQuestion'|trans }}</th>
+		<th>{{ 'admin.table.Action'|trans }}</th>
 	</thead>
 	<tbody>
 	</tbody>
