@@ -27,72 +27,65 @@ class PoemType extends AbstractType
 
         $builder
             ->add('title', TextType::class, array(
-                'constraints' => new Assert\NotBlank(), 'label' => 'Titre'
+                'constraints' => new Assert\NotBlank(), 'label' => 'admin.poem.Title'
             ))
             ->add('poeticform', ChoiceType::class, array(
-											'label' => 'Forme poétique', 
+											'label' => 'admin.poem.PoeticForm', 
 											'multiple' => false,
 											'required' => false,
 											'expanded' => false,
-											'placeholder' => 'Choisissez une option',
+											'placeholder' => 'main.field.ChooseAnOption',
 											'choices' => $poeticFormArray
 											))
 			->add('text', TextareaType::class, array(
-                'attr' => array('class' => 'redactor'), 'label' => 'Texte'
+                'attr' => array('class' => 'redactor'), 'label' => 'admin.poem.Text'
             ))
 			->add('releasedDate', IntegerType::class, array(
-                'label' => 'Date de publication'
+                'label' => 'admin.poem.PublicationDate'
             ))
 			
 			->add('unknownReleasedDate', CheckboxType::class, array(
-                'mapped' => false, 'label' => 'Date inconnue'
+                'mapped' => false, 'label' => 'admin.poem.UnknownDate'
             ))
 			
             ->add('authorType', ChoiceType::class, array(
-											'label' => 'Type d\'auteur', 
+											'label' => 'admin.poem.AuthorKind', 
 											'multiple' => false, 
 											'expanded' => false,
 											'constraints' => array(new Assert\NotBlank()),
-										    'choices' => array("Biographie" => "biography", "Utilisateur" => "user"),
+										    'choices' => array("admin.poem.Biography" => "biography", "admin.poem.User" => "user"),
 											'attr' => array('class' => 'authorType_select')
 											))
 			->add('user', ChoiceType::class, array(
-											'label' => 'Utilisateur', 
+											'label' => 'admin.poem.User', 
 											'multiple' => false, 
 											'expanded' => false,
-											'placeholder' => 'Choisissez une option',
+											'placeholder' => 'main.field.ChooseAnOption',
 										    'choices' => $userArray
 											))
             ->add('biography', TextType::class, array(
-                'label' => 'Biographie'
+                'label' => 'admin.poem.Biography'
             ))
-			/*->add('biography', ChoiceType::class, array(
-											'label' => 'Biographie', 
-											'multiple' => false, 
-											'expanded' => false,
-											'placeholder' => 'Choisissez une option',
-										    'choices' => $biographyArray
-											))*/
 											
 			->add('country', ChoiceType::class, array(
-											'label' => 'Pays', 
+											'label' => 'admin.poem.Country', 
 											'multiple' => false, 
 											'expanded' => false,
 											'constraints' => array(new Assert\NotBlank()),
-											'placeholder' => 'Choisissez une option',
+											'placeholder' => 'main.field.ChooseAnOption',
 										    'choices' => $countryArray
 											))		
 			->add('collection', ChoiceType::class, array(
-											'label' => 'Recueil', 
+											'label' => 'admin.poem.Collection', 
 											'multiple' => false,
 											'required' => false,
 											'expanded' => false,
-											'placeholder' => 'Choisissez une option',
+											'placeholder' => 'main.field.ChooseAnOption',
 										    'choices' => $collectionArray
 											))
 			->add('photo', FileType::class, array('data_class' => null, "label" => "Image", "required" => true
             ))
-            ->add('save', SubmitType::class, array('label' => 'Sauvegarder', 'attr' => array('class' => 'btn btn-success')));
+            ->add('save', SubmitType::class, array('label' => 'admin.main.Save', 'attr' => array('class' => 'btn btn-success')));
     }
 
 	/**

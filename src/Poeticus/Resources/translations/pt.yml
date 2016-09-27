@@ -116,7 +116,7 @@ forgottenPassword:
     index:
         ResetPassword: "Redefinir palavra-passe"
         NewPasswordSend: "Preencha um dos campos para receber uma palavra-passe temporária por correio eletrónico."
-   field:
+    field:
         EmailUsername: "E-mail ou Nome de utilizador(a)"
         Captcha: "Digite o texto que vê na imagem"
         Send: "Enviar uma nova palavra-chave por e-mail"
@@ -146,3 +146,17 @@ admin:
         Pseudo: "Nome de utilizador(a)"
         ReleaseDate: "Date de saída"
         VersionNumber: "Número de versão"
+    main:
+        Save: "Registar"
+    poem:
+        Title: "Título"
+        PoeticForm: "Forma poética"
+        Text: "Texto"
+        AuthorKind: "Tipo de autor"
+        Biography: "Biografia"
+        User: "Usuário"
+        Country: "País"
+        Collection: "Colectânea"
+        PublicationDate: "Data de publicação"
+        UnknownDate: "Data desconhecida"
+        Image: "Imagem"

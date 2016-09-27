@@ -88,13 +88,12 @@ class PoemAdminController
 		
 		$poeticForm = $app['repository.poeticform']->find($entity->getPoeticForm());
 // die(var_dump($poeticForm).PoeticForm::IMAGETYPE);
-		if($poeticForm->getTypeContentPoem() == PoeticForm::IMAGETYPE) {
+		if(!empty($poeticForm) and $poeticForm->getTypeContentPoem() == PoeticForm::IMAGETYPE) {
 			if($entity->getPhoto() == null)
 				$form->get("photo")->addError(new FormError('Ce champ ne peut pas être vide'));
 		}
 		else {
-			die("kkk");
-			$form->get("text")->addError(new FormError('Ceggg champ ne peut pas être vide'));
+			$form->get("text")->addError(new FormError('Ce champ ne peut pas être vide'));
 		}
 		
 		$userForms = $app['repository.user']->findAllForChoice();

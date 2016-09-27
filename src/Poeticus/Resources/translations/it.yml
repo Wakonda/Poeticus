@@ -146,3 +146,17 @@ admin:
         Pseudo: "Nome utente"
         ReleaseDate: "Data di uscita"
         VersionNumber: "Numero di versione"
+    main:
+        Save: "Registrare"
+    poem:
+        Title: "Titolo"
+        PoeticForm: "Forma poetica"
+        Text: "Testo"
+        AuthorKind: "Tipo d'autore"
+        Biography: "Biografia"
+        User: "Utente"
+        Country: "Paese"
+        Collection: "Raccolta"
+        PublicationDate: "Data di pubblicazione"
+        UnknownDate: "Data sconosciuta"
+        Image: "Immagine"
