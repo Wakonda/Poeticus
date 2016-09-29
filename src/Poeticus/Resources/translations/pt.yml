@@ -160,3 +160,10 @@ admin:
         PublicationDate: "Data de publicação"
         UnknownDate: "Data desconhecida"
         Image: "Imagem"
+    biography:
+        Title: "Título"
+        Text: "Texto"
+        BirthDate: "Data de nascimento"
+        DeathDate: "Data de falecimento"
+        Image: "Imagem"
+        Nationality: "Nacionalidade"

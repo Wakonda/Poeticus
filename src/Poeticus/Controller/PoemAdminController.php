@@ -87,19 +87,20 @@ class PoemAdminController
 		$this->checkForDoubloon($entity, $form, $app);
 		
 		$poeticForm = $app['repository.poeticform']->find($entity->getPoeticForm());
-// die(var_dump($poeticForm).PoeticForm::IMAGETYPE);
+		$translator = $app['translator'];
+// die(var_dump($translator));
 		if(!empty($poeticForm) and $poeticForm->getTypeContentPoem() == PoeticForm::IMAGETYPE) {
 			if($entity->getPhoto() == null)
-				$form->get("photo")->addError(new FormError('Ce champ ne peut pas être vide'));
+				$form->get("photo")->addError(new FormError($translator->trans("This value should not be blank.", array(), "validators")));
 		}
 		else {
-			$form->get("text")->addError(new FormError('Ce champ ne peut pas être vide'));
+			$form->get("text")->addError(new FormError($translator->trans("This value should not be blank.", array(), "validators")));
 		}
 		
 		$userForms = $app['repository.user']->findAllForChoice();
 
 		if(($entity->isBiography() and $entity->getBiography() == null) or ($entity->isUser() and $entity->getUser() == null))
-			$form->get($entity->getAuthorType())->addError(new FormError('Ce champ ne peut pas être vide'));
+			$form->get($entity->getAuthorType())->addError(new FormError($translator->trans("This value should not be blank.", array(), "validators")));
 		
 		if($form->isValid())
 		{

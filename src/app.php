@@ -48,7 +48,8 @@ $app->register(new Silex\Provider\SecurityServiceProvider(), array(
 $app->register(new Silex\Provider\RememberMeServiceProvider());
 
 $app->register(new Silex\Provider\TranslationServiceProvider(), array(
-    'locale' => 'fr'
+    'locale' => 'fr',
+	'translator.domains' => array()
 ));
 
 $app['translator'] = $app->share($app->extend('translator', function($translator, $app) {
@@ -76,6 +77,12 @@ $app->before(function () use ($app) {
 		$app['locale'] = $locale;
 		$app['request']->setLocale($locale);
     }
+	// die(var_dump());
+	$app['translator']->addLoader('xlf', new Symfony\Component\Translation\Loader\XliffFileLoader());
+	$app['translator']->addResource('xlf', realpath(__DIR__.'/../vendor/symfony/validator/Resources/translations/validators.pt.xlf'), 'pt', 'validators');
+	$app['translator']->addResource('xlf', realpath(__DIR__.'/../vendor/symfony/validator/Resources/translations/validators.it.xlf'), 'it', 'validators');
+	$app['translator']->addResource('xlf', realpath(__DIR__.'/../vendor/symfony/validator/Resources/translations/validators.fr.xlf'), 'fr', 'validators');
+
 });
 
 $app->boot();

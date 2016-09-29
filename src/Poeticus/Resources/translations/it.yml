@@ -46,7 +46,7 @@ biography:
         HisPoems: "Le sue poesie"
     field:
         BirthDate: "Data di nascita"
-        DeathDate: "Data della morte"
+        DeathDate: "Data de decesso"
         Nationality: "Nazionalità"
     table:
         Number: "Numero"
@@ -160,3 +160,10 @@ admin:
         PublicationDate: "Data di pubblicazione"
         UnknownDate: "Data sconosciuta"
         Image: "Immagine"
+    biography:
+        Title: "Titolo"
+        Text: "Testo"
+        BirthDate: "Data di nascita"
+        DeathDate: "Data del decesso"
+        Image: "Immagine"
+        Nationality: "Nazionalità"

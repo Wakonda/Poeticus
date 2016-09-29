@@ -43,14 +43,6 @@ class BiographyType extends AbstractType
 				'placeholder' => 'Choisissez une option',
 				'choices' => $countryArray
 			))
-			->add('language', ChoiceType::class, array(
-				'label' => 'Langue',
-				'multiple' => false,
-				'expanded' => false,
-				'constraints' => array(new Assert\NotBlank()),
-				'placeholder' => 'Choisissez une option',
-				'choices' => $languageArray
-			))
             ->add('save', SubmitType::class, array('label' => 'Sauvegarder', 'attr' => array('class' => 'btn btn-success')))
 			;
     }
