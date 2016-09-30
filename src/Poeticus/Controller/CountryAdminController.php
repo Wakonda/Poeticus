@@ -81,7 +81,7 @@ class CountryAdminController
 		$form->handleRequest($request);
 
 		if($entity->getFlag() == null)
-			$form->get("flag")->addError(new FormError('Ce champ ne peut pas être vide'));
+			$form->get("flag")->addError(new FormError($translator->trans("This value should not be blank.", array(), "validators")));
 		
 		if($form->isValid())
 		{

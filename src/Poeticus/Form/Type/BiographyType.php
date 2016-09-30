@@ -23,27 +23,27 @@ class BiographyType extends AbstractType
 
         $builder
             ->add('title', TextType::class, array(
-                'constraints' => new Assert\NotBlank(), "label" => "Titre"
+                'constraints' => new Assert\NotBlank(), "label" => "admin.biography.Title"
             ))
 			->add('text', TextareaType::class, array(
-                'constraints' => new Assert\NotBlank(), "label" => "Texte", 'attr' => array('class' => 'redactor')
+                'constraints' => new Assert\NotBlank(), "label" => "admin.biography.Text", 'attr' => array('class' => 'redactor')
             ))
-			->add('photo', FileType::class, array('data_class' => null, "label" => "Photo", "required" => true))
-			->add('dayBirth', IntegerType::class, array("label" => "Date de naissance", "required" => false))
+			->add('photo', FileType::class, array('data_class' => null, "label" => "admin.biography.Image", "required" => true))
+			->add('dayBirth', IntegerType::class, array("label" => "admin.biography.BirthDate", "required" => false))
 			->add('monthBirth', IntegerType::class, array("label" => "", "required" => false))
 			->add('yearBirth', IntegerType::class, array("label" => "", "required" => false))
-			->add('dayDeath', IntegerType::class, array("label" => "Date de décès", "required" => false))
+			->add('dayDeath', IntegerType::class, array("label" => "admin.biography.DeathDate", "required" => false))
 			->add('monthDeath', IntegerType::class, array("label" => "", "required" => false))
 			->add('yearDeath', IntegerType::class, array("label" => "", "required" => false))
 			->add('country', ChoiceType::class, array(
-				'label' => 'Pays', 
+				'label' => 'admin.biography.Country', 
 				'multiple' => false, 
 				'expanded' => false,
 				'constraints' => array(new Assert\NotBlank()),
-				'placeholder' => 'Choisissez une option',
+				'placeholder' => 'main.field.ChooseAnOption',
 				'choices' => $countryArray
 			))
-            ->add('save', SubmitType::class, array('label' => 'Sauvegarder', 'attr' => array('class' => 'btn btn-success')))
+            ->add('save', SubmitType::class, array('label' => 'admin.main.Save', 'attr' => array('class' => 'btn btn-success')))
 			;
     }
 

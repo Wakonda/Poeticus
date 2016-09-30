@@ -81,7 +81,7 @@ class PoeticFormAdminController
 		$form->handleRequest($request);
 
 		if($entity->getImage() == null)
-			$form->get("image")->addError(new FormError('Ce champ ne peut pas être vide'));
+			$form->get("image")->addError(new FormError($translator->trans("This value should not be blank.", array(), "validators")));
 		
 		if($form->isValid())
 		{

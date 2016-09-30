@@ -82,7 +82,7 @@ class VersionAdminController
 		
 		$this->checkForDoubloon($entity, $form, $app);
 		if($entity->getFile() == null)
-			$form->get("file")->addError(new FormError('Ce champ ne peut pas être vide'));
+			$form->get("file")->addError(new FormError($translator->trans("This value should not be blank.", array(), "validators")));
 
 		if($form->isValid())
 		{

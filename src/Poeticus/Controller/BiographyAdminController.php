@@ -82,8 +82,10 @@ class BiographyAdminController
 		$form->handleRequest($request);
 		
 		$this->checkForDoubloon($entity, $form, $app);
+		$translator = $app['translator'];
+		
 		if($entity->getPhoto() == null)
-			$form->get("photo")->addError(new FormError('Ce champ ne peut pas être vide'));
+			$form->get("photo")->addError(new FormError($translator->trans("This value should not be blank.", array(), "validators")));
 
 		if($form->isValid())
 		{

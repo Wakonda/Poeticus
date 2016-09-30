@@ -83,7 +83,7 @@ class PageAdminController
 		
 		$this->checkForDoubloon($entity, $form, $app);
 		if($entity->getPhoto() == null)
-			$form->get("photo")->addError(new FormError('Ce champ ne peut pas être vide'));
+			$form->get("photo")->addError(new FormError($translator->trans("This value should not be blank.", array(), "validators")));
 
 		if($form->isValid())
 		{
