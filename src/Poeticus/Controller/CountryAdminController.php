@@ -80,6 +80,8 @@ class CountryAdminController
         $form = $app['form.factory']->create(CountryType::class, $entity);
 		$form->handleRequest($request);
 
+		$translator = $app['translator'];
+		
 		if($entity->getFlag() == null)
 			$form->get("flag")->addError(new FormError($translator->trans("This value should not be blank.", array(), "validators")));
 		

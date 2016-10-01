@@ -79,6 +79,8 @@ class PoeticFormAdminController
 		$entity = new PoeticForm();
         $form = $app['form.factory']->create(PoeticFormType::class, $entity);
 		$form->handleRequest($request);
+		
+		$translator = $app['translator'];
 
 		if($entity->getImage() == null)
 			$form->get("image")->addError(new FormError($translator->trans("This value should not be blank.", array(), "validators")));

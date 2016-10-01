@@ -18,16 +18,16 @@ class PageType extends AbstractType
     {
         $builder
             ->add('title', TextType::class, array(
-                'constraints' => new Assert\NotBlank(), "label" => "Titre"
+                'constraints' => new Assert\NotBlank(), "label" => "admin.page.Title"
             ))
 			->add('text', TextareaType::class, array(
-                'constraints' => new Assert\NotBlank(), "label" => "Texte", 'attr' => array('class' => 'redactor')
+                'constraints' => new Assert\NotBlank(), "label" => "admin.page.Text", 'attr' => array('class' => 'redactor')
             ))
 			->add('internationalName', TextType::class, array(
-                'constraints' => new Assert\NotBlank(), "label" => "Nom international"
+                'constraints' => new Assert\NotBlank(), "label" => "admin.page.InternationalName"
             ))
-			->add('photo', FileType::class, array('data_class' => null, "label" => "Photo", "required" => true))
-            ->add('save', SubmitType::class, array('label' => 'Sauvegarder', 'attr' => array('class' => 'btn btn-success')))
+			->add('photo', FileType::class, array('data_class' => null, "label" => "admin.page.Image", "required" => true))
+            ->add('save', SubmitType::class, array('label' => 'admin.main.Save', 'attr' => array('class' => 'btn btn-success')))
 			;
     }
 	

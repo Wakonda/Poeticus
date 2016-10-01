@@ -120,6 +120,13 @@ forgottenPassword:
         EmailUsername: "Indirizzo email o Nome utente"
         Captcha: "Inserisci il testo che vedi sull'immagine"
         Send: "Reimposta password"
+contact:
+    field:
+        ContactUs: "Contattateci!"
+        Message: "Menssaggio"
+        Email: "Email"
+        Subject: "Oggetto"
+        Send: "Inviare"
 admin:
     index:
         Biography: "Biografia"
@@ -160,6 +167,7 @@ admin:
         PublicationDate: "Data di pubblicazione"
         UnknownDate: "Data sconosciuta"
         Image: "Immagine"
+        RapidCreation: "Rapida creazione"
     biography:
         Title: "Titolo"
         Text: "Testo"
@@ -168,3 +176,40 @@ admin:
         Image: "Immagine"
         Nationality: "Nazionalità"
         Country: "Paese"
+    poeticForm:
+        Title: "Titolo"
+        Text: "Testo"
+        Image: "Immagine"
+        KindOfContent: "Tipo di contenuto"
+    country:
+        Title: "Titolo"
+        InternationalName: "Denominazione internazionale"
+        Flag: "Bandiera"
+    collection:
+        Title: "Titolo"
+        Text: "Testo"
+        PublicationDate: "Data di pubblicazione"
+        Image: "Immagine"
+        Biography: "Biografia"
+        ProductCode: "Codice del prodotto"
+        UnknownDate: "Data sconosciuta"
+    contact:
+        Message: "Menssaggio"
+        Email: "Email"
+        DateOfDispatch: "Data di spedizione"
+    member:
+        Pseudo: "Nome utente"
+        Roles: "Ruoli"
+        Email: "Email"
+        Activated: "Attivato"
+        Activate: "Attivare"
+        Desactivate: "Disattivare"
+    page:
+        Title: "Titolo"
+        Text: "Testo"
+        InternationalName: "Denominazione internazionale"
+        Image: "Immagine"
+    version:
+        VersionNumber: "Numero di versione"
+        ReleaseDate: "Data di uscita"
+        File: "File"

@@ -120,6 +120,13 @@ forgottenPassword:
         EmailUsername: "E-mail ou Nome de utilizador(a)"
         Captcha: "Digite o texto que vê na imagem"
         Send: "Enviar uma nova palavra-chave por e-mail"
+contact:
+    field:
+        ContactUs: "Encontramo-nos!"
+        Message: "Mensagem"
+        Email: "E-mail"
+        Subject: "Assunto"
+        Send: "Enviar"
 admin:
     index:
         Biography: "Biografia"
@@ -160,6 +167,7 @@ admin:
         PublicationDate: "Data de publicação"
         UnknownDate: "Data desconhecida"
         Image: "Imagem"
+        RapidCreation: "Rápida criação"
     biography:
         Title: "Título"
         Text: "Texto"
@@ -168,3 +176,40 @@ admin:
         Image: "Imagem"
         Nationality: "Nacionalidade"
         Country: "País"
+    poeticForm:
+        Title: "Título"
+        Text: "Texto"
+        Image: "Imagem"
+        KindOfContent: "Tipo de conteúdo"
+    country:
+        Title: "Título"
+        InternationalName: "Denominação internacionalmente"
+        Flag: "Bandeira"
+    collection:
+        Title: "Título"
+        Text: "Texto"
+        PublicationDate: "Data de publicação"
+        Image: "Imagem"
+        Biography: "Biografia"
+        ProductCode: "Código do produto"
+        UnknownDate: "Data desconhecida"
+    contact:
+        Message: "Mensagem"
+        Email: "E-mail"
+        DateOfDispatch: "Data de envio"
+    member:
+        Pseudo: "Nome de utilizador(a)"
+        Roles: "Papéis"
+        Email: "E-mail"
+        Activated: "Activado"
+        Activate: "Activar"
+        Desactivate: "Desactivar"
+    page:
+        Title: "Título"
+        Text: "Texto"
+        InternationalName: "Denominação internacionalmente"
+        Image: "Imagem"
+    version:
+        VersionNumber: "Número de versão"
+        ReleaseDate: "Date de saída"
+        File: "Arquivo"

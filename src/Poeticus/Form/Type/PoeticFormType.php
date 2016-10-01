@@ -20,16 +20,16 @@ class PoeticFormType extends AbstractType
     {
         $builder
             ->add('title', TextType::class, array(
-                'constraints' => new Assert\NotBlank(), "label" => "Titre"
+                'constraints' => new Assert\NotBlank(), "label" => "admin.poeticForm.Title"
             ))
 			->add('text', TextareaType::class, array(
-                'constraints' => new Assert\NotBlank(), "label" => "Texte", 'attr' => array('class' => 'redactor')
+                'constraints' => new Assert\NotBlank(), "label" => "admin.poeticForm.Text", 'attr' => array('class' => 'redactor')
             ))
-			->add('image', FileType::class, array('data_class' => null, "label" => "Image", "required" => true
+			->add('image', FileType::class, array('data_class' => null, "label" => "admin.poeticForm.Image", "required" => true
             ))
-			->add('typeContentPoem', ChoiceType::class, array("label" => "Type de contenu", "required" => true, "multiple" => false, "expanded" => false, 'choices' => ['Image' => PoeticForm::IMAGETYPE, 'Texte' => PoeticForm::TEXTTYPE]
+			->add('typeContentPoem', ChoiceType::class, array("label" => "admin.poeticForm.KindOfContent", "required" => true, "multiple" => false, "expanded" => false, 'choices' => ['admin.poeticForm.Image' => PoeticForm::IMAGETYPE, 'admin.poeticForm.Text' => PoeticForm::TEXTTYPE]
 			))
-            ->add('save', SubmitType::class, array('label' => 'Sauvegarder', 'attr' => array('class' => 'btn btn-success')))
+            ->add('save', SubmitType::class, array('label' => 'admin.main.Save', 'attr' => array('class' => 'btn btn-success')))
 			;
     }
 

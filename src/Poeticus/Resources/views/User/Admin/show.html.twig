@@ -1,31 +1,31 @@
 {% extends generic_layout %}
 
-{% block head_title %}Admin Recueil{% endblock %}
-{% block main_title %}Administration - Recueil{% endblock %}
+{% block head_title %}{{ 'menu.left.Admin'|trans }} - {{ 'admin.index.Member'|trans }}{% endblock %}
+{% block main_title %}{{ 'menu.left.Admin'|trans }} - {{ 'admin.index.Member'|trans }}{% endblock %}
 
 {% block main_content %}
 	<table class="admin_show">
 		<tr>
-			<th>Pseudo</th>
+			<th>{{ "admin.member.Pseudo"|trans }}</th>
 			<td>{{ entity.username }}</td>
 		</tr>
 		<tr>
-			<th>Rôles</th>
+			<th>{{ "admin.member.Roles"|trans }}</th>
 			<td>{{ entity.roles }}</td>
 		</tr>
 		<tr>
-			<th>Email</th>
+			<th>{{ "admin.member.Email"|trans }}</th>
 			<td>{{ entity.email }}</td>
 		</tr>
 		<tr>
-			<th>Activé</th>
+			<th>{{ "admin.member.Activated"|trans }}</th>
 			<td>{{ entity.enabled == 1 ? '&#x2713;' : '&#x2718' }}</td>
 		</tr>
 	</table>
 	<hr>
 	{% if entity.enabled == 1 %}
-		<a href="{{ path('useradmin_enabled', { 'id' : entity.id, 'state' : 0 }) }}" class="btn btn-danger">Désactiver</a>
+		<a href="{{ path('useradmin_enabled', { 'id' : entity.id, 'state' : 0 }) }}" class="btn btn-danger">{{ "admin.member.Desactivate"|trans }}</a>
 	{% else %}
-		<a href="{{ path('useradmin_enabled', { 'id' : entity.id, 'state' : 1 }) }}" class="btn btn-success">Activer</a>
+		<a href="{{ path('useradmin_enabled', { 'id' : entity.id, 'state' : 1 }) }}" class="btn btn-success">{{ "admin.member.Activate"|trans }}</a>
 	{% endif %}
 {% endblock %}

@@ -1,23 +1,23 @@
 {% extends generic_layout %}
 
-{% block head_title %}Admin Forme Poétique{% endblock %}
-{% block main_title %}Administration - Forme Poétique{% endblock %}
+{% block head_title %}{{ 'menu.left.Admin'|trans }} - {{ 'admin.index.PoeticForm'|trans }}{% endblock %}
+{% block main_title %}{{ 'menu.left.Admin'|trans }} - {{ 'admin.index.PoeticForm'|trans }}{% endblock %}
 
 {% block main_content %}
 	<table class="admin_show">
 		<tr>
-			<th>Titre</th>
+			<th>{{ "admin.poeticForm.Title"|trans }}</th>
 			<td>{{ entity.title }}</td>
 		</tr>
 		<tr>
-			<th>Texte</th>
+			<th>{{ "admin.poeticForm.Text"|trans }}</th>
 			<td>{{ entity.text|raw }}</td>
 		</tr>
 		<tr>
-			<th>Image</th>
+			<th>{{ "admin.poeticForm.Image"|trans }}</th>
 			<td><img src="{{ app.request.basepath }}/photo/poeticform/{{ entity.image }}" alt="" /></td>
 		</tr>
 	</table>
 	<hr>
-	<a href="{{ path('poeticformadmin_edit', { 'id' : entity.id }) }}"><i class="fa fa-edit"></i> Modifier</a> - <a href="{{ path('poeticformadmin_new') }}"><i class="fa fa-plus-square"></i> Créer</a>
+	<a href="{{ path('poeticformadmin_edit', { 'id' : entity.id }) }}"><i class="fa fa-edit"></i> {{ 'admin.index.Update'|trans }}</a> - <a href="{{ path('poeticformadmin_new') }}"><i class="fa fa-plus-square"></i> {{ 'admin.index.Create'|trans }}</a>
 {% endblock %}

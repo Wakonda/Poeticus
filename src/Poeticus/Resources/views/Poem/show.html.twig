@@ -1,16 +1,16 @@
 {% extends generic_layout %}
 
-{% block head_title %}Admin Poésie{% endblock %}
-{% block main_title %}Administration - Poésie{% endblock %}
+{% block head_title %}{{ 'menu.left.Admin'|trans }} - {{ 'admin.index.Poem'|trans }}{% endblock %}
+{% block main_title %}{{ 'menu.left.Admin'|trans }} - {{ 'admin.index.Poem'|trans }}{% endblock %}
 
 {% block main_content %}
 	<table class="admin_show">
 		<tr>
-			<th>Titre</th>
+			<th>{{ "admin.poem.Title"|trans }}</th>
 			<td>{{ entity.title }}</td>
 		</tr>
 		<tr>
-			<th>Texte</th>
+			<th>{{ "admin.poem.Text"|trans }}</th>
 			<td>
 			{% if entity.poeticform is not null and entity.poeticform.typeContentPoem == constant('Poeticus\\Entity\\PoeticForm::IMAGETYPE') %}
 				{{ ("photo/poem/"~entity.photo)|max_size_image(app.request.basepath) }}
@@ -20,26 +20,26 @@
 			</td>
 		</tr>
 		<tr>
-			<th>Date de publication</th>
+			<th>{{ "admin.poem.PublicationDate"|trans }}</th>
 			<td>{{ entity.releasedDate }}</td>
 		</tr>
 		<tr>
-			<th>Forme poétique</th>
+			<th>{{ "admin.poem.PoeticForm"|trans }}</th>
 			<td>{{ entity.poeticform|toString('title') }}</td>
 		</tr>
 		<tr>
-			<th>Auteur</th>
+			<th>{{ "admin.poem.Biography"|trans }}</th>
 			<td>{{ entity.biography|toString('title') }}</td>
 		</tr>
 		<tr>
-			<th>Pays</th>
+			<th>{{ "admin.poem.Country"|trans }}</th>
 			<td>{{ entity.country|toString('title') }}</td>
 		</tr>
 		<tr>
-			<th>Recueil</th>
+			<th>{{ "admin.poem.Collection"|trans }}</th>
 			<td>{{ entity.collection|toString('title') }}</td>
 		</tr>
 	</table>
 	<hr>
-	<a href="{{ path('poemadmin_edit', { 'id' : entity.id }) }}"><i class="fa fa-edit"></i> Modifier</a> - <a href="{{ path('poemadmin_new') }}"><i class="fa fa-plus-square"></i> Créer</a> - <a href="{{ path('poemadmin_newfast') }}" alt=""><i class="fa fa-paper-plane"></i> Création rapide</a>
+	<a href="{{ path('poemadmin_edit', { 'id' : entity.id }) }}"><i class="fa fa-edit"></i> {{ 'admin.index.Update'|trans }}</a> - <a href="{{ path('poemadmin_new') }}"><i class="fa fa-plus-square"></i> {{ 'admin.index.Create'|trans }}</a> - <a href="{{ path('poemadmin_newfast') }}" alt=""><i class="fa fa-paper-plane"></i> {{ "admin.poem.RapidCreation"|trans }}</a>
 {% endblock %}

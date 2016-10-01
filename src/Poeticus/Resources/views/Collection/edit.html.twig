@@ -1,7 +1,7 @@
 {% extends generic_layout %}
 
-{% block head_title %}Admin Recueil{% endblock %}
-{% block main_title %}Administration - Recueil{% endblock %}
+{% block head_title %}{{ 'menu.left.Admin'|trans }} - {{ 'admin.index.Collection'|trans }}{% endblock %}
+{% block main_title %}{{ 'menu.left.Admin'|trans }} - {{ 'admin.index.Collection'|trans }}{% endblock %}
 
 {% block style_additional %}
 	<link rel="stylesheet" type="text/css" href="{{ app.request.basepath }}/js/redactor/css/redactor.css" />

@@ -1,35 +1,35 @@
 {% extends generic_layout %}
 
-{% block head_title %}Admin Recueil{% endblock %}
-{% block main_title %}Administration - Recueil{% endblock %}
+{% block head_title %}{{ 'menu.left.Admin'|trans }} - {{ 'admin.index.Collection'|trans }}{% endblock %}
+{% block main_title %}{{ 'menu.left.Admin'|trans }} - {{ 'admin.index.Collection'|trans }}{% endblock %}
 
 {% block main_content %}
 	<table class="admin_show">
 		<tr>
-			<th>Titre</th>
+			<th>{{ "admin.collection.Title"|trans }}</th>
 			<td>{{ entity.title }}</td>
 		</tr>
 		<tr>
-			<th>Texte</th>
+			<th>{{ "admin.collection.Text"|trans }}</th>
 			<td>{{ entity.text|raw }}</td>
 		</tr>
 		<tr>
-			<th>Date de publication</th>
+			<th>{{ "admin.collection.PublicationDate"|trans }}</th>
 			<td>{{ entity.releasedDate }}</td>
 		</tr>
 		<tr>
-			<th>Image</th>
+			<th>{{ "admin.collection.Image"|trans }}</th>
 			<td><p class="center">{{ ("photo/collection/"~entity.image)|max_size_image(app.request.basepath) }}</p></td>
 		</tr>
 		<tr>
-			<th>Auteur</th>
+			<th>{{ "admin.collection.Biography"|trans }}</th>
 			<td>{{ entity.biography|toString('title') }}</td>
 		</tr>
 		<tr>
-			<th>Code produit</th>
+			<th>{{ "admin.collection.ProductCode"|trans }}</th>
 			<td>{{ entity.widgetProduct|raw }}</td>
 		</tr>
 	</table>
 	<hr>
-	<a href="{{ path('collectionadmin_edit', { 'id' : entity.id }) }}"><i class="fa fa-edit"></i> Modifier</a> - <a href="{{ path('collectionadmin_new') }}"><i class="fa fa-plus-square"></i> Créer</a>
+	<a href="{{ path('collectionadmin_edit', { 'id' : entity.id }) }}"><i class="fa fa-edit"></i> {{ 'admin.index.Update'|trans }}</a> - <a href="{{ path('collectionadmin_new') }}"><i class="fa fa-plus-square"></i> {{ 'admin.index.Create'|trans }}</a>
 {% endblock %}

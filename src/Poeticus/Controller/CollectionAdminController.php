@@ -81,6 +81,7 @@ class CollectionAdminController
 		$form->handleRequest($request);
 		
 		$this->checkForDoubloon($entity, $form, $app);
+		$translator = $app['translator'];
 		
 		if($entity->getImage() == null)
 			$form->get("image")->addError(new FormError($translator->trans("This value should not be blank.", array(), "validators")));

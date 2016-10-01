@@ -22,37 +22,29 @@ class CollectionType extends AbstractType
 
         $builder
             ->add('title', TextType::class, array(
-                'constraints' => new Assert\NotBlank(), "label" => "Titre"
+                'constraints' => new Assert\NotBlank(), "label" => "admin.collection.Title"
             ))
 			->add('text', TextareaType::class, array(
-                'constraints' => new Assert\NotBlank(), "label" => "Texte", 'attr' => array('class' => 'redactor')
+                'constraints' => new Assert\NotBlank(), "label" => "admin.collection.Text", 'attr' => array('class' => 'redactor')
             ))
-			->add('image', FileType::class, array('data_class' => null, "label" => "Image", "required" => true
+			->add('image', FileType::class, array('data_class' => null, "label" => "admin.collection.Image", "required" => true
             ))
 			
 			->add('releasedDate', IntegerType::class, array(
-                'label' => 'Date de publication'
+                'label' => 'admin.collection.PublicationDate'
             ))
 			
 			->add('unknownReleasedDate', CheckboxType::class, array(
-                'mapped' => false, 'label' => 'Date inconnue'
+                'mapped' => false, 'label' => 'admin.collection.UnknownDate'
             ))
-			
-			/*->add('biography', ChoiceType::class, array(
-											'label' => 'Biographie', 
-											'multiple' => false, 
-											'expanded' => false,
-											'placeholder' => 'Choisissez une option',
-										    'choices' => $biographyArray
-											))*/
 											
             ->add('biography', TextType::class, array(
-                'label' => 'Biographie'
+                'label' => 'admin.collection.Biography'
             ))
 			
-			->add('widgetProduct', TextareaType::class, array('required' => false, 'label' => 'Code produit'))
+			->add('widgetProduct', TextareaType::class, array('required' => false, 'label' => 'admin.collection.ProductCode'))
 			
-            ->add('save', SubmitType::class, array('label' => 'Sauvegarder', 'attr' => array('class' => 'btn btn-success')))
+            ->add('save', SubmitType::class, array('label' => 'admin.main.Save', 'attr' => array('class' => 'btn btn-success')))
 			;
     }
 
