@@ -24,6 +24,7 @@ class PoemType extends AbstractType
 		$biographyArray = $options["biographies"];
 		$countryArray = $options["countries"];
 		$collectionArray = $options["collections"];
+		$languageArray = $options["languages"];
 
         $builder
             ->add('title', TextType::class, array(
@@ -74,7 +75,7 @@ class PoemType extends AbstractType
 											'constraints' => array(new Assert\NotBlank()),
 											'placeholder' => 'main.field.ChooseAnOption',
 										    'choices' => $countryArray
-											))		
+											))
 			->add('collection', ChoiceType::class, array(
 											'label' => 'admin.poem.Collection', 
 											'multiple' => false,
@@ -83,8 +84,15 @@ class PoemType extends AbstractType
 											'placeholder' => 'main.field.ChooseAnOption',
 										    'choices' => $collectionArray
 											))
-			->add('photo', FileType::class, array('data_class' => null, "label" => "Image", "required" => true
-            ))
+			->add('photo', FileType::class, array('data_class' => null, "label" => "Image", "required" => true))
+			->add('language', ChoiceType::class, array(
+				'label' => 'admin.form.Language', 
+				'multiple' => false,
+				'required' => false,
+				'expanded' => false,
+				'placeholder' => 'main.field.ChooseAnOption',
+				'choices' => $languageArray
+			))
             ->add('save', SubmitType::class, array('label' => 'admin.main.Save', 'attr' => array('class' => 'btn btn-success')));
     }
 
@@ -98,7 +106,8 @@ class PoemType extends AbstractType
 			"countries" => null,
 			"collections" => null,
 			"poeticForms" => null,
-			"users" => null
+			"users" => null,
+			"languages" => null
 		));
 	}
 	

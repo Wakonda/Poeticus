@@ -155,6 +155,8 @@ admin:
         VersionNumber: "Numero di versione"
     main:
         Save: "Registrare"
+    form:
+        Language: "Lingua"
     poem:
         Title: "Titolo"
         PoeticForm: "Forma poetica"

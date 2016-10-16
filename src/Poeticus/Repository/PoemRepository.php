@@ -8,7 +8,7 @@ use Poeticus\Entity\Poem;
 /**
  * Poem repository
  */
-class PoemRepository
+class PoemRepository extends GenericRepository
 {
     /**
      * @var \Doctrine\DBAL\Connection
@@ -33,7 +33,8 @@ class PoemRepository
         'country_id' => ($entity->getCountry() == 0) ? null : $entity->getCountry(),
         'collection_id' => ($entity->getCollection() == 0) ? null : $entity->getCollection(),
 		'state' => ($entity->getState() == null) ? 0 : $entity->getState(),
-		'photo' => $entity->getPhoto()
+		'photo' => $entity->getPhoto(),
+		'language_id' => ($entity->getLanguage() == 0) ? null : $entity->getLanguage(),
 		);
 
 		if(empty($id))
@@ -70,19 +71,6 @@ class PoemRepository
         }
 
         return $entitiesArray;
-    }
-	
-    public function findByTable($id, $table, $field = null)
-    {
-		if(empty($id))
-			return null;
-			
-        $data = $this->db->fetchAssoc('SELECT * FROM '.$table.' WHERE id = ?', array($id));
-
-		if(empty($field))
-			return $data;
-		else
-			return $data[$field];
     }
 	
 	public function getDatatablesForIndex($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $count = false)
@@ -317,6 +305,7 @@ class PoemRepository
 			$entity->setUser($this->findByTable($data['user_id'], 'user', 'username'));
 			$entity->setCountry($this->findByTable($data['country_id'], 'country'));
 			$entity->setCollection($this->findByTable($data['collection_id'], 'collection'));
+			$entity->setLanguage($this->findByTable($data['language_id'], 'language'));
 		}
 		else
 		{
@@ -325,6 +314,7 @@ class PoemRepository
 			$entity->setUser($data['user_id']);
 			$entity->setCountry($data['country_id']);
 			$entity->setCollection($data['collection_id']);
+			$entity->setLanguage($data['language_id']);
 		}
 
         return $entity;

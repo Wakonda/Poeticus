@@ -36,31 +36,31 @@ class Poem
 
     /**
      *
-     * @var \Poetic\Entity\PoeticForm
+     * @var \Poeticus\Entity\PoeticForm
      */
     protected $poeticForm;
 
     /**
      *
-     * @var \Poetic\Entity\Biography
+     * @var \Poeticus\Entity\Biography
      */
     protected $biography;
 
     /**
      *
-     * @var \Poetic\Entity\Country
+     * @var \Poeticus\Entity\Country
      */
     protected $country;
 
     /**
      *
-     * @var \Poetic\Entity\Collection
+     * @var \Poeticus\Entity\Collection
      */
     protected $collection;
 	
     /**
      *
-     * @var \Poetic\Entity\User
+     * @var \Poeticus\Entity\User
      */
     protected $user;
 

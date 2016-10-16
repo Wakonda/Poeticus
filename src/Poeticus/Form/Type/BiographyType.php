@@ -43,6 +43,14 @@ class BiographyType extends AbstractType
 				'placeholder' => 'main.field.ChooseAnOption',
 				'choices' => $countryArray
 			))
+			->add('language', ChoiceType::class, array(
+				'label' => 'admin.form.Language', 
+				'multiple' => false,
+				'required' => false,
+				'expanded' => false,
+				'placeholder' => 'main.field.ChooseAnOption',
+				'choices' => $languageArray
+			))
             ->add('save', SubmitType::class, array('label' => 'admin.main.Save', 'attr' => array('class' => 'btn btn-success')))
 			;
     }

@@ -22,6 +22,12 @@ class Country
      */
     protected $internationalName;
 
+	/**
+	 *
+	 * @var \Poeticus\Entity\Language
+	 */
+	protected $language;
+
 	public function __toString()
 	{
 		$this->title;
@@ -72,4 +78,14 @@ class Country
     {
         $this->flag = $flag;
     }
+
+	public function getLanguage()
+	{
+		return $this->language;
+	}
+	
+	public function setLanguage($language)
+	{
+		$this->language = $language;
+	}
 }

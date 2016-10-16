@@ -149,8 +149,9 @@ class CollectionAdminController
 	private function createForm($app, $entity)
 	{
 		$biographyForms = $app['repository.biography']->findAllForChoice();
+		$languageForms = $app['repository.language']->findAllForChoice();
 		
-		$form = $app['form.factory']->create(CollectionType::class, $entity, array('biographies' => $biographyForms));
+		$form = $app['form.factory']->create(CollectionType::class, $entity, array('biographies' => $biographyForms, 'languages' => $languageForms));
 		
 		return $form;
 	}

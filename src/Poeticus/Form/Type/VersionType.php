@@ -4,7 +4,7 @@ namespace Poeticus\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -15,6 +15,8 @@ class VersionType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+		$languageArray = $options["languages"];
+		
         $builder
             ->add('versionNumber', TextType::class, array(
                 'constraints' => new Assert\NotBlank(), "label" => "Numéro de version"
@@ -26,6 +28,16 @@ class VersionType extends AbstractType
             ->add('save', SubmitType::class, array('label' => 'Sauvegarder', 'attr' => array('class' => 'btn btn-success')))
 			;
     }
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function configureOptions(OptionsResolver $resolver)
+	{
+		$resolver->setDefaults(array(
+			"languages" => null
+		));
+	}
 	
     public function getName()
     {

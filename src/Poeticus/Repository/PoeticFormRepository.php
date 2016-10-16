@@ -8,7 +8,7 @@ use Poeticus\Entity\PoeticForm;
 /**
  * Poem repository
  */
-class PoeticFormRepository
+class PoeticFormRepository extends GenericRepository
 {
     /**
      * @var \Doctrine\DBAL\Connection
@@ -26,7 +26,8 @@ class PoeticFormRepository
 		'title' => $entity->getTitle(),
 		'text' => $entity->getText(),
 		'image' => $entity->getImage(),
-		'typeContentPoem' => $entity->getTypeContentPoem()
+		'typeContentPoem' => $entity->getTypeContentPoem(),
+		'language_id' => ($entity->getLanguage() == 0) ? null : $entity->getLanguage()
 		);
 
 		if(empty($id))
@@ -129,6 +130,15 @@ class PoeticFormRepository
         $poeticForm->setText($data['text']);
         $poeticForm->setImage($data['image']);
         $poeticForm->setTypeContentPoem($data['typeContentPoem']);
+
+		if($show)
+		{
+			$entity->setLanguage($this->findByTable($data['language_id'], 'language'));
+		}
+		else
+		{
+			$entity->setLanguage($data['language_id']);
+		}
 
         return $poeticForm;
     }

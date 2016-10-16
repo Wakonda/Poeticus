@@ -69,7 +69,7 @@ class PoeticFormAdminController
     public function newAction(Request $request, Application $app)
     {
 		$entity = new PoeticForm();
-        $form = $app['form.factory']->create(PoeticFormType::class, $entity);
+        $form = $this->createForm($app, $entity);
 
 		return $app['twig']->render('PoeticForm/new.html.twig', array('form' => $form->createView()));
     }
@@ -77,7 +77,7 @@ class PoeticFormAdminController
 	public function createAction(Request $request, Application $app)
 	{
 		$entity = new PoeticForm();
-        $form = $app['form.factory']->create(PoeticFormType::class, $entity);
+        $form = $this->createForm($app, $entity);
 		$form->handleRequest($request);
 		
 		$translator = $app['translator'];
@@ -110,7 +110,7 @@ class PoeticFormAdminController
 	public function editAction(Request $request, Application $app, $id)
 	{
 		$entity = $app['repository.poeticform']->find($id);
-		$form = $app['form.factory']->create(PoeticFormType::class, $entity);
+		$form = $this->createForm($app, $entity);
 	
 		return $app['twig']->render('PoeticForm/edit.html.twig', array('form' => $form->createView(), 'entity' => $entity));
 	}
@@ -119,7 +119,7 @@ class PoeticFormAdminController
 	{
 		$entity = $app['repository.poeticform']->find($id);
 		$currentImage = $entity->getImage();
-		$form = $app['form.factory']->create(PoeticFormType::class, $entity);
+		$form = $this->createForm($app, $entity);
 		$form->handleRequest($request);
 		
 		if($form->isValid())
@@ -141,5 +141,14 @@ class PoeticFormAdminController
 		}
 	
 		return $app['twig']->render('PoeticForm/edit.html.twig', array('form' => $form->createView(), 'entity' => $entity));
+	}
+
+	private function createForm($app, $entity)
+	{
+		$languageForms = $app['repository.language']->findAllForChoice();
+
+		$form = $app['form.factory']->create(PoeticFormType::class, $entity, array('languages' => $languageForms));
+
+		return $form;
 	}
 }

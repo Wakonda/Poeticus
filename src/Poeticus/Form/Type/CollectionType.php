@@ -19,6 +19,7 @@ class CollectionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 		$biographyArray = $options["biographies"];
+		$languageArray = $options["languages"];
 
         $builder
             ->add('title', TextType::class, array(
@@ -37,12 +38,21 @@ class CollectionType extends AbstractType
 			->add('unknownReleasedDate', CheckboxType::class, array(
                 'mapped' => false, 'label' => 'admin.collection.UnknownDate'
             ))
-											
+
             ->add('biography', TextType::class, array(
                 'label' => 'admin.collection.Biography'
             ))
 			
 			->add('widgetProduct', TextareaType::class, array('required' => false, 'label' => 'admin.collection.ProductCode'))
+			
+			->add('language', ChoiceType::class, array(
+				'label' => 'admin.form.Language', 
+				'multiple' => false,
+				'required' => false,
+				'expanded' => false,
+				'placeholder' => 'main.field.ChooseAnOption',
+				'choices' => $languageArray
+			))
 			
             ->add('save', SubmitType::class, array('label' => 'admin.main.Save', 'attr' => array('class' => 'btn btn-success')))
 			;
@@ -54,7 +64,8 @@ class CollectionType extends AbstractType
 	public function configureOptions(OptionsResolver $resolver)
 	{
 		$resolver->setDefaults(array(
-			"biographies" => null
+			"biographies" => null,
+			"languages" => null
 		));
 	}
 	

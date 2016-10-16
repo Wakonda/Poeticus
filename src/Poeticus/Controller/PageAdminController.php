@@ -147,7 +147,9 @@ class PageAdminController
 	
 	private function createForm($app, $entity)
 	{
-		$form = $app['form.factory']->create(PageType::class, $entity);
+		$languageForms = $app['repository.language']->findAllForChoice();
+
+		$form = $app['form.factory']->create(PageType::class, $entity, array('languages' => $languageForms));
 		
 		return $form;
 	}

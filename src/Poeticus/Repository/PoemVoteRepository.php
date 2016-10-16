@@ -8,7 +8,7 @@ use Poeticus\Entity\PoemVote;
 /**
  * PoemVote repository
  */
-class PoemVoteRepository
+class PoemVoteRepository extends GenericRepository
 {
     /**
      * @var \Doctrine\DBAL\Connection
@@ -110,18 +110,5 @@ class PoemVoteRepository
 		}
 
         return $entity;
-    }
-
-    public function findByTable($id, $table, $field = null)
-    {
-		if(empty($id))
-			return null;
-			
-        $data = $this->db->fetchAssoc('SELECT * FROM '.$table.' WHERE id = ?', array($id));
-
-		if(empty($field))
-			return $data;
-		else
-			return $data[$field];
     }
 }

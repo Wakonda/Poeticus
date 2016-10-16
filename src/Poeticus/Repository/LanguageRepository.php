@@ -8,7 +8,7 @@ use Poeticus\Entity\Language;
 /**
  * Poem repository
  */
-class LanguageRepository
+class LanguageRepository extends GenericRepository
 {
     /**
      * @var \Doctrine\DBAL\Connection

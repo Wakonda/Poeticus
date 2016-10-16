@@ -8,7 +8,7 @@ use Poeticus\Entity\Comment;
 /**
  * Comment repository
  */
-class CommentRepository
+class CommentRepository extends GenericRepository
 {
     /**
      * @var \Doctrine\DBAL\Connection
@@ -117,19 +117,6 @@ class CommentRepository
 
 		return $entitiesArray;
 	}
-
-    public function findByTable($id, $table, $field = null)
-    {
-		if(empty($id))
-			return null;
-			
-        $data = $this->db->fetchAssoc('SELECT * FROM '.$table.' WHERE id = ?', array($id));
-
-		if(empty($field))
-			return $data;
-		else
-			return $data[$field];
-    }
 
 	public function findCommentByUser($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $username, $count = false)
 	{

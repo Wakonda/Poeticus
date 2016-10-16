@@ -155,6 +155,8 @@ admin:
         VersionNumber: "Numéro de version"
     main:
         Save: "Sauvegarder"
+    form:
+        Language: "Langue"
     poem:
         Title: "Titre"
         PoeticForm: "Forme poétique"

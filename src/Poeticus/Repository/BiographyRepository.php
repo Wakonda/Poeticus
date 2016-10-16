@@ -8,7 +8,7 @@ use Poeticus\Entity\Biography;
 /**
  * Poem repository
  */
-class BiographyRepository
+class BiographyRepository extends GenericRepository
 {
     /**
      * @var \Doctrine\DBAL\Connection
@@ -32,7 +32,8 @@ class BiographyRepository
 		'monthDeath' => $entity->getMonthDeath(),
 		'yearDeath' => $entity->getYearDeath(),
 		'photo' => $entity->getPhoto(),
-		'country_id' => ($entity->getCountry() == 0) ? null : $entity->getCountry()
+		'country_id' => ($entity->getCountry() == 0) ? null : $entity->getCountry(),
+		'language_id' => ($entity->getLanguage() == 0) ? null : $entity->getLanguage()
 		);
 
 		if(empty($id))
@@ -125,10 +126,12 @@ class BiographyRepository
 		if($show)
 		{
 			$entity->setCountry($this->findByTable($data['country_id'], 'country'));
+			$entity->setLanguage($this->findByTable($data['language_id'], 'language'));
 		}
 		else
 		{
 			$entity->setCountry($data['country_id']);
+			$entity->setLanguage($data['language_id']);
 		}
 
         return $entity;
@@ -184,19 +187,6 @@ class BiographyRepository
 		
 		return $results[0]["number"];
 	}
-
-    public function findByTable($id, $table, $field = null)
-    {
-		if(empty($id))
-			return null;
-			
-        $data = $this->db->fetchAssoc('SELECT * FROM '.$table.' WHERE id = ?', array($id));
-
-		if(empty($field))
-			return $data;
-		else
-			return $data[$field];
-    }
 
 	// Combobox
 	public function getDatasCombobox($params, $count = false)

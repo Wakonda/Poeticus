@@ -27,6 +27,12 @@ class Version
      * @var date
      */
     protected $releaseDate;
+
+	/**
+	 *
+	 * @var \Poeticus\Entity\Language
+	 */
+	protected $language;
 	
     public function getId()
     {
@@ -67,4 +73,14 @@ class Version
     {
         $this->releaseDate = $releaseDate;
     }
+
+	public function getLanguage()
+	{
+		return $this->language;
+	}
+	
+	public function setLanguage($language)
+	{
+		$this->language = $language;
+	}
 }

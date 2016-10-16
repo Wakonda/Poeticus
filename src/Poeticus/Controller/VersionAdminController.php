@@ -150,7 +150,9 @@ class VersionAdminController
 	
 	private function createForm($app, $entity)
 	{
-		$form = $app['form.factory']->create(VersionType::class, $entity);
+		$languageForms = $app['repository.language']->findAllForChoice();
+
+		$form = $app['form.factory']->create(VersionType::class, $entity, array('languages' => $languageForms));
 		
 		return $form;
 	}

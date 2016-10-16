@@ -16,6 +16,8 @@ class PageType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+		$languageArray = $options["languages"];
+
         $builder
             ->add('title', TextType::class, array(
                 'constraints' => new Assert\NotBlank(), "label" => "admin.page.Title"
@@ -27,10 +29,28 @@ class PageType extends AbstractType
                 'constraints' => new Assert\NotBlank(), "label" => "admin.page.InternationalName"
             ))
 			->add('photo', FileType::class, array('data_class' => null, "label" => "admin.page.Image", "required" => true))
-            ->add('save', SubmitType::class, array('label' => 'admin.main.Save', 'attr' => array('class' => 'btn btn-success')))
+			->add('language', ChoiceType::class, array(
+				'label' => 'admin.form.Language', 
+				'multiple' => false,
+				'required' => false,
+				'expanded' => false,
+				'placeholder' => 'main.field.ChooseAnOption',
+				'choices' => $languageArray
+			))
+			->add('save', SubmitType::class, array('label' => 'admin.main.Save', 'attr' => array('class' => 'btn btn-success')))
 			;
     }
-	
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function configureOptions(OptionsResolver $resolver)
+	{
+		$resolver->setDefaults(array(
+			"languages" => null
+		));
+	}
+
     public function getName()
     {
         return 'page';

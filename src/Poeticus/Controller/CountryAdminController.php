@@ -69,7 +69,7 @@ class CountryAdminController
     public function newAction(Request $request, Application $app)
     {
 		$entity = new Country();
-        $form = $app['form.factory']->create(CountryType::class, $entity);
+		$form = $this->createForm($app, $entity);
 
 		return $app['twig']->render('Country/new.html.twig', array('form' => $form->createView()));
     }
@@ -77,7 +77,7 @@ class CountryAdminController
 	public function createAction(Request $request, Application $app)
 	{
 		$entity = new Country();
-        $form = $app['form.factory']->create(CountryType::class, $entity);
+        $form = $this->createForm($app, $entity);
 		$form->handleRequest($request);
 
 		$translator = $app['translator'];
@@ -102,7 +102,7 @@ class CountryAdminController
 	
 	public function showAction(Request $request, Application $app, $id)
 	{
-		$entity = $app['repository.country']->find($id);
+		$entity = $app['repository.country']->find($id, true);
 	
 		return $app['twig']->render('Country/show.html.twig', array('entity' => $entity));
 	}
@@ -110,7 +110,7 @@ class CountryAdminController
 	public function editAction(Request $request, Application $app, $id)
 	{
 		$entity = $app['repository.country']->find($id);
-		$form = $app['form.factory']->create(CountryType::class, $entity);
+		$form = $this->createForm($app, $entity);
 	
 		return $app['twig']->render('Country/edit.html.twig', array('form' => $form->createView(), 'entity' => $entity));
 	}
@@ -119,7 +119,7 @@ class CountryAdminController
 	{
 		$entity = $app['repository.country']->find($id);
 		$currentImage = $entity->getFlag();
-		$form = $app['form.factory']->create(CountryType::class, $entity);
+		$form = $this->createForm($app, $entity);
 		$form->handleRequest($request);
 		
 		if($form->isValid())
@@ -141,5 +141,14 @@ class CountryAdminController
 		}
 	
 		return $app['twig']->render('Country/edit.html.twig', array('form' => $form->createView(), 'entity' => $entity));
+	}
+
+	private function createForm($app, $entity)
+	{
+		$languageForms = $app['repository.language']->findAllForChoice();
+
+		$form = $app['form.factory']->create(CountryType::class, $entity, array('languages' => $languageForms));
+
+		return $form;
 	}
 }

@@ -8,7 +8,7 @@ use Poeticus\Entity\Collection;
 /**
  * Poem repository
  */
-class CollectionRepository
+class CollectionRepository extends GenericRepository
 {
     /**
      * @var \Doctrine\DBAL\Connection
@@ -28,7 +28,8 @@ class CollectionRepository
 		'releasedDate' => $entity->getReleasedDate(),
 		'biography_id' => ($entity->getBiography() == 0) ? null : $entity->getBiography(),
 		'image' => $entity->getImage(),
-		'widgetProduct' => $entity->getWidgetProduct()
+		'widgetProduct' => $entity->getWidgetProduct(),
+		'language_id' => ($entity->getLanguage() == 0) ? null : $entity->getLanguage()
 		);
 
 		if(empty($id))
@@ -117,10 +118,12 @@ class CollectionRepository
 		if($show)
 		{
 			$entity->setBiography($this->findByTable($data['biography_id'], 'biography'));
+			$entity->setLanguage($this->findByTable($data['language_id'], 'language'));
 		}
 		else
 		{
 			$entity->setBiography($data['biography_id']);
+			$entity->setLanguage($data['language_id']);
 		}
 		
         return $entity;
@@ -144,19 +147,6 @@ class CollectionRepository
 		
         return $choiceArray;
 	}
-	
-    public function findByTable($id, $table, $field = null)
-    {
-		if(empty($id))
-			return null;
-			
-        $data = $this->db->fetchAssoc('SELECT * FROM '.$table.' WHERE id = ?', array($id));
-
-		if(empty($field))
-			return $data;
-		else
-			return $data[$field];
-    }
 	
 	public function findAllByAuthor($authorId)
     {

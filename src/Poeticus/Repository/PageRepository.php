@@ -8,7 +8,7 @@ use Poeticus\Entity\Page;
 /**
  * Poem repository
  */
-class PageRepository
+class PageRepository extends GenericRepository
 {
     /**
      * @var \Doctrine\DBAL\Connection
@@ -26,7 +26,8 @@ class PageRepository
 		'title' => $entity->getTitle(),
 		'internationalName' => $entity->getInternationalName(),
 		'text' => $entity->getText(),
-		'photo' => $entity->getPhoto()
+		'photo' => $entity->getPhoto(),
+		'language_id' => ($entity->getLanguage() == 0) ? null : $entity->getLanguage()
 		);
 
 		if(empty($id))
@@ -117,6 +118,15 @@ class PageRepository
         $entity->setInternationalName($data['internationalName']);
         $entity->setText($data['text']);
         $entity->setPhoto($data['photo']);
+		
+		if($show)
+		{
+			$entity->setLanguage($this->findByTable($data['language_id'], 'language'));
+		}
+		else
+		{
+			$entity->setLanguage($data['language_id']);
+		}
 
         return $entity;
     }

@@ -8,7 +8,7 @@ use Poeticus\Entity\Contact;
 /**
  * Poem repository
  */
-class ContactRepository
+class ContactRepository extends GenericRepository
 {
     /**
      * @var \Doctrine\DBAL\Connection
@@ -95,6 +95,5 @@ class ContactRepository
 	public function readContact($id)
 	{
 		$this->db->update('contact', array("readMessage" => "1"), array('id' => $id));
-		// $this->db->exec('UPDATE contact SET read = "1" WHERE id = "'.$id.'"');
 	}
 }

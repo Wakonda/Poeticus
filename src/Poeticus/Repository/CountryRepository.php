@@ -8,7 +8,7 @@ use Poeticus\Entity\Country;
 /**
  * Poem repository
  */
-class CountryRepository
+class CountryRepository extends GenericRepository
 {
     /**
      * @var \Doctrine\DBAL\Connection
@@ -25,7 +25,8 @@ class CountryRepository
 		$entityData = array(
 		'title' => $entity->getTitle(),
 		'internationalName' => $entity->getInternationalName(),
-		'flag' => $entity->getFlag()
+		'flag' => $entity->getFlag(),
+		'language_id' => ($entity->getLanguage() == 0) ? null : $entity->getLanguage(),
 		);
 
 		if(empty($id))
@@ -39,11 +40,11 @@ class CountryRepository
 		return $id;
 	}
 	
-    public function find($id)
+    public function find($id, $show = false)
     {
         $data = $this->db->fetchAssoc('SELECT * FROM country WHERE id = ?', array($id));
 
-        return $data ? $this->build($data) : null;
+        return $data ? $this->build($data, $show) : null;
     }
 	
     public function findAll($show = false)
@@ -101,15 +102,24 @@ class CountryRepository
 		return $entitiesArray;
 	}
 	
-	protected function build($data)
+	protected function build($data, $show = false)
     {
-        $poeticForm = new Country();
-        $poeticForm->setId($data['id']);
-        $poeticForm->setTitle($data['title']);
-        $poeticForm->setInternationalName($data['internationalName']);
-        $poeticForm->setFlag($data['flag']);
+        $entity = new Country();
+        $entity->setId($data['id']);
+        $entity->setTitle($data['title']);
+        $entity->setInternationalName($data['internationalName']);
+        $entity->setFlag($data['flag']);
 
-        return $poeticForm;
+		if($show)
+		{
+			$entity->setLanguage($this->findByTable($data['language_id'], 'language'));
+		}
+		else
+		{
+			$entity->setLanguage($data['language_id']);
+		}
+
+        return $entity;
     }
 
 	public function findAllForChoice()

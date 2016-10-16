@@ -8,7 +8,7 @@ use Poeticus\Entity\Version;
 /**
  * Poem repository
  */
-class VersionRepository
+class VersionRepository extends GenericRepository
 {
     /**
      * @var \Doctrine\DBAL\Connection
@@ -25,7 +25,8 @@ class VersionRepository
 		$entityData = array(
 		'file' => $entity->getFile(),
 		'versionNumber' => $entity->getVersionNumber(),
-		'releaseDate' => $entity->getReleaseDate()->format('Y-m-d')
+		'releaseDate' => $entity->getReleaseDate()->format('Y-m-d'),
+		'language_id' => ($entity->getLanguage() == 0) ? null : $entity->getLanguage()
 		);
 
 		if(empty($id))
@@ -108,6 +109,15 @@ class VersionRepository
         $entity->setVersionNumber($data['versionNumber']);
         $entity->setReleaseDate(new \DateTime($data['releaseDate']));
         $entity->setFile($data['file']);
+
+		if($show)
+		{
+			$entity->setLanguage($this->findByTable($data['language_id'], 'language'));
+		}
+		else
+		{
+			$entity->setLanguage($data['language_id']);
+		}
 
         return $entity;
     }
