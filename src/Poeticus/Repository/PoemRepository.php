@@ -2,7 +2,6 @@
 
 namespace Poeticus\Repository;
 
-use Doctrine\DBAL\Connection;
 use Poeticus\Entity\Poem;
 
 /**
@@ -10,16 +9,6 @@ use Poeticus\Entity\Poem;
  */
 class PoemRepository extends GenericRepository
 {
-    /**
-     * @var \Doctrine\DBAL\Connection
-     */
-    protected $db;
-
-    public function __construct(Connection $db)
-    {
-        $this->db = $db;
-    }
-
 	public function save($entity, $id = null)
 	{
 		$entityData = array(
@@ -77,10 +66,11 @@ class PoemRepository extends GenericRepository
 	{
 		$qb = $this->db->createQueryBuilder();
 
-		$aColumns = array( 'pf.id', 'pf.title', 'pf.id');
+		$aColumns = array( 'pf.id', 'pf.title', 'la.title', 'pf.id');
 		
-		$qb->select("*")
-		   ->from("poem", "pf");
+		$qb->select("pf.*")
+		   ->from("poem", "pf")
+	   ->leftjoin("pf", "language", "la", "pf.language_id = la.id");
 		
 		if(!empty($sortDirColumn))
 		   $qb->orderBy($aColumns[$sortByColumn[0]], $sortDirColumn[0]);
@@ -104,7 +94,7 @@ class PoemRepository extends GenericRepository
 		$entitiesArray = array();
 
         foreach ($dataArray as $data) {
-            $entitiesArray[] = $this->build($data);
+            $entitiesArray[] = $this->build($data, true);
         }
 
 		return $entitiesArray;

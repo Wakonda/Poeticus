@@ -10,6 +10,16 @@ use Poeticus\Entity\Country;
  */
 class GenericRepository
 {
+    /**
+     * @var \Doctrine\DBAL\Connection
+     */
+    protected $db;
+
+    public function __construct(Connection $db)
+    {
+        $this->db = $db;
+    }
+	
     public function findByTable($id, $table, $field = null)
     {
 		if(empty($id))

@@ -53,6 +53,9 @@ class BiographyAdminController
 			$row[] = $entity->getId();
 			$row[] = $entity->getTitle();
 			
+			$language = $entity->getLanguage();
+			$row[] = $language['title'];
+			
 			$show = $app['url_generator']->generate('biographyadmin_show', array('id' => $entity->getId()));
 			$edit = $app['url_generator']->generate('biographyadmin_edit', array('id' => $entity->getId()));
 			

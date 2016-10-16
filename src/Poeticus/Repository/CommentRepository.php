@@ -2,7 +2,6 @@
 
 namespace Poeticus\Repository;
 
-use Doctrine\DBAL\Connection;
 use Poeticus\Entity\Comment;
 
 /**
@@ -10,16 +9,6 @@ use Poeticus\Entity\Comment;
  */
 class CommentRepository extends GenericRepository
 {
-    /**
-     * @var \Doctrine\DBAL\Connection
-     */
-    protected $db;
-
-    public function __construct(Connection $db)
-    {
-        $this->db = $db;
-    }
-
 	public function save($entity, $id = null)
 	{
 		$entityData = array(

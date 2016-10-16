@@ -2,7 +2,6 @@
 
 namespace Poeticus\Repository;
 
-use Doctrine\DBAL\Connection;
 use Poeticus\Entity\PoeticForm;
 
 /**
@@ -10,16 +9,6 @@ use Poeticus\Entity\PoeticForm;
  */
 class PoeticFormRepository extends GenericRepository
 {
-    /**
-     * @var \Doctrine\DBAL\Connection
-     */
-    protected $db;
-
-    public function __construct(Connection $db)
-    {
-        $this->db = $db;
-    }
-
 	public function save($entity, $id = null)
 	{
 		$entityData = array(
@@ -70,10 +59,11 @@ class PoeticFormRepository extends GenericRepository
 	{
 		$qb = $this->db->createQueryBuilder();
 
-		$aColumns = array( 'pf.id', 'pf.title', 'pf.id');
+		$aColumns = array( 'pf.id', 'pf.title', 'la.title', 'pf.id');
 		
-		$qb->select("*")
-		   ->from("poeticform", "pf");
+		$qb->select("pf.*")
+		   ->from("poeticform", "pf")
+		   ->leftjoin("pf", "language", "la", "pf.language_id = la.id");
 		
 		if(!empty($sortDirColumn))
 		   $qb->orderBy($aColumns[$sortByColumn[0]], $sortDirColumn[0]);
@@ -97,7 +87,7 @@ class PoeticFormRepository extends GenericRepository
 		$entitiesArray = array();
 
         foreach ($dataArray as $data) {
-            $entitiesArray[] = $this->build($data);
+            $entitiesArray[] = $this->build($data, true);
         }
 			
 		return $entitiesArray;
@@ -122,14 +112,14 @@ class PoeticFormRepository extends GenericRepository
         return $choiceArray;
 	}
 	
-	protected function build($data)
+	protected function build($data, $show = false)
     {
-        $poeticForm = new PoeticForm();
-        $poeticForm->setId($data['id']);
-        $poeticForm->setTitle($data['title']);
-        $poeticForm->setText($data['text']);
-        $poeticForm->setImage($data['image']);
-        $poeticForm->setTypeContentPoem($data['typeContentPoem']);
+        $entity = new PoeticForm();
+        $entity->setId($data['id']);
+        $entity->setTitle($data['title']);
+        $entity->setText($data['text']);
+        $entity->setImage($data['image']);
+        $entity->setTypeContentPoem($data['typeContentPoem']);
 
 		if($show)
 		{
@@ -140,6 +130,6 @@ class PoeticFormRepository extends GenericRepository
 			$entity->setLanguage($data['language_id']);
 		}
 
-        return $poeticForm;
+        return $entity;
     }
 }

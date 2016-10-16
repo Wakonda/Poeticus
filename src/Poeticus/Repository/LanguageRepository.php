@@ -2,7 +2,6 @@
 
 namespace Poeticus\Repository;
 
-use Doctrine\DBAL\Connection;
 use Poeticus\Entity\Language;
 
 /**
@@ -10,16 +9,6 @@ use Poeticus\Entity\Language;
  */
 class LanguageRepository extends GenericRepository
 {
-    /**
-     * @var \Doctrine\DBAL\Connection
-     */
-    protected $db;
-
-    public function __construct(Connection $db)
-    {
-        $this->db = $db;
-    }
-	
     public function find($id, $show = false)
     {
         $data = $this->db->fetchAssoc('SELECT * FROM language WHERE id = ?', array($id));

@@ -2,7 +2,6 @@
 
 namespace Poeticus\Repository;
 
-use Doctrine\DBAL\Connection;
 use Poeticus\Entity\Version;
 
 /**
@@ -10,16 +9,6 @@ use Poeticus\Entity\Version;
  */
 class VersionRepository extends GenericRepository
 {
-    /**
-     * @var \Doctrine\DBAL\Connection
-     */
-    protected $db;
-
-    public function __construct(Connection $db)
-    {
-        $this->db = $db;
-    }
-
 	public function save($entity, $id = null)
 	{
 		$entityData = array(
@@ -69,10 +58,11 @@ class VersionRepository extends GenericRepository
 	{
 		$qb = $this->db->createQueryBuilder();
 
-		$aColumns = array('v.id', 'v.versionNumber', 'v.releaseDate', 'v.id');
+		$aColumns = array('v.id', 'v.versionNumber', 'v.releaseDate', 'la.title', 'v.id');
 		
-		$qb->select("*")
-		   ->from("version", "v");
+		$qb->select("v.*")
+		   ->from("version", "v")
+		   ->leftjoin("v", "language", "la", "v.language_id = la.id");
 		
 		if(!empty($sortDirColumn))
 		   $qb->orderBy($aColumns[$sortByColumn[0]], $sortDirColumn[0]);
@@ -96,13 +86,13 @@ class VersionRepository extends GenericRepository
 		$entitiesArray = array();
 
         foreach ($dataArray as $data) {
-            $entitiesArray[] = $this->build($data);
+            $entitiesArray[] = $this->build($data, true);
         }
 			
 		return $entitiesArray;
 	}
 	
-	protected function build($data)
+	protected function build($data, $show = false)
     {
         $entity = new Version();
         $entity->setId($data['id']);

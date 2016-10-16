@@ -2,7 +2,6 @@
 
 namespace Poeticus\Repository;
 
-use Doctrine\DBAL\Connection;
 use Poeticus\Entity\PoemVote;
 
 /**
@@ -10,16 +9,6 @@ use Poeticus\Entity\PoemVote;
  */
 class PoemVoteRepository extends GenericRepository
 {
-    /**
-     * @var \Doctrine\DBAL\Connection
-     */
-    protected $db;
-
-    public function __construct(Connection $db)
-    {
-        $this->db = $db;
-    }
-
 	public function save($entity, $id = null)
 	{
 		// die(var_dump($entity->getUser()->getId()));

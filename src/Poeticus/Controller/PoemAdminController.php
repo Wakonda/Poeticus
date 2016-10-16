@@ -57,6 +57,9 @@ class PoemAdminController
 			$row[] = $entity->getId();
 			$row[] = $entity->getTitle();
 			
+			$language = $entity->getLanguage();
+			$row[] = $language['title'];
+			
 			$show = $app['url_generator']->generate('poemadmin_show', array('id' => $entity->getId()));
 			$edit = $app['url_generator']->generate('poemadmin_edit', array('id' => $entity->getId()));
 			

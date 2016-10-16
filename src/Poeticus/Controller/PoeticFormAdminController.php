@@ -53,6 +53,9 @@ class PoeticFormAdminController
 			$row[] = $entity->getId();
 			$row[] = $entity->getTitle();
 			
+			$language = $entity->getLanguage();
+			$row[] = $language['title'];
+			
 			$show = $app['url_generator']->generate('poeticformadmin_show', array('id' => $entity->getId()));
 			$edit = $app['url_generator']->generate('poeticformadmin_edit', array('id' => $entity->getId()));
 			

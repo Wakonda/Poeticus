@@ -53,6 +53,9 @@ class PageAdminController
 			$row[] = $entity->getId();
 			$row[] = $entity->getTitle();
 			
+			$language = $entity->getLanguage();
+			$row[] = $language['title'];
+			
 			$show = $app['url_generator']->generate('pageadmin_show', array('id' => $entity->getId()));
 			$edit = $app['url_generator']->generate('pageadmin_edit', array('id' => $entity->getId()));
 			
