@@ -95,7 +95,7 @@ class BiographyRepository extends GenericRepository
         foreach ($dataArray as $data) {
             $entitiesArray[] = $this->build($data, true);
         }
-			
+
 		return $entitiesArray;
 	}
 	

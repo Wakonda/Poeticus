@@ -29,8 +29,11 @@ menu:
         Version: "Versione"
 main:
     index:
-        WelcomeTo: "Bem-vindo ao Poéticus"
+        WonderfulWorldOfPoem: "Il<small> Magico Mondo </small> della Poesia"
+        WelcomeTo: "Benvenuti a Poéticus"
         Search: "Cercare la poesia"
+        PoemRandomly: "Poesia a case"
+        NoPoem: "Alcuna poesia"
     field:
         Title: "Titolo"
         Keywords: "Parola chiave"

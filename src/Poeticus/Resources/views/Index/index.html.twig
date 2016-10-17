@@ -56,7 +56,7 @@
 		{{ form_rest(form) }}
 	{{ form_end(form) }}
 	<hr class="flare">
-	<h2>Poésie au hasard</h2>
+	<h2>{{ 'main.index.PoemRandomly'|trans }}</h2>
 	{% if random is not null %}
 	<h3><a href="{{ path('read', {'id' : random.id}) }}" alt="{{ random.title }}">{{ random.title }}</a></h3>
 	<div>
@@ -71,6 +71,6 @@
 		<a href="{{ path('country', {'id' : random.country.id }) }}" alt=""><img class="flag" src="{{ app.request.basepath }}/photo/country/{{ random.country.flag }}" alt="" height="8" /></a>
 	</div>
 	{% else %}
-		<p>Aucune Poésie encore ajoutée.</p>
+		<p>{{ 'main.index.NoPoem'|trans }}</p>
 	{% endif %}
 {% endblock %}

@@ -32,7 +32,7 @@ class IndexController
 		// $app['request']->getSession()->set('_locale', 'pt');
 
 		$form = $this->createForm($app, null);
-		$random = $app['repository.poem']->getRandomPoem();
+		$random = $app['repository.poem']->getRandomPoem($this->getCurrentLocale($app));
 		
         return $app['twig']->render('Index/index.html.twig', array('form' => $form->createView(), 'random' => $random));
     }
@@ -814,5 +814,10 @@ class IndexController
 		$response->headers->set('Content-Type', 'application/json');
 
 		return $response;
+	}
+	
+	private function getCurrentLocale($app)
+	{
+		return $app['request']->getLocale();
 	}
 }

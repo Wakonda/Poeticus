@@ -201,28 +201,32 @@ class PoemRepository extends GenericRepository
 		return $entitiesArray;
 	}
 	
-	public function getRandomPoem()
+	public function getRandomPoem($locale)
 	{
 		$qb = $this->db->createQueryBuilder();
 
 		$qb->select("COUNT(*) AS countRow")
 		   ->from("poem", "pf");
+		   
+		$this->whereLanguage($qb, "pf", $locale);
 		
 		$count = $qb->execute()->fetchObject();
 		$id = rand(1, $count->countRow);
-		
+	
 		$qb = $this->db->createQueryBuilder();
 
-		$qb->select("*")
+		$qb->select("pf.*")
 		   ->from("poem", "pf")
 		   ->where("pf.id = :id")
 		   ->setParameter("id", $id)
 		   ->andWhere("pf.state = 0")
 		   ->andWhere("pf.authorType = :authorType")
 		   ->setParameter("authorType", "biography");
+		   
+		$this->whereLanguage($qb, "pf", $locale);
 
 		$result = $qb->execute()->fetch();
-		
+
 		if(!$result)
 			return null;
 		
@@ -240,8 +244,7 @@ class PoemRepository extends GenericRepository
 		   ->from("collection", "co")
 		   ->where("pf.biography_id = :id")
 		   ->setParameter("id", $authorId)
-		   ->andWhere("(pf.collection_id = co.id OR pf.collection_id IS NULL)")
-		   ;
+		   ->andWhere("(pf.collection_id = co.id OR pf.collection_id IS NULL)");
 		
 		if(!empty($sortDirColumn))
 		   $qb->orderBy($aColumns[$sortByColumn[0]], $sortDirColumn[0]);

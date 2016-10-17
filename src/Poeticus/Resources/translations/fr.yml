@@ -29,8 +29,11 @@ menu:
         Version: "Version"
 main:
     index:
+        WonderfulWorldOfPoem: "Le<small> Monde Magique </small> de la Poésie"
         WelcomeTo: "Bienvenue sur Poéticus"
         Search: "Rechercher une poésie"
+        PoemRandomly: "Poésie au hasard"
+        NoPoem: "Aucune poésie"
     field:
         Title: "Titre"
         Keywords: "Mots-clés"
