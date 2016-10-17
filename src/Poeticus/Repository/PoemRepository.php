@@ -100,7 +100,7 @@ class PoemRepository extends GenericRepository
 		return $entitiesArray;
 	}
 	
-	public function findIndexSearch($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $datasObject, $count = false)
+	public function findIndexSearch($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $datasObject, $locale, $count = false)
 	{
 		$aColumns = array( 'pf.title', 'pfb.title', 'pfc.title', 'pf.id');
 		$qb = $this->db->createQueryBuilder();
@@ -108,6 +108,8 @@ class PoemRepository extends GenericRepository
 		$qb->select("pf.*")
 		   ->from("poem", "pf")
 		   ->leftjoin("pf", "country", "pfc", "pf.country_id = pfc.id");
+
+		$this->whereLanguage($qb, 'pf', $locale);
 
 		if(!empty($datasObject->title))
 		{
@@ -180,7 +182,7 @@ class PoemRepository extends GenericRepository
 		return $entitiesArray;
 	}
 	
-	public function getLastEntries()
+	public function getLastEntries($locale)
 	{
 		$qb = $this->db->createQueryBuilder();
 
@@ -190,6 +192,8 @@ class PoemRepository extends GenericRepository
 		   ->setMaxResults(7)
 		   ->andWhere("pf.state = 0")
 		   ->orderBy("pf.id", "DESC");
+		   
+		$this->whereLanguage($qb, "pf", $locale);
 		   
 		$dataArray = $qb->execute()->fetchAll();
 		$entitiesArray = array();
@@ -313,7 +317,7 @@ class PoemRepository extends GenericRepository
         return $entity;
     }
 	
-    public function findPoemByAuthor($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $count = false)
+    public function findPoemByAuthor($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $locale, $count = false)
     {
 		$qb = $this->db->createQueryBuilder();
 
@@ -324,6 +328,8 @@ class PoemRepository extends GenericRepository
 		   ->where("pf.authorType = 'biography'")
 		   ->leftjoin("pf", "biography", "bp", "pf.biography_id = bp.id")
 		   ->groupBy("bp.id");
+		   
+		 $this->whereLanguage($qb, "pf", $locale);
 		
 		if(!empty($sortDirColumn))
 		   $qb->orderBy($aColumns[$sortByColumn[0]], $sortDirColumn[0]);
@@ -348,7 +354,7 @@ class PoemRepository extends GenericRepository
 		return $dataArray;
     }
 	
-    public function findPoemByPoeticForm($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $count = false)
+    public function findPoemByPoeticForm($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $locale, $count = false)
     {
 		$qb = $this->db->createQueryBuilder();
 
@@ -359,6 +365,8 @@ class PoemRepository extends GenericRepository
 		   ->where("pf.authorType = 'biography'")
 		   ->innerjoin("pf", "poeticform", "co", "pf.poeticform_id = co.id")
 		   ->groupBy("co.id");
+
+		$this->whereLanguage($qb, 'pf', $locale);
 		
 		if(!empty($sortDirColumn))
 		   $qb->orderBy($aColumns[$sortByColumn[0]], $sortDirColumn[0]);
@@ -419,7 +427,7 @@ class PoemRepository extends GenericRepository
 		return $dataArray;
 	}
 	
-    public function findPoemByCollection($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $count = false)
+    public function findPoemByCollection($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $locale, $count = false)
     {
 		$qb = $this->db->createQueryBuilder();
 
@@ -431,6 +439,8 @@ class PoemRepository extends GenericRepository
 		   ->innerjoin("pf", "collection", "co", "pf.collection_id = co.id")
 		   ->where("pf.authorType = 'biography'")
 		   ->groupBy("co.id");
+
+		$this->whereLanguage($qb, 'pf', $locale);
 		
 		if(!empty($sortDirColumn))
 		   $qb->orderBy($aColumns[$sortByColumn[0]], $sortDirColumn[0]);
@@ -492,7 +502,7 @@ class PoemRepository extends GenericRepository
 		return $dataArray;
 	}
 	
-    public function findPoemByCountry($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $count = false)
+    public function findPoemByCountry($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $locale, $count = false)
     {
 		$qb = $this->db->createQueryBuilder();
 
@@ -502,8 +512,9 @@ class PoemRepository extends GenericRepository
 		   ->from("poem", "pf")
 		   ->where("pf.authorType = 'biography'")
 		   ->innerjoin("pf", "country", "co", "pf.country_id = co.id")
-			   ->groupBy("co.id")
-		   ;
+		   ->groupBy("co.id");
+		
+		$this->whereLanguage($qb, 'pf', $locale);
 		
 		if(!empty($sortDirColumn))
 		   $qb->orderBy($aColumns[$sortByColumn[0]], $sortDirColumn[0]);
@@ -528,7 +539,7 @@ class PoemRepository extends GenericRepository
 		return $dataArray;
     }
 	
-    public function findPoemByPoemUser($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $count = false)
+    public function findPoemByPoemUser($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $locale, $count = false)
     {
 		$qb = $this->db->createQueryBuilder();
 
@@ -538,8 +549,9 @@ class PoemRepository extends GenericRepository
 		   ->from("poem", "pf")
 		   ->where("pf.authorType = 'user'")
 		   ->join("pf", "user", "u", "pf.user_id = u.id")
-		   ->andWhere("pf.state = 0")
-		   ;
+		   ->andWhere("pf.state = 0");
+		   
+		$this->whereLanguage($qb, 'pf', $locale);
 		
 		if(!empty($sortDirColumn))
 		   $qb->orderBy($aColumns[$sortByColumn[0]], $sortDirColumn[0]);
@@ -623,12 +635,14 @@ class PoemRepository extends GenericRepository
 		return $results["number"];
 	}
 	
-	public function getStat()
+	public function getStat($locale)
 	{
 		$qbPoem = $this->db->createQueryBuilder();
 
 		$qbPoem->select("COUNT(*) AS count_poem")
 			   ->from("poem", "pf");
+			   
+		$this->whereLanguage($qbPoem, "pf", $locale);
 		
 		$resultPoem = $qbPoem->execute()->fetchAll();
 		
@@ -636,6 +650,8 @@ class PoemRepository extends GenericRepository
 
 		$qbBio->select("COUNT(*) AS count_biography")
 		      ->from("biography", "bp");
+			  
+		$this->whereLanguage($qbBio, "bp", $locale);
 		
 		$resultBio = $qbBio->execute()->fetchAll();
 		
@@ -643,6 +659,8 @@ class PoemRepository extends GenericRepository
 
 		$qbCo->select("COUNT(*) AS count_collection")
 		      ->from("collection", "bp");
+		
+		$this->whereLanguage($qbCo, "bp", $locale);
 		
 		$resultCo = $qbCo->execute()->fetchAll();
 		

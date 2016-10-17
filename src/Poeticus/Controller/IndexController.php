@@ -68,8 +68,8 @@ class IndexController
 			}
 		}
 		$sSearch = json_decode($search);
-		$entities = $app['repository.poem']->findIndexSearch($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch);
-		$iTotal = $app['repository.poem']->findIndexSearch($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, true);
+		$entities = $app['repository.poem']->findIndexSearch($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $this->getCurrentLocale($app));
+		$iTotal = $app['repository.poem']->findIndexSearch($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $this->getCurrentLocale($app), true);
 
 		$output = array(
 			"sEcho" => $request->query->get('sEcho'),
@@ -197,7 +197,7 @@ class IndexController
 
 	public function lastPoemAction(Request $request, Application $app)
     {
-		$entities = $app['repository.poem']->getLastEntries();
+		$entities = $app['repository.poem']->getLastEntries($this->getCurrentLocale($app));
 
 		$app['locale'] = $app['request']->getLocale();
 
@@ -206,7 +206,7 @@ class IndexController
 
 	public function statPoemAction(Request $request, Application $app)
     {
-		$statistics = $app['repository.poem']->getStat();
+		$statistics = $app['repository.poem']->getStat($this->getCurrentLocale($app));
 		
 		$app['locale'] = $app['request']->getLocale();
 
@@ -237,8 +237,8 @@ class IndexController
 			}
 		}
 
-		$entities = $app['repository.poem']->findPoemByAuthor($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch);
-		$iTotal = $app['repository.poem']->findPoemByAuthor($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, true);
+		$entities = $app['repository.poem']->findPoemByAuthor($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $this->getCurrentLocale($app));
+		$iTotal = $app['repository.poem']->findPoemByAuthor($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $sSearch, $this->getCurrentLocale($app), true);
 
 		$output = array(
 			"sEcho" => $request->query->get('sEcho'),
@@ -339,8 +339,8 @@ class IndexController
 			}
 		}
 
-		$entities = $app['repository.poem']->findPoemByPoeticForm($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch);
-		$iTotal = $app['repository.poem']->findPoemByPoeticForm($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, true);
+		$entities = $app['repository.poem']->findPoemByPoeticForm($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $this->getCurrentLocale($app));
+		$iTotal = $app['repository.poem']->findPoemByPoeticForm($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $this->getCurrentLocale($app), true);
 
 		$output = array(
 			"sEcho" => $request->query->get('sEcho'),
@@ -447,8 +447,8 @@ class IndexController
 			}
 		}
 
-		$entities = $app['repository.poem']->findPoemByCollection($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch);
-		$iTotal = $app['repository.poem']->findPoemByCollection($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, true);
+		$entities = $app['repository.poem']->findPoemByCollection($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $this->getCurrentLocale($app));
+		$iTotal = $app['repository.poem']->findPoemByCollection($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $this->getCurrentLocale($app), true);
 
 		$output = array(
 			"sEcho" => $request->query->get('sEcho'),
@@ -586,8 +586,8 @@ class IndexController
 			}
 		}
 
-		$entities = $app['repository.poem']->findPoemByCountry($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch);
-		$iTotal = $app['repository.poem']->findPoemByCountry($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, true);
+		$entities = $app['repository.poem']->findPoemByCountry($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $this->getCurrentLocale($app));
+		$iTotal = $app['repository.poem']->findPoemByCountry($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $this->getCurrentLocale($app), true);
 
 		$output = array(
 			"sEcho" => $request->query->get('sEcho'),
@@ -640,8 +640,8 @@ class IndexController
 			}
 		}
 
-		$entities = $app['repository.poem']->findPoemByPoemUser($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch);
-		$iTotal = $app['repository.poem']->findPoemByPoemUser($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, true);
+		$entities = $app['repository.poem']->findPoemByPoemUser($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $this->getCurrentLocale($app));
+		$iTotal = $app['repository.poem']->findPoemByPoemUser($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $this->getCurrentLocale($app), true);
 
 		$output = array(
 			"sEcho" => $request->query->get('sEcho'),

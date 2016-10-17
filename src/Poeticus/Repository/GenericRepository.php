@@ -38,8 +38,7 @@ class GenericRepository
 		if($join)
 			$qb->leftjoin($alias, "language", "la", $alias.".language_id = la.id");
 		
-		$qb->andWhere('la.abbreviation = :locale')
-		   ->setParameter('locale', $locale);
+		$qb->andWhere('la.abbreviation = "'.$locale.'"');
 		
 		return $qb;
 	}
