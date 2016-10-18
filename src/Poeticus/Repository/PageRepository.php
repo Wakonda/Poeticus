@@ -37,9 +37,17 @@ class PageRepository extends GenericRepository
         return $data ? $this->build($data, $show) : null;
     }
 	
-    public function findByName($name, $show = false)
+    public function findByName($name, $locale, $show = false)
     {
-        $data = $this->db->fetchAssoc('SELECT * FROM page WHERE internationalName = ?', array($name));
+		$qb = $this->db->createQueryBuilder();
+
+		$qb->select("pa.*")
+		   ->from("page", "pa")
+		   ->where('pa.internationalName = :internationalName')
+		   ->setParameter('internationalName', $name);
+		
+		$this->whereLanguage($qb, 'pa', $locale);
+		$data = $qb->execute()->fetch();
 
         return $data ? $this->build($data, $show) : null;
     }

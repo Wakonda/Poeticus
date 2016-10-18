@@ -53,6 +53,27 @@ class VersionRepository extends GenericRepository
 
         return $entitiesArray;
     }
+
+	
+    public function findByLanguage($locale, $show = false)
+    {
+		$qb = $this->db->createQueryBuilder();
+
+		$qb->select("bo.*")
+		   ->from("version", "bo");
+
+		$this->whereLanguage($qb, "bo", $locale);
+
+		$dataArray = $qb->execute()->fetchAll();
+
+		$entitiesArray = array();
+
+        foreach ($dataArray as $data) {
+            $entitiesArray[] = $this->build($data, true);
+        }
+
+        return $entitiesArray;
+    }
 	
 	public function getDatatablesForIndex($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $count = false)
 	{

@@ -674,14 +674,14 @@ class IndexController
 	
 	public function pageAction(Request $request, Application $app, $name)
 	{
-		$entity = $app['repository.page']->findByName($name);
+		$entity = $app['repository.page']->findByName($name, $this->getCurrentLocale($app));
 		
 		return $app['twig']->render('Index/page.html.twig', array("entity" => $entity));
 	}
 	
 	public function versionAction(Request $request, Application $app)
 	{
-		$entities = $app['repository.version']->findAll();
+		$entities = $app['repository.version']->findByLanguage($this->getCurrentLocale($app));
 		
 		return $app['twig']->render('Index/version.html.twig', array('entities' => $entities));
 	}

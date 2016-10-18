@@ -19,10 +19,10 @@ class PoemUserType extends AbstractType
     {
         $builder
             ->add('title', TextType::class, array(
-                'constraints' => new Assert\NotBlank(), 'label' => 'Titre'
+                'constraints' => new Assert\NotBlank(), 'label' => 'yourPoems.field.Title'
             ))
 			->add('text', TextareaType::class, array(
-                'constraints' => new Assert\NotBlank(), 'attr' => array('class' => 'redactor'), 'label' => 'Texte'
+                'constraints' => new Assert\NotBlank(), 'attr' => array('class' => 'redactor'), 'label' => 'yourPoems.field.Text'
             ))
 			
             ->add('save', SubmitType::class, array('label' => 'Sauvegarder', 'attr' => array('class' => 'btn btn-success')))

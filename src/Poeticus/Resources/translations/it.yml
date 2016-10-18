@@ -90,6 +90,10 @@ yourPoems:
     table:
         Author: "Autore"
         Title: "Titolo"
+    field:
+        WritePoetry: "Scrivere poesie"
+        Title: "Titolo"
+        Text: "Testo"
 user:
     login:
         Pseudo: "Nome utente"
@@ -130,6 +134,11 @@ contact:
         Email: "Email"
         Subject: "Oggetto"
         Send: "Inviare"
+version:
+    index:
+        Version: "Versione"
+        ReleaseDate: "Data di rilascio"
+        Read: "Leggere"
 admin:
     index:
         Biography: "Biografia"

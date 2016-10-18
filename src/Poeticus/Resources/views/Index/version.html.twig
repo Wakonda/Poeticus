@@ -1,7 +1,7 @@
 {% extends generic_layout %}
 
-{% block head_title %}Version{% endblock %}
-{% block main_title %}Version{% endblock %}
+{% block head_title %}{{ 'version.index.Version'|trans }}{% endblock %}
+{% block main_title %}{{ 'version.index.Version'|trans }}{% endblock %}
 
 {% block main_content %}
 	<p class="center"><img src="{{ app.request.basepath }}/photo/version.png" alt="" class="medium" /></p>
@@ -9,9 +9,9 @@
 		<table class="table table-bordered">
 			<thead>
 				<tr class="active">
-					<th>Version</th>
-					<th>Date de sortie</th>
-					<th>Lire</th>
+					<th>{{ 'version.index.Version'|trans }}</th>
+					<th>{{ 'version.index.ReleaseDate'|trans }}</th>
+					<th>{{ 'version.index.Read'|trans }}</th>
 				</tr>
 			</thead>
 			<tbody>
