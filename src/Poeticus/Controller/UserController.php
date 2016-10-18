@@ -370,6 +370,8 @@ class UserController implements ControllerProviderInterface
 			"iTotalDisplayRecords" => $iTotal,
 			"aaData" => array()
 		);
+		
+		$translator = $app['translator'];
 
 		foreach($entities as $entity)
 		{
@@ -379,8 +381,8 @@ class UserController implements ControllerProviderInterface
 			$row[] = '<a href="'.$show.'" alt="Show">'.$entity->getTitle().'</a>';
 
 			if ($app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_REMEMBERED') and $this->getCurrentUser($app)->getUsername() == $username) {
-				$row[] = '<div class="state_poem '.$entity->getStateRealName().'">'.$entity->getStateString().'</div>';
-				$row[] = '<a href="'.$app['url_generator']->generate('poemuser_edit', array("id" => $entity->getId())).'" alt=""><span class="glyphicon glyphicon-pencil">Modifier</span></a> / <a href="#" alt="" data-id="'.$entity->getId().'" class="delete_poem"><span class="glyphicon glyphicon-remove">Supprimer</span></a>';
+				$row[] = '<div class="state_poem '.$entity->getStateRealName().'">'.$translator->trans($entity->getStateString()).'</div>';
+				$row[] = '<a href="'.$app['url_generator']->generate('poemuser_edit', array("id" => $entity->getId())).'" alt=""><span class="glyphicon glyphicon-pencil">'.$translator->trans('user.myProfile.Edit').'</span></a> / <a href="#" alt="" data-id="'.$entity->getId().'" class="delete_poem"><span class="glyphicon glyphicon-remove">'.$translator->trans('user.myProfile.Delete').'</span></a>';
 			}
 			
 			$output['aaData'][] = $row;

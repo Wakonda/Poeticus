@@ -94,13 +94,15 @@ yourPoems:
         WritePoetry: "Ecrire une poésie"
         Title: "Titre"
         Text: "Texte"
+        Draft: "Brouillon"
+        Save: "Sauvegarder"
 user:
     login:
         Pseudo: "Pseudo"
         Password: "Mot de passe"
         RememberMe: "Se souvenir de moi"
         LogIn: "Connexion"
-        LogIn: "Se déconnecter"
+        LogOut: "Se déconnecter"
         ForgottenPassword: "Mot de passe oublié ?"
         PasswordOrUserForgotten: "Pseudo ou mot de passe incorect"
         YouAreLoggedInAs: "Vous êtes déjà connecté en tant que"
@@ -119,6 +121,21 @@ user:
         SelectFile: "Sélectionnez un fichier"
         UseGravatar: "Utilisez un gravatar"
         PasswordsMustMatch: "Les mots de passe doivent correspondre"
+    myProfile:
+        MyPoems: "Mes poésies"
+        MyComments: "Mes commentaires"
+        MyVotes: "Mes votes"
+        Login: "Nom d'utilisateur"
+        Country: "Pays"
+        Description: "Présentation"
+        Title: "Titre"
+        Action: "Action"
+        Edit: "Modifier"
+        Delete: "Supprimer"
+        State: "Etat"
+        Poem: "Poésie"
+        PublicationDate: "Date de publication"
+        Vote: "Vote"
 forgottenPassword:
     index:
         ResetPassword: "Réinitialisation du mot de passe"
@@ -139,6 +156,11 @@ version:
         Version: "Version"
         ReleaseDate: "Date de sortie"
         Read: "Lire"
+poem:
+    state:
+        Published: "Publié"
+        Deleted: "Supprimé"
+        Draft: "Brouillon"
 admin:
     index:
         Biography: "Biographie"

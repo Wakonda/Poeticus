@@ -94,6 +94,8 @@ yourPoems:
         WritePoetry: "Escrever poesia"
         Title: "Título"
         Text: "Texto"
+        Draft: "Rascunho"
+        Save: "Registar"
 user:
     login:
         Pseudo: "Nome de utilizador(a)"
@@ -119,6 +121,21 @@ user:
         SelectFile: "Selecione um arquivo"
         UseGravatar: "Use um gravatar"
         PasswordsMustMatch: "As palavras-passe têm de coincidir"
+    myProfile:
+        MyPoems: "Os meus poemas"
+        MyComments: "Os meus comentários"
+        MyVotes: "Meu voto"
+        Login: "Nome de utilizador(a)"
+        Country: "País"
+        Description: "Apresentação"
+        Title: "Título"
+        Action: "Acção"
+        Edit: "Modificar"
+        Delete: "Remover"
+        State: "Estado"
+        Poem: "Poesia"
+        PublicationDate: "Data de publicação"
+        Vote: "Votação"
 forgottenPassword:
     index:
         ResetPassword: "Redefinir palavra-passe"
@@ -139,6 +156,11 @@ version:
         Version: "Versão"
         ReleaseDate: "Data de saída"
         Read: "Ler"
+poem:
+    state:
+        Published: "Publicado"
+        Deleted: "Suprimido"
+        Draft: "Rascunho"
 admin:
     index:
         Biography: "Biografia"

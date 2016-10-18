@@ -25,8 +25,8 @@ class PoemUserType extends AbstractType
                 'constraints' => new Assert\NotBlank(), 'attr' => array('class' => 'redactor'), 'label' => 'yourPoems.field.Text'
             ))
 			
-            ->add('save', SubmitType::class, array('label' => 'Sauvegarder', 'attr' => array('class' => 'btn btn-success')))
-            ->add('draft', SubmitType::class, array('label' => 'Brouillon', 'attr' => array('class' => 'btn btn-primary')));
+            ->add('save', SubmitType::class, array('label' => 'yourPoems.field.Save', 'attr' => array('class' => 'btn btn-success')))
+            ->add('draft', SubmitType::class, array('label' => 'yourPoems.field.Draft', 'attr' => array('class' => 'btn btn-primary')));
     }
 
     public function getName()

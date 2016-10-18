@@ -89,13 +89,13 @@ class Poem
 		switch($this->state)
 		{
 			case 0:
-				$res = "Publié";
+				$res = "poem.state.Published";
 				break;
 			case 1:
-				$res = "Brouillon";
+				$res = "poem.state.Draft";
 				break;
 			case 2:
-				$res = "Supprimé";
+				$res = "poem.state.Deleted";
 				break;
 			default:
 				$res = "";
