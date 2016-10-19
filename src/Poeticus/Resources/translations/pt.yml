@@ -91,7 +91,8 @@ yourPoems:
         Author: "Autor"
         Title: "Título"
     field:
-        WritePoetry: "Escrever poesia"
+        WritePoetry: "Escrever um poema"
+        EditPoetry: "Modificar um poema"
         Title: "Título"
         Text: "Texto"
         Draft: "Rascunho"

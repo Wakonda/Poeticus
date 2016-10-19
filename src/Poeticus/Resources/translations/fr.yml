@@ -92,6 +92,7 @@ yourPoems:
         Title: "Titre"
     field:
         WritePoetry: "Ecrire une poésie"
+        EditPoetry: "Modifier une poésie"
         Title: "Titre"
         Text: "Texte"
         Draft: "Brouillon"

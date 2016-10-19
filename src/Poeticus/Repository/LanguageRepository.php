@@ -15,6 +15,13 @@ class LanguageRepository extends GenericRepository
 
         return $data ? $this->build($data, $show) : null;
     }
+
+    public function findOneByAbbreviation($abbreviation, $show = false)
+    {
+        $data = $this->db->fetchAssoc('SELECT * FROM language WHERE abbreviation = ?', array($abbreviation));
+
+        return $data ? $this->build($data, $show) : null;
+    }
 	
     public function findAll($show = false)
     {
@@ -73,10 +80,10 @@ class LanguageRepository extends GenericRepository
 	
 	protected function build($data, $show = false)
     {
-        $entity = new Biography();
+        $entity = new Language();
         $entity->setId($data['id']);
         $entity->setTitle($data['title']);
-        $entity->setAbbrevation($data['abbrevation']);
+        $entity->setAbbreviation($data['abbreviation']);
         $entity->setLogo($data['logo']);
         $entity->setDirection($data['direction']);
 

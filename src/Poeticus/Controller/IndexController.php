@@ -738,6 +738,8 @@ class IndexController
 	public function poemUserEditAction(Request $request, Application $app, $id)
 	{
 		$entity = $app['repository.poem']->find($id, true);
+		$entity->setText(strip_tags($entity->getText()));
+		
 		$form = $app['form.factory']->create(PoemUserType::class, $entity);
 
 		return $app['twig']->render("Index/poemUserEdit.html.twig", array("form" => $form->createView(), "entity" => $entity));
@@ -746,7 +748,7 @@ class IndexController
 	public function poemUserUpdateAction(Request $request, Application $app, $id)
 	{
 		$entity = $app['repository.poem']->find($id, true);
-		$form = $app['form.factory']->create(new PoemUserType(), $entity);
+		$form = $app['form.factory']->create(PoemUserType::class, $entity);
 		$form->handleRequest($request);
 
 		if(array_key_exists("draft", $request->request->get($form->getName())))
@@ -756,11 +758,18 @@ class IndexController
 		
 		if($form->isValid())
 		{
-			$entity->setText($entity->getText());
+			$entity->setText(nl2br($entity->getText()));
+
 			$user = $app['security.token_storage']->getToken()->getUser();
 			$user = $app['repository.user']->findByUsernameOrEmail($user->getUsername());
 
 			$entity->setUser($user);
+
+			$entity->setCountry($user->getCountry());
+			
+			$language = $app['repository.language']->findOneByAbbreviation($this->getCurrentLocale($app));
+
+			$entity->setLanguage($language->getId());
 			
 			$app['repository.poem']->save($entity, $id);
 

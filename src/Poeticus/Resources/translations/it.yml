@@ -91,7 +91,8 @@ yourPoems:
         Author: "Autore"
         Title: "Titolo"
     field:
-        WritePoetry: "Scrivere poesie"
+        WritePoetry: "Scrivere una poesia"
+        EditPoetry: "Modificare una poesia"
         Title: "Titolo"
         Text: "Testo"
         Draft: "Bozza"

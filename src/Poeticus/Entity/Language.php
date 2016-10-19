@@ -39,6 +39,11 @@ class Language
 	{
 		$this->title;
 	}
+	
+	public function getId()
+	{
+		return $this->id;
+	}
 
     public function setId($id)
     {
