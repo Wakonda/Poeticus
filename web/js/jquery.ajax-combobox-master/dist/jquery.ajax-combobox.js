@@ -601,8 +601,8 @@ $.extend(AjaxComboBox.prototype, /** @lends AjaxComboBox.prototype */ {
       .addClass(this.css_class.input)
 	  .addClass(this.css_class.form_control)
       .wrap('<div>'); // This "div" is "container".
-	
-    elem.container = $(elem.combo_input).parent().addClass(this.css_class.container).addClass(this.css_class.form_group);
+
+    elem.container = $(elem.combo_input).parent().addClass(this.css_class.container).addClass(this.css_class.form_group).addClass("container_" + $(elem.combo_input).attr('id'));
     if (this.option.plugin_type == 'combobox') {
       elem.button = $('<div>').addClass(this.css_class.button);
 	  $(elem.button).addClass(this.css_class.input_group_addon);

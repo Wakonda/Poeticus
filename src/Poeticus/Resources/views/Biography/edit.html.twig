@@ -18,6 +18,27 @@
 				'unorderedlist', 'orderedlist', 'outdent', 'indent', '|',
 				'image', 'video', 'file', 'table', 'link', '|', 'fontcolor', 'backcolor', '|', 'alignment', 'aligncenter', 'alignright', 'justify', '|', 'horizontalrule']
 			});
+
+			$("select#{{ form.language.vars.id }}").change(function() {
+				$.ajax({
+					type: "GET",
+					url: "{{ path('get_countries_by_language') }}",
+					data: { "locale" : $(this).val() },
+					success: function(data)
+					{
+						$("select#{{ form.country.vars.id }}").empty();
+						$("select#{{ form.country.vars.id }}").append('<option value="" selected="selected">{{ 'main.field.ChooseAnOption'|trans }}</option>');
+						
+						for (var i = 0; i < data.length; i++) {
+							$("select#{{ form.country.vars.id }}").append('<option value="'+ data[i].id +'">'+ data[i].name +'</option>');
+							console.log(data[i]);
+						}
+					}
+				});
+
+			});
+			
+			$("select#{{ form.language.vars.id }}").change();
 		});
 	</script>
 {% endblock %}

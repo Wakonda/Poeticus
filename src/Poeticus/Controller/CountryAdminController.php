@@ -146,6 +146,24 @@ class CountryAdminController
 		return $app['twig']->render('Country/edit.html.twig', array('form' => $form->createView(), 'entity' => $entity));
 	}
 
+	public function getCountriesByLanguageAction(Request $request, Application $app)
+	{
+		$locale = $request->query->get("locale");
+		$entities = $app['repository.country']->findAllByLanguage($locale);
+		
+		$res = array();
+		
+		foreach($entities as $entity)
+		{
+			$res[] = array("id" => $entity->getId(), "name" => $entity->getTitle());
+		}
+		
+		$response = new Response(json_encode($res));
+		$response->headers->set('Content-Type', 'application/json');
+
+		return $response;
+	}
+
 	private function createForm($app, $entity)
 	{
 		$languageForms = $app['repository.language']->findAllForChoice();

@@ -40,7 +40,7 @@ class PoemFastType extends AbstractType
 											'label' => 'Biographie', 
 											'multiple' => false, 
 											'expanded' => false,
-											'placeholder' => 'Choisissez une option',
+											'placeholder' => 'main.field.ChooseAnOption',
 											'constraints' => array(new Assert\NotBlank()),
 										    'choices' => $biographyArray
 											))*/
@@ -49,7 +49,7 @@ class PoemFastType extends AbstractType
 											'multiple' => false, 
 											'expanded' => false,
 											'constraints' => array(new Assert\NotBlank()),
-											'placeholder' => 'Choisissez une option',
+											'placeholder' => 'main.field.ChooseAnOption',
 										    'choices' => $countryArray
 											))
 											
@@ -58,7 +58,7 @@ class PoemFastType extends AbstractType
 											'multiple' => false,
 											'required' => false,
 											'expanded' => false,
-											'placeholder' => 'Choisissez une option',
+											'placeholder' => 'main.field.ChooseAnOption',
 										    'choices' => $collectionArray
 											))
 			

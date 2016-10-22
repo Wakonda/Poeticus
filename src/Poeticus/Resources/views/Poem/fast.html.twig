@@ -42,7 +42,7 @@
 						$("#{{ form.vars['id'] }}_country").val(data.country);
 						var collections = data.collections;
 						$("#{{form.vars['id'] }}_collection option").remove();
-						$("#{{form.vars['id'] }}_collection").append('<option value="">Choisissez une option</option>');
+						$("#{{form.vars['id'] }}_collection").append('<option value="">{{ 'main.field.ChooseAnOption'|trans }}</option>');
 						$.each(collections, function(index, element)
 						{
 							$("#{{form.vars['id'] }}_collection").append('<option value="'+ element.id +'">'+ element.title +'</option>');

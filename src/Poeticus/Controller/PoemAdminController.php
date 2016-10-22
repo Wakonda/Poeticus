@@ -277,7 +277,7 @@ class PoemAdminController
 		}
 		else
 			$finalArray = array("collections" => "", "country" => "");
-			
+// die(var_dump($finalArray));			
 		$response = new Response(json_encode($finalArray));
 		$response->headers->set('Content-Type', 'application/json');
 		return $response;
@@ -319,6 +319,8 @@ class PoemAdminController
 	
 	public function getBiographiesByAjaxAction(Request $request, Application $app)
 	{
+		$locale = $request->query->get("locale");
+		
 		if($request->query->has("pkey_val")) {
 			$pkeyVal = $request->query->has("pkey_val");
 			
@@ -326,7 +328,7 @@ class PoemAdminController
 				return json_encode(array());
 
 			$parameters = array("pkey_val" => $request->query->get("pkey_val"));
-			$response = $app['repository.biography']->getDatasCombobox($parameters);
+			$response = $app['repository.biography']->getDatasCombobox($parameters, $locale);
 			
 			$resObj = new \stdClass();
 			$resObj->id = $response["id"];
@@ -347,8 +349,8 @@ class PoemAdminController
 
 		$parameters['offset']  = ($parameters['page_num'] - 1) * $parameters['per_page'];
 
-		$response = $app['repository.biography']->getDatasCombobox($parameters);
-		$count = $app['repository.biography']->getDatasCombobox($parameters, true);
+		$response = $app['repository.biography']->getDatasCombobox($parameters, $locale);
+		$count = $app['repository.biography']->getDatasCombobox($parameters, $locale, true);
 
 		$results = array();
 
@@ -375,10 +377,10 @@ class PoemAdminController
 		$countryForms = $app['repository.country']->findAllForChoice();
 		$collectionForms = $app['repository.collection']->findAllForChoice();
 		$languageForms = $app['repository.language']->findAllForChoice();
+		$language = $app['repository.language']->findOneByAbbreviation($app['request']->getLocale());
+		$localeForms = $language->getId();
 
-		$form = $app['form.factory']->create(PoemType::class, $entity, array('poeticForms' => $poeticForms, 'users' => $userForms, 'biographies' => $biographyForms, 'countries' => $countryForms, 'collections' => $collectionForms, 'languages' => $languageForms));
-		
-		return $form;
+		return $app['form.factory']->create(PoemType::class, $entity, array('poeticForms' => $poeticForms, 'users' => $userForms, 'biographies' => $biographyForms, 'countries' => $countryForms, 'collections' => $collectionForms, 'languages' => $languageForms, "locale" => $localeForms));
 	}
 
 

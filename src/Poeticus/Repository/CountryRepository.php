@@ -130,4 +130,25 @@ class CountryRepository extends GenericRepository
 
         return $choiceArray;
 	}
+	
+	public function findAllByLanguage($locale, $show = false)
+	{
+		$qb = $this->db->createQueryBuilder();
+
+		$qb->select("co.*")
+		   ->from("country", "co")
+		   ->leftjoin("co", "language", "la", "co.language_id = la.id")
+		   ->where("la.id = :id")
+		   ->setParameter("id", $locale);
+
+		$dataArray = $qb->execute()->fetchAll();
+
+		$entitiesArray = array();
+
+        foreach ($dataArray as $data) {
+            $entitiesArray[] = $this->build($data, true);
+        }
+
+        return $entitiesArray;
+	}
 }

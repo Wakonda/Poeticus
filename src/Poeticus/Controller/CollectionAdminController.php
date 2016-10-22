@@ -153,10 +153,11 @@ class CollectionAdminController
 	{
 		$biographyForms = $app['repository.biography']->findAllForChoice();
 		$languageForms = $app['repository.language']->findAllForChoice();
+
+		$language = $app['repository.language']->findOneByAbbreviation($app['request']->getLocale());
+		$localeForms = $language->getId();
 		
-		$form = $app['form.factory']->create(CollectionType::class, $entity, array('biographies' => $biographyForms, 'languages' => $languageForms));
-		
-		return $form;
+		return $app['form.factory']->create(CollectionType::class, $entity, array('biographies' => $biographyForms, 'languages' => $languageForms, "locale" => $localeForms));
 	}
 
 	private function checkForDoubloon($entity, $form, $app)

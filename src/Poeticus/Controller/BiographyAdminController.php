@@ -155,9 +155,10 @@ class BiographyAdminController
 		$countryForms = $app['repository.country']->findAllForChoice();
 		$languageForms = $app['repository.language']->findAllForChoice();
 		
-		$form = $app['form.factory']->create(BiographyType::class, $entity, array("countries" => $countryForms, "languages" => $languageForms));
-		
-		return $form;
+		$language = $app['repository.language']->findOneByAbbreviation($app['request']->getLocale());
+		$localeForms = $language->getId();
+
+		return $app['form.factory']->create(BiographyType::class, $entity, array("countries" => $countryForms, "languages" => $languageForms, "locale" => $localeForms));
 	}
 	
 	private function checkForDoubloon($entity, $form, $app)

@@ -179,15 +179,19 @@ class BiographyRepository extends GenericRepository
 	}
 
 	// Combobox
-	public function getDatasCombobox($params, $count = false)
+	public function getDatasCombobox($params, $locale, $count = false)
 	{
 		$qb = $this->db->createQueryBuilder();
+		
+		if(!empty($locale))
+			$qb->andWhere("b.language_id = :localeId")
+			   ->setParameter("localeId", $locale);
 		
 		if(array_key_exists("pkey_val", $params))
 		{
 			$qb->select("b.id, b.title")
 			   ->from("biography", "b")
-			   ->where('b.id = :id')
+			   ->andWhere('b.id = :id')
 			   ->setParameter('id', $params['pkey_val']);
 			   
 			return $qb->execute()->fetch();
@@ -197,7 +201,7 @@ class BiographyRepository extends GenericRepository
 
 		$qb->select("b.id, b.title")
 		   ->from("biography", "b")
-		   ->where("b.title LIKE :title")
+		   ->andWhere("b.title LIKE :title")
 		   ->setParameter("title", "%".implode(' ', $params['q_word'])."%")
 		   ->setMaxResults($params['per_page'])
 		   ->setFirstResult($params['offset'])
@@ -207,7 +211,7 @@ class BiographyRepository extends GenericRepository
 		{
 			$qb->select("COUNT(b.id)")
 			   ->from("biography", "b")
-			   ->where("b.title LIKE :title")
+			   ->andWhere("b.title LIKE :title")
 			   ->setParameter("title", "%".implode(' ', $params['q_word'])."%")
 			   ;
 			   

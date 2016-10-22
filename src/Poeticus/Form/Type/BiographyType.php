@@ -20,6 +20,7 @@ class BiographyType extends AbstractType
     {
 		$countryArray = $options["countries"];
 		$languageArray = $options["languages"];
+		$locale = $options["locale"];
 
         $builder
             ->add('title', TextType::class, array(
@@ -49,7 +50,8 @@ class BiographyType extends AbstractType
 				'required' => false,
 				'expanded' => false,
 				'placeholder' => 'main.field.ChooseAnOption',
-				'choices' => $languageArray
+				'choices' => $languageArray,
+				'data' => $locale
 			))
             ->add('save', SubmitType::class, array('label' => 'admin.main.Save', 'attr' => array('class' => 'btn btn-success')))
 			;
@@ -62,7 +64,8 @@ class BiographyType extends AbstractType
 	{
 		$resolver->setDefaults(array(
 			"countries" => null,
-			"languages" => null
+			"languages" => null,
+			"locale" => null
 		));
 	}
 	

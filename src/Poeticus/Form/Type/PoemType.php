@@ -25,19 +25,20 @@ class PoemType extends AbstractType
 		$countryArray = $options["countries"];
 		$collectionArray = $options["collections"];
 		$languageArray = $options["languages"];
+		$locale = $options["locale"];
 
         $builder
             ->add('title', TextType::class, array(
                 'constraints' => new Assert\NotBlank(), 'label' => 'admin.poem.Title'
             ))
             ->add('poeticform', ChoiceType::class, array(
-											'label' => 'admin.poem.PoeticForm', 
-											'multiple' => false,
-											'required' => false,
-											'expanded' => false,
-											'placeholder' => 'main.field.ChooseAnOption',
-											'choices' => $poeticFormArray
-											))
+				'label' => 'admin.poem.PoeticForm', 
+				'multiple' => false,
+				'required' => false,
+				'expanded' => false,
+				'placeholder' => 'main.field.ChooseAnOption',
+				'choices' => $poeticFormArray
+			))
 			->add('text', TextareaType::class, array(
                 'attr' => array('class' => 'redactor'), 'label' => 'admin.poem.Text'
             ))
@@ -50,40 +51,39 @@ class PoemType extends AbstractType
             ))
 			
             ->add('authorType', ChoiceType::class, array(
-											'label' => 'admin.poem.AuthorKind', 
-											'multiple' => false, 
-											'expanded' => false,
-											'constraints' => array(new Assert\NotBlank()),
-										    'choices' => array("admin.poem.Biography" => "biography", "admin.poem.User" => "user"),
-											'attr' => array('class' => 'authorType_select')
-											))
+				'label' => 'admin.poem.AuthorKind', 
+				'multiple' => false, 
+				'expanded' => false,
+				'constraints' => array(new Assert\NotBlank()),
+				'choices' => array("admin.poem.Biography" => "biography", "admin.poem.User" => "user"),
+				'attr' => array('class' => 'authorType_select')
+			))
 			->add('user', ChoiceType::class, array(
-											'label' => 'admin.poem.User', 
-											'multiple' => false, 
-											'expanded' => false,
-											'placeholder' => 'main.field.ChooseAnOption',
-										    'choices' => $userArray
-											))
+				'label' => 'admin.poem.User', 
+				'multiple' => false, 
+				'expanded' => false,
+				'placeholder' => 'main.field.ChooseAnOption',
+				'choices' => $userArray
+			))
             ->add('biography', TextType::class, array(
                 'label' => 'admin.poem.Biography'
             ))
-											
 			->add('country', ChoiceType::class, array(
-											'label' => 'admin.poem.Country', 
-											'multiple' => false, 
-											'expanded' => false,
-											'constraints' => array(new Assert\NotBlank()),
-											'placeholder' => 'main.field.ChooseAnOption',
-										    'choices' => $countryArray
-											))
+				'label' => 'admin.poem.Country', 
+				'multiple' => false, 
+				'expanded' => false,
+				'constraints' => array(new Assert\NotBlank()),
+				'placeholder' => 'main.field.ChooseAnOption',
+				'choices' => $countryArray
+			))
 			->add('collection', ChoiceType::class, array(
-											'label' => 'admin.poem.Collection', 
-											'multiple' => false,
-											'required' => false,
-											'expanded' => false,
-											'placeholder' => 'main.field.ChooseAnOption',
-										    'choices' => $collectionArray
-											))
+				'label' => 'admin.poem.Collection', 
+				'multiple' => false,
+				'required' => false,
+				'expanded' => false,
+				'placeholder' => 'main.field.ChooseAnOption',
+				'choices' => $collectionArray
+			))
 			->add('photo', FileType::class, array('data_class' => null, "label" => "Image", "required" => true))
 			->add('language', ChoiceType::class, array(
 				'label' => 'admin.form.Language', 
@@ -91,7 +91,8 @@ class PoemType extends AbstractType
 				'required' => false,
 				'expanded' => false,
 				'placeholder' => 'main.field.ChooseAnOption',
-				'choices' => $languageArray
+				'choices' => $languageArray,
+				'data' => $locale
 			))
             ->add('save', SubmitType::class, array('label' => 'admin.main.Save', 'attr' => array('class' => 'btn btn-success')));
     }
@@ -107,7 +108,8 @@ class PoemType extends AbstractType
 			"collections" => null,
 			"poeticForms" => null,
 			"users" => null,
-			"languages" => null
+			"languages" => null,
+			"locale" => null
 		));
 	}
 	

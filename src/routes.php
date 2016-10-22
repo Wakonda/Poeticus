@@ -152,7 +152,9 @@ $app->get('/user/poem_vote_datatables/{username}', 'controllers.user:votesUserDa
 
 $app->get('/user/poem_comment_datatables/{username}', 'controllers.user:commentsUserDatatablesAction')
 	->bind('poem_comment_datatables');
-	
+
+$app->get('/get_countries_by_language', 'controllers.countryadmin:getCountriesByLanguageAction')
+	->bind('get_countries_by_language');
 // USER
 $app->get('/user/login', 'controllers.user:connect')
 	->bind('login');

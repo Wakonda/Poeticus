@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
@@ -20,6 +21,7 @@ class CollectionType extends AbstractType
     {
 		$biographyArray = $options["biographies"];
 		$languageArray = $options["languages"];
+		$locale = $options["locale"];
 
         $builder
             ->add('title', TextType::class, array(
@@ -51,7 +53,8 @@ class CollectionType extends AbstractType
 				'required' => false,
 				'expanded' => false,
 				'placeholder' => 'main.field.ChooseAnOption',
-				'choices' => $languageArray
+				'choices' => $languageArray,
+				'data' => $locale
 			))
 			
             ->add('save', SubmitType::class, array('label' => 'admin.main.Save', 'attr' => array('class' => 'btn btn-success')))
@@ -65,7 +68,8 @@ class CollectionType extends AbstractType
 	{
 		$resolver->setDefaults(array(
 			"biographies" => null,
-			"languages" => null
+			"languages" => null,
+			"locale" => null
 		));
 	}
 	

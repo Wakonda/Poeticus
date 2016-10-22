@@ -63,7 +63,7 @@
 						$("#{{ form.vars['id'] }}_country").val(data.country);
 						var collections = data.collections;
 						$("#{{form.vars['id'] }}_collection option").remove();
-						$("#{{form.vars['id'] }}_collection").append('<option value="">Choisissez une option</option>');
+						$("#{{form.vars['id'] }}_collection").append('<option value="">{{ 'main.field.ChooseAnOption'|trans }}</option>');
 						$.each(collections, function(index, element)
 						{
 							$("#{{form.vars['id'] }}_collection").append('<option value="'+ element.id +'">'+ element.title +'</option>');
@@ -115,6 +115,16 @@
 			$("#{{ form.vars['id'] }}_poeticform").change();
 			$("#{{ form.vars['id'] }}_biography").change();
 			$("#{{ form.vars['id'] }}_collection").change();
+			
+			$("select#{{ form.language.vars.id }}").change(function() {
+				var input = $(".container_{{ form.vars['id'] }}_biography > .input-group > input[type='hidden']");
+				$(input[0]).addClass('combobox full_width form-control').attr("type", "text");
+				$(".container_{{ form.vars['id'] }}_biography").parent().append(input[0]);
+				$(".container_{{ form.vars['id'] }}_biography").remove();
+				setComboboxEdit('{{ path("poemadmin_getbiographiesbyajax") }}?locale=' + $(this).val(), 'biography', "#{{ form.vars['id'] }}_biography");
+			});
+
+			$("select#{{ form.language.vars.id }}").change();
 		});
 	</script>
 {% endblock %}
@@ -127,6 +137,10 @@
 		<tr>
 			<th>{{ form_label(form.title) }}</th>
 			<td><div class="errors">{{ form_errors(form.title) }}</div>{{ form_widget(form.title, {'attr':{'class':'full_width form-control'}}) }}</td>
+		</tr>
+		<tr>
+			<th>{{ form_label(form.language) }}</th>
+			<td><div class="errors">{{ form_errors(form.language) }}</div>{{ form_widget(form.language, {'attr':{'class':'full_width form-control'}}) }}</td>
 		</tr>
 		<tr>
 			<th>{{ form_label(form.poeticform) }}</th>
@@ -163,10 +177,6 @@
 		<tr>
 			<th>{{ form_label(form.releasedDate) }}</th>
 			<td><div class="errors">{{ form_errors(form.releasedDate) }}</div>{{ form_widget(form.releasedDate, {'attr':{'class':'year form-control'}}) }} {{ form_widget(form.unknownReleasedDate) }} {{ form_label(form.unknownReleasedDate) }}</td>
-		</tr>
-		<tr>
-			<th>{{ form_label(form.language) }}</th>
-			<td><div class="errors">{{ form_errors(form.language) }}</div>{{ form_widget(form.language, {'attr':{'class':'full_width form-control'}}) }}</td>
 		</tr>
 	</table>
 	<hr />
