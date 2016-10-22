@@ -44,12 +44,12 @@
 
 			$("select#{{ form.language.vars.id }}").change(function() {
 				var input = $(".container_{{ form.vars['id'] }}_biography > .input-group > input[type='hidden']");
-				$(input[0]).addClass('combobox full_width form-control').attr("type", "text");
+				$(input[0]).addClass('combobox full_width form-control').attr("type", "text").val("");
 				$(".container_{{ form.vars['id'] }}_biography").parent().append(input[0]);
 				$(".container_{{ form.vars['id'] }}_biography").remove();
 				setComboboxEdit('{{ path("poemadmin_getbiographiesbyajax") }}?locale=' + $(this).val(), 'biography', "#{{ form.vars['id'] }}_biography");
 			});
-
+			
 			$("select#{{ form.language.vars.id }}").change();
 		});
 	</script>

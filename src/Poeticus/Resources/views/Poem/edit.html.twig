@@ -52,7 +52,7 @@
 			});
 			putReleasedDate("{{ entity.releasedDate }}", true);
 			
-			$("#{{ form.vars['id'] }}_biography").change(function()
+			$(document).on('change', "#{{ form.vars['id'] }}_biography", function()
 			{
 				$.ajax({
 					type: "POST",
@@ -118,12 +118,27 @@
 			
 			$("select#{{ form.language.vars.id }}").change(function() {
 				var input = $(".container_{{ form.vars['id'] }}_biography > .input-group > input[type='hidden']");
-				$(input[0]).addClass('combobox full_width form-control').attr("type", "text");
+				$(input[0]).addClass('combobox full_width form-control').attr("type", "text").val("");
 				$(".container_{{ form.vars['id'] }}_biography").parent().append(input[0]);
 				$(".container_{{ form.vars['id'] }}_biography").remove();
 				setComboboxEdit('{{ path("poemadmin_getbiographiesbyajax") }}?locale=' + $(this).val(), 'biography', "#{{ form.vars['id'] }}_biography");
+			
+				$.ajax({
+					type: "GET",
+					url: "{{ path('get_poeticforms_by_language') }}",
+					data: { "locale" : $(this).val() },
+					success: function(data)
+					{
+						$("select#{{ form.poeticform.vars.id }}").empty();
+						$("select#{{ form.poeticform.vars.id }}").append('<option value="" selected="selected">{{ 'main.field.ChooseAnOption'|trans }}</option>');
+						
+						for (var i = 0; i < data.length; i++) {
+							$("select#{{ form.poeticform.vars.id }}").append('<option value="'+ data[i].id +'">'+ data[i].name +'</option>');
+						}
+					}
+				});
 			});
-
+			
 			$("select#{{ form.language.vars.id }}").change();
 		});
 	</script>

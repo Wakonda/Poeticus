@@ -146,6 +146,25 @@ class PoeticFormAdminController
 		return $app['twig']->render('PoeticForm/edit.html.twig', array('form' => $form->createView(), 'entity' => $entity));
 	}
 
+
+	public function getPoeticFormsByLanguageAction(Request $request, Application $app)
+	{
+		$locale = $request->query->get("locale");
+		$entities = $app['repository.poeticform']->findAllByLanguage($locale);
+		
+		$res = array();
+		
+		foreach($entities as $entity)
+		{
+			$res[] = array("id" => $entity->getId(), "name" => $entity->getTitle());
+		}
+		
+		$response = new Response(json_encode($res));
+		$response->headers->set('Content-Type', 'application/json');
+
+		return $response;
+	}
+
 	private function createForm($app, $entity)
 	{
 		$languageForms = $app['repository.language']->findAllForChoice();

@@ -132,4 +132,25 @@ class PoeticFormRepository extends GenericRepository
 
         return $entity;
     }
+
+	public function findAllByLanguage($locale, $show = false)
+	{
+		$qb = $this->db->createQueryBuilder();
+
+		$qb->select("pf.*")
+		   ->from("poeticform", "pf")
+		   ->leftjoin("pf", "language", "la", "pf.language_id = la.id")
+		   ->where("la.id = :id")
+		   ->setParameter("id", $locale);
+
+		$dataArray = $qb->execute()->fetchAll();
+
+		$entitiesArray = array();
+
+        foreach ($dataArray as $data) {
+            $entitiesArray[] = $this->build($data, true);
+        }
+
+        return $entitiesArray;
+	}
 }
