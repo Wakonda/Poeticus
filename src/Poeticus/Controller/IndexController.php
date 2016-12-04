@@ -20,7 +20,7 @@ require_once __DIR__.'/../../simple_html_dom.php';
 
 class IndexController
 {
-    public function indexAction(Request $request, Application $app, $test="rr")
+    public function indexAction(Request $request, Application $app)
     {
 		// test
 		// $test = new MailerPoeticus($app['swiftmailer.options']);
@@ -103,6 +103,9 @@ class IndexController
 	{
 		$entity = $app['repository.poem']->find($id, true);
 		
+		if(empty($entity))
+			$app->abort('404');
+		
 		$params = array();
 		
 		if($entity->isBiography()) {
@@ -123,6 +126,10 @@ class IndexController
 	public function readPDFAction(Request $request, Application $app, $id)
 	{
 		$entity = $app['repository.poem']->find($id, true);
+		
+		if(empty($entity))
+			$app->abort('404');
+		
 		$content = $app['twig']->render('Index/pdf_poem.html.twig', array('entity' => $entity));
 
 		$html2pdf = new \HTML2PDF('P','A4','fr');

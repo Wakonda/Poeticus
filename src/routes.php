@@ -5,9 +5,6 @@ $app->get('/', 'controllers.index:indexAction')
 
 $app->get('change_language/{language}', 'controllers.index:changeLanguageAction')
 	->bind('change_language');
-	
-$app->get('/error/{code}', 'controllers.index:errorAction')
-	->bind('error');
 
 $app->post('/search', 'controllers.index:indexSearchAction')
     ->bind('index_search');

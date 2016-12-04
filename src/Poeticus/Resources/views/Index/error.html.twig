@@ -40,12 +40,14 @@
 		<p>Une <b>erreur {{ code }}</b> est survenue. Si le problème persiste, n'hésitez pas à nous <a href="{{ path('contact') }}" alt="">contacter</a> afin que nous puissions le résoudre le plus rapidement possible !</p>
 	{% endif %}
 	<hr>
+	{% if message is not empty %}
 	<div class="error error_content">
-	<div id="state_error_content">
-		<span class="glyphicon glyphicon-plus pointer" data-state-error="more"> </span>
+		<div id="state_error_content">
+			<span class="glyphicon glyphicon-plus pointer" data-state-error="more"> </span>
+		</div>
+		<div id="error_content">
+			{{ message }}
+		</div>
 	</div>
-	<div id="error_content">
-		{{ message }}
-	</div>
-	</div>
+	{% endif %}
 {% endblock %}

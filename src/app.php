@@ -107,9 +107,12 @@ $app['repository.poem'] = $app->share(function ($app) {
     return new Poeticus\Repository\PoemRepository($app['db']);
 });
 
+$app->before(function () use ($app) {
+    $app['twig']->addGlobal('generic_layout', $app['twig']->loadTemplate('generic_layout.html.twig'));
+}, \Silex\Application::EARLY_EVENT);
+
 // Register the error handler.
 $app->error(function (\Exception $e, $code) use ($app) {
-
     if ($app['debug']) {
         return;
     }
@@ -125,9 +128,6 @@ $app->error(function (\Exception $e, $code) use ($app) {
 	return $app['twig']->render('Index/error.html.twig', array('code' => $code, 'message' => $e->getMessage()));
 });
 
-$app->before(function () use ($app) {
-    $app['twig']->addGlobal('generic_layout', $app['twig']->loadTemplate('generic_layout.html.twig'));
-});
 
 // Register repositories
 $app['repository.poeticform'] = $app->share(function ($app) {
