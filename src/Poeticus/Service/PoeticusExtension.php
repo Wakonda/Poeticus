@@ -34,7 +34,8 @@ class PoeticusExtension extends \Twig_Extension
 			'captcha' => new \Twig_Function_Method($this, 'generateCaptcha'),
 			'gravatar' => new \Twig_Function_Method($this, 'generateGravatar'),
 			'number_version' => new \Twig_Function_Method($this, 'getCurrentVersion'),
-			'current_url' => new \Twig_Function_Method($this, 'getCurrentURL')
+			'current_url' => new \Twig_Function_Method($this, 'getCurrentURL'),
+			'code_by_language' => new \Twig_Function_Method($this, 'getCodeByLanguage')
 		);
 	}
 
@@ -125,5 +126,23 @@ class PoeticusExtension extends \Twig_Extension
 	public function getCurrentURL($server)
 	{
 		return $server->get("REQUEST_SCHEME").'://'.$server->get("SERVER_NAME").$server->get("REQUEST_URI");
+	}
+	
+	public function getCodeByLanguage()
+	{
+		$locale = $this->app['request']->getLocale();
+		
+		switch($locale)
+		{
+			case "it":
+				return "it";
+				break;
+			case "pt":
+				return "pt_PT";
+				break;
+			default:
+				return "fr_FR";
+				break;
+		}
 	}
 }

@@ -130,8 +130,12 @@ class UserController implements ControllerProviderInterface
 		if(!empty($id))
 			$entity = $app['repository.user']->find($id, false);
 		else
-			$entity = $app['repository.user']->findByName($this->getCurrentUser($app)->getUsername(), false);
+		{
+			if(!$app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY'))
+				$app->abort(500);
 
+			$entity = $app['repository.user']->findByName($this->getCurrentUser($app)->getUsername(), false);
+		}
 		$form = $this->createForm($app, $entity, true);
 	
 		return $app['twig']->render('User/edit.html.twig', array('form' => $form->createView(), 'entity' => $entity));

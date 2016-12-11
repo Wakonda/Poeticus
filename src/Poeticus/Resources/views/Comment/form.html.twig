@@ -1,3 +1,23 @@
+<script src="{{ app.request.basepath }}/js/tinymce/js/tinymce/tinymce.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+	tinymce.init({
+		selector:'textarea',
+		height: 250,
+		menubar: false,
+		language: "{{ code_by_language() }}",
+		statusbar: false,
+		plugins: [
+			'lists link image charmap textcolor media'
+		],
+		toolbar: 'bold italic underline | forecolor backcolor | alignleft aligncenter alignright alignjustify | link image | undo redo |',
+		setup: function (editor) {
+			editor.on('change', function () {
+				tinymce.triggerSave();
+			});
+		}
+	});
+</script>
+
 {% form_theme form 'Form/fields.html.twig' %}
 
 {{ form_start(form, {'method' : 'post', 'action' : '', 'attr': {'id': 'form_comment', 'novalidate': 'novalidate'} }) }}
