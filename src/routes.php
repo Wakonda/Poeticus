@@ -155,6 +155,7 @@ $app->get('/get_countries_by_language', 'controllers.countryadmin:getCountriesBy
 	
 $app->get('/get_poeticforms_by_language', 'controllers.poeticformadmin:getPoeticFormsByLanguageAction')
 	->bind('get_poeticforms_by_language');
+
 // USER
 $app->get('/user/login', 'controllers.user:connect')
 	->bind('login');
@@ -211,10 +212,10 @@ $app->get('/poemuser/delete', 'controllers.index:poemUserDeleteAction')
 // CONTACT
 $app->get('/contact', 'controllers.contact:indexAction')
     ->bind('contact');
-	
+
 $app->post('/contact_send', 'controllers.contact:sendAction')
 	->bind('contact_send');
-	
+
 // ADMIN POETIC FORM
 $app->get('/admin/poeticform/index', 'controllers.poeticformadmin:indexAction')
     ->bind('poeticformadmin_index');

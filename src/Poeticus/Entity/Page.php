@@ -22,23 +22,11 @@ class Page
      */
     protected $text;
 	
-	/**
-	 *
-	 * @var string
-	 */
-	protected $internationalName;
-	
     /**
      *
      * @var image
      */
     protected $photo;
-
-	/**
-	 *
-	 * @var \Poeticus\Entity\Language
-	 */
-	protected $language;
 	
     public function getId()
     {
@@ -79,24 +67,4 @@ class Page
     {
         $this->photo = $photo;
     }
-
-    public function getInternationalName()
-    {
-        return $this->internationalName;
-    }
-
-    public function setInternationalName($internationalName)
-    {
-        $this->internationalName = $internationalName;
-    }
-
-	public function getLanguage()
-	{
-		return $this->language;
-	}
-	
-	public function setLanguage($language)
-	{
-		$this->language = $language;
-	}
 }
