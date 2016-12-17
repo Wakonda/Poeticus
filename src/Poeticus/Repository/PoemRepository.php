@@ -84,8 +84,7 @@ class PoemRepository extends GenericRepository
 		if($count)
 		{
 			$qb->select("COUNT(*) AS count");
-			$results = $qb->execute()->fetchAll();
-			return $results[0]["count"];
+			return $qb->execute()->fetchColumn();
 		}
 		else
 			$qb->setFirstResult($iDisplayStart)->setMaxResults($iDisplayLength);
@@ -165,8 +164,7 @@ class PoemRepository extends GenericRepository
 		if($count)
 		{
 			$qb->select("COUNT(*) AS count");
-			$results = $qb->execute()->fetchAll();
-			return $results[0]["count"];
+			return $qb->execute()->fetchColumn();
 		}
 		else
 			$qb->setFirstResult($iDisplayStart)->setMaxResults($iDisplayLength);
@@ -214,8 +212,8 @@ class PoemRepository extends GenericRepository
 		   
 		$this->whereLanguage($qb, "pf", $locale);
 		
-		$count = $qb->execute()->fetchObject();
-		$id = rand(1, $count->countRow);
+		$count = $qb->execute()->fetchColumn();
+		$id = rand(1, $count);
 	
 		$qb = $this->db->createQueryBuilder();
 
@@ -416,8 +414,7 @@ class PoemRepository extends GenericRepository
 		if($count)
 		{
 			$qb->select("COUNT(*) AS count");
-			$results = $qb->execute()->fetchAll();
-			return $results[0]["count"];
+			return $qb->execute()->fetchColumn();
 		}
 		else
 			$qb->setFirstResult($iDisplayStart)->setMaxResults($iDisplayLength);
@@ -491,8 +488,7 @@ class PoemRepository extends GenericRepository
 		if($count)
 		{
 			$qb->select("COUNT(*) AS count");
-			$results = $qb->execute()->fetchAll();
-			return $results[0]["count"];
+			return $qb->execute()->fetchColumn();
 		}
 		else
 			$qb->setFirstResult($iDisplayStart)->setMaxResults($iDisplayLength);
@@ -564,9 +560,7 @@ class PoemRepository extends GenericRepository
 		if($count)
 		{
 			$qb->select("COUNT(*) AS count");
-			$results = $qb->execute()->fetchAll();
-
-			return $results[0]["count"];
+			return $qb->execute()->fetchColumn();
 		}
 		else
 			$qb->setFirstResult($iDisplayStart)->setMaxResults($iDisplayLength);
@@ -603,8 +597,7 @@ class PoemRepository extends GenericRepository
 		if($count)
 		{
 			$qb->select("COUNT(*) AS count");
-			$results = $qb->execute()->fetchAll();
-			return $results[0]["count"];
+			return $qb->execute()->fetchColumn();
 		}
 		else
 			$qb->setFirstResult($iDisplayStart)->setMaxResults($iDisplayLength);
@@ -630,9 +623,7 @@ class PoemRepository extends GenericRepository
 			$qb->andWhere("pf.id != :id")
 			   ->setParameter("id", $entity->getId());
 		}
-		$results = $qb->execute()->fetch();
-		
-		return $results["number"];
+		return $qb->execute()->fetchColumn();
 	}
 	
 	public function getStat($locale)
@@ -643,8 +634,8 @@ class PoemRepository extends GenericRepository
 			   ->from("poem", "pf");
 			   
 		$this->whereLanguage($qbPoem, "pf", $locale);
-		
-		$resultPoem = $qbPoem->execute()->fetchAll();
+
+		$resultPoem = $qbPoem->execute()->fetchColumn();
 		
 		$qbBio = $this->db->createQueryBuilder();
 
@@ -653,7 +644,7 @@ class PoemRepository extends GenericRepository
 			  
 		$this->whereLanguage($qbBio, "bp", $locale);
 		
-		$resultBio = $qbBio->execute()->fetchAll();
+		$resultBio = $qbBio->execute()->fetchColumn();
 		
 		$qbCo = $this->db->createQueryBuilder();
 
@@ -662,9 +653,9 @@ class PoemRepository extends GenericRepository
 		
 		$this->whereLanguage($qbCo, "bp", $locale);
 		
-		$resultCo = $qbCo->execute()->fetchAll();
+		$resultCo = $qbCo->execute()->fetchColumn();
 		
-		return array("count_poem" => $resultPoem[0]["count_poem"], "count_biography" => $resultBio[0]["count_biography"], "count_collection" => $resultCo[0]["count_collection"]);
+		return array("count_poem" => $resultPoem, "count_biography" => $resultBio, "count_collection" => $resultCo);
 	}
 
 	public function findPoemByUserAndAuhorType($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $username, $currentUser, $authorType, $count = false)
@@ -699,8 +690,7 @@ class PoemRepository extends GenericRepository
 		if($count)
 		{
 			$qb->select("COUNT(*) AS count");
-			$results = $qb->execute()->fetchAll();
-			return $results[0]["count"];
+			return $qb->execute()->fetchColumn();
 		}
 		else
 			$qb->setFirstResult($iDisplayStart)->setMaxResults($iDisplayLength);

@@ -97,8 +97,7 @@ class VersionRepository extends GenericRepository
 		if($count)
 		{
 			$qb->select("COUNT(*) AS count");
-			$results = $qb->execute()->fetchAll();
-			return $results[0]["count"];
+			return $qb->execute()->fetchColumn();
 		}
 		else
 			$qb->setFirstResult($iDisplayStart)->setMaxResults($iDisplayLength);
@@ -161,8 +160,7 @@ class VersionRepository extends GenericRepository
 			$qb->andWhere("v.id != :id")
 			   ->setParameter("id", $entity->getId());
 		}
-		$results = $qb->execute()->fetchAll();
-		
-		return $results[0]["number"];
+
+		return $qb->execute()->fetchColumn();
 	}
 }

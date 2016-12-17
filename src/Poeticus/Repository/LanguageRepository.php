@@ -62,8 +62,7 @@ class LanguageRepository extends GenericRepository
 		if($count)
 		{
 			$qb->select("COUNT(*) AS count");
-			$results = $qb->execute()->fetchAll();
-			return $results[0]["count"];
+			return $qb->execute()->fetchColumn();
 		}
 		else
 			$qb->setFirstResult($iDisplayStart)->setMaxResults($iDisplayLength);
@@ -139,10 +138,9 @@ class LanguageRepository extends GenericRepository
 			$qb->select("COUNT(b.id)")
 			   ->from("biography", "b")
 			   ->where("b.title LIKE :title")
-			   ->setParameter("title", "%".implode(' ', $params['q_word'])."%")
-			   ;
+			   ->setParameter("title", "%".implode(' ', $params['q_word'])."%");
 			   
-			return $qb->execute()->fetchColumn();
+			return $qb->execute()->rowCount();
 		}
 
 		return $qb->execute()->fetchAll();

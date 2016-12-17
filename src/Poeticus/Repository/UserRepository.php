@@ -102,7 +102,7 @@ class UserRepository extends GenericRepository
 	{
 		$qb = $this->db->createQueryBuilder();
 
-		$qb->select("COUNT(*) AS number")
+		$qb->select("COUNT(*) AS count")
 		   ->from("user", "pf")
 		   ->where("pf.username = :username")
 		   ->orWhere("pf.email = :email")
@@ -114,9 +114,8 @@ class UserRepository extends GenericRepository
 			$qb->andWhere("pf.id != :id")
 			   ->setParameter("id", $entity->getId());
 		}
-		$results = $qb->execute()->fetchAll();
 
-		return $results[0]["number"];
+		return $qb->execute()->fetchColumn();
 	}
 
 	public function save($entity, $id = null)
@@ -168,8 +167,7 @@ class UserRepository extends GenericRepository
 		if($count)
 		{
 			$qb->select("COUNT(*) AS count");
-			$results = $qb->execute()->fetchAll();
-			return $results[0]["count"];
+			return $qb->execute()->fetchColumn();
 		}
 		else
 			$qb->setFirstResult($iDisplayStart)->setMaxResults($iDisplayLength);

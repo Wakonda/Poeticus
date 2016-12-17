@@ -77,10 +77,9 @@ class CommentRepository extends GenericRepository
 		   ->from('comment', 'c')
 		   ->where('c.poem_id = :poemId')
 		   ->setParameter('poemId', $poemId);
+			$results = $qb->execute()->fetchAll();
 
-		$result = $qb->execute()->fetch();
-
-		return $result["count"];
+			return $results[0]["count"];
 	}
 	
 	public function displayComments($poemId, $max_comment_by_page, $first_message_to_display)
@@ -133,8 +132,7 @@ class CommentRepository extends GenericRepository
 		if($count)
 		{
 			$qb->select("COUNT(*) AS count");
-			$results = $qb->execute()->fetchAll();
-			return $results[0]["count"];
+			return $qb->execute()->fetchColumn();
 		}
 		else
 			$qb->setFirstResult($iDisplayStart)->setMaxResults($iDisplayLength);
