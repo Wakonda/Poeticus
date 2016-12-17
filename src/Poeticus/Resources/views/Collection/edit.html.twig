@@ -57,7 +57,7 @@
 
 {% block main_content %}
 {% form_theme form 'Form/fields.html.twig' %}
-
+{% import "index/macro.html.twig" as macro %}
 {{ form_start(form, {'method' : 'post', 'action' : path('collectionadmin_update', {'id' : entity.id }), 'attr': {'novalidate': 'novalidate'} }) }}
 <table class="form_grid">
 		<tr>
@@ -74,7 +74,7 @@
 		</tr>
 		<tr>
 			<th>{{ form_label(form.image) }}</th>
-			<td><p>Photo actuelle : {{ entity.image }}</p><div class="errors">{{ form_errors(form.image) }}</div>{{ form_widget(form.image) }}</td>
+			<td><div class="errors">{{ form_errors(form.image) }}</div>{{ macro.currentImage("photo/collection/", entity.image) }}{{ form_widget(form.image) }}</td>
 		</tr>
 		<tr>
 			<th>{{ form_label(form.language) }}</th>

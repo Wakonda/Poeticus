@@ -45,7 +45,7 @@
 
 {% block main_content %}
 {% form_theme form 'Form/fields.html.twig' %}
-
+{% import "index/macro.html.twig" as macro %}
 {{ form_start(form, {'method' : 'post', 'action' : path('biographyadmin_update', {'id' : entity.id }), 'attr': {'novalidate': 'novalidate'} }) }}
 <table class="form_grid">
 		<tr>
@@ -66,7 +66,7 @@
 		</tr>
 		<tr>
 			<th>{{ form_label(form.photo) }}</th>
-			<td><p>Photo actuelle : {{ entity.photo }}</p><div class="errors">{{ form_errors(form.photo) }}</div>{{ form_widget(form.photo) }}</td>
+			<td><div class="errors">{{ form_errors(form.photo) }}</div>{{ macro.currentImage("photo/biography/", entity.photo) }}{{ form_widget(form.photo) }}</td>
 		</tr>
 		<tr>
 			<th>{{ form_label(form.country) }}</th>
