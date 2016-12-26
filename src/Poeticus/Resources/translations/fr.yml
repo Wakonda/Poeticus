@@ -152,6 +152,20 @@ contact:
         Email: "Email"
         Subject: "Objet"
         Send: "Envoyer"
+comment:
+    index:
+        Comments: "Commentaires"
+    field:
+        Message: "Message"
+        Send: "Envoyer"
+        YouMustBeLoggedInToWriteAComment: "Vous devez être connecté pour pouvoir écrire un commentaire"
+vote:
+    index:
+        Votes: "Votes"
+    field:
+        Error: "Erreur"
+        YouMustBeLoggedInToVote: "Vous devez être connecté pour pouvoir voter !"
+        YouHaveAlreadyVotedForThisPoem: "Vous avez déjà voté pour cette poésie"
 version:
     index:
         Version: "Version"
@@ -162,6 +176,9 @@ poem:
         Published: "Publié"
         Deleted: "Supprimé"
         Draft: "Brouillon"
+    browsing:
+        Previous: "Précédent"
+        Next: "Suivant"
 admin:
     index:
         Biography: "Biographie"
@@ -180,6 +197,7 @@ admin:
         GenerateSitemap: "Générer le Sitemap"
         Yes: "Oui"
         No: "Non"
+        CurrentImage: "Photo actuelle"
     table:
         Title: "Titre"
         Action: "Action"
@@ -205,6 +223,8 @@ admin:
         UnknownDate: "Date inconnue"
         Image: "Image"
         RapidCreation: "Création rapide"
+        ForSameBiography: "pour le même auteur"
+        ForSameCollection: "pour le même recueil"
     biography:
         Title: "Titre"
         Text: "Texte"

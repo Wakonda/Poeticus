@@ -3,8 +3,8 @@
 {% block head_title %}Poéticus{% endblock %}
 
 {% block script_additional %}
-	<script src="{{ app.request.basepath }}/js/jquery-ui-1.11.0/jquery-ui.min.js"></script>	
-	<script src="{{ app.request.basepath }}/js/tag-it-master/js/tag-it.min.js"></script>
+	<script src="{{ app.request_stack.currentrequest.basepath }}/js/jquery-ui-1.11.0/jquery-ui.min.js"></script>	
+	<script src="{{ app.request_stack.currentrequest.basepath }}/js/tag-it-master/js/tag-it.min.js"></script>
 
 	<script type="text/javascript">
 		$(function()
@@ -17,8 +17,8 @@
 {% endblock %}
 
 {% block style_additional %}
-	<link rel="stylesheet" type="text/css" href="{{ app.request.basepath }}/js/jquery-ui-1.11.0/jquery-ui.min.css" />
-	<link rel="stylesheet" type="text/css" href="{{ app.request.basepath }}/js/tag-it-master/css/jquery.tagit.css" />
+	<link rel="stylesheet" type="text/css" href="{{ app.request_stack.currentrequest.basepath }}/js/jquery-ui-1.11.0/jquery-ui.min.css" />
+	<link rel="stylesheet" type="text/css" href="{{ app.request_stack.currentrequest.basepath }}/js/tag-it-master/css/jquery.tagit.css" />
 {% endblock %}
 
 {% block main_content %}
@@ -61,14 +61,14 @@
 	<h3><a href="{{ path('read', {'id' : random.id}) }}" alt="{{ random.title }}">{{ random.title }}</a></h3>
 	<div>
 		{% if random.poeticform is not null and random.poeticform.typeContentPoem == constant('Poeticus\\Entity\\PoeticForm::IMAGETYPE') %}
-			{{ ("photo/poem/"~random.photo)|max_size_image(app.request.basepath) }}
+			{{ ("photo/poem/"~random.photo)|max_size_image(app.request_stack.currentrequest.basepath) }}
 		{% else %}
 			{{ random.text|raw }}
 		{% endif %}
 		<hr>
 		<a href="{{ path('author', {'id' : random.biography.id }) }}" alt="">{{ random.biography.title }}</a>
 		-
-		<a href="{{ path('country', {'id' : random.country.id }) }}" alt=""><img class="flag" src="{{ app.request.basepath }}/photo/country/{{ random.country.flag }}" alt="" height="8" /></a>
+		<a href="{{ path('country', {'id' : random.country.id }) }}" alt=""><img class="flag" src="{{ app.request_stack.currentrequest.basepath }}/photo/country/{{ random.country.flag }}" alt="" height="8" /></a>
 	</div>
 	{% else %}
 		<p>{{ 'main.index.NoPoem'|trans }}</p>

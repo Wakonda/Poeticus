@@ -39,7 +39,7 @@ class IndexController
 	
 	public function changeLanguageAction(Request $request, Application $app, $language)
 	{
-		$app['request']->getSession()->set('_locale', $language);
+		$request->getSession()->set('_locale', $language);
      
 		return $app->redirect($app["url_generator"]->generate('index'));
 	}
@@ -205,8 +205,7 @@ class IndexController
 	public function lastPoemAction(Request $request, Application $app)
     {
 		$entities = $app['repository.poem']->getLastEntries($this->getCurrentLocale($app));
-
-		$app['locale'] = $app['request']->getLocale();
+		$app['translator']->setLocale($request->getSession()->get("_locale"));
 
 		return $app['twig']->render('Index/lastPoem.html.twig', array('entities' => $entities));
     }
@@ -215,7 +214,7 @@ class IndexController
     {
 		$statistics = $app['repository.poem']->getStat($this->getCurrentLocale($app));
 		
-		$app['locale'] = $app['request']->getLocale();
+		$app['translator']->setLocale($request->getSession()->get("_locale"));
 
 		return $app['twig']->render('Index/statPoem.html.twig', array('statistics' => $statistics));
     }
@@ -834,6 +833,6 @@ class IndexController
 	
 	private function getCurrentLocale($app)
 	{
-		return $app['request']->getLocale();
+		return $app['request_stack']->getCurrentRequest()->getSession()->get("_locale");
 	}
 }

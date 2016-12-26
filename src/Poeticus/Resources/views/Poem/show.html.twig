@@ -13,7 +13,7 @@
 			<th>{{ "admin.poem.Text"|trans }}</th>
 			<td>
 			{% if entity.poeticform is not null and entity.poeticform.typeContentPoem == constant('Poeticus\\Entity\\PoeticForm::IMAGETYPE') %}
-				{{ ("photo/poem/"~entity.photo)|max_size_image(app.request.basepath) }}
+				{{ ("photo/poem/"~entity.photo)|max_size_image(app.request_stack.currentrequest.basepath) }}
 			{% else %}
 				{{ entity.text|raw }}
 			{% endif %}
@@ -45,5 +45,5 @@
 		</tr>
 	</table>
 	<hr>
-	<a href="{{ path('poemadmin_edit', { 'id' : entity.id }) }}"><i class="fa fa-edit"></i> {{ 'admin.index.Update'|trans }}</a> - <a href="{{ path('poemadmin_new') }}"><i class="fa fa-plus-square"></i> {{ 'admin.index.Create'|trans }}</a> - <a href="{{ path('poemadmin_newfast') }}" alt=""><i class="fa fa-paper-plane"></i> {{ "admin.poem.RapidCreation"|trans }}</a>
+	<a href="{{ path('poemadmin_edit', { 'id' : entity.id }) }}"><i class="fa fa-edit"></i> {{ 'admin.index.Update'|trans }}</a> - <a href="{{ path('poemadmin_new') }}"><i class="fa fa-plus-square"></i> {{ 'admin.index.Create'|trans }}</a> | <a href="{{ path('poemadmin_new', {'authorId' : entity.biography.id}) }}">{{ 'admin.poem.ForSameBiography'|trans }}</a>{% if entity.collection is not null %} | <a href="{{ path('poemadmin_new', {'biographyId' : entity.biography.id, 'collectionId' : entity.collection.id }) }}">{{ 'admin.poem.ForSameCollection'|trans }}</a>{% endif %} - <a href="{{ path('poemadmin_newfast') }}" alt=""><i class="fa fa-paper-plane"></i> {{ "admin.poem.RapidCreation"|trans }}</a>
 {% endblock %}

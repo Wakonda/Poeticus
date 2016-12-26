@@ -36,12 +36,12 @@ class PoemVoteController
 				$numberOfDoubloons = $app['repository.poemvote']->checkIfUserAlreadyVote($idPoem, $userDb->getId());
 				
 				if($numberOfDoubloons >= 1)
-					$state = "Vous avez déjà voté pour cette poésie";
+					$state = $app["translator"]->trans("vote.field.YouHaveAlreadyVotedForThisPoem");
 				else
 					$app['repository.poemvote']->save($entity);
 			}
 			else
-				$state = "Vous devez être connecté pour pouvoir voter !";
+				$state = $app["translator"]->trans("vote.field.YouMustBeLoggedInToVote");
 		}
 
 		$up_values = $app['repository.poemvote']->countVoteByPoem($idPoem, 1);

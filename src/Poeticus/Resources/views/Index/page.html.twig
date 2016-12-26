@@ -5,7 +5,7 @@
 
 {% block main_content %}
 	{% if entity is not null %}
-		<p class="center"><img src="{{ app.request.basepath }}/photo/page/{{ entity.photo }}" alt="" /></p>
+		<p class="center"><img src="{{ app.request_stack.currentrequest.basepath }}/photo/page/{{ entity.photo }}" alt="" /></p>
 		{{ entity.text|raw }}
 	{% endif %}
 {% endblock %}

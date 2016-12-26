@@ -4,12 +4,12 @@
 {% block main_title %}{{ 'menu.left.Admin'|trans }} - {{ 'admin.index.Poem'|trans }}{% endblock %}
 
 {% block style_additional %}
-	<link rel="stylesheet" type="text/css" href="{{ app.request.basepath }}/js/jquery.ajax-combobox-master/dist/jquery.ajax-combobox.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="{{ app.request_stack.currentrequest.basepath }}/js/jquery.ajax-combobox-master/dist/jquery.ajax-combobox.css" media="screen" />
 {% endblock %}
 
 {% block script_additional %}
-	<script src="{{ app.request.basepath }}/js/jquery.ajax-combobox-master/dist/jquery.ajax-combobox.js"></script>
-	<script src="{{ app.request.basepath }}/js/combobox.js"></script>
+	<script src="{{ app.request_stack.currentrequest.basepath }}/js/jquery.ajax-combobox-master/dist/jquery.ajax-combobox.js"></script>
+	<script src="{{ app.request_stack.currentrequest.basepath }}/js/combobox.js"></script>
 	<script type="text/javascript">
 		$(function()
 		{
@@ -35,24 +35,24 @@
 			function putReleasedDate(value, load)
 			{
 				if(value != "")
-					$("input#{{ form.vars['id'] }}_unknownReleasedDate").prop('checked', false);
+					$("input#{{ form.unknownReleasedDate.vars.id }}").prop('checked', false);
 				else
-					$("input#{{ form.vars['id'] }}_unknownReleasedDate").prop('checked', true);
+					$("input#{{ form.unknownReleasedDate.vars.id }}").prop('checked', true);
 			}
 			
-			$("input#{{ form.vars['id'] }}_unknownReleasedDate").click(function()
+			$("input#{{ form.unknownReleasedDate.vars.id }}").click(function()
 			{
 				if($(this).is(":checked"))
-					$("#{{ form.vars['id'] }}_releasedDate").val("");
+					$("#{{ form.releasedDate.vars.id }}").val("");
 			});
 			
-			$("input#{{ form.vars['id'] }}_releasedDate").keyup(function()
+			$("input#{{ form.releasedDate.vars.id }}").keyup(function()
 			{
 				putReleasedDate($(this).val(), false);
 			});
 			putReleasedDate("{{ entity.releasedDate }}", true);
 			
-			$(document).on('change', "#{{ form.vars['id'] }}_biography", function()
+			$(document).on('change', "#{{ form.biography.vars.id }}", function()
 			{
 				$.ajax({
 					type: "POST",
@@ -60,21 +60,21 @@
 					data: { "id" : $(this).val() },
 					success: function(data)
 					{
-						$("#{{ form.vars['id'] }}_country").val(data.country);
+						$("#{{ form.country.vars.id }}").val(data.country);
 						var collections = data.collections;
-						$("#{{form.vars['id'] }}_collection option").remove();
-						$("#{{form.vars['id'] }}_collection").append('<option value="">{{ 'main.field.ChooseAnOption'|trans }}</option>');
+						$("#{{ form.collection.vars.id }} option").remove();
+						$("#{{ form.collection.vars.id }}").append('<option value="">{{ 'main.field.ChooseAnOption'|trans }}</option>');
 						$.each(collections, function(index, element)
 						{
-							$("#{{form.vars['id'] }}_collection").append('<option value="'+ element.id +'">'+ element.title +'</option>');
+							$("#{{ form.collection.vars.id }}").append('<option value="'+ element.id +'">'+ element.title +'</option>');
 						});
 						if("{{ entity.collection }}" != "")
-							$("#{{ form.vars['id'] }}_collection").val("{{ entity.collection }}");
+							$("#{{ form.collection.vars.id }}").val("{{ entity.collection }}");
 					}
 				});
 			});
 			
-			$("#{{ form.vars['id'] }}_collection").change(function()
+			$("#{{ form.collection.vars.id }}").change(function()
 			{
 				$.ajax({
 					type: "POST",
@@ -82,7 +82,7 @@
 					data: { "id" : $(this).val() },
 					success: function(data)
 					{
-						$("#{{ form.vars['id'] }}_releasedDate").val(data.releasedDate);
+						$("#{{ form.releasedDate.vars.id }}").val(data.releasedDate);
 						
 						if(data.releasedDate != "")
 							$('input#poem_unknownReleasedDate').attr('checked', false);
@@ -92,7 +92,7 @@
 				});
 			});
 			
-			$("#{{ form.vars['id'] }}_poeticform").change(function()
+			$("#{{ form.poeticform.vars.id }}").change(function()
 			{
 				$.ajax({
 					type: "POST",
@@ -112,16 +112,16 @@
 				});
 			});
 
-			$("#{{ form.vars['id'] }}_poeticform").change();
-			$("#{{ form.vars['id'] }}_biography").change();
-			$("#{{ form.vars['id'] }}_collection").change();
+			$("#{{ form.poeticform.vars.id }}").change();
+			$("#{{ form.biography.vars.id }}").change();
+			$("#{{ form.collection.vars.id }}").change();
 			
 			$("select#{{ form.language.vars.id }}").change(function() {
-				var input = $(".container_{{ form.vars['id'] }}_biography > .input-group > input[type='hidden']");
+				var input = $(".container_{{ form.biography.vars.id }} > .input-group > input[type='hidden']");
 				$(input[0]).addClass('combobox full_width form-control').attr("type", "text").val("");
-				$(".container_{{ form.vars['id'] }}_biography").parent().append(input[0]);
-				$(".container_{{ form.vars['id'] }}_biography").remove();
-				setComboboxEdit('{{ path("poemadmin_getbiographiesbyajax") }}?locale=' + $(this).val(), 'biography', "#{{ form.vars['id'] }}_biography");
+				$(".container_{{ form.biography.vars.id }}").parent().append(input[0]);
+				$(".container_{{ form.biography.vars.id }}").remove();
+				setComboboxEdit('{{ path("poemadmin_getbiographiesbyajax") }}?locale=' + $(this).val(), 'biography', "#{{ form.biography.vars.id }}");
 			
 				$.ajax({
 					type: "GET",

@@ -154,7 +154,7 @@ class CollectionAdminController
 		$biographyForms = $app['repository.biography']->findAllForChoice();
 		$languageForms = $app['repository.language']->findAllForChoice();
 
-		$language = $app['repository.language']->findOneByAbbreviation($app['request']->getLocale());
+		$language = $app['repository.language']->findOneByAbbreviation($app['request_stack']->getCurrentRequest()->getLocale());
 		$localeForms = $language->getId();
 		
 		return $app['form.factory']->create(CollectionType::class, $entity, array('biographies' => $biographyForms, 'languages' => $languageForms, "locale" => $localeForms));

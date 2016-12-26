@@ -18,7 +18,7 @@ class CommentController
 		$entity = new Comment();
         $form = $app['form.factory']->create(CommentType::class, $entity);
 		
-		$app['locale'] = $app['request']->getLocale();
+		$app['translator']->setLocale($request->getSession()->get("_locale"));
 
         return $app['twig']->render('Comment/index.html.twig', array('poemId' => $poemId, 'form' => $form->createView()));
     }
@@ -35,7 +35,8 @@ class CommentController
 			$user = $app['repository.user']->findByUsernameOrEmail($user->getUsername());
 		else
 		{
-			$form->get("text")->addError(new FormError('Vous devez être connecté pour pouvoir poster un commentaire'));
+			
+			$form->get("text")->addError(new FormError($app["translator"]->trans("comment.field.YouMustBeLoggedInToWriteAComment")));
 		}
 
 		if($form->isValid())

@@ -4,12 +4,12 @@
 {% block main_title %}{{ entity.title }}{% endblock %}
 
 {% block style_additional %}
-	<link rel="stylesheet" type="text/css" href="{{ app.request.basepath }}/js/jquery.qtip/jquery.qtip.min.css" />
+	<link rel="stylesheet" type="text/css" href="{{ app.request_stack.currentrequest.basepath }}/js/jquery.qtip/jquery.qtip.min.css" />
 {% endblock %}
 
 {% block script_additional %}
-<script src="{{ app.request.basepath }}/js/jquery.qtip/jquery.qtip.min.js"></script>
-<script type="text/javascript" src="{{ app.request.basepath }}/js/aterkik-jquery-tweet-highlighted/jquery.tweetHighlighted.js"></script>
+<script src="{{ app.request_stack.currentrequest.basepath }}/js/jquery.qtip/jquery.qtip.min.js"></script>
+<script type="text/javascript" src="{{ app.request_stack.currentrequest.basepath }}/js/aterkik-jquery-tweet-highlighted/jquery.tweetHighlighted.js"></script>
 <script type="text/javascript">
 	$(function()
 	{
@@ -46,7 +46,7 @@
 						el.qtip({
 							content: {
 								text: data.alreadyVoted,
-								title: 'Erreur',
+								title: '{{ 'vote.field.Error'|trans }}',
 							},
 							style: { classes: 'qtip-red' }
 						});
@@ -82,7 +82,7 @@
 		var popupLocation = popupCenter(500, 300);
 		
 		$('div#main_poem_text').tweetHighlighted({
-			node: '<a href="#"><img src="{{ app.request.basepath }}/js/aterkik-jquery-tweet-highlighted/tweet.png" width="90px" height="30px" alt="tweet icon"></a>',
+			node: '<a href="#"><img src="{{ app.request_stack.currentrequest.basepath }}/js/aterkik-jquery-tweet-highlighted/tweet.png" width="90px" height="30px" alt="tweet icon"></a>',
 			cssClass: 'btn btn-primary',
 			minLength: 6,
 			maxLength: 144 * 2,
@@ -121,7 +121,7 @@
 		<a href="{{ path('user_show', {'id' : entity.user }) }}" alt="">{{ entity.user }}</a>
 	{% endif %}
 	-
-	<a href="{{ path('country', {'id' : entity.country.id }) }}" alt=""><img class="flag" src="{{ app.request.basepath }}/photo/country/{{ entity.country.flag }}" alt="" height="8" /></a>
+	<a href="{{ path('country', {'id' : entity.country.id }) }}" alt=""><img class="flag" src="{{ app.request_stack.currentrequest.basepath }}/photo/country/{{ entity.country.flag }}" alt="" height="8" /></a>
 	{% if entity.collection is not null %}
 		-
 		<a class="underline italic" href="{{ path('collection', {'id' : entity.collection.id }) }}" alt="">{{ entity.collection.title }}</a>
@@ -136,13 +136,13 @@
 		<tbody>
 			<tr>
 				<td class="socialNetwork">
-					<a href="{{ path('read_pdf', {'id' : entity.id}) }}"><img src="{{ app.request.basepath }}/photo/pdf.gif" alt="" /></a>
+					<a href="{{ path('read_pdf', {'id' : entity.id}) }}"><img src="{{ app.request_stack.currentrequest.basepath }}/photo/pdf.gif" alt="" /></a>
 				</td>
 				<td class="socialNetwork">
-					<a id="print_page" href="#"><img src="{{ app.request.basepath }}/photo/print.gif" alt="" /></a>
+					<a id="print_page" href="#"><img src="{{ app.request_stack.currentrequest.basepath }}/photo/print.gif" alt="" /></a>
 				</td>
 				<td class="socialNetwork">
-					<a href="#" data-toggle="modal" data-target="#send_poem_modal"><img src="{{ app.request.basepath }}/photo/share-by-mail.png" alt="" /></a>
+					<a href="#" data-toggle="modal" data-target="#send_poem_modal"><img src="{{ app.request_stack.currentrequest.basepath }}/photo/share-by-mail.png" alt="" /></a>
 				</td>
 				<td class="socialNetwork" id="twitter">
 					<a href="https://twitter.com/share" class="twitter-share-button" data-via="Wakonda1" id="TwitterShareButton1">Tweet</a>
@@ -191,7 +191,7 @@
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					<h4 class="modal-title" id="sendPoemModalLabel">Envoyez cette poésie à un ami</h4>
 				</div>
-				{{ render(app.request.baseUrl ~ '/send_poem/index/' ~ entity.id) }}
+				{{ render(app.request_stack.currentrequest.baseUrl ~ '/send_poem/index/' ~ entity.id) }}
 			</div>
 		</div>
 	</div>
@@ -200,11 +200,11 @@
 		<div id="poem_browsing" class="hidden_print">
 			<hr>
 			{% if(browsingPoems['previous'] is not empty) %}
-				<span data-nav-action="Précédent" data-nav-title="{{ browsingPoems['previous']['title'] }}" id="previous_data"><a href="{{ path('read', {'id' : browsingPoems['previous']['id']}) }}"><i class="fa fa-arrow-circle-left"></i> Précédent</a></span>
+				<span data-nav-action="{{ 'poem.browsing.Previous'|trans }}" data-nav-title="{{ browsingPoems['previous']['title'] }}" id="previous_data"><a href="{{ path('read', {'id' : browsingPoems['previous']['id']}) }}"><i class="fa fa-arrow-circle-left"></i> {{ 'poem.browsing.Previous'|trans }}</a></span>
 			{% endif %}
 			
 			{% if(browsingPoems['next'] is not empty) %}
-				<span data-nav-action="Suivant" data-nav-title="{{ browsingPoems['next']['title'] }}" class="right" id="next_data"><a href="{{ path('read', {'id' : browsingPoems['next']['id']}) }}">Suivant <i class="fa fa-arrow-circle-right"></i></a></span>
+				<span data-nav-action="{{ 'poem.browsing.Next'|trans }}" data-nav-title="{{ browsingPoems['next']['title'] }}" class="right" id="next_data"><a href="{{ path('read', {'id' : browsingPoems['next']['id']}) }}">{{ 'poem.browsing.Next'|trans }} <i class="fa fa-arrow-circle-right"></i></a></span>
 			{% endif %}
 		</div>
 		<div style="clear: both;"></div>
@@ -212,7 +212,7 @@
 	
 	<div class="hidden_print">
 		<hr>
-		<h2>Votes</h2>
+		<h2>{{ 'vote.index.Votes'|trans }}</h2>
 		<table id="poem_vote">
 			<tr>
 				<td>
@@ -239,5 +239,5 @@
 		</table>
 	</div>
 	
-	{{ render(app.request.baseUrl ~ '/comment/' ~ entity.id) }}
+	{{ render(app.request_stack.currentrequest.baseUrl ~ '/comment/' ~ entity.id) }}
 {% endblock %}

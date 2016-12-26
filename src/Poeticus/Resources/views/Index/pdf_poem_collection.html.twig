@@ -56,7 +56,7 @@
         </table>
     </page_footer>
 	<h1 class="center">{{ collection.title }}</h1>
-	<p class="center">{{ ("photo/collection/"~collection.image)|max_size_image(app.request.basepath, null, true) }}</p>
+	<p class="center">{{ ("photo/collection/"~collection.image)|max_size_image(app.request_stack.currentrequest.basepath, null, true) }}</p>
 	<h2 class="center">{{ collection.biography['title']|remove_control_characters }}</h2>
 	{% if collection.releasedDate is not empty %}
 		<p class="center bold">{{ collection.releasedDate }}</p>
@@ -71,7 +71,7 @@
 <page pageset="old">
 	<bookmark title="L'auteur" level="0" ></bookmark><h1>L'auteur</h1>
 	<h2 class="center">{{ biography.title|remove_control_characters }}</h2>
-	<p class="center">{{ ("photo/biography/"~biography.photo)|max_size_image(app.request.basepath, null, true) }}</p>
+	<p class="center">{{ ("photo/biography/"~biography.photo)|max_size_image(app.request_stack.currentrequest.basepath, null, true) }}</p>
 	{{ biography.text|raw }}
 </page>
 

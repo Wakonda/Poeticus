@@ -12,7 +12,7 @@ use Poeticus\Service\MailerPoeticus;
 use Poeticus\Service\PasswordHash;
 
 use Silex\Application;
-use Silex\ControllerProviderInterface;
+use Silex\Api\ControllerProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
@@ -22,7 +22,7 @@ class UserController implements ControllerProviderInterface
 {
     public function connect(Application $app)
     {
-		$request = $app['request'];
+		$request = $app['request_stack']->getCurrentRequest();
 
 		if($request->query->get("t") != null)
 		{

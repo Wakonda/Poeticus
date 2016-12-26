@@ -4,7 +4,7 @@
 {% block main_title %}{{ 'version.index.Version'|trans }}{% endblock %}
 
 {% block main_content %}
-	<p class="center"><img src="{{ app.request.basepath }}/photo/version.png" alt="" class="medium" /></p>
+	<p class="center"><img src="{{ app.request_stack.currentrequest.basepath }}/photo/version.png" alt="" class="medium" /></p>
 	<div>
 		<table class="table table-bordered">
 			<thead>
@@ -21,7 +21,7 @@
 					<td>{{ entity.releaseDate|date_letter }}</td>
 					<td>
 						{% if entity.file is not empty %}
-							<a href="{{ app.request.basepath }}/photo/version/{{ entity.file }}">Lire</a>
+							<a href="{{ app.request_stack.currentrequest.basepath }}/photo/version/{{ entity.file }}">Lire</a>
 						{% else %}
 							-
 						{% endif %}

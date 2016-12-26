@@ -12,7 +12,7 @@ $app->register(new Silex\Provider\DoctrineServiceProvider());
 $app->register(new Silex\Provider\FormServiceProvider());
 $app->register(new Silex\Provider\SessionServiceProvider());
 $app->register(new Silex\Provider\ValidatorServiceProvider());
-$app->register(new Silex\Provider\UrlGeneratorServiceProvider());
+$app->register(new Silex\Provider\RoutingServiceProvider());
 $app->register(new Silex\Provider\TranslationServiceProvider());
 $app->register(new Silex\Provider\SwiftmailerServiceProvider());
 $app->register(new Silex\Provider\HttpFragmentServiceProvider());
@@ -33,9 +33,9 @@ $app['security.firewalls'] = array(
 		'remember_me' => array('key' => '}Gp#qsZ^9HBR8^V%2vJz'),
 		'form' => array('login_path' => '/user/login', 'check_path' => '/admin/login_check','default_target_path'=> '/','always_use_default_target_path'=>true),
 		'logout' => array('logout_path' => '/admin/logout'),
-		'users' => $app->share(function () use ($app) {
+		'users' => function ($app) {
 			return new Poeticus\Controller\UserProvider($app['db']);
-		})
+		}
     )
 );
 
@@ -47,12 +47,16 @@ $app->register(new Silex\Provider\SecurityServiceProvider(), array(
 
 $app->register(new Silex\Provider\RememberMeServiceProvider());
 
+$app['security.default_encoder'] = function ($app) {
+    return $app['security.encoder.digest'];
+};
+
 $app->register(new Silex\Provider\TranslationServiceProvider(), array(
     'locale' => 'fr',
 	'translator.domains' => array()
 ));
 
-$app['translator'] = $app->share($app->extend('translator', function($translator, $app) {
+$app['translator'] = $app->extend('translator', function($translator, $app) {
     $translator->addLoader('yaml', new YamlFileLoader());
 
     $translator->addResource('yaml', __DIR__.'/Poeticus/Resources/translations/fr.yml', 'fr');
@@ -60,7 +64,7 @@ $app['translator'] = $app->share($app->extend('translator', function($translator
     $translator->addResource('yaml', __DIR__.'/Poeticus/Resources/translations/it.yml', 'it');
 
     return $translator;
-}));
+});
 
 $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
     'db.orm.proxies_namespace'     => 'DoctrineProxy',
@@ -73,11 +77,14 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
 ));
 
 $app->before(function () use ($app) {
-    if ($locale = $app['request']->get('lang') or $locale  = $app['request']->getSession()->get('_locale')) {
+	$request = $app['request_stack']->getCurrentRequest();
+	$locale = $app['locale'];
+    if ($locale = $request->get('lang') or $locale  = $request->getSession()->get('_locale')) {
 		$app['locale'] = $locale;
-		$app['request']->setLocale($locale);
+		$app['translator']->setLocale($locale);
+		$request->setLocale($locale);
     }
-	// die(var_dump());
+
 	$app['translator']->addLoader('xlf', new Symfony\Component\Translation\Loader\XliffFileLoader());
 	$app['translator']->addResource('xlf', realpath(__DIR__.'/../vendor/symfony/validator/Resources/translations/validators.pt.xlf'), 'pt', 'validators');
 	$app['translator']->addResource('xlf', realpath(__DIR__.'/../vendor/symfony/validator/Resources/translations/validators.it.xlf'), 'it', 'validators');
@@ -95,17 +102,17 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => array(__DIR__ . '/Poeticus/Resources/views')
 ));
 
-$app['twig']->addGlobal("dev", 1);
-
-$app["twig"] = $app->share($app->extend("twig", function (\Twig_Environment $twig, Silex\Application $app) {
+$app["twig"] = $app->extend("twig", function (\Twig_Environment $twig, Silex\Application $app) {
     $twig->addExtension(new Poeticus\Service\PoeticusExtension($app));
     return $twig;
-}));
+});
+
+$app['twig']->addGlobal("dev", 1);
 
 // Register repositories.
-$app['repository.poem'] = $app->share(function ($app) {
+$app['repository.poem'] = function ($app) {
     return new Poeticus\Repository\PoemRepository($app['db']);
-});
+};
 
 $app->before(function () use ($app) {
     $app['twig']->addGlobal('generic_layout', $app['twig']->loadTemplate('generic_layout.html.twig'));
@@ -130,125 +137,125 @@ $app->error(function (\Exception $e, $code) use ($app) {
 
 
 // Register repositories
-$app['repository.poeticform'] = $app->share(function ($app) {
+$app['repository.poeticform'] = function ($app) {
     return new Poeticus\Repository\PoeticFormRepository($app['db']);
-});
-$app['repository.country'] = $app->share(function ($app) {
+};
+$app['repository.country'] = function ($app) {
     return new Poeticus\Repository\CountryRepository($app['db']);
-});
-$app['repository.biography'] = $app->share(function ($app) {
+};
+$app['repository.biography'] = function ($app) {
     return new Poeticus\Repository\BiographyRepository($app['db']);
-});
-$app['repository.collection'] = $app->share(function ($app) {
+};
+$app['repository.collection'] = function ($app) {
     return new Poeticus\Repository\CollectionRepository($app['db']);
-});
-$app['repository.version'] = $app->share(function ($app) {
+};
+$app['repository.version'] = function ($app) {
     return new Poeticus\Repository\VersionRepository($app['db']);
-});
-$app['repository.poem'] = $app->share(function ($app) {
+};
+$app['repository.poem'] = function ($app) {
     return new Poeticus\Repository\PoemRepository($app['db']);
-});
-$app['repository.user'] = $app->share(function ($app) {
+};
+$app['repository.user'] = function ($app) {
     return new Poeticus\Repository\UserRepository($app['db']);
-});
-$app['repository.contact'] = $app->share(function ($app) {
+};
+$app['repository.contact'] = function ($app) {
     return new Poeticus\Repository\ContactRepository($app['db']);
-});
-$app['repository.poemvote'] = $app->share(function ($app) {
+};
+$app['repository.poemvote'] = function ($app) {
     return new Poeticus\Repository\PoemVoteRepository($app['db']);
-});
-$app['repository.comment'] = $app->share(function ($app) {
+};
+$app['repository.comment'] = function ($app) {
 	return new Poeticus\Repository\CommentRepository($app['db']);
-});
-$app['repository.page'] = $app->share(function ($app) {
+};
+$app['repository.page'] = function ($app) {
 	return new Poeticus\Repository\PageRepository($app['db']);
-});
-$app['repository.language'] = $app->share(function ($app) {
+};
+$app['repository.language'] = function ($app) {
 	return new Poeticus\Repository\LanguageRepository($app['db']);
-});
+};
 
 // Register controllers
-$app["controllers.index"] = $app -> share(function($app) {
+$app["controllers.index"] = function($app) {
     return new Poeticus\Controller\IndexController();
-});
+};
 
-$app["controllers.poeticformadmin"] = $app -> share(function($app) {
+$app["controllers.poeticformadmin"] = function($app) {
     return new Poeticus\Controller\PoeticFormAdminController();
-});
+};
 
-$app["controllers.countryadmin"] = $app -> share(function($app) {
+$app["controllers.countryadmin"] = function($app) {
     return new Poeticus\Controller\CountryAdminController();
-});
+};
 
-$app["controllers.biographyadmin"] = $app -> share(function($app) {
+$app["controllers.biographyadmin"] = function($app) {
     return new Poeticus\Controller\BiographyAdminController();
-});
+};
 
-$app["controllers.collectionadmin"] = $app -> share(function($app) {
+$app["controllers.collectionadmin"] = function($app) {
     return new Poeticus\Controller\CollectionAdminController();
-});
+};
 
-$app["controllers.poemadmin"] = $app -> share(function($app) {
+$app["controllers.poemadmin"] = function($app) {
     return new Poeticus\Controller\PoemAdminController();
-});
+};
 
-$app["controllers.useradmin"] = $app -> share(function($app) {
+$app["controllers.useradmin"] = function($app) {
     return new Poeticus\Controller\UserAdminController();
-});
+};
 
-$app["controllers.admin"] = $app -> share(function($app) {
+$app["controllers.admin"] = function($app) {
     return new Poeticus\Controller\AdminController();
-});
+};
 
-$app["controllers.contact"] = $app -> share(function($app) {
+$app["controllers.contact"] = function($app) {
     return new Poeticus\Controller\ContactController();
-});
+};
 
-$app["controllers.contactadmin"] = $app -> share(function($app) {
+$app["controllers.contactadmin"] = function($app) {
     return new Poeticus\Controller\ContactAdminController();
-});
+};
 
-$app["controllers.versionadmin"] = $app -> share(function($app) {
+$app["controllers.versionadmin"] = function($app) {
     return new Poeticus\Controller\VersionAdminController();
-});
+};
 
-$app["controllers.user"] = $app -> share(function($app) {
+$app["controllers.user"] = function($app) {
     return new Poeticus\Controller\UserController();
-});
+};
 
-$app["controllers.poemvote"] = $app -> share(function($app) {
+$app["controllers.poemvote"] = function($app) {
     return new Poeticus\Controller\PoemVoteController();
-});
+};
 
-$app["controllers.comment"] = $app -> share(function($app) {
+$app["controllers.comment"] = function($app) {
     return new Poeticus\Controller\CommentController();
-});
+};
 
-$app["controllers.sitemap"] = $app -> share(function($app) {
+$app["controllers.sitemap"] = function($app) {
 	return new Poeticus\Controller\SitemapController();
-});
+};
 
-$app["controllers.sendpoem"] = $app -> share(function($app) {
+$app["controllers.sendpoem"] = function($app) {
 	return new Poeticus\Controller\SendPoemController();
-});
+};
 
-$app["controllers.pageadmin"] = $app -> share(function($app) {
+$app["controllers.pageadmin"] = function($app) {
 	return new Poeticus\Controller\PageAdminController();
-});
+};
 
 // Form extension
-$app['form.type.extensions'] = $app->share($app->extend('form.type.extensions', function ($extensions) use ($app) {
+$app['form.type.extensions'] = $app->extend('form.type.extensions', function ($extensions) use ($app) {
     $extensions[] = new Poeticus\Form\Extension\ButtonTypeIconExtension();
     return $extensions;
-}));
+});
 
 // SwiftMailer
 // See http://silex.sensiolabs.org/doc/providers/swiftmailer.html
 $app['swiftmailer.options'] = array(
-	'host' => 'smtp.yopmail.com',
+	'host' => 'smtp.gmail.com',
 	'port' => 465,
-    'username' => 'test@yopmail.com',
-    'password' => '***',
+    'username' => 'amatukami66@gmail.com',
+    'password' => 'rclens66', // k+W13uz5
     'encryption' => 'ssl'
 );
 

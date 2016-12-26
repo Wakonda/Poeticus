@@ -4,12 +4,12 @@
 {% block main_title %}{{ 'menu.left.Admin'|trans }} - {{ 'admin.index.Poem'|trans }}{% endblock %}
 
 {% block style_additional %}
-	<link rel="stylesheet" type="text/css" href="{{ app.request.basepath }}/js/jquery.ajax-combobox-master/dist/jquery.ajax-combobox.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="{{ app.request_stack.currentrequest.basepath }}/js/jquery.ajax-combobox-master/dist/jquery.ajax-combobox.css" media="screen" />
 {% endblock %}
 
 {% block script_additional %}
-	<script src="{{ app.request.basepath }}/js/jquery.ajax-combobox-master/dist/jquery.ajax-combobox.js"></script>
-	<script src="{{ app.request.basepath }}/js/combobox.js"></script>
+	<script src="{{ app.request_stack.currentrequest.basepath }}/js/jquery.ajax-combobox-master/dist/jquery.ajax-combobox.js"></script>
+	<script src="{{ app.request_stack.currentrequest.basepath }}/js/combobox.js"></script>
 	<script type="text/javascript">
 		$(function()
 		{
@@ -46,7 +46,7 @@
 			});
 			$("input#poem_releasedDate").keyup();
 			
-			$(document).on('change', "#{{ form.vars['id'] }}_biography", function()
+			$(document).on('change', "#{{ form.biography.vars.id }}", function()
 			{
 				$.ajax({
 					type: "POST",
@@ -58,17 +58,23 @@
 
 						var collections = data.collections;
 
-						$("#{{form.vars['id'] }}_collection option").remove();
-						$("#{{form.vars['id'] }}_collection").append('<option value="">{{ 'main.field.ChooseAnOption'|trans }}</option>');
+						$("#{{ form.collection.vars.id }} option").remove();
+						$("#{{ form.collection.vars.id }}").append('<option value="">{{ 'main.field.ChooseAnOption'|trans }}</option>');
 						$.each(collections, function(index, element)
 						{
-							$("#{{form.vars['id'] }}_collection").append('<option value="'+ element.id +'">'+ element.title +'</option>');
+							$("#{{ form.collection.vars.id }}").append('<option value="'+ element.id +'">'+ element.title +'</option>');
 						});
+						{% set collection = app.request_stack.currentrequest.get('collectionId') %}
+						{% if collection is not null %}
+							$("#{{ form.collection.vars.id }}").val("{{ collection }}");
+						{% endif %}
 					}
 				});
 			});
 			
-			$("#{{ form.vars['id'] }}_collection").change(function()
+			$("#{{ form.biography.vars.id }}").change();
+			
+			$("#{{ form.collection.vars.id }}").change(function()
 			{
 				$.ajax({
 					type: "POST",
@@ -76,7 +82,7 @@
 					data: { "id" : $(this).val() },
 					success: function(data)
 					{
-						$("#{{ form.vars['id'] }}_releasedDate").val(data.releasedDate);
+						$("#{{ form.releasedDate.vars.id }}").val(data.releasedDate);
 						
 						if(data.releasedDate != "")
 							$('input#poem_unknownReleasedDate').attr('checked', false);
@@ -86,7 +92,9 @@
 				});
 			});
 			
-			$("#{{ form.vars['id'] }}_poeticform").change(function()
+			$("#{{ form.collection.vars.id }}").change();
+			
+			$("#{{ form.poeticform.vars.id }}").change(function()
 			{
 				$.ajax({
 					type: "POST",
@@ -106,7 +114,7 @@
 				});
 			});
 			
-			$("#{{ form.vars['id'] }}_poeticform").change();
+			$("#{{ form.poeticform.vars.id }}").change();
 			
 			$("select#{{ form.language.vars.id }}").change(function() {
 				var input = $(".container_{{ form.vars['id'] }}_biography > .input-group > input[type='hidden']");

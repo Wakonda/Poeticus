@@ -15,7 +15,7 @@
 		</tr>
 		<tr>
 			<th>{{ "admin.country.Flag"|trans }}</th>
-			<td><img src="{{ app.request.basepath }}/photo/country/{{ entity.flag }}" alt="" /></td>
+			<td><img src="{{ app.request_stack.currentrequest.basepath }}/photo/country/{{ entity.flag }}" alt="" /></td>
 		</tr>
 		<tr>
 			<th>{{ "admin.form.Language"|trans }}</th>

@@ -130,7 +130,7 @@ class PoeticusExtension extends \Twig_Extension
 	
 	public function getCodeByLanguage()
 	{
-		$locale = $this->app['request']->getLocale();
+		$locale = $this->app['request_stack']->getCurrentRequest();
 		
 		switch($locale)
 		{

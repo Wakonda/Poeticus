@@ -10,17 +10,17 @@
 		<meta name="robots" content="index,follow" />
 		{% endblock %}
 
-		<link rel="shortcut icon" href="{{ app.request.getUriForPath('/') }}photo/favicon.jpg">
-		<link rel="alternate" href="{{ app.request.getUriForPath('/') }}" hreflang="fr-fr" />
+		<link rel="shortcut icon" href="{{ app.request_stack.currentrequest.getUriForPath('/') }}photo/favicon.jpg">
+		<link rel="alternate" href="{{ app.request_stack.currentrequest.getUriForPath('/') }}" hreflang="fr-fr" />
 		<title>Poéticus - {% block head_title %}{% endblock %}</title>
-		<link rel="stylesheet" type="text/css" href="{{ app.request.basepath }}/css/style.css" media="screen" />
-		<link rel="stylesheet" type="text/css" href="{{ app.request.basepath }}/css/style_print.css" media="print" />
-		<link rel="stylesheet" type="text/css" href="{{ app.request.basepath }}/css/bootstrap-3.3.2-dist/css/bootstrap.min.css" media="screen" />
-		<link rel="stylesheet" type="text/css" href="{{ app.request.basepath }}/css/font-awesome/css/font-awesome.min.css" />
-		<link rel="stylesheet" type="text/css" href="{{ app.request.basepath }}/js/BackToTop/BackToTop.css" />
+		<link rel="stylesheet" type="text/css" href="{{ app.request_stack.currentrequest.basepath }}/css/style.css" media="screen" />
+		<link rel="stylesheet" type="text/css" href="{{ app.request_stack.currentrequest.basepath }}/css/style_print.css" media="print" />
+		<link rel="stylesheet" type="text/css" href="{{ app.request_stack.currentrequest.basepath }}/css/bootstrap-3.3.2-dist/css/bootstrap.min.css" media="screen" />
+		<link rel="stylesheet" type="text/css" href="{{ app.request_stack.currentrequest.basepath }}/css/font-awesome/css/font-awesome.min.css" />
+		<link rel="stylesheet" type="text/css" href="{{ app.request_stack.currentrequest.basepath }}/js/BackToTop/BackToTop.css" />
 		
-		<script src="{{ app.request.basepath }}/js/jquery.js"></script>
-		<script src="{{ app.request.basepath }}/js/cookiechoices/cookiechoices.js"></script>
+		<script src="{{ app.request_stack.currentrequest.basepath }}/js/jquery.js"></script>
+		<script src="{{ app.request_stack.currentrequest.basepath }}/js/cookiechoices/cookiechoices.js"></script>
 		<script type="text/javascript">
 			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -53,7 +53,7 @@
 				<hgroup id="title">
 					<div id="logo">
 						<a href="{{ path('index') }}" alt="">
-							<img src="{{ app.request.basepath }}/photo/favicon.jpg" alt="logo" />
+							<img src="{{ app.request_stack.currentrequest.basepath }}/photo/favicon.jpg" alt="logo" />
 							<span>Poéticus</span>
 						</a>
 					</div>
@@ -78,7 +78,7 @@
 				<aside id="sidebar-wrapper">
 					<nav class="sidebar">
 						<h1>{{ 'menu.left.RecentPoems'|trans }}</h1>
-						{{ render(app.request.baseUrl ~ '/last_poem') }}
+						{{ render(app.request_stack.currentrequest.baseUrl ~ '/last_poem') }}
 						<span class="follow_on_twitter"><a href="https://twitter.com/poeticus12" class="twitter-follow-button" data-show-count="false" data-lang="fr" data-size="large" data-dnt="true">Suivre @poeticus12</a>
 						<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script></span>
 					</nav>
@@ -97,7 +97,7 @@
 					</nav>
 					<nav class="sidebar">
 						<h1>{{ 'menu.left.Statistics'|trans }}</h1>
-						{{ render(app.request.baseUrl ~ '/stat_poem') }}
+						{{ render(app.request_stack.currentrequest.baseUrl ~ '/stat_poem') }}
 					</nav>
 
 					<nav class="sidebar">
@@ -121,9 +121,9 @@
 					
 					<nav class="sidebar">
 						<h1>{{ 'menu.left.Languages'|trans }}</h1>
-							<a href="{{ path('change_language', {'language':'fr'}) }}" title="Français"><img src="{{ app.request.basepath }}/photo/language/fr.png" alt="Fr" width="22" {{ (app.request.locale == "fr") ? 'class="selected_language"' : "" }}></a>
-							| <a href="{{ path('change_language', {'language':'it'}) }}" title="Italiano"><img src="{{ app.request.basepath }}/photo/language/it.png" alt="It" width="22" {{ (app.request.locale == "it") ? 'class="selected_language"' : "" }}></a>
-							| <a href="{{ path('change_language', {'language':'pt'}) }}" title="Português"><img src="{{ app.request.basepath }}/photo/language/pt.png" alt="Pt" width="22" {{ (app.request.locale == "pt") ? 'class="selected_language"' : "" }}></a>
+							<a href="{{ path('change_language', {'language':'fr'}) }}" title="Français"><img src="{{ app.request_stack.currentrequest.basepath }}/photo/language/fr.png" alt="Fr" width="22" {{ (app.request_stack.currentrequest.locale == "fr") ? 'class="selected_language"' : "" }}></a>
+							| <a href="{{ path('change_language', {'language':'it'}) }}" title="Italiano"><img src="{{ app.request_stack.currentrequest.basepath }}/photo/language/it.png" alt="It" width="22" {{ (app.request_stack.currentrequest.locale == "it") ? 'class="selected_language"' : "" }}></a>
+							| <a href="{{ path('change_language', {'language':'pt'}) }}" title="Português"><img src="{{ app.request_stack.currentrequest.basepath }}/photo/language/pt.png" alt="Pt" width="22" {{ (app.request_stack.currentrequest.locale == "pt") ? 'class="selected_language"' : "" }}></a>
 						</ul>
 					</nav>
 				</aside>
@@ -168,8 +168,8 @@
 			<!-- Footer Element Ends Here -->
 		</div>
 		<!-- Div Wrapper Element ends Here -->
-		<script src="{{ app.request.basepath }}/css/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
-		<script src="{{ app.request.basepath }}/js/BackToTop/BackToTop.js"></script>
+		<script src="{{ app.request_stack.currentrequest.basepath }}/css/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
+		<script src="{{ app.request_stack.currentrequest.basepath }}/js/BackToTop/BackToTop.js"></script>
 		<script>
 			// Resize "aside" and "article" tags
 			function resizeAsideArticle() {

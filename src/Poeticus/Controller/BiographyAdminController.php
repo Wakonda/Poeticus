@@ -155,7 +155,7 @@ class BiographyAdminController
 		$countryForms = $app['repository.country']->findAllForChoice();
 		$languageForms = $app['repository.language']->findAllForChoice();
 		
-		$language = $app['repository.language']->findOneByAbbreviation($app['request']->getLocale());
+		$language = $app['repository.language']->findOneByAbbreviation($app['request_stack']->getCurrentRequest()->getLocale());
 		$localeForms = $language->getId();
 
 		return $app['form.factory']->create(BiographyType::class, $entity, array("countries" => $countryForms, "languages" => $languageForms, "locale" => $localeForms));

@@ -152,6 +152,20 @@ contact:
         Email: "E-mail"
         Subject: "Assunto"
         Send: "Enviar"
+comment:
+    index:
+        Comments: "Comentários"
+    field:
+        Message: "Mensagem"
+        Send: "Enviar"
+        YouMustBeLoggedInToWriteAComment: "Você precisa estar logado para escrever um comentário"
+vote:
+    index:
+        Votes: "Votações"
+    field:
+        Error: "Erro"
+        YouMustBeLoggedInToVote: "Você deve estar logado para votar!"
+        YouHaveAlreadyVotedForThisPoem: "Você já votou neste poesia"
 version:
     index:
         Version: "Versão"
@@ -162,6 +176,9 @@ poem:
         Published: "Publicado"
         Deleted: "Suprimido"
         Draft: "Rascunho"
+    browsing:
+        Previous: "Precedente"
+        Next: "Seguinte"
 admin:
     index:
         Biography: "Biografia"
@@ -180,6 +197,7 @@ admin:
         GenerateSitemap: "Gerar o mapa do site"
         Yes: "Sim"
         No: "Não"
+        CurrentImage: "Foto atual"
     table:
         Title: "Título"
         Action: "Acção"
@@ -205,6 +223,8 @@ admin:
         UnknownDate: "Data desconhecida"
         Image: "Imagem"
         RapidCreation: "Rápida criação"
+        ForSameBiography: "para a mesmo autor"
+        ForSameCollection: "para a mesma coleção"
     biography:
         Title: "Título"
         Text: "Texto"

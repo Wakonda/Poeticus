@@ -73,14 +73,21 @@ class PoemAdminController
 		return $response;
 	}
 
-    public function newAction(Request $request, Application $app)
+    public function newAction(Request $request, Application $app, $biographyId, $collectionId)
     {
 		$entity = new Poem();
+
+		if(!empty($biographyId))
+			$entity->setBiography($biographyId);
+
+		if(!empty($collectionId))
+			$entity->setCollection($collectionId);
+
         $form = $this->createForm($app, $entity);
 
 		return $app['twig']->render('Poem/new.html.twig', array('form' => $form->createView()));
     }
-	
+
 	public function createAction(Request $request, Application $app)
 	{
 		$entity = new Poem();
@@ -97,7 +104,8 @@ class PoemAdminController
 				$form->get("photo")->addError(new FormError($translator->trans("This value should not be blank.", array(), "validators")));
 		}
 		else {
-			$form->get("text")->addError(new FormError($translator->trans("This value should not be blank.", array(), "validators")));
+			if($entity->getText() == null)
+				$form->get("text")->addError(new FormError($translator->trans("This value should not be blank.", array(), "validators")));
 		}
 		
 		$userForms = $app['repository.user']->findAllForChoice();
@@ -107,7 +115,7 @@ class PoemAdminController
 		
 		if($form->isValid())
 		{
-			if($poeticForm->getTypeContentPoem() == PoeticForm::IMAGETYPE) {
+			if(!empty($poeticForm) and $poeticForm->getTypeContentPoem() == PoeticForm::IMAGETYPE) {
 				$image = uniqid()."_".$entity->getPhoto()->getClientOriginalName();
 				$entity->getPhoto()->move("photo/poem/", $image);
 				$entity->setPhoto($image);
@@ -377,7 +385,7 @@ class PoemAdminController
 		$countryForms = $app['repository.country']->findAllForChoice();
 		$collectionForms = $app['repository.collection']->findAllForChoice();
 		$languageForms = $app['repository.language']->findAllForChoice();
-		$language = $app['repository.language']->findOneByAbbreviation($app['request']->getLocale());
+		$language = $app['repository.language']->findOneByAbbreviation($app['request_stack']->getCurrentRequest()->getLocale());
 		$localeForms = $language->getId();
 
 		return $app['form.factory']->create(PoemType::class, $entity, array('poeticForms' => $poeticForms, 'users' => $userForms, 'biographies' => $biographyForms, 'countries' => $countryForms, 'collections' => $collectionForms, 'languages' => $languageForms, "locale" => $localeForms));

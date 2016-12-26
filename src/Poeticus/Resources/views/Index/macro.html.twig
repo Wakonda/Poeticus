@@ -1,5 +1,5 @@
 {% macro currentImage(path, file) %}
-	<span class="underline bold">Photo actuelle :</span> {{ file }}
+	<span class="underline bold">{{ 'admin.index.CurrentImage'|trans }} :</span> {{ file }}
 	<a href="#" data-toggle="modal" data-target="#display_current_image"><i class="fa fa-file-image-o" aria-hidden="true"></i></a>
 
 	<!-- Modal -->
@@ -8,9 +8,9 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title" id="currentImageLabel">Photo actuelle</h4>
+					<h4 class="modal-title" id="currentImageLabel">{{ 'admin.index.CurrentImage'|trans }}</h4>
 				</div>
-				<p class="center">{{ (path~file)|max_size_image(app.request.basepath) }}</p>
+				<p class="center">{{ (path~file)|max_size_image(app.request_stack.currentrequest.basepath) }}</p>
 			</div>
 		</div>
 	</div>

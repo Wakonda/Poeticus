@@ -4,7 +4,7 @@
 {% block main_title %}Erreur {{ code }}{% endblock %}
 
 {% block script_additional %}
-	<script src="{{ app.request.basepath }}/js/jquery.qtip/jquery.qtip.min.js"></script>
+	<script src="{{ app.request_stack.currentrequest.basepath }}/js/jquery.qtip/jquery.qtip.min.js"></script>
 	<script type="text/javascript">
 		$(function() {
 			$("div#error_content").hide();
@@ -32,7 +32,7 @@
 {% endblock %}
 
 {% block main_content %}
-	<p class="center"><img src="{{ app.request.basepath }}/photo/error-page.jpg" alt="" /></p>
+	<p class="center"><img src="{{ app.request_stack.currentrequest.basepath }}/photo/error-page.jpg" alt="" /></p>
 	<br>
 	{% if code == "404" %}
 		<p>La page à laquelle vous souhaitez accéder n'existe pas (ou plus) !</p>

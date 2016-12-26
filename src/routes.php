@@ -355,7 +355,11 @@ $app->get('/admin/poem/index', 'controllers.poemadmin:indexAction')
 $app->get('/admin/poem/indexdatatables', 'controllers.poemadmin:indexDatatablesAction')
     ->bind('poemadmin_indexdatatables');
 
-$app->get('/admin/poem/new', 'controllers.poemadmin:newAction')
+$app->get('/admin/poem/new/{biographyId}/{collectionId}', 'controllers.poemadmin:newAction')
+	->assert('biographyId', '\d+')
+	->assert('collectionId', '\d+')
+	->value('biographyId', null)
+	->value('collectionId', null)
     ->bind('poemadmin_new');
 
 $app->post('/admin/poem/create', 'controllers.poemadmin:createAction')
