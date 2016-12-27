@@ -301,7 +301,7 @@ class PoemAdminController
 			$finalArray = array("releasedDate" => $entity->getReleasedDate());
 		}
 		else
-			$finalArray = array("releasedDate" => "");
+			$finalArray = array("releasedDate" => null);
 			
 		$response = new Response(json_encode($finalArray));
 		$response->headers->set('Content-Type', 'application/json');

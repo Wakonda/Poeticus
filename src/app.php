@@ -78,18 +78,15 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
 
 $app->before(function () use ($app) {
 	$request = $app['request_stack']->getCurrentRequest();
-	$locale = $app['locale'];
-    if ($locale = $request->get('lang') or $locale  = $request->getSession()->get('_locale')) {
+
+    if ($locale = $app['locale'] or $locale = $request->get('lang') or $locale = $request->getSession()->get('_locale')) {
 		$app['locale'] = $locale;
 		$app['translator']->setLocale($locale);
-		$request->setLocale($locale);
+		$request->getSession()->set('_locale', $locale);
+
+		if(!empty($request))
+			$request->setLocale($locale);
     }
-
-	$app['translator']->addLoader('xlf', new Symfony\Component\Translation\Loader\XliffFileLoader());
-	$app['translator']->addResource('xlf', realpath(__DIR__.'/../vendor/symfony/validator/Resources/translations/validators.pt.xlf'), 'pt', 'validators');
-	$app['translator']->addResource('xlf', realpath(__DIR__.'/../vendor/symfony/validator/Resources/translations/validators.it.xlf'), 'it', 'validators');
-	$app['translator']->addResource('xlf', realpath(__DIR__.'/../vendor/symfony/validator/Resources/translations/validators.fr.xlf'), 'fr', 'validators');
-
 });
 
 $app->boot();
@@ -241,6 +238,11 @@ $app["controllers.sendpoem"] = function($app) {
 
 $app["controllers.pageadmin"] = function($app) {
 	return new Poeticus\Controller\PageAdminController();
+};
+
+// Register Services
+$app['generic_function'] = function ($app) {
+    return new Poeticus\Service\GenericFunction($app);
 };
 
 // Form extension

@@ -18,7 +18,7 @@ class CommentController
 		$entity = new Comment();
         $form = $app['form.factory']->create(CommentType::class, $entity);
 		
-		$app['translator']->setLocale($request->getSession()->get("_locale"));
+		$app['generic_function']->setLocaleTwigRenderController();
 
         return $app['twig']->render('Comment/index.html.twig', array('poemId' => $poemId, 'form' => $form->createView()));
     }

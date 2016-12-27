@@ -121,9 +121,9 @@
 					
 					<nav class="sidebar">
 						<h1>{{ 'menu.left.Languages'|trans }}</h1>
-							<a href="{{ path('change_language', {'language':'fr'}) }}" title="Français"><img src="{{ app.request_stack.currentrequest.basepath }}/photo/language/fr.png" alt="Fr" width="22" {{ (app.request_stack.currentrequest.locale == "fr") ? 'class="selected_language"' : "" }}></a>
-							| <a href="{{ path('change_language', {'language':'it'}) }}" title="Italiano"><img src="{{ app.request_stack.currentrequest.basepath }}/photo/language/it.png" alt="It" width="22" {{ (app.request_stack.currentrequest.locale == "it") ? 'class="selected_language"' : "" }}></a>
-							| <a href="{{ path('change_language', {'language':'pt'}) }}" title="Português"><img src="{{ app.request_stack.currentrequest.basepath }}/photo/language/pt.png" alt="Pt" width="22" {{ (app.request_stack.currentrequest.locale == "pt") ? 'class="selected_language"' : "" }}></a>
+							<a href="{{ path('change_language', {'language':'fr'}) }}" title="Français"><img src="{{ app.request_stack.currentrequest.basepath }}/photo/language/fr.png" alt="Fr" width="22" {{ (app.request_stack.currentrequest.session.get('_locale') == "fr") ? 'class="selected_language"' : "" }}></a>
+							| <a href="{{ path('change_language', {'language':'it'}) }}" title="Italiano"><img src="{{ app.request_stack.currentrequest.basepath }}/photo/language/it.png" alt="It" width="22" {{ (app.request_stack.currentrequest.session.get('_locale') == "it") ? 'class="selected_language"' : "" }}></a>
+							| <a href="{{ path('change_language', {'language':'pt'}) }}" title="Português"><img src="{{ app.request_stack.currentrequest.basepath }}/photo/language/pt.png" alt="Pt" width="22" {{ (app.request_stack.currentrequest.session.get('_locale') == "pt") ? 'class="selected_language"' : "" }}></a>
 						</ul>
 					</nav>
 				</aside>

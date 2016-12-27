@@ -61,7 +61,7 @@
 					{
 						$("#{{ form.vars['id'] }}_releasedDate").val(data.releasedDate);
 						
-						if(data.releasedDate != "")
+						if(data.releasedDate != null)
 							$('input#{{ form.vars["id"] }}_unknownReleasedDate').prop('checked', false);
 						else
 							$('input#{{ form.vars["id"] }}_unknownReleasedDate').prop('checked', true);

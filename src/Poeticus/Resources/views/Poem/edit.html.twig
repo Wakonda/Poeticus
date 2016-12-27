@@ -84,7 +84,7 @@
 					{
 						$("#{{ form.releasedDate.vars.id }}").val(data.releasedDate);
 						
-						if(data.releasedDate != "")
+						if(data.releasedDate != null)
 							$('input#poem_unknownReleasedDate').attr('checked', false);
 						else
 							$('input#poem_unknownReleasedDate').attr('checked', true);
