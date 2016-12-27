@@ -50,11 +50,11 @@ class PoeticusExtension extends \Twig_Extension
         return var_dump($object);
     }
 	
-	public function text_month($monthInt)
+	public function text_month($month, $year)
 	{
-		$arrayMonth = array("janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre");
-		
-		return $arrayMonth[intval($monthInt) - 1];
+		$locale = $this->app['generic_function']->getLocaleTwigRenderController();
+		$arrayMonth = $this->formatDateByLocale();
+		return $arrayMonth[$locale]["months"][intval($month) - 1].(!empty($year) ? $arrayMonth[$locale]["separator"].$year : "");
 	}
 	
 	public function maxSizeImage($img, $basePath, array $options = null, $isPDF = false)
@@ -82,13 +82,16 @@ class PoeticusExtension extends \Twig_Extension
 	
 	public function dateLetter($date)
 	{
-		$arrayMonth = array("janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre");
+		if(is_string($date))
+			$date = new \DateTime($date);
 		
-		$month = $arrayMonth[$date->format("n") - 1];
+		$locale = $this->app['generic_function']->getLocaleTwigRenderController();
+		$arrayMonth = $this->formatDateByLocale();
 		
-		$day = ($date->format("j") == 1) ? $date->format("j")."<sup>er</sup>" : $date->format("j");
+		$month = $arrayMonth[$locale]["months"][$date->format("n") - 1];
+		$day = ($date->format("j") == 1) ? $date->format("j").((!empty($arrayMonth[$locale]["sup"])) ? "<sup>".$arrayMonth[$locale]["sup"]."</sup>" : "") : $date->format("j");
 		
-		return $day." ".$month." ".$date->format("Y");
+		return $day.$arrayMonth[$locale]["separator"].$month.$arrayMonth[$locale]["separator"].$date->format("Y");
 	}
 
 	public function removeControlCharacters($string)
@@ -130,19 +133,26 @@ class PoeticusExtension extends \Twig_Extension
 	
 	public function getCodeByLanguage()
 	{
-		$locale = $this->app['request_stack']->getCurrentRequest();
+		$locale = $this->app['generic_function']->getLocaleTwigRenderController();
 		
 		switch($locale)
 		{
 			case "it":
 				return "it";
-				break;
 			case "pt":
 				return "pt_PT";
-				break;
 			default:
 				return "fr_FR";
-				break;
 		}
+	}
+	
+	private function formatDateByLocale()
+	{
+		$arrayMonth = array();
+		$arrayMonth['fr'] = array("sup" => "er", "separator" => " ", "months" => array("janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"));
+		$arrayMonth['it'] = array("sup" => "°", "separator" => " ", "months" => array("gennaio", "febbraio", "marzo", "aprile", "maggio", "guigno", "luglio", "agosto", "settembre", "ottobre", "novembre", "dicembre"));
+		$arrayMonth['pt'] = array("sup" => null, "separator" => " de ", "months" => array("janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"));
+	
+		return $arrayMonth;
 	}
 }

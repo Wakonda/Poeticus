@@ -272,7 +272,8 @@ class UserController implements ControllerProviderInterface
 
 	private function createForm($app, $entity, $ifEdit)
 	{
-		$countryForms = $app['repository.country']->findAllForChoice();
+		$language = $app['repository.language']->findOneByAbbreviation($app['generic_function']->getLocaleTwigRenderController());
+		$countryForms = $app['repository.country']->findAllForChoice($language);
 		$form = $app['form.factory']->create(UserType::class, $entity, array('countries' => $countryForms, 'edit' => $ifEdit));
 		
 		return $form;

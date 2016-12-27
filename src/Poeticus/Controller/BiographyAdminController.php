@@ -152,11 +152,11 @@ class BiographyAdminController
 	
 	private function createForm($app, $entity)
 	{
-		$countryForms = $app['repository.country']->findAllForChoice();
-		$languageForms = $app['repository.language']->findAllForChoice();
-		
-		$language = $app['repository.language']->findOneByAbbreviation($app['request_stack']->getCurrentRequest()->getLocale());
+		$language = $app['repository.language']->findOneByAbbreviation($app['generic_function']->getLocaleTwigRenderController());
 		$localeForms = $language->getId();
+
+		$countryForms = $app['repository.country']->findAllForChoice($localeForms);
+		$languageForms = $app['repository.language']->findAllForChoice();
 
 		return $app['form.factory']->create(BiographyType::class, $entity, array("countries" => $countryForms, "languages" => $languageForms, "locale" => $localeForms));
 	}

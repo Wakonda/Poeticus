@@ -31,14 +31,10 @@
 						
 						for (var i = 0; i < data.length; i++) {
 							$("select#{{ form.country.vars.id }}").append('<option value="'+ data[i].id +'">'+ data[i].name +'</option>');
-							console.log(data[i]);
 						}
 					}
 				});
-
 			});
-			
-			$("select#{{ form.language.vars.id }}").change();
 		});
 	</script>
 {% endblock %}

@@ -151,12 +151,12 @@ class CollectionAdminController
 	
 	private function createForm($app, $entity)
 	{
-		$biographyForms = $app['repository.biography']->findAllForChoice();
-		$languageForms = $app['repository.language']->findAllForChoice();
-
-		$language = $app['repository.language']->findOneByAbbreviation($app['request_stack']->getCurrentRequest()->getLocale());
+		$language = $app['repository.language']->findOneByAbbreviation($app['generic_function']->getLocaleTwigRenderController());
 		$localeForms = $language->getId();
 		
+		$biographyForms = $app['repository.biography']->findAllForChoice($localeForms);
+		$languageForms = $app['repository.language']->findAllForChoice();
+
 		return $app['form.factory']->create(CollectionType::class, $entity, array('biographies' => $biographyForms, 'languages' => $languageForms, "locale" => $localeForms));
 	}
 

@@ -78,15 +78,14 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
 
 $app->before(function () use ($app) {
 	$request = $app['request_stack']->getCurrentRequest();
+	$locale = (!empty($request) and !empty($request->getSession()->get('_locale'))) ? $request->getSession()->get('_locale') : $app['locale'];
 
-    if ($locale = $app['locale'] or $locale = $request->get('lang') or $locale = $request->getSession()->get('_locale')) {
-		$app['locale'] = $locale;
-		$app['translator']->setLocale($locale);
-		$request->getSession()->set('_locale', $locale);
+	$app['locale'] = $locale;
+	$app['translator']->setLocale($locale);
+	$request->getSession()->set('_locale', $locale);
 
-		if(!empty($request))
-			$request->setLocale($locale);
-    }
+	if(!empty($request))
+		$request->setLocale($locale);
 });
 
 $app->boot();

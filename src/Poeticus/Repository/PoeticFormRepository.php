@@ -92,12 +92,15 @@ class PoeticFormRepository extends GenericRepository
 		return $entitiesArray;
 	}
 	
-	public function findAllForChoice()
+	public function findAllForChoice($locale)
 	{
 		$qb = $this->db->createQueryBuilder();
 		
-		$qb->select("id, title")
+		$qb->select("pf.id AS id, pf.title AS title")
 		   ->from("poeticform", "pf")
+		   ->leftjoin("pf", "language", "la", "pf.language_id = la.id")
+		   ->where('la.id = :locale')
+		   ->setParameter('locale', $locale)
 		   ->orderBy("title", "ASC");
 
 		$results = $qb->execute()->fetchAll();
