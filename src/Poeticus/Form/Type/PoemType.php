@@ -21,8 +21,6 @@ class PoemType extends AbstractType
     {
 		$poeticFormArray = $options["poeticForms"];
 		$userArray = $options["users"];
-		$biographyArray = $options["biographies"];
-		$countryArray = $options["countries"];
 		$collectionArray = $options["collections"];
 		$languageArray = $options["languages"];
 		$locale = $options["locale"];
@@ -68,14 +66,6 @@ class PoemType extends AbstractType
             ->add('biography', TextType::class, array(
                 'label' => 'admin.poem.Biography'
             ))
-			->add('country', ChoiceType::class, array(
-				'label' => 'admin.poem.Country', 
-				'multiple' => false, 
-				'expanded' => false,
-				'constraints' => array(new Assert\NotBlank()),
-				'placeholder' => 'main.field.ChooseAnOption',
-				'choices' => $countryArray
-			))
 			->add('collection', ChoiceType::class, array(
 				'label' => 'admin.poem.Collection', 
 				'multiple' => false,
@@ -103,8 +93,6 @@ class PoemType extends AbstractType
 	public function configureOptions(OptionsResolver $resolver)
 	{
 		$resolver->setDefaults(array(
-			"biographies" => null,
-			"countries" => null,
 			"collections" => null,
 			"poeticForms" => null,
 			"users" => null,

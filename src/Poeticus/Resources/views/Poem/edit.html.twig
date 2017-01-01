@@ -5,15 +5,23 @@
 
 {% block style_additional %}
 	<link rel="stylesheet" type="text/css" href="{{ app.request_stack.currentrequest.basepath }}/js/jquery.ajax-combobox-master/dist/jquery.ajax-combobox.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="{{ app.request_stack.currentrequest.basepath }}/js/redactor/css/redactor.css" />
 {% endblock %}
 
 {% block script_additional %}
 	<script src="{{ app.request_stack.currentrequest.basepath }}/js/jquery.ajax-combobox-master/dist/jquery.ajax-combobox.js"></script>
 	<script src="{{ app.request_stack.currentrequest.basepath }}/js/combobox.js"></script>
+	<script src="{{ app.request_stack.currentrequest.basepath }}/js/redactor/redactor.min.js"></script>
 	<script type="text/javascript">
 		$(function()
 		{
-			setComboboxEdit('{{ path("poemadmin_getbiographiesbyajax") }}', 'biography', "#{{ form.vars['id'] }}_biography");
+			$('.redactor').redactor({
+				autoresize: false,
+				minHeight: 300,
+				buttons: ['html']
+			});
+
+			setComboboxEdit('{{ path("poemadmin_getbiographiesbyajax") }}', 'biography', "{{ form.biography.vars.value }}");
 		
 			$('#poem_authorType').change(function()
 			{
@@ -60,7 +68,6 @@
 					data: { "id" : $(this).val() },
 					success: function(data)
 					{
-						$("#{{ form.country.vars.id }}").val(data.country);
 						var collections = data.collections;
 						$("#{{ form.collection.vars.id }} option").remove();
 						$("#{{ form.collection.vars.id }}").append('<option value="">{{ 'main.field.ChooseAnOption'|trans }}</option>');
@@ -68,8 +75,9 @@
 						{
 							$("#{{ form.collection.vars.id }}").append('<option value="'+ element.id +'">'+ element.title +'</option>');
 						});
-						if("{{ entity.collection }}" != "")
-							$("#{{ form.collection.vars.id }}").val("{{ entity.collection }}");
+						{% if entity.collection is not null %}
+							$("#{{ form.collection.vars.id }}").val("{{ entity.collection.id }}");
+						{% endif %}
 					}
 				});
 			});
@@ -121,7 +129,8 @@
 				$(input[0]).addClass('combobox full_width form-control').attr("type", "text").val("");
 				$(".container_{{ form.biography.vars.id }}").parent().append(input[0]);
 				$(".container_{{ form.biography.vars.id }}").remove();
-				setComboboxEdit('{{ path("poemadmin_getbiographiesbyajax") }}?locale=' + $(this).val(), 'biography', "#{{ form.biography.vars.id }}");
+
+				setComboboxEdit('{{ path("poemadmin_getbiographiesbyajax") }}?locale=' + $(this).val(), 'biography', "{{ form.biography.vars.value }}");
 			
 				$.ajax({
 					type: "GET",
@@ -167,7 +176,7 @@
 		</tr>
 		<tr id="text_container">
 			<th>{{ form_label(form.text) }}</th>
-			<td><div class="errors">{{ form_errors(form.text) }}</div>{{ form_widget(form.text, { 'attr' : { 'class' : 'text form-control' }}) }}</td>
+			<td><div class="errors">{{ form_errors(form.text) }}</div>{{ form_widget(form.text, { 'attr' : { 'class' : 'text form-control redactor' }}) }}</td>
 		</tr>
 		<tr>
 			<th>{{ form_label(form.authorType) }}</th>
@@ -182,8 +191,8 @@
 			<td><div class="errors">{{ form_errors(form.biography) }}</div>{{ form_widget(form.biography, {'attr':{'class':'full_width combobox'}}) }}</td>
 		</tr>
 		<tr>
-			<th>{{ form_label(form.country) }}</th>
-			<td><div class="errors">{{ form_errors(form.country) }}</div>{{ form_widget(form.country, {'attr':{'class':'full_width form-control'}}) }}</td>
+			<th>{{ 'admin.poem.Country'|trans }}</th>
+			<td><img src="{{ app.request_stack.currentrequest.basepath }}/photo/country/{{ entity.country.flag }}" class="flag" /> {{ entity.country.title }}</td>
 		</tr>
 		<tr>
 			<th>{{ form_label(form.collection) }}</th>

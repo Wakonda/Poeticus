@@ -17,7 +17,6 @@ class PoemFastType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-		$biographyArray = $options['biographies'];
 		$countryArray = $options['countries'];
 		$collectionArray = $options['collections'];
 
@@ -36,14 +35,6 @@ class PoemFastType extends AbstractType
             ->add('biography', TextType::class, array(
                 'label' => 'Biographie'
             ))
-			/*->add('biography', ChoiceType::class, array(
-											'label' => 'Biographie', 
-											'multiple' => false, 
-											'expanded' => false,
-											'placeholder' => 'main.field.ChooseAnOption',
-											'constraints' => array(new Assert\NotBlank()),
-										    'choices' => $biographyArray
-											))*/
 			->add('country', ChoiceType::class, array(
 											'label' => 'Pays', 
 											'multiple' => false, 
@@ -71,7 +62,6 @@ class PoemFastType extends AbstractType
 	public function configureOptions(OptionsResolver $resolver)
 	{
 		$resolver->setDefaults(array(
-			"biographies" => null,
 			"countries" => null,
 			"collections" => null
 		));

@@ -5,14 +5,22 @@
 
 {% block style_additional %}
 	<link rel="stylesheet" type="text/css" href="{{ app.request_stack.currentrequest.basepath }}/js/jquery.ajax-combobox-master/dist/jquery.ajax-combobox.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="{{ app.request_stack.currentrequest.basepath }}/js/redactor/css/redactor.css" />
 {% endblock %}
 
 {% block script_additional %}
 	<script src="{{ app.request_stack.currentrequest.basepath }}/js/jquery.ajax-combobox-master/dist/jquery.ajax-combobox.js"></script>
 	<script src="{{ app.request_stack.currentrequest.basepath }}/js/combobox.js"></script>
+	<script src="{{ app.request_stack.currentrequest.basepath }}/js/redactor/redactor.min.js"></script>
 	<script type="text/javascript">
 		$(function()
 		{
+			$('.redactor').redactor({
+				autoresize: false,
+				minHeight: 300,
+				buttons: ['html']
+			});
+
 			$('#poem_authorType').change(function()
 			{
 				if($(this).val() == "user")
@@ -54,7 +62,11 @@
 					data: { "id" : $(this).val() },
 					success: function(data)
 					{
-						$("#{{ form.vars['id'] }}_country").val(data.country);
+						if(data.country != "")
+							$("td.poem-country").html('<img src="{{ app.request_stack.currentrequest.basepath }}/photo/country/'+ data.country.flag +'" class="flag" />' + ' ' + data.country.title);
+						else
+							$("td.poem-country").html("-");
+						console.log(data.country);
 
 						var collections = data.collections;
 
@@ -182,8 +194,8 @@
 			<td><div class="errors">{{ form_errors(form.biography) }}</div>{{ form_widget(form.biography, {'attr':{'class':'full_width combobox'}}) }}</td>
 		</tr>
 		<tr>
-			<th>{{ form_label(form.country) }}</th>
-			<td><div class="errors">{{ form_errors(form.country) }}</div>{{ form_widget(form.country, {'attr':{'class':'full_width form-control'}}) }}</td>
+			<th>{{ 'admin.poem.Country'|trans }}</th>
+			<td class="poem-country">-</td>
 		</tr>
 		<tr>
 			<th>{{ form_label(form.collection) }}</th>

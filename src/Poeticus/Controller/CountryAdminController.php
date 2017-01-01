@@ -90,7 +90,7 @@ class CountryAdminController
 		
 		if($form->isValid())
 		{
-			$image = uniqid()."_".$entity->getFlag()->getClientOriginalName();
+			$image = $app['generic_function']->getUniqCleanNameForFile($entity->getFlag());
 			$entity->getFlag()->move("photo/country/", $image);
 			$entity->setFlag($image);
 			$id = $app['repository.country']->save($entity);
@@ -129,7 +129,7 @@ class CountryAdminController
 		{
 			if(!is_null($entity->getFlag()))
 			{
-				$image = uniqid()."_".$entity->getFlag()->getClientOriginalName();
+				$image = $app['generic_function']->getUniqCleanNameForFile($entity->getFlag());
 				$entity->getFlag()->move("photo/country/", $image);
 			}
 			else

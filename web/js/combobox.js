@@ -1,4 +1,4 @@
-function setComboboxEdit(path, table, field)
+function setComboboxEdit(path, table, val)
 {
 	$('.combobox').ajaxComboBox(
 		path,
@@ -8,7 +8,7 @@ function setComboboxEdit(path, table, field)
 			per_page: 20,
 			navi_num: 10,
 			no_image: true,
-			init_record: $(field).val()
+			init_record: val
 		}
 	).bind('foo', function(e, is_enter_key) {
 		if(!is_enter_key) {

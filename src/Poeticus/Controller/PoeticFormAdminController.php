@@ -90,7 +90,7 @@ class PoeticFormAdminController
 		
 		if($form->isValid())
 		{
-			$image = uniqid()."_".$entity->getImage()->getClientOriginalName();
+			$image = $app['generic_function']->getUniqCleanNameForFile($entity->getImage());
 			$entity->getImage()->move("photo/poeticform/", $image);
 			$entity->setImage($image);
 			$id = $app['repository.poeticform']->save($entity);
@@ -129,7 +129,7 @@ class PoeticFormAdminController
 		{
 			if(!is_null($entity->getImage()))
 			{
-				$image = uniqid()."_".$entity->getImage()->getClientOriginalName();
+				$image = $app['generic_function']->getUniqCleanNameForFile($entity->getImage());
 				$entity->getImage()->move("photo/poeticform/", $image);
 			}
 			else

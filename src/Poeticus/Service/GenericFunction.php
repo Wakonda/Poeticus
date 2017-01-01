@@ -10,6 +10,12 @@ class GenericFunction
 		$this->app = $app;
 	}
 	
+	public function getUniqCleanNameForFile($file)
+	{
+		$file = preg_replace('/[^A-Za-z0-9 _\-.]/', '', $file->getClientOriginalName());
+		return uniqid()."_".$file;
+	}
+	
 	public function setLocaleTwigRenderController()
 	{
 		$request = $this->app['request_stack']->getCurrentRequest();

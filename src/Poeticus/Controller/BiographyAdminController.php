@@ -92,7 +92,7 @@ class BiographyAdminController
 
 		if($form->isValid())
 		{
-			$image = uniqid()."_".$entity->getPhoto()->getClientOriginalName();
+			$image = $app['generic_function']->getUniqCleanNameForFile($entity->getPhoto());
 			$entity->getPhoto()->move("photo/biography/", $image);
 			$entity->setPhoto($image);
 			$id = $app['repository.biography']->save($entity);
@@ -133,7 +133,7 @@ class BiographyAdminController
 		{
 			if(!is_null($entity->getPhoto()))
 			{
-				$image = uniqid()."_".$entity->getPhoto()->getClientOriginalName();
+				$image = $app['generic_function']->getUniqCleanNameForFile($entity->getPhoto());
 				$entity->getPhoto()->move("photo/biography/", $image);
 			}
 			else

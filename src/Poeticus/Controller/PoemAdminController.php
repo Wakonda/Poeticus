@@ -116,12 +116,12 @@ class PoemAdminController
 		if($form->isValid())
 		{
 			if(!empty($poeticForm) and $poeticForm->getTypeContentPoem() == PoeticForm::IMAGETYPE) {
-				$image = uniqid()."_".$entity->getPhoto()->getClientOriginalName();
+				$image = $app['generic_function']->getUniqCleanNameForFile($entity->getPhoto());
 				$entity->getPhoto()->move("photo/poem/", $image);
 				$entity->setPhoto($image);
 			}
-			
-			$entity->setText('<p>'.nl2br($entity->getText()).'</p>');
+
+			$entity->setCountry($app['repository.biography']->find($entity->getBiography())->getCountry());
 			$id = $app['repository.poem']->save($entity);
 
 			$redirect = $app['url_generator']->generate('poemadmin_show', array('id' => $id));
@@ -141,12 +141,9 @@ class PoemAdminController
 	
 	public function editAction(Request $request, Application $app, $id)
 	{
-		$entity = $app['repository.poem']->find($id);
-		
-		$text = str_ireplace(array('<br>','<br/>','<br />'),"\r\n", $entity->getText());
-		$entity->setText(strip_tags($text));
-		$form = $this->createForm($app, $entity);
-	
+		$form = $this->createForm($app, $app['repository.poem']->find($id));
+		$entity = $app['repository.poem']->find($id, true);
+
 		return $app['twig']->render('Poem/edit.html.twig', array('form' => $form->createView(), 'entity' => $entity));
 	}
 
@@ -163,7 +160,12 @@ class PoemAdminController
 		
 		if($form->isValid())
 		{
-			$entity->setText('<p>'.nl2br($entity->getText()).'</p>');
+			if(!empty($poeticForm) and $poeticForm->getTypeContentPoem() == PoeticForm::IMAGETYPE and !is_null($entity->getPhoto())) {
+				$image = $app['generic_function']->getUniqCleanNameForFile($entity->getPhoto());
+				$entity->getPhoto()->move("photo/poem/", $image);
+				$entity->setPhoto($image);
+			}
+
 			$id = $app['repository.poem']->save($entity, $id);
 
 			$redirect = $app['url_generator']->generate('poemadmin_show', array('id' => $id));
@@ -182,7 +184,7 @@ class PoemAdminController
 		$countryForms = $app['repository.country']->findAllForChoice($app['generic_function']->getLocaleTwigRenderController());
 		$collectionForms = $app['repository.collection']->findAllForChoice($app['generic_function']->getLocaleTwigRenderController());
 		
-		$form = $app['form.factory']->create(new PoemFastType($biographyForms, $countryForms, $collectionForms), $entity);
+		$form = $app['form.factory']->create(PoemFastType::class, $entity, array('countries' => $countryForms, 'collections' => $collectionForms));
 	
 		return $app['twig']->render('Poem/fast.html.twig', array('form' => $form->createView(), 'entity' => $entity));
 	}
@@ -194,7 +196,7 @@ class PoemAdminController
 		$countryForms = $app['repository.country']->findAllForChoice($app['generic_function']->getLocaleTwigRenderController());
 		$collectionForms = $app['repository.collection']->findAllForChoice($app['generic_function']->getLocaleTwigRenderController());
 		
-		$form = $app['form.factory']->create(new PoemFastType($biographyForms, $countryForms, $collectionForms), $entity);
+		$form = $app['form.factory']->create(PoemFastType::class, $entity, array('countries' => $countryForms, 'collections' => $collectionForms));
 	
 		$form->handleRequest($request);
 		
@@ -275,17 +277,14 @@ class PoemAdminController
 			}
 
 			$country = $app['repository.country']->find($entity->getCountry());
-			
-			if(empty($country))
-				$countryText = null;
-			else
-				$countryText = $country->getId();
+
+			$countryText = (empty($country)) ? null : array('title' => $country->getTitle(), 'flag' => $country->getFlag());
 				
 			$finalArray = array("collections" => $collectionArray, "country" => $countryText);
 		}
 		else
 			$finalArray = array("collections" => "", "country" => "");
-// die(var_dump($finalArray));			
+		
 		$response = new Response(json_encode($finalArray));
 		$response->headers->set('Content-Type', 'application/json');
 		return $response;
@@ -381,14 +380,12 @@ class PoemAdminController
 	{
 		$poeticForms = $app['repository.poeticform']->findAllForChoice($app['generic_function']->getLocaleTwigRenderController());
 		$userForms = $app['repository.user']->findAllForChoice();
-		$biographyForms = $app['repository.biography']->findAllForChoice($app['generic_function']->getLocaleTwigRenderController());
-		$countryForms = $app['repository.country']->findAllForChoice($app['generic_function']->getLocaleTwigRenderController());
 		$collectionForms = $app['repository.collection']->findAllForChoice($app['generic_function']->getLocaleTwigRenderController());
 		$languageForms = $app['repository.language']->findAllForChoice();
 		$language = $app['repository.language']->findOneByAbbreviation($app['generic_function']->getLocaleTwigRenderController());
 		$localeForms = $language->getId();
 
-		return $app['form.factory']->create(PoemType::class, $entity, array('poeticForms' => $poeticForms, 'users' => $userForms, 'biographies' => $biographyForms, 'countries' => $countryForms, 'collections' => $collectionForms, 'languages' => $languageForms, "locale" => $localeForms));
+		return $app['form.factory']->create(PoemType::class, $entity, array('poeticForms' => $poeticForms, 'users' => $userForms, 'collections' => $collectionForms, 'languages' => $languageForms, "locale" => $localeForms));
 	}
 
 

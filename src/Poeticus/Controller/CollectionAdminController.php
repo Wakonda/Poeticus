@@ -91,7 +91,7 @@ class CollectionAdminController
 
 		if($form->isValid())
 		{
-			$image = uniqid()."_".$entity->getImage()->getClientOriginalName();
+			$image = $app['generic_function']->getUniqCleanNameForFile($entity->getImage());
 			$entity->getImage()->move("photo/collection/", $image);
 			$entity->setImage($image);
 			$id = $app['repository.collection']->save($entity);
@@ -132,7 +132,7 @@ class CollectionAdminController
 		{
 			if(!is_null($entity->getImage()))
 			{
-				$image = uniqid()."_".$entity->getImage()->getClientOriginalName();
+				$image = $app['generic_function']->getUniqCleanNameForFile($entity->getImage());
 				$entity->getImage()->move("photo/collection/", $image);
 			}
 			else
