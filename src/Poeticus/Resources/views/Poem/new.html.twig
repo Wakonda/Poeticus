@@ -54,19 +54,18 @@
 			});
 			$("input#poem_releasedDate").keyup();
 			
-			$(document).on('change', "#{{ form.biography.vars.id }}", function()
+			function changeBiography(val)
 			{
 				$.ajax({
 					type: "POST",
 					url: "{{ path('list_selected_biography') }}",
-					data: { "id" : $(this).val() },
+					data: { "id" : val },
 					success: function(data)
 					{
 						if(data.country != "")
 							$("td.poem-country").html('<img src="{{ app.request_stack.currentrequest.basepath }}/photo/country/'+ data.country.flag +'" class="flag" />' + ' ' + data.country.title);
 						else
 							$("td.poem-country").html("-");
-						console.log(data.country);
 
 						var collections = data.collections;
 
@@ -82,10 +81,8 @@
 						{% endif %}
 					}
 				});
-			});
-			
-			$("#{{ form.biography.vars.id }}").change();
-			
+			}
+
 			$("#{{ form.collection.vars.id }}").change(function()
 			{
 				$.ajax({
@@ -133,7 +130,7 @@
 				$(input[0]).addClass('combobox full_width form-control').attr("type", "text").val("");
 				$(".container_{{ form.vars['id'] }}_biography").parent().append(input[0]);
 				$(".container_{{ form.vars['id'] }}_biography").remove();
-				setComboboxNew('{{ path("poemadmin_getbiographiesbyajax") }}?locale=' + $(this).val(), 'biography', "#{{ form.vars['id'] }}_biography");
+				setComboboxNew('{{ path("poemadmin_getbiographiesbyajax") }}?locale=' + $(this).val(), 'biography', "#{{ form.biography.vars.id }}", changeBiography);
 			
 				$.ajax({
 					type: "GET",
@@ -179,7 +176,7 @@
 		</tr>
 		<tr id="text_container">
 			<th>{{ form_label(form.text) }}</th>
-			<td><div class="errors">{{ form_errors(form.text) }}</div>{{ form_widget(form.text, { 'attr' : { 'class' : 'text form-control' }}) }}</td>
+			<td><div class="errors">{{ form_errors(form.text) }}</div>{{ form_widget(form.text, { 'attr' : { 'class' : 'text form-control redactor' }}) }}</td>
 		</tr>
 		<tr>
 			<th>{{ form_label(form.authorType) }}</th>

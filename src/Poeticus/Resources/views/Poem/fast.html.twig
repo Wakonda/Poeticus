@@ -13,7 +13,7 @@
 	<script type="text/javascript">
 		$(function()
 		{
-			setComboboxNew('{{ path("poemadmin_getbiographiesbyajax") }}', 'biography', "#{{ form.vars['id'] }}_biography");
+			//setComboboxEdit('{{ path("poemadmin_getbiographiesbyajax") }}', 'biography', "#{{ form.biography.vars.id }}", "{{ form.biography.vars.value }}", changeBiography);
 		
 			$("input#poemfast_unknownReleasedDate").click(function()
 			{
@@ -31,15 +31,19 @@
 			});
 			$("input#poemfast_releasedDate").keyup();
 			
-			$("#{{ form.vars['id'] }}_biography").change(function()
+			function changeBiography(val)
 			{
 				$.ajax({
 					type: "POST",
 					url: "{{ path('list_selected_biography') }}",
-					data: { "id" : $(this).val() },
+					data: { "id" : val },
 					success: function(data)
 					{
-						$("#{{ form.vars['id'] }}_country").val(data.country);
+						if(data.country != "")
+							$("td.poem-country").html('<img src="{{ app.request_stack.currentrequest.basepath }}/photo/country/'+ data.country.flag +'" class="flag" />' + ' ' + data.country.title);
+						else
+							$("td.poem-country").html("-");
+
 						var collections = data.collections;
 						$("#{{form.vars['id'] }}_collection option").remove();
 						$("#{{form.vars['id'] }}_collection").append('<option value="">{{ 'main.field.ChooseAnOption'|trans }}</option>');
@@ -49,7 +53,7 @@
 						});
 					}
 				});
-			});
+			}
 			
 			$("#{{ form.vars['id'] }}_collection").change(function()
 			{
@@ -68,6 +72,16 @@
 					}
 				});
 			});
+			
+			$("select#{{ form.language.vars.id }}").change(function() {
+				var input = $(".container_{{ form.vars['id'] }}_biography > .input-group > input[type='hidden']");
+				$(input[0]).addClass('combobox full_width form-control').attr("type", "text").val("");
+				$(".container_{{ form.vars['id'] }}_biography").parent().append(input[0]);
+				$(".container_{{ form.vars['id'] }}_biography").remove();
+				setComboboxNew('{{ path("poemadmin_getbiographiesbyajax") }}?locale=' + $(this).val(), 'biography', "#{{ form.biography.vars.id }}", changeBiography);
+			});
+			
+			$("select#{{ form.language.vars.id }}").change();
 		});
 	</script>
 {% endblock %}
@@ -77,6 +91,10 @@
 	<form action="{{ path('poemadmin_addfast') }}" method="post" novalidate>
 		<table class="form_grid">
 			<tr>
+				<th>{{ form_label(form.language) }}</th>
+				<td><div class="errors">{{ form_errors(form.language) }}</div>{{ form_widget(form.language, {'attr':{'class':'full_width form-control'}}) }}</td>
+			</tr>
+			<tr>
 				<th>{{ form_label(form.url) }}</th>
 				<td><div class="errors">{{ form_errors(form.url) }}</div>{{ form_widget(form.url, {'attr':{'class':'full_width form-control'}}) }}</td>
 			</tr>
@@ -85,8 +103,8 @@
 				<td><div class="errors">{{ form_errors(form.biography) }}</div>{{ form_widget(form.biography, {'attr':{'class':'full_width combobox'}}) }}</td>
 			</tr>
 			<tr>
-				<th>{{ form_label(form.country) }}</th>
-				<td><div class="errors">{{ form_errors(form.country) }}</div>{{ form_widget(form.country, {'attr':{'class':'full_width form-control'}}) }}</td>
+				<th>{{ 'admin.poem.Country'|trans }}</th>
+				<td class="poem-country">-</td>
 			</tr>
 			<tr>
 				<th>{{ form_label(form.collection) }}</th>

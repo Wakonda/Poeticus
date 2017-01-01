@@ -1,4 +1,4 @@
-function setComboboxEdit(path, table, val)
+function setComboboxEdit(path, table, field, val, func)
 {
 	$('.combobox').ajaxComboBox(
 		path,
@@ -8,16 +8,18 @@ function setComboboxEdit(path, table, val)
 			per_page: 20,
 			navi_num: 10,
 			no_image: true,
-			init_record: val
+			select_only: true,
+			init_record: val,
+			bind_to: 'selectElement'
 		}
-	).bind('foo', function(e, is_enter_key) {
+	).bind('selectElement', { 'func' : func }, function(e, is_enter_key) {
 		if(!is_enter_key) {
-			$(field).change();
+			e.data.func($(field).val());
 		}
 	});
 }
 
-function setComboboxNew(path, table, field)
+function setComboboxNew(path, table, field, func)
 {
 	var options = {
 		lang: 'fr',
@@ -25,7 +27,7 @@ function setComboboxNew(path, table, field)
 		per_page: 20,
 		navi_num: 10,
 		no_image: true,
-		bind_to: 'foo'
+		bind_to: 'selectElement'
 	};
 	
 	if($(field).val() != "")
@@ -34,9 +36,9 @@ function setComboboxNew(path, table, field)
 	$('.combobox').ajaxComboBox(
 		path,
 		options
-	).bind('foo', function(e, is_enter_key) {
+	).bind('selectElement', { 'func' : func }, function(e, is_enter_key) {
 		if(!is_enter_key) {
-			$(field).change();
+			e.data.func($(field).val());
 		}
 	});
 }

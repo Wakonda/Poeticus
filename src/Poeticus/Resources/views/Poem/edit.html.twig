@@ -21,7 +21,6 @@
 				buttons: ['html']
 			});
 
-			setComboboxEdit('{{ path("poemadmin_getbiographiesbyajax") }}', 'biography', "{{ form.biography.vars.value }}");
 		
 			$('#poem_authorType').change(function()
 			{
@@ -60,14 +59,19 @@
 			});
 			putReleasedDate("{{ entity.releasedDate }}", true);
 			
-			$(document).on('change', "#{{ form.biography.vars.id }}", function()
+			function changeBiography(val)
 			{
 				$.ajax({
 					type: "POST",
 					url: "{{ path('list_selected_biography') }}",
-					data: { "id" : $(this).val() },
+					data: { "id" : val },
 					success: function(data)
 					{
+						if(data.country != "")
+							$("td.poem-country").html('<img src="{{ app.request_stack.currentrequest.basepath }}/photo/country/'+ data.country.flag +'" class="flag" />' + ' ' + data.country.title);
+						else
+							$("td.poem-country").html("-");
+					
 						var collections = data.collections;
 						$("#{{ form.collection.vars.id }} option").remove();
 						$("#{{ form.collection.vars.id }}").append('<option value="">{{ 'main.field.ChooseAnOption'|trans }}</option>');
@@ -80,7 +84,9 @@
 						{% endif %}
 					}
 				});
-			});
+			}
+			
+			changeBiography($("#{{ form.biography.vars.id }}").val());
 			
 			$("#{{ form.collection.vars.id }}").change(function()
 			{
@@ -121,7 +127,6 @@
 			});
 
 			$("#{{ form.poeticform.vars.id }}").change();
-			$("#{{ form.biography.vars.id }}").change();
 			$("#{{ form.collection.vars.id }}").change();
 			
 			$("select#{{ form.language.vars.id }}").change(function() {
@@ -130,7 +135,7 @@
 				$(".container_{{ form.biography.vars.id }}").parent().append(input[0]);
 				$(".container_{{ form.biography.vars.id }}").remove();
 
-				setComboboxEdit('{{ path("poemadmin_getbiographiesbyajax") }}?locale=' + $(this).val(), 'biography', "{{ form.biography.vars.value }}");
+				setComboboxEdit('{{ path("poemadmin_getbiographiesbyajax") }}?locale=' + $(this).val(), 'biography', "#{{ form.biography.vars.id }}", "{{ form.biography.vars.value }}", changeBiography);
 			
 				$.ajax({
 					type: "GET",
@@ -192,7 +197,7 @@
 		</tr>
 		<tr>
 			<th>{{ 'admin.poem.Country'|trans }}</th>
-			<td><img src="{{ app.request_stack.currentrequest.basepath }}/photo/country/{{ entity.country.flag }}" class="flag" /> {{ entity.country.title }}</td>
+			<td class="poem-country"><img src="{{ app.request_stack.currentrequest.basepath }}/photo/country/{{ entity.country.flag }}" class="flag" /> {{ entity.country.title }}</td>
 		</tr>
 		<tr>
 			<th>{{ form_label(form.collection) }}</th>

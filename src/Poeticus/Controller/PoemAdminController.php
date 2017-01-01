@@ -166,6 +166,7 @@ class PoemAdminController
 				$entity->setPhoto($image);
 			}
 
+			$entity->setCountry($app['repository.biography']->find($entity->getBiography())->getCountry());
 			$id = $app['repository.poem']->save($entity, $id);
 
 			$redirect = $app['url_generator']->generate('poemadmin_show', array('id' => $id));
@@ -179,12 +180,13 @@ class PoemAdminController
 	public function newFastAction(Request $request, Application $app)
 	{
 		$entity = new Poem();
-		
-		$biographyForms = $app['repository.biography']->findAllForChoice($app['generic_function']->getLocaleTwigRenderController());
-		$countryForms = $app['repository.country']->findAllForChoice($app['generic_function']->getLocaleTwigRenderController());
+
 		$collectionForms = $app['repository.collection']->findAllForChoice($app['generic_function']->getLocaleTwigRenderController());
+		$languageForms = $app['repository.language']->findAllForChoice();
+		$language = $app['repository.language']->findOneByAbbreviation($app['generic_function']->getLocaleTwigRenderController());
+		$localeForms = $language->getId();
 		
-		$form = $app['form.factory']->create(PoemFastType::class, $entity, array('countries' => $countryForms, 'collections' => $collectionForms));
+		$form = $app['form.factory']->create(PoemFastType::class, $entity, array('collections' => $collectionForms, 'languages' => $languageForms, "locale" => $localeForms));
 	
 		return $app['twig']->render('Poem/fast.html.twig', array('form' => $form->createView(), 'entity' => $entity));
 	}
@@ -192,11 +194,12 @@ class PoemAdminController
 	public function addFastAction(Request $request, Application $app)
 	{
 		$entity = new Poem();
-		$biographyForms = $app['repository.biography']->findAllForChoice($app['generic_function']->getLocaleTwigRenderController());
-		$countryForms = $app['repository.country']->findAllForChoice($app['generic_function']->getLocaleTwigRenderController());
 		$collectionForms = $app['repository.collection']->findAllForChoice($app['generic_function']->getLocaleTwigRenderController());
+		$languageForms = $app['repository.language']->findAllForChoice();
+		$language = $app['repository.language']->findOneByAbbreviation($app['generic_function']->getLocaleTwigRenderController());
+		$localeForms = $language->getId();
 		
-		$form = $app['form.factory']->create(PoemFastType::class, $entity, array('countries' => $countryForms, 'collections' => $collectionForms));
+		$form = $app['form.factory']->create(PoemFastType::class, $entity, array('collections' => $collectionForms, 'languages' => $languageForms, "locale" => $localeForms));
 	
 		$form->handleRequest($request);
 		

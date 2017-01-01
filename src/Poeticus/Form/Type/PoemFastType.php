@@ -17,8 +17,9 @@ class PoemFastType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-		$countryArray = $options['countries'];
 		$collectionArray = $options['collections'];
+		$languageArray = $options["languages"];
+		$locale = $options["locale"];
 
         $builder
 			->add('url', TextType::class, array(
@@ -35,24 +36,23 @@ class PoemFastType extends AbstractType
             ->add('biography', TextType::class, array(
                 'label' => 'Biographie'
             ))
-			->add('country', ChoiceType::class, array(
-											'label' => 'Pays', 
-											'multiple' => false, 
-											'expanded' => false,
-											'constraints' => array(new Assert\NotBlank()),
-											'placeholder' => 'main.field.ChooseAnOption',
-										    'choices' => $countryArray
-											))
-											
 			->add('collection', ChoiceType::class, array(
-											'label' => 'Recueil', 
-											'multiple' => false,
-											'required' => false,
-											'expanded' => false,
-											'placeholder' => 'main.field.ChooseAnOption',
-										    'choices' => $collectionArray
-											))
-			
+				'label' => 'Recueil', 
+				'multiple' => false,
+				'required' => false,
+				'expanded' => false,
+				'placeholder' => 'main.field.ChooseAnOption',
+				'choices' => $collectionArray
+			))
+			->add('language', ChoiceType::class, array(
+				'label' => 'admin.form.Language', 
+				'multiple' => false,
+				'required' => false,
+				'expanded' => false,
+				'placeholder' => 'main.field.ChooseAnOption',
+				'choices' => $languageArray,
+				'data' => $locale
+			))
             ->add('save', SubmitType::class, array('label' => 'Ajouter', 'attr' => array('class' => 'btn btn-success')));
     }
 
@@ -62,8 +62,9 @@ class PoemFastType extends AbstractType
 	public function configureOptions(OptionsResolver $resolver)
 	{
 		$resolver->setDefaults(array(
-			"countries" => null,
-			"collections" => null
+			"collections" => null,
+			"languages" => null,
+			"locale" => null
 		));
 	}
 
