@@ -203,11 +203,9 @@ class PoemAdminController
 	
 		$form->handleRequest($request);
 		
-		$req = $request->request->get('poemfast');
+		$req = $request->request->get($form->getName());
 
-		if(!empty($req["url"]) and !filter_var($req["url"], FILTER_VALIDATE_URL))
-			$form->get("url")->addError(new FormError('L\'URL ne semble pas être valide !'));
-		else
+		if(!empty($req["url"]) and filter_var($req["url"], FILTER_VALIDATE_URL))
 		{
 			$url = $req["url"];
 			$url_array = parse_url($url);
@@ -221,7 +219,7 @@ class PoemAdminController
 
 				$title = html_entity_decode($title[0]->plaintext);
 				$title = (preg_match('!!u', $title)) ? $title : utf8_encode($title);
-				
+
 				$entity->setTitle($title);
 				$entity->setText(str_replace(' class="last"', '', $text[0]->outertext));
 			}
@@ -231,7 +229,7 @@ class PoemAdminController
 				$title_str = $title_node[0]->plaintext;
 				$title_array = explode(":", $title_str);
 				$title = trim($title_array[1]);
-				
+
 				$text_node = $content->find('div.postpoetique p');
 				$text_init = strip_tags($text_node[0]->plaintext, "<br><br /><br/>");
 				$text_array = explode("\n", $text_init);

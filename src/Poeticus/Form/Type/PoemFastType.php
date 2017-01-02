@@ -23,7 +23,7 @@ class PoemFastType extends AbstractType
 
         $builder
 			->add('url', TextType::class, array(
-                'constraints' => new Assert\NotBlank(), 'label' => 'URL', 'mapped' => false
+                'constraints' => [new Assert\NotBlank(), new Assert\Url()], 'label' => 'URL', 'mapped' => false
             ))
 
 			->add('releasedDate', IntegerType::class, array(
@@ -34,7 +34,8 @@ class PoemFastType extends AbstractType
                 'mapped' => false, 'label' => 'Date inconnue'
             ))
             ->add('biography', TextType::class, array(
-                'label' => 'Biographie'
+                'label' => 'Biographie',
+				'constraints' => new Assert\NotBlank()
             ))
 			->add('collection', ChoiceType::class, array(
 				'label' => 'Recueil', 
@@ -47,11 +48,12 @@ class PoemFastType extends AbstractType
 			->add('language', ChoiceType::class, array(
 				'label' => 'admin.form.Language', 
 				'multiple' => false,
-				'required' => false,
+				'required' => true,
 				'expanded' => false,
 				'placeholder' => 'main.field.ChooseAnOption',
 				'choices' => $languageArray,
-				'data' => $locale
+				'data' => $locale,
+				'constraints' => new Assert\NotBlank()
 			))
             ->add('save', SubmitType::class, array('label' => 'Ajouter', 'attr' => array('class' => 'btn btn-success')));
     }

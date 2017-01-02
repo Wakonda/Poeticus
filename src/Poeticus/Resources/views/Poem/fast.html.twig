@@ -13,23 +13,21 @@
 	<script type="text/javascript">
 		$(function()
 		{
-			//setComboboxEdit('{{ path("poemadmin_getbiographiesbyajax") }}', 'biography', "#{{ form.biography.vars.id }}", "{{ form.biography.vars.value }}", changeBiography);
-		
-			$("input#poemfast_unknownReleasedDate").click(function()
+			$("input#{{form.unknownReleasedDate.vars.id }}").click(function()
 			{
 				if($(this).is(":checked"))
-					$("#poemfast_releasedDate").val("");
+					$("#{{form.releasedDate.vars.id }}").val("");
 			});
-			$("input#poemfast_unknownReleasedDate").click();
+			$("input#{{form.unknownReleasedDate.vars.id }}").click();
 			
-			$("input#poemfast_releasedDate").keyup(function()
+			$("input#{{form.releasedDate.vars.id }}").keyup(function()
 			{
 				if($(this).val() != "")
-					$("input#poemfast_unknownReleasedDate").prop('checked', false);
+					$("input#{{ form.unknownReleasedDate.vars.id }}").prop('checked', false);
 				else
-					$("input#poemfast_unknownReleasedDate").prop('checked', true);
+					$("input#{{ form.unknownReleasedDate.vars.id }}").prop('checked', true);
 			});
-			$("input#poemfast_releasedDate").keyup();
+			$("input#{{ form.releasedDate.vars.id }}").keyup();
 			
 			function changeBiography(val)
 			{
@@ -45,17 +43,19 @@
 							$("td.poem-country").html("-");
 
 						var collections = data.collections;
-						$("#{{form.vars['id'] }}_collection option").remove();
-						$("#{{form.vars['id'] }}_collection").append('<option value="">{{ 'main.field.ChooseAnOption'|trans }}</option>');
+						$("#{{ form.collection.vars.id }} option").remove();
+						$("#{{ form.collection.vars.id }}").append('<option value="">{{ 'main.field.ChooseAnOption'|trans }}</option>');
 						$.each(collections, function(index, element)
 						{
-							$("#{{form.vars['id'] }}_collection").append('<option value="'+ element.id +'">'+ element.title +'</option>');
+							$("#{{ form.collection.vars.id }}").append('<option value="'+ element.id +'">'+ element.title +'</option>');
 						});
 					}
 				});
 			}
 			
-			$("#{{ form.vars['id'] }}_collection").change(function()
+			changeBiography($("#{{ form.biography.vars.id }}").val());
+			
+			$("#{{ form.collection.vars.id }}").change(function()
 			{
 				$.ajax({
 					type: "POST",
@@ -63,21 +63,21 @@
 					data: { "id" : $(this).val() },
 					success: function(data)
 					{
-						$("#{{ form.vars['id'] }}_releasedDate").val(data.releasedDate);
+						$("#{{ form.releasedDate.vars.id }}").val(data.releasedDate);
 						
 						if(data.releasedDate != null)
-							$('input#{{ form.vars["id"] }}_unknownReleasedDate').prop('checked', false);
+							$('input#{{ form.unknownReleasedDate.vars.id }}').prop('checked', false);
 						else
-							$('input#{{ form.vars["id"] }}_unknownReleasedDate').prop('checked', true);
+							$('input#{{ form.unknownReleasedDate.vars.id }}').prop('checked', true);
 					}
 				});
 			});
 			
 			$("select#{{ form.language.vars.id }}").change(function() {
-				var input = $(".container_{{ form.vars['id'] }}_biography > .input-group > input[type='hidden']");
+				var input = $(".container_{{ form.biography.vars.id }} > .input-group > input[type='hidden']");
 				$(input[0]).addClass('combobox full_width form-control').attr("type", "text").val("");
-				$(".container_{{ form.vars['id'] }}_biography").parent().append(input[0]);
-				$(".container_{{ form.vars['id'] }}_biography").remove();
+				$(".container_{{ form.biography.vars.id }}").parent().append(input[0]);
+				$(".container_{{ form.biography.vars.id }}").remove();
 				setComboboxNew('{{ path("poemadmin_getbiographiesbyajax") }}?locale=' + $(this).val(), 'biography', "#{{ form.biography.vars.id }}", changeBiography);
 			});
 			

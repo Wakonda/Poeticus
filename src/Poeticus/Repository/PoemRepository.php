@@ -184,14 +184,14 @@ class PoemRepository extends GenericRepository
 	{
 		$qb = $this->db->createQueryBuilder();
 
-		$qb->select("*")
+		$qb->select("pf.*")
 		   ->from("poem", "pf")
 		   ->where("pf.authorType = 'biography'")
 		   ->setMaxResults(7)
 		   ->andWhere("pf.state = 0")
 		   ->orderBy("pf.id", "DESC");
 		   
-		$this->whereLanguage($qb, "pf", $locale);
+		$this->whereLanguage($qb, "pf", $locale, true);
 		   
 		$dataArray = $qb->execute()->fetchAll();
 		$entitiesArray = array();
