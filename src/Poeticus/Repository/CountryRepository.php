@@ -118,7 +118,7 @@ class CountryRepository extends GenericRepository
 		$qb->select("pf.id AS id, pf.title AS title")
 		   ->from("country", "pf")
 		   ->leftjoin("pf", "language", "la", "pf.language_id = la.id")
-		   ->where('la.id = :locale')
+		   ->where('la.abbreviation = :locale')
 		   ->setParameter('locale', $locale)
 		   ->orderBy("title", "ASC");
 
