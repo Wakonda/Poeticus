@@ -180,13 +180,13 @@ class PoemAdminController
 	public function newFastAction(Request $request, Application $app)
 	{
 		$entity = new Poem();
-
+		$poeticForms = $app['repository.poeticform']->findAllForChoice($app['generic_function']->getLocaleTwigRenderController());
 		$collectionForms = $app['repository.collection']->findAllForChoice($app['generic_function']->getLocaleTwigRenderController());
 		$languageForms = $app['repository.language']->findAllForChoice();
 		$language = $app['repository.language']->findOneByAbbreviation($app['generic_function']->getLocaleTwigRenderController());
 		$localeForms = $language->getId();
 		
-		$form = $app['form.factory']->create(PoemFastType::class, $entity, array('collections' => $collectionForms, 'languages' => $languageForms, "locale" => $localeForms));
+		$form = $app['form.factory']->create(PoemFastType::class, $entity, array('collections' => $collectionForms, 'languages' => $languageForms, "locale" => $localeForms, 'poeticForms' => $poeticForms));
 	
 		return $app['twig']->render('Poem/fast.html.twig', array('form' => $form->createView(), 'entity' => $entity));
 	}
@@ -194,12 +194,13 @@ class PoemAdminController
 	public function addFastAction(Request $request, Application $app)
 	{
 		$entity = new Poem();
+		$poeticForms = $app['repository.poeticform']->findAllForChoice($app['generic_function']->getLocaleTwigRenderController());
 		$collectionForms = $app['repository.collection']->findAllForChoice($app['generic_function']->getLocaleTwigRenderController());
 		$languageForms = $app['repository.language']->findAllForChoice();
 		$language = $app['repository.language']->findOneByAbbreviation($app['generic_function']->getLocaleTwigRenderController());
 		$localeForms = $language->getId();
 		
-		$form = $app['form.factory']->create(PoemFastType::class, $entity, array('collections' => $collectionForms, 'languages' => $languageForms, "locale" => $localeForms));
+		$form = $app['form.factory']->create(PoemFastType::class, $entity, array('collections' => $collectionForms, 'languages' => $languageForms, "locale" => $localeForms, 'poeticForms' => $poeticForms));
 	
 		$form->handleRequest($request);
 		
@@ -211,40 +212,64 @@ class PoemAdminController
 			$url_array = parse_url($url);
 
 			$content = file_get_html($url);
+			$entity->setAuthorType("biography");
+			$entity->setCountry($app['repository.biography']->find($entity->getBiography())->getCountry());
+			$poemArray = array();
 
-			if(base64_encode($url_array['host']) == 'cG9lc2llLndlYm5ldC5mcg==')
+			switch(base64_encode($url_array['host']))
 			{
-				$title = $content->find('h1'); 
-				$text = $content->find('p[class=last]'); 
+				case 'cG9lc2llLndlYm5ldC5mcg==':
+					$title = $content->find('h1'); 
+					$text = $content->find('p[class=last]'); 
 
-				$title = html_entity_decode($title[0]->plaintext);
-				$title = (preg_match('!!u', $title)) ? $title : utf8_encode($title);
+					$title = html_entity_decode($title[0]->plaintext);
+					$title = (preg_match('!!u', $title)) ? $title : utf8_encode($title);
 
-				$entity->setTitle($title);
-				$entity->setText(str_replace(' class="last"', '', $text[0]->outertext));
-			}
-			elseif(base64_encode($url_array['host']) == 'd3d3LnBvZXNpZS1mcmFuY2Fpc2UuZnI=')
-			{
-				$title_node = $content->find('article h1');
-				$title_str = $title_node[0]->plaintext;
-				$title_array = explode(":", $title_str);
-				$title = trim($title_array[1]);
+					$subPoemArray = array();
+					$subPoemArray['title'] = $title;
+					$subPoemArray['text'] = str_replace(' class="last"', '', $text[0]->outertext);
+					$poemArray[] = $subPoemArray;
+					break;
+				case 'd3d3LnBvZXNpZS1mcmFuY2Fpc2UuZnI=':
+					$title_node = $content->find('article h1');
+					$title_str = $title_node[0]->plaintext;
+					$title_array = explode(":", $title_str);
+					$title = trim($title_array[1]);
 
-				$text_node = $content->find('div.postpoetique p');
-				$text_init = strip_tags($text_node[0]->plaintext, "<br><br /><br/>");
-				$text_array = explode("\n", $text_init);
-				$text = "";
-				
-				foreach($text_array as $line) {
-					$text = $text."<br>".trim($line);
-				}
-				$text = preg_replace('/^(<br>)+/', '', $text);
-				
-				$entity->setTitle($title);
-				$entity->setText($text);
+					$text_node = $content->find('div.postpoetique p');
+					$text_init = strip_tags($text_node[0]->plaintext, "<br><br /><br/>");
+					$text_array = explode("\n", $text_init);
+					$text = "";
+					
+					foreach($text_array as $line) {
+						$text = $text."<br>".trim($line);
+					}
+					$text = preg_replace('/^(<br>)+/', '', $text);
+					
+					$subPoemArray = array();
+					$subPoemArray['title'] = $title;
+					$subPoemArray['text'] = $text;
+					$poemArray[] = $subPoemArray;
+					break;
+				case 'd3d3LnVuaGFpa3UuY29t':
+					foreach($content->find('ul#chunkLast > li') as $li)
+					{
+						$text = current($li->find("div#texte"));
+						
+						if(!empty($text))
+						{
+							$titleArray = preg_split(":(<br ?/?>):", $text->innertext);
+							
+							$subPoemArray = array();
+							$subPoemArray['title'] = $titleArray[0];
+							$subPoemArray['text'] = $text->innertext;
+							$poemArray[] = $subPoemArray;
+						}
+					}
+					break;
 			}
 			
-			$entity->setAuthorType("biography");
+			
 			
 			if($app['repository.poem']->checkForDoubloon($entity) >= 1)
 				$form->get("url")->addError(new FormError('Cette entrée existe déjà !'));
@@ -252,7 +277,13 @@ class PoemAdminController
 
 		if($form->isValid())
 		{
-			$id = $app['repository.poem']->save($entity);
+			foreach($poemArray as $poem)
+			{
+				$entityPoem = clone $entity;
+				$entityPoem->setTitle($poem['title']);
+				$entityPoem->setText($poem['text']);
+				$id = $app['repository.poem']->save($entityPoem);
+			}
 			$redirect = $app['url_generator']->generate('poemadmin_show', array('id' => $id));
 
 			return $app->redirect($redirect);

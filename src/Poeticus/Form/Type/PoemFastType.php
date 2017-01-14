@@ -20,6 +20,7 @@ class PoemFastType extends AbstractType
 		$collectionArray = $options['collections'];
 		$languageArray = $options["languages"];
 		$locale = $options["locale"];
+		$poeticFormArray = $options["poeticForms"];
 
         $builder
 			->add('url', TextType::class, array(
@@ -55,6 +56,14 @@ class PoemFastType extends AbstractType
 				'data' => $locale,
 				'constraints' => new Assert\NotBlank()
 			))
+            ->add('poeticform', ChoiceType::class, array(
+				'label' => 'admin.poem.PoeticForm', 
+				'multiple' => false,
+				'required' => false,
+				'expanded' => false,
+				'placeholder' => 'main.field.ChooseAnOption',
+				'choices' => $poeticFormArray
+			))
             ->add('save', SubmitType::class, array('label' => 'Ajouter', 'attr' => array('class' => 'btn btn-success')));
     }
 
@@ -64,6 +73,7 @@ class PoemFastType extends AbstractType
 	public function configureOptions(OptionsResolver $resolver)
 	{
 		$resolver->setDefaults(array(
+			"poeticForms" => null,
 			"collections" => null,
 			"languages" => null,
 			"locale" => null
