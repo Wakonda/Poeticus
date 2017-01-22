@@ -7,27 +7,7 @@
 {% form_theme form 'Form/fields.html.twig' %}
 
 {{ form_start(form, {'method' : 'post', 'action' : path('countryadmin_create'), 'attr': {'novalidate': 'novalidate'} }) }}
-<table class="form_grid">
-		<tr>
-			<th>{{ form_label(form.title) }}</th>
-			<td><div class="errors">{{ form_errors(form.title) }}</div>{{ form_widget(form.title, {'attr':{'class':'full_width form-control'}}) }}</td>
-		</tr>
-		<tr>
-			<th>{{ form_label(form.internationalName) }}</th>
-			<td><div class="errors">{{ form_errors(form.internationalName) }}</div>{{ form_widget(form.internationalName, {'attr':{'class':'full_width form-control'}}) }}</td>
-		</tr>
-		<tr>
-			<th>{{ form_label(form.flag) }}</th>
-			<td><div class="errors">{{ form_errors(form.flag) }}</div>{{ form_widget(form.flag) }}</td>
-		</tr>
-		<tr>
-			<th>{{ form_label(form.language) }}</th>
-			<td><div class="errors">{{ form_errors(form.language) }}</div>{{ form_widget(form.language, {'attr':{'class':'full_width form-control'}}) }}</td>
-		</tr>
-	</table>
-	<hr />
-	{{ form_widget(form.save, {'icon': 'fa-save'}) }}
-	{{ form_rest(form) }}
+	{% include "Country/_form.html.twig" with {'form' : form} %}
 {{ form_end(form) }}
 
 {% endblock %}

@@ -7,23 +7,7 @@
 {% form_theme form 'Form/fields.html.twig' %}
 
 {{ form_start(form, {'method' : 'post', 'action' : path('versionadmin_update', {'id' : entity.id }) , 'attr': {'novalidate': 'novalidate'} }) }}
-<table class="form_grid">
-		<tr>
-			<th>{{ form_label(form.versionNumber) }}</th>
-			<td><div class="errors">{{ form_errors(form.versionNumber) }}</div>{{ form_widget(form.versionNumber, {'attr':{'class':'form-control'}}) }}</td>
-		</tr>
-		<tr>
-			<th>{{ form_label(form.releaseDate) }}</th>
-			<td><div class="errors">{{ form_errors(form.releaseDate) }}</div>{{ form_widget(form.releaseDate) }}</td>
-		</tr>
-		<tr>
-			<th>{{ form_label(form.file) }}</th>
-			<td><p>Fichier actuel : {{ entity.file }}</p><div class="errors">{{ form_errors(form.file) }}</div>{{ form_widget(form.photo) }}</td>
-		</tr>
-	</table>
-	<hr />
-	{{ form_widget(form.save, {'icon': 'fa-save'}) }}
-	{{ form_rest(form) }}
+	{% include "Version/_form.html.twig" with {'form': form} %}
 {{ form_end(form) }}
 
 {% endblock %}

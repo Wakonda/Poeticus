@@ -155,7 +155,7 @@ class BiographyAdminController
 		$language = $app['repository.language']->findOneByAbbreviation($app['generic_function']->getLocaleTwigRenderController());
 		$localeForms = $language->getId();
 
-		$countryForms = $app['repository.country']->findAllForChoice($localeForms);
+		$countryForms = $app['repository.country']->findAllForChoice($language->getAbbreviation());
 		$languageForms = $app['repository.language']->findAllForChoice();
 
 		return $app['form.factory']->create(BiographyType::class, $entity, array("countries" => $countryForms, "languages" => $languageForms, "locale" => $localeForms));

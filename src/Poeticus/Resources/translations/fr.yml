@@ -198,6 +198,7 @@ admin:
         Yes: "Oui"
         No: "Non"
         CurrentImage: "Photo actuelle"
+        CurrentFile: "Fichier actuel"
     table:
         Title: "Titre"
         Action: "Action"

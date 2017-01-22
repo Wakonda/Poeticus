@@ -22,7 +22,7 @@ class VersionType extends AbstractType
                 'constraints' => new Assert\NotBlank(), "label" => "Numéro de version"
             ))
 			->add('releaseDate', DateType::class, array(
-                'constraints' => new Assert\NotBlank(), "label" => "Texte", 'attr' => array('class' => 'redactor')
+                'constraints' => new Assert\NotBlank(), "label" => "Texte", 'widget' => 'single_text'
             ))
 			->add('file', FileType::class, array('data_class' => null, "label" => "Fichier", "required" => true))
             ->add('save', SubmitType::class, array('label' => 'Sauvegarder', 'attr' => array('class' => 'btn btn-success')))

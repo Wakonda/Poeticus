@@ -251,6 +251,37 @@ class PoemAdminController
 					$subPoemArray['text'] = $text;
 					$poemArray[] = $subPoemArray;
 					break;
+				case 'd3d3LnBvZXRpY2EuZnI=':
+					$title = current($content->find("h1.entry-title"))->innertext;
+					
+					$text = $content->find("main article div.entry-content");
+					$text = $text[1]->innertext;
+					
+					$text = str_replace("<p>", "", $text);
+					$text = str_replace("<br />", "<br>", $text);
+					$text = trim($text);
+
+					$text = explode("</p>", $text);
+					array_pop($text);
+					array_pop($text);
+					$text = implode("<br><br>", $text);
+					
+					$subPoemArray = array();
+					$subPoemArray['title'] = $title;
+					$subPoemArray['text'] = $text;
+					$poemArray[] = $subPoemArray;
+					break;
+				case 'd3d3LnRvdXRlbGFwb2VzaWUuY29t':
+					$html = file_get_html($url);
+					$title = trim(current(explode("<br>", current($html->find('h1.ipsType_pagetitle'))->innertext)));					
+					$text = current($html->find('div.poemeanthologie p.last'))->innertext;
+					$text =preg_replace('#</?span[^>]*>#is', '', $text);
+
+					$subPoemArray = array();
+					$subPoemArray['title'] = utf8_encode($title);
+					$subPoemArray['text'] = utf8_encode($text);
+					$poemArray[] = $subPoemArray;
+					break;
 				case 'd3d3LnVuaGFpa3UuY29t':
 					foreach($content->find('ul#chunkLast > li') as $li)
 					{

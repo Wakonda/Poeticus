@@ -696,7 +696,7 @@ class IndexController
 	{
 		$language = $app['repository.language']->findOneByAbbreviation($this->getCurrentLocale($app));
 
-		$countryForms = $app['repository.country']->findAllForChoice($language->getId());
+		$countryForms = $app['repository.country']->findAllForChoice($language->getAbbreviation());
 		$form = $app['form.factory']->create(IndexSearchType::class, null, array("countries" => $countryForms));
 		
 		return $form;

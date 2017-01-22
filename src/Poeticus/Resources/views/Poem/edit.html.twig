@@ -21,7 +21,6 @@
 				buttons: ['html']
 			});
 
-		
 			$('#poem_authorType').change(function()
 			{
 				if($(this).val() == "user")
@@ -162,55 +161,7 @@
 {% form_theme form 'Form/fields.html.twig' %}
 
 {{ form_start(form, {'method' : 'post', 'action' : path('poemadmin_update', {'id' : entity.id }), 'attr': {'novalidate': 'novalidate'} }) }}
-	<table class="form_grid">
-		<tr>
-			<th>{{ form_label(form.title) }}</th>
-			<td><div class="errors">{{ form_errors(form.title) }}</div>{{ form_widget(form.title, {'attr':{'class':'full_width form-control'}}) }}</td>
-		</tr>
-		<tr>
-			<th>{{ form_label(form.language) }}</th>
-			<td><div class="errors">{{ form_errors(form.language) }}</div>{{ form_widget(form.language, {'attr':{'class':'full_width form-control'}}) }}</td>
-		</tr>
-		<tr>
-			<th>{{ form_label(form.poeticform) }}</th>
-			<td><div class="errors">{{ form_errors(form.poeticform) }}</div>{{ form_widget(form.poeticform, {'attr':{'class':'full_width form-control'}}) }}</td>
-		</tr>
-		<tr id="photo_container">
-			<th>{{ form_label(form.photo) }}</th>
-			<td><div class="errors">{{ form_errors(form.photo) }}</div>{{ form_widget(form.photo) }}</td>
-		</tr>
-		<tr id="text_container">
-			<th>{{ form_label(form.text) }}</th>
-			<td><div class="errors">{{ form_errors(form.text) }}</div>{{ form_widget(form.text, { 'attr' : { 'class' : 'text form-control redactor' }}) }}</td>
-		</tr>
-		<tr>
-			<th>{{ form_label(form.authorType) }}</th>
-			<td><div class="errors">{{ form_errors(form.authorType) }}</div>{{ form_widget(form.authorType, {'attr':{'class':'full_width form-control'}}) }}</td>
-		</tr>
-		<tr class="user_row">
-			<th>{{ form_label(form.user) }}</th>
-			<td><div class="errors">{{ form_errors(form.user) }}</div>{{ form_widget(form.user, {'attr':{'class':'full_width form-control'}}) }}</td>
-		</tr>
-		<tr class="biography_row">
-			<th>{{ form_label(form.biography) }}</th>
-			<td><div class="errors">{{ form_errors(form.biography) }}</div>{{ form_widget(form.biography, {'attr':{'class':'full_width combobox'}}) }}</td>
-		</tr>
-		<tr>
-			<th>{{ 'admin.poem.Country'|trans }}</th>
-			<td class="poem-country"><img src="{{ app.request_stack.currentrequest.basepath }}/photo/country/{{ entity.country.flag }}" class="flag" /> {{ entity.country.title }}</td>
-		</tr>
-		<tr>
-			<th>{{ form_label(form.collection) }}</th>
-			<td><div class="errors">{{ form_errors(form.collection) }}</div>{{ form_widget(form.collection, {'attr':{'class':'full_width form-control'}}) }}</td>
-		</tr>
-		<tr>
-			<th>{{ form_label(form.releasedDate) }}</th>
-			<td><div class="errors">{{ form_errors(form.releasedDate) }}</div>{{ form_widget(form.releasedDate, {'attr':{'class':'year form-control'}}) }} {{ form_widget(form.unknownReleasedDate) }} {{ form_label(form.unknownReleasedDate) }}</td>
-		</tr>
-	</table>
-	<hr />
-	{{ form_widget(form.save, {'icon': 'fa-save'}) }}
-	{{ form_rest(form) }}
+	{% include "Poem/_form.html.twig" with {'form': form} %}
 {{ form_end(form) }}
 
 {% endblock %}

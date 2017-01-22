@@ -154,7 +154,7 @@ class CollectionAdminController
 		$language = $app['repository.language']->findOneByAbbreviation($app['generic_function']->getLocaleTwigRenderController());
 		$localeForms = $language->getId();
 		
-		$biographyForms = $app['repository.biography']->findAllForChoice($localeForms);
+		$biographyForms = $app['repository.biography']->findAllForChoice($language->getAbbreviation());
 		$languageForms = $app['repository.language']->findAllForChoice();
 
 		return $app['form.factory']->create(CollectionType::class, $entity, array('biographies' => $biographyForms, 'languages' => $languageForms, "locale" => $localeForms));

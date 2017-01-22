@@ -422,6 +422,9 @@ input[type=search] {
 	border: solid 1px darkgrey;
 }
 
+.bias-input-group .input-group-addon + .input-group-btn > .btn {border-radius: 0;}
+.bias-input-group .input-group-addon + .input-group-btn + .input-group-addon {border-right: 0; border-left: 0;}
+
 /***** GENERIC CLASS **************/
 button[type="submit"]
 {

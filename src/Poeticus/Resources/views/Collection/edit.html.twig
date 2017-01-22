@@ -25,29 +25,29 @@
 			function putReleasedDate(value, load)
 			{
 				if(value != "")
-					$("input#{{ form.vars['id'] }}_unknownReleasedDate").prop('checked', false);
+					$("input#{{ form.unknownReleasedDate.vars.id }}").prop('checked', false);
 				else
-					$("input#{{ form.vars['id'] }}_unknownReleasedDate").prop('checked', true);
+					$("input#{{ form.unknownReleasedDate.vars.id }}").prop('checked', true);
 			}
 			
-			$("input#{{ form.vars['id'] }}_unknownReleasedDate").click(function()
+			$("input#{{ form.unknownReleasedDate.vars.id }}").click(function()
 			{
 				if($(this).is(":checked"))
-					$("#{{ form.vars['id'] }}_releasedDate").val("");
+					$("#{{ form.releasedDate.vars.id }}").val("");
 			});
 			
-			$("input#{{ form.vars['id'] }}_releasedDate").keyup(function()
+			$("input#{{ form.releasedDate.vars.id }}").keyup(function()
 			{
 				putReleasedDate($(this).val(), false);
 			});
 			putReleasedDate("{{ entity.releasedDate }}", true);
 
 			$("select#{{ form.language.vars.id }}").change(function() {
-				var input = $(".container_{{ form.vars['id'] }}_biography > .input-group > input[type='hidden']");
+				var input = $(".container_{{ form.biography.vars.id }} > .input-group > input[type='hidden']");
 				$(input[0]).addClass('combobox full_width form-control').attr("type", "text").val("");
-				$(".container_{{ form.vars['id'] }}_biography").parent().append(input[0]);
-				$(".container_{{ form.vars['id'] }}_biography").remove();
-				setComboboxEdit('{{ path("poemadmin_getbiographiesbyajax") }}?locale=' + $(this).val(), 'biography', "{{ form.biography.vars.value }}");
+				$(".container_{{ form.biography.vars.id }}").parent().append(input[0]);
+				$(".container_{{ form.biography.vars.id }}").remove();
+				setComboboxEdit('{{ path("poemadmin_getbiographiesbyajax") }}?locale=' + $(this).val(), 'biography', "#{{ form.biography.vars.id }}", "{{ form.biography.vars.value }}");
 			});
 			
 			$("select#{{ form.language.vars.id }}").change();
@@ -57,41 +57,8 @@
 
 {% block main_content %}
 {% form_theme form 'Form/fields.html.twig' %}
-{% import "index/macro.html.twig" as macro %}
 {{ form_start(form, {'method' : 'post', 'action' : path('collectionadmin_update', {'id' : entity.id }), 'attr': {'novalidate': 'novalidate'} }) }}
-<table class="form_grid">
-		<tr>
-			<th>{{ form_label(form.title) }}</th>
-			<td><div class="errors">{{ form_errors(form.title) }}</div>{{ form_widget(form.title, {'attr':{'class':'full_width form-control'}}) }}</td>
-		</tr>
-		<tr>
-			<th>{{ form_label(form.text) }}</th>
-			<td><div class="errors">{{ form_errors(form.text) }}</div>{{ form_widget(form.text) }}</td>
-		</tr>
-		<tr>
-			<th>{{ form_label(form.releasedDate) }}</th>
-			<td><div class="errors">{{ form_errors(form.releasedDate) }}</div>{{ form_widget(form.releasedDate, {'attr':{'class':'year form-control'}}) }} {{ form_widget(form.unknownReleasedDate) }} {{ form_label(form.unknownReleasedDate) }}</td>
-		</tr>
-		<tr>
-			<th>{{ form_label(form.image) }}</th>
-			<td><div class="errors">{{ form_errors(form.image) }}</div>{{ macro.currentImage("photo/collection/", entity.image) }}{{ form_widget(form.image) }}</td>
-		</tr>
-		<tr>
-			<th>{{ form_label(form.language) }}</th>
-			<td><div class="errors">{{ form_errors(form.language) }}</div>{{ form_widget(form.language, {'attr':{'class':'full_width form-control'}}) }}</td>
-		</tr>
-		<tr>
-			<th>{{ form_label(form.biography) }}</th>
-			<td><div class="errors">{{ form_errors(form.biography) }}</div>{{ form_widget(form.biography, {'attr':{'class':'full_width combobox'}}) }}</td>
-		</tr>
-		<tr>
-			<th>{{ form_label(form.widgetProduct) }}</th>
-			<td><div class="errors">{{ form_errors(form.widgetProduct) }}</div>{{ form_widget(form.widgetProduct, {'attr':{'class':'text form-control'}}) }}</td>
-		</tr>
-	</table>
-	<hr />
-	{{ form_widget(form.save, {'icon': 'fa-save'}) }}
-	{{ form_rest(form) }}
+	{% include "Collection/_form.html.twig" with {'form' : form} %}
 {{ form_end(form) }}
 
 {% endblock %}
