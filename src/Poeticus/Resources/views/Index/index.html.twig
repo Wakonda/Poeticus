@@ -18,7 +18,7 @@
 
 {% block style_additional %}
 	<link rel="stylesheet" type="text/css" href="{{ app.request_stack.currentrequest.basepath }}/js/jquery-ui-1.11.0/jquery-ui.min.css" />
-	<link rel="stylesheet" type="text/css" href="{{ app.request_stack.currentrequest.basepath }}/js/tag-it-master/css/jquery.tagit.css" />
+	<link rel="stylesheet" type="text/css" href="{{ minify_file('js/tag-it-master/css/jquery.tagit.css', app.request_stack.currentrequest.basepath) }}" />
 {% endblock %}
 
 {% block main_content %}

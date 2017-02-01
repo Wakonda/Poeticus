@@ -35,7 +35,8 @@ class PoeticusExtension extends \Twig_Extension
 			'gravatar' => new \Twig_Function_Method($this, 'generateGravatar'),
 			'number_version' => new \Twig_Function_Method($this, 'getCurrentVersion'),
 			'current_url' => new \Twig_Function_Method($this, 'getCurrentURL'),
-			'code_by_language' => new \Twig_Function_Method($this, 'getCodeByLanguage')
+			'code_by_language' => new \Twig_Function_Method($this, 'getCodeByLanguage'),
+			'minify_file' => new \Twig_Function_Method($this, 'minifyFile')
 		);
 	}
 
@@ -154,5 +155,11 @@ class PoeticusExtension extends \Twig_Extension
 		$arrayMonth['pt'] = array("sup" => null, "separator" => " de ", "months" => array("janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"));
 	
 		return $arrayMonth;
+	}
+	
+	public function minifyFile($file, $basePath)
+	{
+		$mn = new MinifyFile($file);
+		return $basePath.'/'.$mn->save();
 	}
 }
