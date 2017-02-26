@@ -37,7 +37,7 @@ class Language
 
 	public function __toString()
 	{
-		$this->title;
+		return $this->title;
 	}
 	
 	public function getId()

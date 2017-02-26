@@ -77,7 +77,7 @@ class LanguageRepository extends GenericRepository
 		return $entitiesArray;
 	}
 	
-	protected function build($data, $show = false)
+	public function build($data, $show = false)
     {
         $entity = new Language();
         $entity->setId($data['id']);

@@ -7,7 +7,7 @@ use Poeticus\Entity\Page;
 /**
  * Poem repository
  */
-class PageRepository extends GenericRepository
+class PageRepository extends GenericRepository implements iRepository
 {
 	public function save($entity, $id = null)
 	{
@@ -107,7 +107,7 @@ class PageRepository extends GenericRepository
 		return $entitiesArray;
 	}
 	
-	protected function build($data, $show = false)
+	public function build($data, $show = false)
     {
         $entity = new Page();
         $entity->setId($data['id']);

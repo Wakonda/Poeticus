@@ -7,7 +7,7 @@ use Poeticus\Entity\Biography;
 /**
  * Poem repository
  */
-class BiographyRepository extends GenericRepository
+class BiographyRepository extends GenericRepository implements iRepository
 {
 	public function save($entity, $id = null)
 	{
@@ -98,7 +98,7 @@ class BiographyRepository extends GenericRepository
 		return $entitiesArray;
 	}
 	
-	protected function build($data, $show = false)
+	public function build($data, $show = false)
     {
         $entity = new Biography();
         $entity->setId($data['id']);

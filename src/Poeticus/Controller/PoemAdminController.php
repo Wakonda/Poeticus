@@ -299,9 +299,7 @@ class PoemAdminController
 					}
 					break;
 			}
-			
-			
-			
+
 			if($app['repository.poem']->checkForDoubloon($entity) >= 1)
 				$form->get("url")->addError(new FormError('Cette entrée existe déjà !'));
 		}

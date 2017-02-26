@@ -7,7 +7,7 @@ use Poeticus\Entity\Collection;
 /**
  * Poem repository
  */
-class CollectionRepository extends GenericRepository
+class CollectionRepository extends GenericRepository implements iRepository
 {
 	public function save($entity, $id = null)
 	{
@@ -94,7 +94,7 @@ class CollectionRepository extends GenericRepository
 		return $entitiesArray;
 	}
 	
-	protected function build($data, $show = false)
+	public function build($data, $show = false)
     {
         $entity = new Collection();
         $entity->setId($data['id']);

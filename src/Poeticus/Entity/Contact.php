@@ -40,6 +40,11 @@ class Contact
      */
     protected $dateSending;
 
+	public function __construct()
+	{
+		$this->readMessage = 0;
+	}
+
     public function getId()
     {
         return $this->id;

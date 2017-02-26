@@ -7,7 +7,7 @@ use Poeticus\Entity\User;
 /**
  * Poem repository
  */
-class UserRepository extends GenericRepository
+class UserRepository extends GenericRepository implements iRepository
 {
 	public function findAllForChoice()
 	{
@@ -62,7 +62,7 @@ class UserRepository extends GenericRepository
 		return $entitiesArray;
     }
 	
-	protected function build($data, $show = false)
+	public function build($data, $show = false)
     {
         $entity = new User();
 

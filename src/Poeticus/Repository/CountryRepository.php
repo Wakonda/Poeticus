@@ -7,9 +7,9 @@ use Poeticus\Entity\Country;
 /**
  * Poem repository
  */
-class CountryRepository extends GenericRepository
+class CountryRepository extends GenericRepository implements iRepository
 {
-	public function save($entity, $id)
+	public function save($entity, $id = null)
 	{
 		$entityData = array(
 		'title' => $entity->getTitle(),
@@ -91,7 +91,7 @@ class CountryRepository extends GenericRepository
 		return $entitiesArray;
 	}
 	
-	protected function build($data, $show = false)
+	public function build($data, $show = false)
     {
         $entity = new Country();
         $entity->setId($data['id']);
@@ -152,5 +152,22 @@ class CountryRepository extends GenericRepository
         }
 
         return $entitiesArray;
+	}
+
+	public function checkForDoubloon($entity)
+	{
+		$qb = $this->db->createQueryBuilder();
+
+		$qb->select("COUNT(*) AS number")
+		   ->from("country", "co")
+		   ->where("co.title = :title")
+		   ->setParameter('title', $entity->getTitle());
+
+		if($entity->getId() != null)
+		{
+			$qb->andWhere("co.id != :id")
+			   ->setParameter("id", $entity->getId());
+		}
+		return $qb->execute()->fetchColumn();
 	}
 }

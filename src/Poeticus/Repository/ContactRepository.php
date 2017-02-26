@@ -5,7 +5,7 @@ namespace Poeticus\Repository;
 use Poeticus\Entity\Contact;
 
 /**
- * Poem repository
+ * Contact repository
  */
 class ContactRepository extends GenericRepository
 {
@@ -15,7 +15,8 @@ class ContactRepository extends GenericRepository
 		'subject' => $entity->getSubject(),
 		'mail' => $entity->getMail(),
 		'message' => $entity->getMessage(),
-		'dateSending' => new \DateTime()
+		'dateSending' => date("Y-m-d H:i:s"),
+		'readMessage' => $entity->getReadMessage()
 		);
 
 		$this->db->insert('contact', $entityData);
@@ -60,7 +61,7 @@ class ContactRepository extends GenericRepository
 		return $entitiesArray;
 	}
 
-	protected function build($data)
+	public function build($data, $show = false)
     {
         $entity = new Contact();
         $entity->setId($data['id']);

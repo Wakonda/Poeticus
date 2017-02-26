@@ -7,7 +7,7 @@ use Poeticus\Entity\Version;
 /**
  * Poem repository
  */
-class VersionRepository extends GenericRepository
+class VersionRepository extends GenericRepository implements iRepository
 {
 	public function save($entity, $id = null)
 	{
@@ -112,7 +112,7 @@ class VersionRepository extends GenericRepository
 		return $entitiesArray;
 	}
 	
-	protected function build($data, $show = false)
+	public function build($data, $show = false)
     {
         $entity = new Version();
         $entity->setId($data['id']);

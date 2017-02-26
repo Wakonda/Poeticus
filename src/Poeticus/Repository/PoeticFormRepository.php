@@ -7,7 +7,7 @@ use Poeticus\Entity\PoeticForm;
 /**
  * Poem repository
  */
-class PoeticFormRepository extends GenericRepository
+class PoeticFormRepository extends GenericRepository implements iRepository
 {
 	public function save($entity, $id = null)
 	{
@@ -114,7 +114,7 @@ class PoeticFormRepository extends GenericRepository
         return $choiceArray;
 	}
 	
-	protected function build($data, $show = false)
+	public function build($data, $show = false)
     {
         $entity = new PoeticForm();
         $entity->setId($data['id']);

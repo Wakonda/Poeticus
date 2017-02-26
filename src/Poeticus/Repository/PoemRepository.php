@@ -7,7 +7,7 @@ use Poeticus\Entity\Poem;
 /**
  * Poem repository
  */
-class PoemRepository extends GenericRepository
+class PoemRepository extends GenericRepository implements iRepository
 {
 	public function save($entity, $id = null)
 	{
@@ -281,7 +281,7 @@ class PoemRepository extends GenericRepository
 		return $entitiesArray;
 	}
 	
-	protected function build($data, $show = false)
+	public function build($data, $show = false)
     {
         $entity = new Poem();
 

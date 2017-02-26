@@ -82,6 +82,7 @@ class CountryAdminController
 		$entity = new Country();
         $form = $this->createForm($app, $entity);
 		$form->handleRequest($request);
+		$this->checkForDoubloon($entity, $form, $app);
 
 		$translator = $app['translator'];
 		
@@ -124,7 +125,9 @@ class CountryAdminController
 		$currentImage = $entity->getFlag();
 		$form = $this->createForm($app, $entity);
 		$form->handleRequest($request);
-		
+
+		$this->checkForDoubloon($entity, $form, $app);
+
 		if($form->isValid())
 		{
 			if(!is_null($entity->getFlag()))
@@ -171,5 +174,16 @@ class CountryAdminController
 		$form = $app['form.factory']->create(CountryType::class, $entity, array('languages' => $languageForms));
 
 		return $form;
+	}
+
+	private function checkForDoubloon($entity, $form, $app)
+	{
+		if($entity->getTitle() != null)
+		{
+			$checkForDoubloon = $app['repository.country']->checkForDoubloon($entity);
+
+			if($checkForDoubloon > 0)
+				$form->get("title")->addError(new FormError('Cette entrée existe déjà !'));
+		}
 	}
 }
