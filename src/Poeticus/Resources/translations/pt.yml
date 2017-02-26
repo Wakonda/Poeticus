@@ -199,6 +199,7 @@ admin:
         No: "Não"
         CurrentImage: "Foto atual"
         CurrentFile: "Ficheiro actual"
+        UnreadMessages: "Mensagens não lidas"
     table:
         Title: "Título"
         Action: "Acção"

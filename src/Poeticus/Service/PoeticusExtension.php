@@ -36,7 +36,8 @@ class PoeticusExtension extends \Twig_Extension
 			'number_version' => new \Twig_Function_Method($this, 'getCurrentVersion'),
 			'current_url' => new \Twig_Function_Method($this, 'getCurrentURL'),
 			'code_by_language' => new \Twig_Function_Method($this, 'getCodeByLanguage'),
-			'minify_file' => new \Twig_Function_Method($this, 'minifyFile')
+			'minify_file' => new \Twig_Function_Method($this, 'minifyFile'),
+			'count_unread_messages' => new \Twig_Function_Method($this, 'countUnreadMessagesFunction')
 		);
 	}
 
@@ -155,6 +156,11 @@ class PoeticusExtension extends \Twig_Extension
 		$arrayMonth['pt'] = array("sup" => null, "separator" => " de ", "months" => array("janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"));
 	
 		return $arrayMonth;
+	}
+
+	public function countUnreadMessagesFunction()
+	{
+		return $this->app['repository.contact']->countUnreadMessages();
 	}
 	
 	public function minifyFile($file, $basePath)

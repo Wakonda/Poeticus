@@ -69,7 +69,7 @@
 			</tr>
 			<tr>
 				<td><a href="{{ path('contactadmin_index') }}" alt="">{{ 'admin.index.Contact'|trans }}</a></td>
-				<td>-</td>
+				<td>{{ count_unread_messages() }} {{ 'admin.index.UnreadMessages'|trans }}</td>
 			</tr>
 			<tr>
 				<td><a href="{{ path('useradmin_index') }}" alt="">Membre</a></td>
