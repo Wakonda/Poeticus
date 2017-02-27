@@ -83,6 +83,8 @@ class PoeticFormAdminController
         $form = $this->createForm($app, $entity);
 		$form->handleRequest($request);
 		
+		$this->checkForDoubloon($entity, $form, $app);
+		
 		$translator = $app['translator'];
 
 		if($entity->getImage() == null)
@@ -124,6 +126,8 @@ class PoeticFormAdminController
 		$currentImage = $entity->getImage();
 		$form = $this->createForm($app, $entity);
 		$form->handleRequest($request);
+		
+		$this->checkForDoubloon($entity, $form, $app);
 		
 		if($form->isValid())
 		{
@@ -172,5 +176,16 @@ class PoeticFormAdminController
 		$form = $app['form.factory']->create(PoeticFormType::class, $entity, array('languages' => $languageForms));
 
 		return $form;
+	}
+
+	private function checkForDoubloon($entity, $form, $app)
+	{
+		if($entity->getTitle() != null)
+		{
+			$checkForDoubloon = $app['repository.poeticform']->checkForDoubloon($entity);
+
+			if($checkForDoubloon > 0)
+				$form->get("title")->addError(new FormError('Cette entrée existe déjà !'));
+		}
 	}
 }

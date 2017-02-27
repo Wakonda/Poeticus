@@ -20,29 +20,10 @@
 		<link rel="stylesheet" type="text/css" href="{{ app.request_stack.currentrequest.basepath }}/css/font-awesome/css/font-awesome.min.css" />
 		<link rel="stylesheet" type="text/css" href="{{ minify_file('js/BackToTop/BackToTop.css', app.request_stack.currentrequest.basepath) }}" />
 		
-		<script src="{{ app.request_stack.currentrequest.basepath }}/js/jquery.js"></script>
-		<script src="{{ minify_file('js/cookiechoices/cookiechoices.js', app.request_stack.currentrequest.basepath) }}"></script>
-		<script type="text/javascript">
-			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-			ga('create', 'UA-12307735-4', 'auto');
-			ga('send', 'pageview');
-
-			$(function() {
-				cookieChoices.showCookieBar({
-					linkHref: '{{ path("page_display", {"name" : "cookie"}) }}',
-					language: 'fr'
-				});
-			});
-		</script>
-		{% block script_additional %}
-		{% endblock %}
-		
 		{% block style_additional %}
 		{% endblock %}
+		
+		<script src="{{ app.request_stack.currentrequest.basepath }}/js/jquery.js"></script>
 	</head>
 	<body>
 		<div class="resize"></div>
@@ -170,6 +151,24 @@
 		</div>
 		<!-- Div Wrapper Element ends Here -->
 		<script src="{{ app.request_stack.currentrequest.basepath }}/css/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
+		<script src="{{ minify_file('js/cookiechoices/cookiechoices.js', app.request_stack.currentrequest.basepath) }}"></script>
+		<script type="text/javascript">
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+			ga('create', 'UA-12307735-4', 'auto');
+			ga('send', 'pageview');
+
+			$(function() {
+				cookieChoices.showCookieBar({
+					linkHref: '{{ path("page_display", {"name" : "cookie"}) }}',
+					language: 'fr'
+				});
+			});
+		</script>
+		
 		<script src="{{ minify_file('js/BackToTop/BackToTop.js', app.request_stack.currentrequest.basepath) }}"></script>
 		<script>
 			// Resize "aside" and "article" tags
@@ -188,6 +187,13 @@
 			
 			$(function() {
 				$(document).BackToTop();
+			});
+		</script>
+		{% block script_additional %}
+		{% endblock %}
+		
+		<script>
+			$(function() {
 				resizeAsideArticle();
 			});
 			

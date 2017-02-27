@@ -30,7 +30,7 @@ class PoeticFormRepository extends GenericRepository implements iRepository
 		return $id;
 	}
 	
-    public function find($id)
+    public function find($id, $show = false)
     {
         $data = $this->db->fetchAssoc('SELECT * FROM poeticform WHERE id = ?', array($id));
 
@@ -154,5 +154,22 @@ class PoeticFormRepository extends GenericRepository implements iRepository
         }
 
         return $entitiesArray;
+	}
+
+	public function checkForDoubloon($entity)
+	{
+		$qb = $this->db->createQueryBuilder();
+
+		$qb->select("COUNT(*) AS number")
+		   ->from("poeticform", "pf")
+		   ->where("pf.title = :title")
+		   ->setParameter('title', $entity->getTitle());
+
+		if($entity->getId() != null)
+		{
+			$qb->andWhere("pf.id != :id")
+			   ->setParameter("id", $entity->getId());
+		}
+		return $qb->execute()->fetchColumn();
 	}
 }

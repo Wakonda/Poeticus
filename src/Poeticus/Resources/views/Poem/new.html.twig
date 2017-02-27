@@ -71,14 +71,18 @@
 
 						$("#{{ form.collection.vars.id }} option").remove();
 						$("#{{ form.collection.vars.id }}").append('<option value="">{{ 'main.field.ChooseAnOption'|trans }}</option>');
-						$.each(collections, function(index, element)
+
+						if(collections != "")
 						{
-							$("#{{ form.collection.vars.id }}").append('<option value="'+ element.id +'">'+ element.title +'</option>');
-						});
-						{% set collection = app.request_stack.currentrequest.get('collectionId') %}
-						{% if collection is not null %}
-							$("#{{ form.collection.vars.id }}").val("{{ collection }}");
-						{% endif %}
+							$.each(collections, function(index, element)
+							{
+								$("#{{ form.collection.vars.id }}").append('<option value="'+ element.id +'">'+ element.title +'</option>');
+							});
+							{% set collection = app.request_stack.currentrequest.get('collectionId') %}
+							{% if collection is not null %}
+								$("#{{ form.collection.vars.id }}").val("{{ collection }}");
+							{% endif %}
+						}
 					}
 				});
 			}

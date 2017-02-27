@@ -449,7 +449,6 @@ class PoemAdminController
 		return $app['form.factory']->create(PoemType::class, $entity, array('poeticForms' => $poeticForms, 'users' => $userForms, 'collections' => $collectionForms, 'languages' => $languageForms, "locale" => $localeForms));
 	}
 
-
 	private function checkForDoubloon($entity, $form, $app)
 	{
 		if($entity->getTitle() != null)

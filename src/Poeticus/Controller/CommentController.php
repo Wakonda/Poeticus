@@ -35,20 +35,18 @@ class CommentController
 			$user = $app['repository.user']->findByUsernameOrEmail($user->getUsername());
 		else
 		{
-			
 			$form->get("text")->addError(new FormError($app["translator"]->trans("comment.field.YouMustBeLoggedInToWriteAComment")));
 		}
 
 		if($form->isValid())
 		{
 			$entity->setUser($user);
-			
-			$poem = $app['repository.poem']->find($poemId);
 			$entity->setPoem($poemId);
 			
 			$app['repository.comment']->save($entity);
 			
 			$entities = $app['repository.comment']->findAll();
+			$form = $app['form.factory']->create(CommentType::class, new Comment());
 		}
 
 		$params = $this->getParametersComment($request, $app, $poemId);
