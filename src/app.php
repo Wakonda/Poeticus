@@ -255,8 +255,8 @@ $app['form.type.extensions'] = $app->extend('form.type.extensions', function ($e
 $app['swiftmailer.options'] = array(
 	'host' => 'smtp.gmail.com',
 	'port' => 465,
-    'username' => 'amatukami66@gmail.com',
-    'password' => 'rclens66', // k+W13uz5
+    'username' => 'test@yopmail.com',
+    'password' => 'test',
     'encryption' => 'ssl'
 );
 
