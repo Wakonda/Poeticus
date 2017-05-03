@@ -26,6 +26,10 @@ $app['security.access_rules'] = array(
     array('^/admin', 'ROLE_ADMIN'),
 );
 
+$app['session.storage.options'] = [
+    'name' => "EfcgrtW"
+];
+
 $app['security.firewalls'] = array(
     'main' => array(
         'pattern' => '^/',

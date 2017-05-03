@@ -1,13 +1,11 @@
-<table id="poem_statistics">
-	<tbody>
-		<tr>
-			<td><span class="bold">{{ 'menu.left.NumberOfPublishedPoems'|trans }}</span></td><td>{{ statistics["count_poem"] }}</td>
-		</tr>
-		<tr>
-			<td><span class="bold">{{ 'menu.left.TotalAuthors'|trans }}</span></td><td>{{ statistics["count_biography"] }}</td>
-		</tr>
-		<tr>
-			<td><span class="bold">{{ 'menu.left.NumberOfBooks'|trans }}</span></td><td>{{ statistics["count_collection"] }}</td>
-		</tr>
-	</tbody>
-</table>
+<div class="flex-space-between">
+	<span class="bold">{{ 'menu.left.NumberOfPublishedPoems'|trans }}</span><span>{{ statistics["count_poem"] }}</span>
+</div>
+
+<div class="flex-space-between">
+	<span class="bold">{{ 'menu.left.TotalAuthors'|trans }}</span><span>{{ statistics["count_biography"] }}</span>
+</div>
+
+<div class="flex-space-between">
+	<span class="bold">{{ 'menu.left.NumberOfBooks'|trans }}</span><span>{{ statistics["count_collection"] }}</span>
+</div>

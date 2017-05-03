@@ -506,7 +506,7 @@ class IndexController
 
 		$html2pdf = new \HTML2PDF('P','A4','fr');
 		$html2pdf->WriteHTML($content);
-		$html2pdf->createIndex('Sommaire', 25, 12, false, true, 2, "times");
+		$html2pdf->createIndex('Sommaire', 25, 12, false, true, null, "times");
 		
 		$file = $html2pdf->Output('poem.pdf');
 

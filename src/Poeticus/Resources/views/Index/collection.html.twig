@@ -36,6 +36,7 @@
 {% endblock %}
 
 {% block main_title %}{{ entity.title }}{% endblock %}
+{% block meta_tag_description %}{{ entity.title }} est un recueil de poésies écrit par {{ entity.biography.title }} et publiée {{ (entity.releasedDate is not empty) ? "en "~entity.releasedDate : "à une date inconnue"}}.{% endblock %}
 
 {% block main_content %}
 	<p class="center">{{ ("photo/collection/"~entity.image)|max_size_image(app.request_stack.currentrequest.basepath) }}</p>
@@ -59,7 +60,7 @@
 		<tbody>
 			<tr>
 				<td class="socialNetwork">
-					<a href="{{ path('collection_pdf', {'collectionId' : entity.id, 'biographyId' : biography['id']}) }}" alt=""><img src="{{ app.request_stack.currentrequest.basepath }}/photo/pdf.gif" alt="" /></a>
+					<a href="{{ path('collection_pdf', {'collectionId' : entity.id, 'biographyId' : biography['id']}) }}" class="btn btn-default"><i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i></a>
 				</td>
 			</tr>
 		</tbody>

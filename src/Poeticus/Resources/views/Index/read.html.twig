@@ -7,6 +7,12 @@
 	<link rel="stylesheet" type="text/css" href="{{ app.request_stack.currentrequest.basepath }}/js/jquery.qtip/jquery.qtip.min.css" />
 {% endblock %}
 
+{% block script_additional_sup %}
+	<script src="{{ app.request_stack.currentrequest.basepath }}/js/tinymce/js/tinymce/tinymce.min.js" type="text/javascript"></script>
+{% endblock %}
+
+{% block meta_tag_description %}{{ entity.title }} est une poésie de {{ entity.biography.title }} publiée {{ (entity.releasedDate is not empty) ? "en "~entity.releasedDate : "à une date inconnue"}} {{ (entity.collection is not null) ? "dans le recueil intitulé "~entity.collection.title : "" }}{% endblock %}
+
 {% block script_additional %}
 <script src="{{ app.request_stack.currentrequest.basepath }}/js/jquery.qtip/jquery.qtip.min.js"></script>
 <script type="text/javascript" src="{{ app.request_stack.currentrequest.basepath }}/js/aterkik-jquery-tweet-highlighted/jquery.tweetHighlighted.js"></script>
@@ -136,13 +142,13 @@
 		<tbody>
 			<tr>
 				<td class="socialNetwork">
-					<a href="{{ path('read_pdf', {'id' : entity.id}) }}"><img src="{{ app.request_stack.currentrequest.basepath }}/photo/pdf.gif" alt="" /></a>
+					<a href="{{ path('read_pdf', {'id' : entity.id}) }}" class="btn btn-default"><i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i></a>
 				</td>
 				<td class="socialNetwork">
-					<a id="print_page" href="#"><img src="{{ app.request_stack.currentrequest.basepath }}/photo/print.gif" alt="" /></a>
+					<a id="print_page" href="#" class="btn btn-default"><i class="fa fa-print fa-2x" aria-hidden="true"></i></a>
 				</td>
 				<td class="socialNetwork">
-					<a href="#" data-toggle="modal" data-target="#send_poem_modal"><img src="{{ app.request_stack.currentrequest.basepath }}/photo/share-by-mail.png" alt="" /></a>
+					<a href="#" data-toggle="modal" data-target="#send_poem_modal" class="btn btn-default"><i class="fa fa-envelope fa-2x" aria-hidden="true"></i></a>
 				</td>
 				<td class="socialNetwork" id="twitter">
 					<a href="https://twitter.com/share" class="twitter-share-button" data-via="Wakonda1" id="TwitterShareButton1">Tweet</a>
@@ -187,7 +193,7 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title" id="sendPoemModalLabel">Envoyez cette poésie à un ami</h4>
+					<h4 class="modal-title" id="sendPoemModalLabel"><i class="fa fa-share-square-o" aria-hidden="true"></i> {{ 'send.index.SendPoemFriend'|trans }}</h4>
 				</div>
 				{{ render(app.request_stack.currentrequest.baseUrl ~ '/send_poem/index/' ~ entity.id) }}
 			</div>

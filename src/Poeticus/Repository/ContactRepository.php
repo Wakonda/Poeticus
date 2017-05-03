@@ -91,7 +91,7 @@ class ContactRepository extends GenericRepository
 		$qb = $this->db->createQueryBuilder();
 		
 		$qb->select("COUNT(*) AS count")
-		   ->from("Contact", "cn")
+		   ->from("contact", "cn")
 		   ->where("cn.readMessage = 0");
 		   
 		return $qb->execute()->fetchColumn();

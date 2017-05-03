@@ -380,6 +380,12 @@ $app->get('/admin/poem/newfast', 'controllers.poemadmin:newFastAction')
 $app->post('/admin/poem/addfast', 'controllers.poemadmin:addFastAction')
     ->bind('poemadmin_addfast');
 
+$app->get('/admin/poem/newfastmultiple', 'controllers.poemadmin:newFastMultipleAction')
+    ->bind('poemadmin_newfastmultiple');
+
+$app->post('/admin/poem/addfastmultiple', 'controllers.poemadmin:addFastMultipleAction')
+    ->bind('poemadmin_addfastmultiple');
+
 $app->get('/admin/poem/get_biographies', 'controllers.poemadmin:getBiographiesByAjaxAction')
 	->bind('poemadmin_getbiographiesbyajax');
 

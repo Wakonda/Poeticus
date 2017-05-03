@@ -15,7 +15,7 @@
 	
 	p, span
 	{
-		font-size: 15px;
+		font-size: 20px;
 		text-align: justify;
 	}
 	
@@ -69,7 +69,8 @@
 </page>
 
 <page pageset="old">
-	<bookmark title="L'auteur" level="0" ></bookmark><h1>L'auteur</h1>
+	<bookmark title="L'auteur" level="0" ></bookmark>
+	<h1>L'auteur</h1>
 	<h2 class="center">{{ biography.title|remove_control_characters }}</h2>
 	<p class="center">{{ ("photo/biography/"~biography.photo)|max_size_image(app.request_stack.currentrequest.basepath, null, true) }}</p>
 	{{ biography.text|raw }}
@@ -77,7 +78,8 @@
 
 {% for entity in entities %}
 <page pageset="old">
-    <bookmark title="{{ entity.title }}" level="0" ></bookmark><h1>{{ entity.title }}</h1>
+    <bookmark title="{{ entity.title }}" level="0" ></bookmark>
+	<h1>{{ entity.title }}</h1>
     <div class="niveau">
         {{ entity.text|raw }}
     </div>

@@ -434,8 +434,8 @@ class UserController implements ControllerProviderInterface
 			$show = $app['url_generator']->generate('read', array('id' => $entity['id']));
 			$row[] = '<a href="'.$show.'" alt="Show">'.$entity['title'].'</a>';
 			
-			$imageVote = $request->getBaseUrl()."/photo/".(($entity['vote'] == -1) ? "vote_down.png" : "vote_up.png");
-			$row[] = "<img src='".$imageVote."' alt='' class='votes_result_user' width='15' />";
+			list($icon, $color) = (($entity['vote'] == -1) ? array("fa-arrow-down", "red") : array("fa-arrow-up", "green"));
+			$row[] = "<i class='fa ".$icon."' aria-hidden='true' style='color: ".$color.";'></i>";
 
 			$output['aaData'][] = $row;
 		}

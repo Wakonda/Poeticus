@@ -3,22 +3,12 @@
 {% block head_title %}{{ 'menu.left.Admin'|trans }} - {{ 'admin.index.Biography'|trans }}{% endblock %}
 {% block main_title %}{{ 'menu.left.Admin'|trans }} - {{ 'admin.index.Biography'|trans }}{% endblock %}
 
-{% block style_additional %}
-	<link rel="stylesheet" type="text/css" href="{{ app.request_stack.currentrequest.basepath }}/js/redactor/css/redactor.css" />
-{% endblock %}
 {% block script_additional %}
-	<script src="{{ app.request_stack.currentrequest.basepath }}/js/redactor/redactor.min.js"></script>
+	{% import "Index/macro.html.twig" as macro %}
+	{{ macro.redactor() }}
 	<script type="text/javascript">
 		$(function()
 		{
-			$('.redactor').redactor({
-				autoresize: false,
-				minHeight: 300,
-				buttons: ['html', '|', 'bold', 'italic', 'deleted', 'underline', '|',
-				'unorderedlist', 'orderedlist', 'outdent', 'indent', '|',
-				'image', 'video', 'file', 'table', 'link', '|', 'fontcolor', 'backcolor', '|', 'alignment', 'aligncenter', 'alignright', 'justify', '|', 'horizontalrule']
-			});
-			
 			$("select#{{ form.language.vars.id }}").change(function() {
 				$.ajax({
 					type: "GET",

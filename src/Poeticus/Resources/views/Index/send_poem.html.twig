@@ -22,6 +22,7 @@
 					else
 					{
 						$("form#send_poem_form").find("input[type=text], textarea").val("");
+						tinyMCE.activeEditor.setContent('');
 						$('#send_poem_modal').modal('hide');
 						$('html, body').animate({scrollTop:$('h1').position().top}, 'slow');
 						$('#send_poem_result').html("Votre poème a été envoyé avec succès !");

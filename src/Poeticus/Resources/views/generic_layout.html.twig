@@ -4,7 +4,8 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="google-site-verification" content="mVbu4CCtykAXHkuZC4oxd330guO7Ci4ZwsFdirIo9MQ" />
-		<meta name="description" content="Poéticus est une encyclopédie francophone regroupant les plus beaux poèmes qui ont façonné l'univers féerique et passionnant de la littérature." />
+		<title>{% block head_title %}{% endblock %}</title>
+		<meta name="description" content="{% block meta_tag_description %}Poéticus est une encyclopédie francophone regroupant les plus beaux poèmes qui ont façonné l'univers féerique et passionnant de la littérature.{% endblock %}" />
 		<meta name="keywords" content="po&eacute;sie, po&egrave;me, litt&eacute;rature, vers, prose, po&egrave;te, recueil, ha&iuml;ku, art po&eacute;tique" />
 		{% block meta_tag %}
 		<meta name="robots" content="index,follow" />
@@ -12,7 +13,6 @@
 
 		<link rel="shortcut icon" href="{{ app.request_stack.currentrequest.getUriForPath('/') }}photo/favicon.jpg">
 		<link rel="alternate" href="{{ app.request_stack.currentrequest.getUriForPath('/') }}" hreflang="fr-fr" />
-		<title>Poéticus - {% block head_title %}{% endblock %}</title>
 
 		<link rel="stylesheet" type="text/css" href="{{ minify_file('css/style.css', app.request_stack.currentrequest.basepath) }}" media="screen" />
 		<link rel="stylesheet" type="text/css" href="{{ minify_file('css/style_print.css', app.request_stack.currentrequest.basepath) }}" media="print" />
@@ -24,6 +24,8 @@
 		{% endblock %}
 		
 		<script src="{{ app.request_stack.currentrequest.basepath }}/js/jquery.js"></script>
+		{% block script_additional_sup %}
+		{% endblock %}
 	</head>
 	<body>
 		<div class="resize"></div>
@@ -200,6 +202,12 @@
 			$( document ).ajaxComplete(function() {
 				resizeAsideArticle();
 			});
+
+			window.fbAsyncInit = function(){
+				FB.Event.subscribe("xfbml.render", function(){
+					resizeAsideArticle();
+				});
+			};
 		</script>
 	</body>
 </html>

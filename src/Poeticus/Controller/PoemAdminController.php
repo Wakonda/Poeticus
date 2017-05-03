@@ -6,6 +6,7 @@ use Poeticus\Entity\Poem;
 use Poeticus\Entity\PoeticForm;
 use Poeticus\Form\Type\PoemType;
 use Poeticus\Form\Type\PoemFastType;
+use Poeticus\Form\Type\PoemFastMultipleType;
 use Silex\Application;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -319,6 +320,102 @@ class PoemAdminController
 		}
 	
 		return $app['twig']->render('Poem/fast.html.twig', array('form' => $form->createView(), 'entity' => $entity));
+	}
+	
+	public function newFastMultipleAction(Request $request, Application $app)
+	{
+		$poeticForms = $app['repository.poeticform']->findAllForChoice($app['generic_function']->getLocaleTwigRenderController());
+		$collectionForms = $app['repository.collection']->findAllForChoice($app['generic_function']->getLocaleTwigRenderController());
+		
+		$form = $app['form.factory']->create(PoemFastMultipleType::class, null, array('collections' => $collectionForms, 'poeticForms' => $poeticForms));
+		$language = $app['repository.language']->findOneByAbbreviation($app['generic_function']->getLocaleTwigRenderController());
+
+		return $app['twig']->render('Poem/fastMultiple.html.twig', array('form' => $form->createView(), 'language' => $language));
+	}
+	
+	public function addFastMultipleAction(Request $request, Application $app)
+	{
+		$entity = new Poem();
+		$poeticForms = $app['repository.poeticform']->findAllForChoice($app['generic_function']->getLocaleTwigRenderController());
+		$collectionForms = $app['repository.collection']->findAllForChoice($app['generic_function']->getLocaleTwigRenderController());
+		
+		$form = $app['form.factory']->create(PoemFastMultipleType::class, $entity, array('collections' => $collectionForms, 'poeticForms' => $poeticForms));
+		$language = $app['repository.language']->findOneByAbbreviation($app['generic_function']->getLocaleTwigRenderController());
+		
+		$form->handleRequest($request);
+		$req = $request->request->get($form->getName());
+			
+		if(!empty($req["url"]) and filter_var($req["url"], FILTER_VALIDATE_URL))
+		{
+			$url = $req["url"];
+			$url_array = parse_url($url);
+			
+			$authorizedURLs = ['d3d3LnBvZXNpZS1mcmFuY2Fpc2UuZnI='];
+			
+			if(!in_array(base64_encode($url_array['host']), $authorizedURLs))
+				$form->get("url")->addError(new FormError('URL inconnue'));
+		}
+
+		if($form->isValid())
+		{
+			$entity->setAuthorType("biography");
+			$entity->setCountry($app['repository.biography']->find($entity->getBiography())->getCountry());
+			
+			switch(base64_encode($url_array['host']))
+			{
+				case 'd3d3LnBvZXNpZS1mcmFuY2Fpc2UuZnI=':
+					$number = $req['number'];
+					$i = 0;
+					$html = file_get_html($url);
+
+					foreach($html->find('div.poemes-auteurs') as $div)
+					{					
+						$entityPoem = clone $entity;
+						$a = current($div->find("a"));
+						$content = file_get_html($a->href);
+						$title_node = $content->find('article h1');
+						$title_str = $title_node[0]->plaintext;
+						$title_array = explode(":", $title_str);
+						$title = trim($title_array[1]);
+
+						$text_node = $content->find('div.postpoetique p');
+						$text_init = strip_tags($text_node[0]->plaintext, "<br><br /><br/>");
+						$text_array = explode("\n", $text_init);
+						$text = "";
+						
+						foreach($text_array as $line) {
+							$text = $text."<br>".trim($line);
+						}
+						$text = preg_replace('/^(<br>)+/', '', $text);
+						
+						$entityPoem->setTitle($title);
+						$entityPoem->setText($text);
+						$entityPoem->setLanguage($app['repository.language']->findOneByAbbreviation('fr')->getId());
+						
+						if($app['repository.poem']->checkForDoubloon($entityPoem) >= 1)
+							continue;
+						
+						if($number == $i)
+							break;
+	
+						$i++;
+
+						$id = $app['repository.poem']->save($entityPoem);
+					}
+					break;
+			}
+
+			
+			
+			if(isset($id))
+				$redirect = $app['url_generator']->generate('poemadmin_show', array('id' => $id));
+			else
+				$redirect = $app['url_generator']->generate('poemadmin_index');
+
+			return $app->redirect($redirect);
+		}
+		
+		return $app['twig']->render('Poem/fastMultiple.html.twig', array('form' => $form->createView(), 'language' => $language));
 	}
 	
 	public function listSelectedBiographyAction(Request $request, Application $app)

@@ -1,7 +1,29 @@
 {% form_theme form 'Form/fields.html.twig' %}
 
+<script type="text/javascript">
+	tinymce.init({
+		selector:'#{{ form.message.vars.id }}',
+		height: 150,
+		menubar: false,
+		language: "{{ code_by_language() }}",
+		statusbar: false,
+		plugins: [
+			'lists link image charmap textcolor media'
+		],
+		toolbar: 'bold italic underline | forecolor backcolor | alignleft aligncenter alignright alignjustify | link image | undo redo |',
+		setup: function (editor) {
+			editor.on('change', function () {
+				tinymce.triggerSave();
+			});
+		}
+	});
+</script>
+
 {{ form_start(form, {'method' : 'post', 'action' : '' , 'attr': {'novalidate': 'novalidate', 'id': 'send_poem_form'} }) }}
 	<div class="modal-body">
+		<div class="alert alert-info" role="alert">
+			<strong><i class="fa fa-info-circle" aria-hidden="true"></i> {{ 'send.index.Infos'|trans }}</strong> - {{ 'send.index.PoemAutomaticallyAddedPost'|trans }}
+		</div>
 		<table class="form_grid">
 			<tr>
 				<th>{{ form_label(form.firstName) }}</th>

@@ -159,6 +159,11 @@ comment:
         Message: "Messaggio"
         Send: "Inviare"
         YouMustBeLoggedInToWriteAComment: "Devi essere registrato per scrivere un commento"
+send:
+    index:
+        PoemAutomaticallyAddedPost: "La poesia verrà automaticamente aggiunto al tuo messaggio"
+        SendPoemFriend: "Invia questa poesia ad un amico"
+        Infos: "Informazioni"
 vote:
     index:
         Votes: "Votazioni"

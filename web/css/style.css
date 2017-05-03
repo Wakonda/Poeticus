@@ -43,7 +43,7 @@ p
 a:hover { color:#406189;
 text-decoration:none;}
 
-.sidebar h1, .ad_title { font-size:18px; padding:0px; border-bottom:2px solid #dedede;}
+.sidebar h1, .subtitle { font-size:18px; padding:0px; border-bottom:2px solid #dedede;}
 
 /*
 Main Styles
@@ -212,13 +212,7 @@ footer#copyrights
 	width:90%;
 }
 .sidebar li{ padding:5px 0px;}
-blockquote{ padding:10px; margin:0px 0px; border-bottom:1px solid #dedede;}
-blockquote:before {
-content: '\201C';
-}
-blockquote:after {
-content: '\201D';
-}
+
 #copyrights{
 	border-top:3px solid #CCC;border-bottom:3px solid #CCC;
 }
@@ -422,9 +416,6 @@ input[type=search] {
 	border: solid 1px darkgrey;
 }
 
-.bias-input-group .input-group-addon + .input-group-btn > .btn {border-radius: 0;}
-.bias-input-group .input-group-addon + .input-group-btn + .input-group-addon {border-right: 0; border-left: 0;}
-
 /***** GENERIC CLASS **************/
 button[type="submit"]
 {
@@ -465,10 +456,6 @@ button[type="submit"]
 	display: none;
 }
 
-input:not([type='checkbox']) {
-	width: 100%;
-}
-
 article#contents header h1 img#flag_title
 {
 	border: none !important;
@@ -482,7 +469,6 @@ article#contents header h1 img#flag_title
 {
 	border: none !important;
 	width: auto !important;
-	max-width: 20px;
 	height: 13px;
 	margin-top: 0px;
 	border-radius: 0 !important;
@@ -729,8 +715,9 @@ button#poemuser_draft {
 	text-align: center;
 }
 
-table#poem_statistics  tr td:first-child {
-	width: 95%;
+.flex-space-between {
+    justify-content: space-between;
+    display: flex;
 }
 
 /******** CAPTCHA **********/
@@ -827,4 +814,53 @@ td.socialNetwork#googlePlus {
 	-moz-filter: brightness(0.6);
 	-o-filter: brightness(0.6);
 	-ms-filter: brightness(0.6);
+}
+
+/******* MAP ********/
+#map img {
+	border: 0 !important;
+}
+
+/******* BLOCKQUOTE ********/
+blockquote{
+  display:block;
+  background: #fff;
+  padding: 15px 20px 15px 45px !important;
+  margin: 0 0 20px;
+  position: relative;
+  
+  /*Font*/
+  font-family: Georgia, serif;
+  line-height: 1.2;
+  color: #666;
+  text-align: justify;
+
+  /*Box Shadow - (Optional)*/
+  -moz-box-shadow: 2px 2px 15px #ccc;
+  -webkit-box-shadow: 2px 2px 15px #ccc;
+  box-shadow: 2px 2px 15px #ccc;
+}
+
+blockquote::before{
+  content: "\201C"; /*Unicode for Left Double Quote*/
+  
+  /*Font*/
+  font-family: Georgia, serif;
+  font-size: 60px;
+  font-weight: bold;
+  color: #999;
+  
+  /*Positioning*/
+  position: absolute;
+  left: 10px;
+  top:5px;
+}
+
+blockquote::after{
+  /*Reset to make sure*/
+  content: "";
+}
+
+blockquote em{
+  font-style: italic;
 }

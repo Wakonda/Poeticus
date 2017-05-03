@@ -159,6 +159,11 @@ comment:
         Message: "Message"
         Send: "Envoyer"
         YouMustBeLoggedInToWriteAComment: "Vous devez être connecté pour pouvoir écrire un commentaire"
+send:
+    index:
+        PoemAutomaticallyAddedPost: "La poésie sera automatiquement ajoutée à votre message"
+        SendPoemFriend: "Envoyez cette poésie à un ami"
+        Infos: "Infos"
 vote:
     index:
         Votes: "Votes"
