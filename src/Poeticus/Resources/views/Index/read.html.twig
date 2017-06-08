@@ -151,12 +151,12 @@
 					<a href="#" data-toggle="modal" data-target="#send_poem_modal" class="btn btn-default"><i class="fa fa-envelope fa-2x" aria-hidden="true"></i></a>
 				</td>
 				<td class="socialNetwork" id="twitter">
-					<a href="https://twitter.com/share" class="twitter-share-button" data-via="Wakonda1" id="TwitterShareButton1">Tweet</a>
+					<a href="https://twitter.com/share" class="twitter-share-button" data-via="poeticus12" id="TwitterShareButton1">Tweet</a>
 					<script type="text/javascript">!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 					<script type="text/javascript">
 						var ValidMe=document.getElementById("TwitterShareButton1");
 						ValidMe.setAttribute("data-count","horizontal");
-						ValidMe.setAttribute("data-text", "Poéticus - {{ entity.title }}");
+						ValidMe.setAttribute("data-text", "{{ entity.title|html_entity_decode }}");
 					</script>
 				</td>
 				<td class="socialNetwork">

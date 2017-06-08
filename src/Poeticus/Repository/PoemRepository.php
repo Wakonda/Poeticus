@@ -119,7 +119,7 @@ class PoemRepository extends GenericRepository implements iRepository
 
 		if(!empty($datasObject->text))
 		{
-			$keywords = explode($datasObject->text, ",");
+			$keywords = explode(",", $datasObject->text);
 			$i = 0;
 			foreach($keywords as $keyword)
 			{

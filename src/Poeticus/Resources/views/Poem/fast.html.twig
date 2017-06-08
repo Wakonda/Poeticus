@@ -106,6 +106,10 @@
 	<form action="{{ path('poemadmin_addfast') }}" method="post" novalidate>
 		<table class="form_grid">
 			<tr>
+				<th>{{ form_label(form.ipProxy) }}</th>
+				<td><div class="errors">{{ form_errors(form.ipProxy) }}</div>{{ form_widget(form.ipProxy, {'attr':{'class':'full_width form-control'}}) }}</td>
+			</tr>
+			<tr>
 				<th>{{ form_label(form.language) }}</th>
 				<td><div class="errors">{{ form_errors(form.language) }}</div>{{ form_widget(form.language, {'attr':{'class':'full_width form-control'}}) }}</td>
 			</tr>

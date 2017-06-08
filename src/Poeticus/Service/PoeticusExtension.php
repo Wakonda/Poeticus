@@ -21,6 +21,7 @@ class PoeticusExtension extends \Twig_Extension
     public function getFilters() {
         return array(
             "var_dump"        => new \Twig_Filter_Method($this, "var_dump"),
+            "html_entity_decode"        => new \Twig_Filter_Method($this, "html_entity_decode"),
             "toString"        => new \Twig_Filter_Method($this, "getStringObject"),
             "text_month"      => new \Twig_Filter_Method($this, "text_month"),
             "max_size_image"  => new \Twig_Filter_Method($this, "maxSizeImage", array('is_safe' => array('html'))),
@@ -51,7 +52,11 @@ class PoeticusExtension extends \Twig_Extension
     public function var_dump($object) {
         return var_dump($object);
     }
-	
+
+    public function html_entity_decode($str) {
+        return html_entity_decode($str);
+    }
+
 	public function text_month($month, $year)
 	{
 		$locale = $this->app['generic_function']->getLocaleTwigRenderController();

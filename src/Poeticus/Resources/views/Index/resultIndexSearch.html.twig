@@ -38,6 +38,12 @@
 {% block main_title %}Résultat de votre recherche{% endblock %}
 
 {% block main_content %}
+	<div class="alert alert-info alert-dismissable">
+	  <a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+	  <strong><i class="fa fa-search" aria-hidden="true"></i> Critères : </strong>
+	  <span class="italic">{{ criteria|join(",") }}</span>
+	</div>
+
 	<table class="index_directories display">
 		<thead>
 			<th>Titre</th>

@@ -23,6 +23,10 @@ class PoemFastType extends AbstractType
 		$poeticFormArray = $options["poeticForms"];
 
         $builder
+			->add('ipProxy', TextType::class, array(
+                'label' => 'Adresse Proxy', 'required' => false, 'mapped' => false, 'constraints' => [new Assert\Regex("#^[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}:[0-9]{2,4}$#")]
+            ))
+
 			->add('url', TextType::class, array(
                 'constraints' => [new Assert\NotBlank(), new Assert\Url()], 'label' => 'URL', 'mapped' => false
             ))

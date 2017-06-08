@@ -47,8 +47,9 @@ class IndexController
 	public function indexSearchAction(Request $request, Application $app)
 	{
 		$search = $request->request->get("index_search");
+		$criteria = array_filter(array_values($search));
 
-		return $app['twig']->render('Index/resultIndexSearch.html.twig', array('search' => json_encode($search)));
+		return $app['twig']->render('Index/resultIndexSearch.html.twig', array('search' => base64_encode(json_encode($search)), 'criteria' => $criteria));
 	}
 	
 	public function indexSearchDatatablesAction(Request $request, Application $app, $search)
@@ -67,7 +68,7 @@ class IndexController
 				$sortDirColumn[] = $request->query->get('sSortDir_'.$i);
 			}
 		}
-		$sSearch = json_decode($search);
+		$sSearch = json_decode(base64_decode($search));
 		$entities = $app['repository.poem']->findIndexSearch($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $this->getCurrentLocale($app));
 		$iTotal = $app['repository.poem']->findIndexSearch($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $this->getCurrentLocale($app), true);
 
@@ -241,10 +242,10 @@ class IndexController
 				$sortByColumn[] = $request->query->get('iSortCol_'.$i);
 				$sortDirColumn[] = $request->query->get('sSortDir_'.$i);
 			}
-		}
+		}//die("kk");
 
 		$entities = $app['repository.poem']->findPoemByAuthor($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $this->getCurrentLocale($app));
-		$iTotal = $app['repository.poem']->findPoemByAuthor($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $sSearch, $this->getCurrentLocale($app), true);
+		$iTotal = $app['repository.poem']->findPoemByAuthor($iDisplayStart, $iDisplayLength, $sortByColumn, $sortDirColumn, $sSearch, $this->getCurrentLocale($app), true);
 
 		$output = array(
 			"sEcho" => $request->query->get('sEcho'),

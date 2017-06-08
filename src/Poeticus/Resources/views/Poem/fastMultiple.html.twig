@@ -84,6 +84,10 @@
 	<form action="{{ path('poemadmin_addfastmultiple') }}" method="post" novalidate>
 		<table class="form_grid">
 			<tr>
+				<th>{{ form_label(form.ipProxy) }}</th>
+				<td><div class="errors">{{ form_errors(form.ipProxy) }}</div>{{ form_widget(form.ipProxy, {'attr':{'class':'full_width form-control'}}) }}</td>
+			</tr>
+			<tr>
 				<th>{{ form_label(form.poeticform) }}</th>
 				<td><div class="errors">{{ form_errors(form.poeticform) }}</div>{{ form_widget(form.poeticform, {'attr':{'class':'full_width form-control'}}) }}</td>
 			</tr>

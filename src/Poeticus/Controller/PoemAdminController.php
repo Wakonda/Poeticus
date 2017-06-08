@@ -212,7 +212,11 @@ class PoemAdminController
 			$url = $req["url"];
 			$url_array = parse_url($url);
 
-			$content = file_get_html($url);
+			if(!empty($ipProxy = $form->get('ipProxy')->getData()))
+				$content = str_get_html($app['generic_function']->file_get_contents_proxy($url, $ipProxy));
+			else
+				$content = file_get_html($url, false, null, 0);
+
 			$entity->setAuthorType("biography");
 			$entity->setCountry($app['repository.biography']->find($entity->getBiography())->getCountry());
 			$poemArray = array();
@@ -366,7 +370,11 @@ class PoemAdminController
 				case 'd3d3LnBvZXNpZS1mcmFuY2Fpc2UuZnI=':
 					$number = $req['number'];
 					$i = 0;
-					$html = file_get_html($url);
+					
+					if(!empty($ipProxy = $form->get('ipProxy')->getData()))
+						$html = str_get_html($app['generic_function']->file_get_contents_proxy($url, $ipProxy));
+					else
+						$html = file_get_html($url, false, null, 0);
 
 					foreach($html->find('div.poemes-auteurs') as $div)
 					{					
