@@ -382,7 +382,7 @@ class UserController implements ControllerProviderInterface
 		{
 			$row = array();
 
-			$show = $app['url_generator']->generate('read', array('id' => $entity->getId()));
+			$show = $app['url_generator']->generate('read', array('id' => $entity->getId(), 'slug' => $entity->getSlug()));
 			$row[] = '<a href="'.$show.'" alt="Show">'.$entity->getTitle().'</a>';
 
 			if ($app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_REMEMBERED') and $this->getCurrentUser($app)->getUsername() == $username) {
@@ -431,7 +431,7 @@ class UserController implements ControllerProviderInterface
 		{
 			$row = array();
 
-			$show = $app['url_generator']->generate('read', array('id' => $entity['id']));
+			$show = $app['url_generator']->generate('read', array('id' => $entity['id'], 'slug' => $entity['slug']));
 			$row[] = '<a href="'.$show.'" alt="Show">'.$entity['title'].'</a>';
 			
 			list($icon, $color) = (($entity['vote'] == -1) ? array("fa-arrow-down", "red") : array("fa-arrow-up", "green"));
@@ -478,7 +478,7 @@ class UserController implements ControllerProviderInterface
 		{
 			$row = array();
 
-			$show = $app['url_generator']->generate('read', array('id' => $entity['id']));
+			$show = $app['url_generator']->generate('read', array('id' => $entity['id'], 'slug' => $entity['slug']));
 			$row[] = '<a href="'.$show.'" alt="Show">'.$entity['title'].'</a>';
 			$row[] = "le ".date_format(new \Datetime($entity['created_at']), "d/m/Y à H:i:s");
 

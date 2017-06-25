@@ -58,7 +58,7 @@
 	<hr class="flare">
 	<h2>{{ 'main.index.PoemRandomly'|trans }}</h2>
 	{% if random is not null %}
-	<h3><a href="{{ path('read', {'id' : random.id}) }}" alt="{{ random.title }}">{{ random.title }}</a></h3>
+	<h3><a href="{{ path('read', {'id' : random.id, 'slug' : random.slug }) }}" alt="{{ random.title }}">{{ random.title }}</a></h3>
 	<div>
 		{% if random.poeticform is not null and random.poeticform.typeContentPoem == constant('Poeticus\\Entity\\PoeticForm::IMAGETYPE') %}
 			{{ ("photo/poem/"~random.photo)|max_size_image(app.request_stack.currentrequest.basepath) }}
@@ -66,9 +66,9 @@
 			{{ random.text|raw }}
 		{% endif %}
 		<hr>
-		<a href="{{ path('author', {'id' : random.biography.id }) }}" alt="">{{ random.biography.title }}</a>
+		<a href="{{ path('author', {'id' : random.biography.id, 'slug' : random.biography.slug }) }}" alt="">{{ random.biography.title }}</a>
 		-
-		<a href="{{ path('country', {'id' : random.country.id }) }}" alt=""><img class="flag" src="{{ app.request_stack.currentrequest.basepath }}/photo/country/{{ random.country.flag }}" alt="" height="8" /></a>
+		<a href="{{ path('country', {'id' : random.country.id, 'slug' : random.country.slug }) }}" alt=""><img class="flag" src="{{ app.request_stack.currentrequest.basepath }}/photo/country/{{ random.country.flag }}" alt="" height="8" /></a>
 	</div>
 	{% else %}
 		<p>{{ 'main.index.NoPoem'|trans }}</p>

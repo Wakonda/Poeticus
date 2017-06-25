@@ -2,6 +2,8 @@
 
 namespace Poeticus\Entity;
 
+use Poeticus\Service\GenericFunction;
+
 class Collection
 {
     /**
@@ -15,12 +17,18 @@ class Collection
      * @var string
      */
     protected $title;
-	
+
     /**
      *
      * @var text
      */
     protected $text;
+
+    /**
+     *
+     * @var string
+     */
+    protected $slug;
 
     /**
      *
@@ -80,6 +88,16 @@ class Collection
     public function setText($text)
     {
         $this->text = $text;
+    }
+
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    public function setSlug($slug)
+    {
+		$this->slug = GenericFunction::slugify($this->title);
     }
 
     public function getImage()

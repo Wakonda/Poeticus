@@ -92,7 +92,7 @@
 			cssClass: 'btn btn-primary',
 			minLength: 6,
 			maxLength: 144 * 2,
-			extra: '- {{ url("read", { "id" : entity.id }) }}',
+			extra: '- {{ url("read", { "id" : entity.id, 'slug' : entity.slug }) }}',
 			via: 'poeticus12',
 			popArgs: 'width=500,height=300,toolbar=0,top=' + popupLocation[0] + ",left=" + popupLocation[1]
 		});
@@ -122,12 +122,12 @@
 	<hr>
 	<p>
 	{% if entity.authorType == "biography" %}
-		<a href="{{ path('author', {'id' : entity.biography.id }) }}" alt="">{{ entity.biography.title }}</a>
+		<a href="{{ path('author', {'id' : entity.biography.id, 'slug' : entity.biography.slug }) }}" alt="">{{ entity.biography.title }}</a>
 	{% else %}
 		<a href="{{ path('user_show', {'id' : entity.user }) }}" alt="">{{ entity.user }}</a>
 	{% endif %}
 	-
-	<a href="{{ path('country', {'id' : entity.country.id }) }}" alt=""><img class="flag" src="{{ app.request_stack.currentrequest.basepath }}/photo/country/{{ entity.country.flag }}" alt="" height="8" /></a>
+	<a href="{{ path('country', {'id' : entity.country.id, 'slug' : entity.country.slug }) }}" alt=""><img class="flag" src="{{ app.request_stack.currentrequest.basepath }}/photo/country/{{ entity.country.flag }}" alt="" height="8" /></a>
 	{% if entity.collection is not null %}
 		-
 		<a class="underline italic" href="{{ path('collection', {'id' : entity.collection.id }) }}" alt="">{{ entity.collection.title }}</a>
@@ -142,7 +142,7 @@
 		<tbody>
 			<tr>
 				<td class="socialNetwork">
-					<a href="{{ path('read_pdf', {'id' : entity.id}) }}" class="btn btn-default"><i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i></a>
+					<a href="{{ path('read_pdf', {'id' : entity.id, 'slug' : entity.slug }) }}" class="btn btn-default"><i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i></a>
 				</td>
 				<td class="socialNetwork">
 					<a id="print_page" href="#" class="btn btn-default"><i class="fa fa-print fa-2x" aria-hidden="true"></i></a>
@@ -204,11 +204,11 @@
 		<div id="poem_browsing" class="hidden_print">
 			<hr>
 			{% if(browsingPoems['previous'] is not empty) %}
-				<span data-nav-action="{{ 'poem.browsing.Previous'|trans }}" data-nav-title="{{ browsingPoems['previous']['title'] }}" id="previous_data"><a href="{{ path('read', {'id' : browsingPoems['previous']['id']}) }}"><i class="fa fa-arrow-circle-left"></i> {{ 'poem.browsing.Previous'|trans }}</a></span>
+				<span data-nav-action="{{ 'poem.browsing.Previous'|trans }}" data-nav-title="{{ browsingPoems['previous']['title'] }}" id="previous_data"><a href="{{ path('read', {'id' : browsingPoems['previous']['id'], 'slug' : browsingPoems['previous']['slug']}) }}"><i class="fa fa-arrow-circle-left"></i> {{ 'poem.browsing.Previous'|trans }}</a></span>
 			{% endif %}
 			
 			{% if(browsingPoems['next'] is not empty) %}
-				<span data-nav-action="{{ 'poem.browsing.Next'|trans }}" data-nav-title="{{ browsingPoems['next']['title'] }}" class="right" id="next_data"><a href="{{ path('read', {'id' : browsingPoems['next']['id']}) }}">{{ 'poem.browsing.Next'|trans }} <i class="fa fa-arrow-circle-right"></i></a></span>
+				<span data-nav-action="{{ 'poem.browsing.Next'|trans }}" data-nav-title="{{ browsingPoems['next']['title'] }}" class="right" id="next_data"><a href="{{ path('read', {'id' : browsingPoems['next']['id'], 'slug' : browsingPoems['next']['slug']}) }}">{{ 'poem.browsing.Next'|trans }} <i class="fa fa-arrow-circle-right"></i></a></span>
 			{% endif %}
 		</div>
 		<div style="clear: both;"></div>

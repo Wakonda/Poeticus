@@ -49,7 +49,7 @@ class PoemVoteRepository extends GenericRepository
 
 		$aColumns = array('pf.title', 'vo.vote');
 		
-		$qb->select("pf.id, pf.title, vo.vote")
+		$qb->select("pf.id, pf.title, pf.slug, vo.vote")
 		   ->from("poemvote", "vo")
 		   ->leftjoin("vo", "user", "bp", "vo.user_id = bp.id")
 		   ->leftjoin("vo", "poem", "pf", "vo.poem_id = pf.id")

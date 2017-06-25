@@ -32,7 +32,7 @@ class SitemapController
 
 		foreach($entities as $entity)
 		{
-			$sg->addItem("author/".$entity->getId(), '0.5', array("images" => array(array("loc" => "photo/biography/".$entity->getPhoto(), "caption" => ""))));
+			$sg->addItem("author/".$entity->getId()."/".$entity->getSlug(), '0.5', array("images" => array(array("loc" => "photo/biography/".$entity->getPhoto(), "caption" => ""))));
 		}
 		
 		// Collection
@@ -42,7 +42,7 @@ class SitemapController
 
 		foreach($entities as $entity)
 		{
-			$sg->addItem("collection/".$entity->getId(), '0.5', array("images" => array(array("loc" => "photo/collection/".$entity->getImage(), "caption" => ""))));
+			$sg->addItem("collection/".$entity->getId()."/".$entity->getSlug(), '0.5', array("images" => array(array("loc" => "photo/collection/".$entity->getImage(), "caption" => ""))));
 		}
 
 		// Country
@@ -52,7 +52,7 @@ class SitemapController
 
 		foreach($entities as $entity)
 		{
-			$sg->addItem("country/".$entity->getId());
+			$sg->addItem("country/".$entity->getId()."/".$entity->getSlug());
 		}
 
 		// Poetic Form
@@ -62,7 +62,7 @@ class SitemapController
 
 		foreach($entities as $entity)
 		{
-			$sg->addItem("poeticform/".$entity->getId());
+			$sg->addItem("poeticform/".$entity->getId()."/".$entity->getSlug());
 		}
 		
 		// User
@@ -73,7 +73,7 @@ class SitemapController
 
 		foreach($entities as $entity)
 		{
-			$sg->addItem("read/".$entity->getId());
+			$sg->addItem("read/".$entity->getId().'/'.$entity->getSlug());
 		}
 
 		$res = $sg->save();

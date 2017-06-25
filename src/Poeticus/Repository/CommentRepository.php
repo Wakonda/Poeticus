@@ -112,7 +112,7 @@ class CommentRepository extends GenericRepository
 
 		$aColumns = array('pf.title', 'co.created_at');
 		
-		$qb->select("pf.id, pf.title, co.created_at")
+		$qb->select("pf.id, pf.title, pf.slug, co.created_at")
 		   ->from("comment", "co")
 		   ->leftjoin("co", "user", "bp", "co.user_id = bp.id")
 		   ->leftjoin("co", "poem", "pf", "co.poem_id = pf.id")

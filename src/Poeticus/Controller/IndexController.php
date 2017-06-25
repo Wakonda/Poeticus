@@ -82,7 +82,7 @@ class IndexController
 		foreach($entities as $entity)
 		{
 			$row = array();
-			$show = $app['url_generator']->generate('read', array('id' => $entity->getId()));
+			$show = $app['url_generator']->generate('read', array('id' => $entity->getId(), 'slug' => $entity->getSlug()));
 			$row[] = '<a href="'.$show.'" alt="Show">'.$entity->getTitle().'</a>';
 			
 			$biography = $entity->getBiography();
@@ -182,14 +182,14 @@ class IndexController
 		foreach($entities as $entity)
 		{
 			$row = array();
-			$show = $app['url_generator']->generate('read', array('id' => $entity->getId()));
+			$show = $app['url_generator']->generate('read', array('id' => $entity->getId(), 'slug' => $entity->getSlug()));
 			$row[] = '<a href="'.$show.'" alt="Show">'.$entity->getTitle().'</a>';
 
 			$collection = $entity->getCollection();
 			
 			if(!empty($collection))
 			{
-				$show = $app['url_generator']->generate('collection', array('id' => $collection['id']));
+				$show = $app['url_generator']->generate('collection', array('id' => $collection['id'], 'slug' => $collection['slug']));
 				$row[] = '<a class="underline italic" href="'.$show.'" alt="Show">'.$collection['title'].'</a>';
 			}
 			else
@@ -259,7 +259,7 @@ class IndexController
 			if(!empty($entity['id']))
 			{
 				$row = array();
-				$show = $app['url_generator']->generate('author', array('id' => $entity['id']));
+				$show = $app['url_generator']->generate('author', array('id' => $entity['id'], 'slug' => $entity['slug']));
 				$row[] = '<a href="'.$show.'" alt="Show">'.$entity['author'].'</a>';
 				$row[] = $entity['number_poems_by_author'];
 
@@ -312,7 +312,7 @@ class IndexController
 		foreach($entities as $entity)
 		{
 			$row = array();
-			$show = $app['url_generator']->generate('read', array('id' => $entity["poem_id"]));
+			$show = $app['url_generator']->generate('read', array('id' => $entity["poem_id"], 'slug' => $entity['slug']));
 			$row[] = '<a href="'.$show.'" alt="Show">'.$entity["poem_title"].'</a>';
 
 			$output['aaData'][] = $row;
@@ -364,7 +364,7 @@ class IndexController
 
 				if(!empty($entity['poeticform_id']))
 				{
-					$show = $app['url_generator']->generate('poeticform', array('id' => $entity['poeticform_id']));
+					$show = $app['url_generator']->generate('poeticform', array('id' => $entity['poeticform_id'], 'slug' => $entity['poeticform_slug']));
 					$row[] = '<a href="'.$show.'" alt="Show">'.$entity['poeticform'].'</a>';
 				}
 				else
@@ -420,7 +420,7 @@ class IndexController
 		foreach($entities as $entity)
 		{
 			$row = array();
-			$show = $app['url_generator']->generate('read', array('id' => $entity["poem_id"]));
+			$show = $app['url_generator']->generate('read', array('id' => $entity["poem_id"], 'slug' => $entity['slug']));
 			$row[] = '<a href="'.$show.'" alt="Show">'.$entity["poem_title"].'</a>';
 
 			$output['aaData'][] = $row;
@@ -472,7 +472,7 @@ class IndexController
 
 				if(!empty($entity['collection_id']))
 				{
-					$show = $app['url_generator']->generate('collection', array('id' => $entity['collection_id']));
+					$show = $app['url_generator']->generate('collection', array('id' => $entity['collection_id'], 'slug' => $entity['collection_slug']));
 					$row[] = '<a href="'.$show.'" alt="Show">'.$entity['collection'].'</a>';
 				}
 				else
@@ -480,7 +480,7 @@ class IndexController
 
 				if(!empty($entity['author_id']))
 				{
-					$show = $app['url_generator']->generate('author', array('id' => $entity['author_id']));
+					$show = $app['url_generator']->generate('author', array('id' => $entity['author_id'], 'slug' => $entity['author_slug']));
 					$row[] = '<a href="'.$show.'" alt="Show">'.$entity['author'].'</a>';
 				}
 				else
@@ -556,10 +556,10 @@ class IndexController
 		foreach($entities as $entity)
 		{
 			$row = array();
-			$show = $app['url_generator']->generate('read', array('id' => $entity["poem_id"]));
+			$show = $app['url_generator']->generate('read', array('id' => $entity["poem_id"], 'slug' => $entity["poem_slug"]));
 			$row[] = '<a href="'.$show.'" alt="Show">'.$entity["poem_title"].'</a>';
 			
-			$show = $app['url_generator']->generate('author', array('id' => $entity["biography_id"]));
+			$show = $app['url_generator']->generate('author', array('id' => $entity["biography_id"], 'slug' => $entity['biography_slug']));
 			$row[] = '<a href="'.$show.'" alt="Show">'.$entity["biography_title"].'</a>';
 
 			$output['aaData'][] = $row;
@@ -609,7 +609,7 @@ class IndexController
 			{
 				$row = array();
 
-				$show = $app['url_generator']->generate('country', array('id' => $entity['country_id']));
+				$show = $app['url_generator']->generate('country', array('id' => $entity['country_id'], 'slug' => $entity['country_slug']));
 				$row[] = '<a href="'.$show.'" alt="Show"><img src="'.$request->getBaseUrl().'/photo/country/'.$entity['flag'].'" class="flag" /> '.$entity['country_title'].'</a>';
 
 				$row[] = $entity['number_poems_by_country'];
@@ -663,7 +663,7 @@ class IndexController
 			{
 				$row = array();
 
-				$show = $app['url_generator']->generate('read', array('id' => $entity['poem_id']));
+				$show = $app['url_generator']->generate('read', array('id' => $entity['poem_id'], 'slug' => $entity['slug']));
 				$row[] = '<a href="'.$show.'" alt="Show">'.$entity['poem_title'].'</a>';
 
 				$show = $app['url_generator']->generate('user_show', array('username' => $entity['username']));

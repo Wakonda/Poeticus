@@ -2,6 +2,8 @@
 
 namespace Poeticus\Entity;
 
+use Poeticus\Service\GenericFunction;
+
 class Biography
 {
     /**
@@ -15,7 +17,13 @@ class Biography
      * @var string
      */
     protected $title;
-	
+
+    /**
+     *
+     * @var string
+     */
+    protected $slug;
+
     /**
      *
      * @var text
@@ -90,6 +98,16 @@ class Biography
     public function setTitle($title)
     {
         $this->title = $title;
+    }
+
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    public function setSlug($slug)
+    {
+		$this->slug = GenericFunction::slugify($this->title);
     }
 
     public function getText()

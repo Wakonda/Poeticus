@@ -46,7 +46,7 @@
 		<table class="show">
 			<tr>
 				<th><span class="bold underline">{{ 'collection.field.Author'|trans }} :</span></th>
-				<td><a href="{{ path('author', { 'id' : biography['id'] }) }}" alt="">{{ biography['title'] }}</a></td>
+				<td><a href="{{ path('author', { 'id' : biography['id'], 'slug' : biography['slug'] }) }}" alt="">{{ biography['title'] }}</a></td>
 			</tr>
 			<tr>
 				<th><span class="bold underline">{{ 'collection.field.PublicationDate'|trans }} :</span></th>

@@ -12,16 +12,16 @@ $app->post('/search', 'controllers.index:indexSearchAction')
 $app->get('/result_search/{search}', 'controllers.index:indexSearchDatatablesAction')
     ->bind('index_search_datatables');
 
-$app->get('/read/{id}', 'controllers.index:readAction')
+$app->get('/read/{id}/{slug}', 'controllers.index:readAction')
 	->bind('read');
 
-$app->get('/read_pdf/{id}', 'controllers.index:readPDFAction')
+$app->get('/read_pdf/{id}/{slug}', 'controllers.index:readPDFAction')
 	->bind('read_pdf');
 
 $app->get('/last_poem', 'controllers.index:lastPoemAction')
 	->bind('last_poem');
 
-$app->get('/author/{id}', 'controllers.index:authorAction')
+$app->get('/author/{id}/{slug}', 'controllers.index:authorAction')
 	->bind('author');
 
 $app->get('/author_poem_datatables/{authorId}', 'controllers.index:authorDatatablesAction')
@@ -33,7 +33,7 @@ $app->get('/byauthors', 'controllers.index:byAuthorsAction')
 $app->get('/byauthors_datatables', 'controllers.index:byAuthorsDatatablesAction')
     ->bind('byauthors_datatables');
 	
-$app->get('/collection/{id}', 'controllers.index:collectionAction')
+$app->get('/collection/{id}/{slug}', 'controllers.index:collectionAction')
 	->bind('collection');
 	
 $app->get('/collection_poem_datatables/{collectionId}', 'controllers.index:collectionDatatablesAction')
@@ -48,7 +48,7 @@ $app->get('/bycollections', 'controllers.index:byCollectionsAction')
 $app->get('/bycollections_datatables', 'controllers.index:byCollectionsDatatablesAction')
     ->bind('bycollections_datatables');
 
-$app->get('/poeticform/{id}', 'controllers.index:poeticFormAction')
+$app->get('/poeticform/{id}/{slug}', 'controllers.index:poeticFormAction')
 	->bind('poeticform');
 	
 $app->get('/poeticform_poem_datatables/{poeticformId}', 'controllers.index:poeticformDatatablesAction')
@@ -60,7 +60,7 @@ $app->get('/bypoeticforms', 'controllers.index:byPoeticFormsAction')
 $app->get('/bypoeticforms_datatables', 'controllers.index:byPoeticFormsDatatablesAction')
     ->bind('bypoeticforms_datatables');
 
-$app->get('/country/{id}', 'controllers.index:countryAction')
+$app->get('/country/{id}/{slug}', 'controllers.index:countryAction')
 	->bind('country');
 
 $app->get('/bycountries', 'controllers.index:byCountriesAction')

@@ -288,6 +288,7 @@ class PoemRepository extends GenericRepository implements iRepository
         $entity->setId($data['id']);
         $entity->setTitle($data['title']);
         $entity->setText($data['text']);
+        $entity->setSlug($data['slug']);
         $entity->setReleasedDate($data['releasedDate']);
         $entity->setAuthorType($data['authorType']);
         $entity->setState($data['state']);
@@ -321,7 +322,7 @@ class PoemRepository extends GenericRepository implements iRepository
 
 		$aColumns = array( 'bp.title', 'COUNT(pf.id)');
 		
-		$qb->select("bp.id AS id, bp.title AS author, COUNT(pf.id) AS number_poems_by_author")
+		$qb->select("bp.id AS id, bp.title AS author, bp.slug AS slug, COUNT(pf.id) AS number_poems_by_author")
 		   ->from("poem", "pf")
 		   ->where("pf.authorType = 'biography'")
 		   ->leftjoin("pf", "biography", "bp", "pf.biography_id = bp.id")
@@ -358,7 +359,7 @@ class PoemRepository extends GenericRepository implements iRepository
 
 		$aColumns = array( 'co.title', 'COUNT(pf.id)');
 		
-		$qb->select("pf.id AS id, co.id AS poeticform_id, co.title AS poeticform, COUNT(pf.id) AS number_poems_by_poeticform")
+		$qb->select("pf.id AS id, co.id AS poeticform_id, co.title AS poeticform, COUNT(pf.id) AS number_poems_by_poeticform, co.slug AS poeticform_slug")
 		   ->from("poem", "pf")
 		   ->where("pf.authorType = 'biography'")
 		   ->innerjoin("pf", "poeticform", "co", "pf.poeticform_id = co.id")
@@ -395,7 +396,7 @@ class PoemRepository extends GenericRepository implements iRepository
 
 		$aColumns = array( 'pf.title');
 		
-		$qb->select("pf.title AS poem_title, pf.id AS poem_id")
+		$qb->select("pf.title AS poem_title, pf.id AS poem_id, pf.slug AS slug")
 		   ->from("poem", "pf")
 		   ->where("pf.poeticform_id = :id")
 		   ->setParameter("id", $collectionId)
@@ -430,7 +431,7 @@ class PoemRepository extends GenericRepository implements iRepository
 
 		$aColumns = array( 'co.title', 'bp.title', 'COUNT(pf.id)');
 		
-		$qb->select("pf.id AS id, bp.id AS author_id, co.id AS collection_id, bp.title AS author, co.title AS collection, COUNT(pf.id) AS number_poems_by_collection")
+		$qb->select("pf.id AS id, bp.id AS author_id, co.id AS collection_id, bp.title AS author, bp.slug AS author_slug, co.title AS collection, co.slug AS collection_slug, COUNT(pf.id) AS number_poems_by_collection")
 		   ->from("poem", "pf")
 		   ->leftjoin("pf", "biography", "bp", "pf.biography_id = bp.id")
 		   ->innerjoin("pf", "collection", "co", "pf.collection_id = co.id")
@@ -468,7 +469,7 @@ class PoemRepository extends GenericRepository implements iRepository
 
 		$aColumns = array( 'pf.title');
 		
-		$qb->select("pf.title AS poem_title, pf.id AS poem_id")
+		$qb->select("pf.title AS poem_title, pf.id AS poem_id, pf.slug AS slug")
 		   ->from("poem", "pf")
 		   ->where("pf.collection_id = :id")
 		   ->setParameter("id", $collectionId)
@@ -504,7 +505,7 @@ class PoemRepository extends GenericRepository implements iRepository
 
 		$aColumns = array( 'co.title', 'COUNT(pf.id)');
 		
-		$qb->select("pf.id AS id, co.id AS country_id, co.title AS country_title, COUNT(pf.id) AS number_poems_by_country, co.flag AS flag")
+		$qb->select("pf.id AS id, co.id AS country_id, co.slug AS country_slug, co.title AS country_title, COUNT(pf.id) AS number_poems_by_country, co.flag AS flag")
 		   ->from("poem", "pf")
 		   ->where("pf.authorType = 'biography'")
 		   ->innerjoin("pf", "country", "co", "pf.country_id = co.id")
@@ -541,7 +542,7 @@ class PoemRepository extends GenericRepository implements iRepository
 
 		$aColumns = array( 'pf.title', 'u.username');
 		
-		$qb->select("pf.id AS poem_id, pf.title AS poem_title, u.username AS username, u.id AS user_id")
+		$qb->select("pf.id AS poem_id, pf.title AS poem_title, u.username AS username, u.id AS user_id, pf.slug AS slug")
 		   ->from("poem", "pf")
 		   ->where("pf.authorType = 'user'")
 		   ->join("pf", "user", "u", "pf.user_id = u.id")
@@ -576,7 +577,7 @@ class PoemRepository extends GenericRepository implements iRepository
 
 		$aColumns = array( 'pf.id', 'pf.title', 'pf.id');
 		
-		$qb->select("pf.title AS poem_title, bi.title AS biography_title, pf.id AS poem_id, bi.id AS biography_id")
+		$qb->select("pf.title AS poem_title, bi.title AS biography_title, bi.slug AS biography_slug, pf.id AS poem_id, bi.id AS biography_id, pf.slug AS poem_slug")
 		   ->from("poem", "pf")
 		   ->innerjoin("pf", "biography", "bi", "pf.biography_id = bi.id")
 		   ->where("pf.country_id = :id")
@@ -711,7 +712,7 @@ class PoemRepository extends GenericRepository implements iRepository
 		$subqueryPrevious = 'p.id = (SELECT MAX(p2.id) FROM poem p2 WHERE p2.id < '.$poemId.')';
 		$qb_previous = $this->db->createQueryBuilder();
 		
-		$qb_previous->select("p.id, p.title")
+		$qb_previous->select("p.id, p.title, p.slug")
 		   ->from("poem", "p")
 		   ->where('p.'.$params["field"].' = :biographyId')
 		   ->setParameter('biographyId', $params["author"])
@@ -721,7 +722,7 @@ class PoemRepository extends GenericRepository implements iRepository
 		$subqueryNext = 'p.id = (SELECT MIN(p2.id) FROM poem p2 WHERE p2.id > '.$poemId.')';
 		$qb_next = $this->db->createQueryBuilder();
 		
-		$qb_next->select("p.id, p.title")
+		$qb_next->select("p.id, p.title, p.slug")
 		   ->from("poem", "p")
 		   ->where('p.'.$params["field"].' = :biographyId')
 		   ->setParameter('biographyId', $params["author"])
