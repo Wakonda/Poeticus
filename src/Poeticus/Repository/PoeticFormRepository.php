@@ -11,12 +11,16 @@ class PoeticFormRepository extends GenericRepository implements iRepository
 {
 	public function save($entity, $id = null)
 	{
+		if(empty($entity->getSlug()))
+			$entity->setSlug($entity->getTitle());
+
 		$entityData = array(
-		'title' => $entity->getTitle(),
-		'text' => $entity->getText(),
-		'image' => $entity->getImage(),
-		'typeContentPoem' => $entity->getTypeContentPoem(),
-		'language_id' => ($entity->getLanguage() == 0) ? null : $entity->getLanguage()
+			'title' => $entity->getTitle(),
+			'text' => $entity->getText(),
+			'slug' => $entity->getSlug(),
+			'image' => $entity->getImage(),
+			'typeContentPoem' => $entity->getTypeContentPoem(),
+			'language_id' => ($entity->getLanguage() == 0) ? null : $entity->getLanguage()
 		);
 
 		if(empty($id))
@@ -122,6 +126,7 @@ class PoeticFormRepository extends GenericRepository implements iRepository
         $entity->setText($data['text']);
         $entity->setImage($data['image']);
         $entity->setTypeContentPoem($data['typeContentPoem']);
+		$entity->setSlug($data['slug']);
 
 		if($show)
 		{

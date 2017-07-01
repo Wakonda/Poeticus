@@ -11,19 +11,23 @@ class PoemRepository extends GenericRepository implements iRepository
 {
 	public function save($entity, $id = null)
 	{
+		if(empty($entity->getSlug()))
+			$entity->setSlug($entity->getTitle());
+
 		$entityData = array(
-		'title' => $entity->getTitle(),
-        'text'  => $entity->getText(),
-        'releasedDate' => $entity->getReleasedDate(),
-        'authorType' => $entity->getAuthorType(),
-        'poeticForm_id' => ($entity->getPoeticForm() == 0) ? null : $entity->getPoeticForm(),
-        'biography_id' => ($entity->getBiography() == 0) ? null : $entity->getBiography(),
-        'user_id' => (!is_object($entity->getUser())) ? $entity->getUser() : $entity->getUser()->getId(),
-        'country_id' => ($entity->getCountry() == 0) ? null : $entity->getCountry(),
-        'collection_id' => ($entity->getCollection() == 0) ? null : $entity->getCollection(),
-		'state' => ($entity->getState() == null) ? 0 : $entity->getState(),
-		'photo' => $entity->getPhoto(),
-		'language_id' => ($entity->getLanguage() == 0) ? null : $entity->getLanguage(),
+			'title' => $entity->getTitle(),
+			'slug' => $entity->getSlug(),
+			'text'  => $entity->getText(),
+			'releasedDate' => $entity->getReleasedDate(),
+			'authorType' => $entity->getAuthorType(),
+			'poeticForm_id' => ($entity->getPoeticForm() == 0) ? null : $entity->getPoeticForm(),
+			'biography_id' => ($entity->getBiography() == 0) ? null : $entity->getBiography(),
+			'user_id' => (!is_object($entity->getUser())) ? $entity->getUser() : $entity->getUser()->getId(),
+			'country_id' => ($entity->getCountry() == 0) ? null : $entity->getCountry(),
+			'collection_id' => ($entity->getCollection() == 0) ? null : $entity->getCollection(),
+			'state' => ($entity->getState() == null) ? 0 : $entity->getState(),
+			'photo' => $entity->getPhoto(),
+			'language_id' => ($entity->getLanguage() == 0) ? null : $entity->getLanguage()
 		);
 
 		if(empty($id))
@@ -212,18 +216,18 @@ class PoemRepository extends GenericRepository implements iRepository
 		   
 		$this->whereLanguage($qb, "pf", $locale);
 		
-		$count = $qb->execute()->fetchColumn();
-		$id = rand(1, $count);
-	
+		$max = $qb->execute()->fetchColumn() - 1;
+		$offset = rand(0, $max);
+
 		$qb = $this->db->createQueryBuilder();
 
 		$qb->select("pf.*")
 		   ->from("poem", "pf")
-		   ->where("pf.id = :id")
-		   ->setParameter("id", $id)
 		   ->andWhere("pf.state = 0")
 		   ->andWhere("pf.authorType = :authorType")
-		   ->setParameter("authorType", "biography");
+		   ->setParameter("authorType", "biography")
+		   ->setFirstResult($offset)
+		   ->setMaxResults(1);
 		   
 		$this->whereLanguage($qb, "pf", $locale);
 

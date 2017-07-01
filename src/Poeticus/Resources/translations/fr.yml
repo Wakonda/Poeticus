@@ -217,6 +217,7 @@ admin:
         Save: "Sauvegarder"
     form:
         Language: "Langue"
+        Slug: "Slug"
     poem:
         Title: "Titre"
         PoeticForm: "Forme poétique"

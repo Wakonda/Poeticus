@@ -46,8 +46,10 @@ class GenericFunction
 		return $curl_scraped_page;
 	}
 
-	public static function slugify($text)
+	public static function slugify($text, $max_size = null)
 	{
+		$text = html_entity_decode($text, ENT_QUOTES);
+
 		// replace non letter or digits by -
 		$text = preg_replace('~[^\pL\d]+~u', '-', $text);
 
@@ -69,6 +71,9 @@ class GenericFunction
 		if (empty($text)) {
 			return 'n-a';
 		}
+
+		if(!empty($max_size))
+			return trim(substr($text, 0, $max_size), "-");
 
 		return $text;
 	}

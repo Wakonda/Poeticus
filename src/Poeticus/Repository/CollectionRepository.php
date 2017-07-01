@@ -11,14 +11,18 @@ class CollectionRepository extends GenericRepository implements iRepository
 {
 	public function save($entity, $id = null)
 	{
+		if(empty($entity->getSlug()))
+			$entity->setSlug($entity->getTitle());
+
 		$entityData = array(
-		'title' => $entity->getTitle(),
-		'text' => $entity->getText(),
-		'releasedDate' => $entity->getReleasedDate(),
-		'biography_id' => ($entity->getBiography() == 0) ? null : $entity->getBiography(),
-		'image' => $entity->getImage(),
-		'widgetProduct' => $entity->getWidgetProduct(),
-		'language_id' => ($entity->getLanguage() == 0) ? null : $entity->getLanguage()
+			'title' => $entity->getTitle(),
+			'text' => $entity->getText(),
+			'slug' => $entity->getSlug(),
+			'releasedDate' => $entity->getReleasedDate(),
+			'biography_id' => ($entity->getBiography() == 0) ? null : $entity->getBiography(),
+			'image' => $entity->getImage(),
+			'widgetProduct' => $entity->getWidgetProduct(),
+			'language_id' => ($entity->getLanguage() == 0) ? null : $entity->getLanguage()
 		);
 
 		if(empty($id))
@@ -103,6 +107,7 @@ class CollectionRepository extends GenericRepository implements iRepository
 		$entity->setReleasedDate($data['releasedDate']);
         $entity->setImage($data['image']);
 		$entity->setWidgetProduct($data['widgetProduct']);
+		$entity->setSlug($data['slug']);
 
 		if($show)
 		{

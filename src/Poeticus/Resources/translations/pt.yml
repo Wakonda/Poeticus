@@ -217,6 +217,7 @@ admin:
         Save: "Registar"
     form:
         Language: "Língua"
+        Slug: "Slug"
     poem:
         Title: "Título"
         PoeticForm: "Forma poética"

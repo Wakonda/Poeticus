@@ -11,18 +11,22 @@ class BiographyRepository extends GenericRepository implements iRepository
 {
 	public function save($entity, $id = null)
 	{
+		if(empty($entity->getSlug()))
+			$entity->setSlug($entity->getTitle());
+
 		$entityData = array(
-		'title' => $entity->getTitle(),
-		'text' => $entity->getText(),
-		'dayBirth' => $entity->getDayBirth(),
-		'monthBirth' => $entity->getMonthBirth(),
-		'yearBirth' => $entity->getYearBirth(),
-		'dayDeath' => $entity->getDayDeath(),
-		'monthDeath' => $entity->getMonthDeath(),
-		'yearDeath' => $entity->getYearDeath(),
-		'photo' => $entity->getPhoto(),
-		'country_id' => ($entity->getCountry() == 0) ? null : $entity->getCountry(),
-		'language_id' => ($entity->getLanguage() == 0) ? null : $entity->getLanguage()
+			'title' => $entity->getTitle(),
+			'text' => $entity->getText(),
+			'slug' => $entity->getSlug(),
+			'dayBirth' => $entity->getDayBirth(),
+			'monthBirth' => $entity->getMonthBirth(),
+			'yearBirth' => $entity->getYearBirth(),
+			'dayDeath' => $entity->getDayDeath(),
+			'monthDeath' => $entity->getMonthDeath(),
+			'yearDeath' => $entity->getYearDeath(),
+			'photo' => $entity->getPhoto(),
+			'country_id' => ($entity->getCountry() == 0) ? null : $entity->getCountry(),
+			'language_id' => ($entity->getLanguage() == 0) ? null : $entity->getLanguage()
 		);
 
 		if(empty($id))
@@ -111,6 +115,7 @@ class BiographyRepository extends GenericRepository implements iRepository
         $entity->setMonthDeath($data['monthDeath']);
         $entity->setYearDeath($data['yearDeath']);
         $entity->setPhoto($data['photo']);
+        $entity->setSlug($data['slug']);
 		
 		if($show)
 		{
