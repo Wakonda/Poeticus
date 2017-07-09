@@ -220,7 +220,7 @@ class PoemAdminController
 			$entity->setAuthorType("biography");
 			$entity->setCountry($app['repository.biography']->find($entity->getBiography())->getCountry());
 			$poemArray = array();
-
+// die(var_dump($url_array['host'], base64_encode($url_array['host'])));
 			switch(base64_encode($url_array['host']))
 			{
 				case 'cG9lc2llLndlYm5ldC5mcg==':
@@ -302,6 +302,27 @@ class PoemAdminController
 							$poemArray[] = $subPoemArray;
 						}
 					}
+					break;
+				case 'd3d3LmNpdGFkb3IucHQ=':
+					$html = file_get_html($url);
+					
+					$divPanelDefault = $html->find("div.panel-default", 0);
+					$div = $divPanelDefault->find("div.panel-body", 0);
+					$subPoemArray = [];
+					
+					$subPoemArray['title'] = $div->find("h2", 0)->plaintext;
+					$content = $div->find("div", 0)->innertext;
+
+					$content = preg_replace('/<font[^>]*>([\s\S]*?)<\/font[^>]*>/', '', $content);
+					$content = preg_replace('/<i[^>]*>([\s\S]*?)<\/i[^>]*>/', '', $content);
+					
+					// Remove <br> at the end of string
+					$content = preg_replace('[^([\n\r\s]*<br( \/)?>[\n\r\s]*)*|([\n\r\s]*<br( \/)?>[\n\r\s]*)*$]', '', $content);
+					$content = utf8_encode(str_replace(chr(150), '-', $content)); // Replace "en dash" by simple "dash"
+
+					$subPoemArray['text'] = $content;
+					
+					$poemArray[] = $subPoemArray;
 					break;
 			}
 
@@ -422,7 +443,7 @@ class PoemAdminController
 						$a = $blockquote->find('a', 0);
 						
 						$content = $a->plaintext;
-						$content = utf8_encode(str_replace(chr(150), '-', $content));    // Replace "en dash" by simple "dash"
+						$content = utf8_encode(str_replace(chr(150), '-', $content)); // Replace "en dash" by simple "dash"
 						$content = str_replace("\n", "<br>", $content);
 						$entityPoem = clone $entity;
 						$entityPoem->setTitle($title);

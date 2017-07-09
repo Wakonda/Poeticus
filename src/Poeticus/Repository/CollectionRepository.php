@@ -169,10 +169,13 @@ class CollectionRepository extends GenericRepository implements iRepository
 
 		$qb->select("COUNT(*) AS number")
 		   ->from("collection", "pf")
+		   ->leftjoin("pf", "language", "la", "pf.language_id = la.id")
 		   ->where("pf.title = :title")
 		   ->setParameter('title', $entity->getTitle())
 		   ->andWhere("pf.biography_id = :biographyId")
-		   ->setParameter("biographyId", $entity->getBiography());
+		   ->setParameter("biographyId", $entity->getBiography())
+		   ->andWhere("la.id = :id")
+		   ->setParameter("id", $entity->getLanguage());
 
 		if($entity->getId() != null)
 		{

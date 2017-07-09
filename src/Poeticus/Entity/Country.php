@@ -2,6 +2,8 @@
 
 namespace Poeticus\Entity;
 
+use Poeticus\Service\GenericFunction;
+
 class Country
 {
     /**
@@ -27,6 +29,12 @@ class Country
 	 * @var \Poeticus\Entity\Language
 	 */
 	protected $language;
+
+    /**
+     *
+     * @var string
+     */
+    protected $slug;
 
 	public function __toString()
 	{
@@ -88,4 +96,14 @@ class Country
 	{
 		$this->language = $language;
 	}
+
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    public function setSlug($slug)
+    {
+		$this->slug = GenericFunction::slugify($this->title);
+    }
 }

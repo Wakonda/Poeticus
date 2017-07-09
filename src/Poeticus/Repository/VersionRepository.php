@@ -152,8 +152,11 @@ class VersionRepository extends GenericRepository implements iRepository
 
 		$qb->select("COUNT(*) AS number")
 		   ->from("version", "v")
+		   ->leftjoin("v", "language", "la", "v.language_id = la.id")
 		   ->where("v.versionNumber = :versionNumber")
-		   ->setParameter('versionNumber', $entity->getVersionNumber());
+		   ->setParameter('versionNumber', $entity->getVersionNumber())
+		   ->andWhere("la.id = :id")
+		   ->setParameter("id", $entity->getLanguage());
 
 		if($entity->getId() != null)
 		{

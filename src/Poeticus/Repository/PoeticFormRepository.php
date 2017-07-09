@@ -167,8 +167,11 @@ class PoeticFormRepository extends GenericRepository implements iRepository
 
 		$qb->select("COUNT(*) AS number")
 		   ->from("poeticform", "pf")
+		   ->leftjoin("pf", "language", "la", "pf.language_id = la.id")
 		   ->where("pf.title = :title")
-		   ->setParameter('title', $entity->getTitle());
+		   ->setParameter('title', $entity->getTitle())
+		   ->andWhere("la.id = :id")
+		   ->setParameter("id", $entity->getLanguage());
 
 		if($entity->getId() != null)
 		{

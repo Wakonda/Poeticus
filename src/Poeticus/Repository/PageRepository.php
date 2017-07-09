@@ -134,8 +134,11 @@ class PageRepository extends GenericRepository implements iRepository
 
 		$qb->select("COUNT(*) AS number")
 		   ->from("page", "pa")
+		   ->leftjoin("pa", "language", "la", "pa.language_id = la.id")
 		   ->where("pa.title = :title")
-		   ->setParameter('title', $entity->getTitle());
+		   ->setParameter('title', $entity->getTitle())
+		   ->andWhere("la.id = :id")
+		   ->setParameter("id", $entity->getLanguage());
 
 		if($entity->getId() != null)
 		{

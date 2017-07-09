@@ -11,11 +11,15 @@ class CountryRepository extends GenericRepository implements iRepository
 {
 	public function save($entity, $id = null)
 	{
+		if(empty($entity->getSlug()))
+			$entity->setSlug($entity->getTitle());
+
 		$entityData = array(
-		'title' => $entity->getTitle(),
-		'internationalName' => $entity->getInternationalName(),
-		'flag' => $entity->getFlag(),
-		'language_id' => ($entity->getLanguage() == 0) ? null : $entity->getLanguage(),
+			'title' => $entity->getTitle(),
+			'internationalName' => $entity->getInternationalName(),
+			'flag' => $entity->getFlag(),
+			'slug' => $entity->getSlug(),
+			'language_id' => ($entity->getLanguage() == 0) ? null : $entity->getLanguage()
 		);
 
 		if(empty($id))
@@ -98,6 +102,7 @@ class CountryRepository extends GenericRepository implements iRepository
         $entity->setTitle($data['title']);
         $entity->setInternationalName($data['internationalName']);
         $entity->setFlag($data['flag']);
+		$entity->setSlug($data['slug']);
 
 		if($show)
 		{
@@ -160,14 +165,19 @@ class CountryRepository extends GenericRepository implements iRepository
 
 		$qb->select("COUNT(*) AS number")
 		   ->from("country", "co")
+		   ->leftjoin("co", "language", "la", "co.language_id = la.id")
 		   ->where("co.title = :title")
-		   ->setParameter('title', $entity->getTitle());
+		   ->setParameter('title', $entity->getTitle())
+		   ->andWhere("la.id = :id")
+		   ->setParameter("id", $entity->getLanguage())
+		   ;
 
 		if($entity->getId() != null)
 		{
 			$qb->andWhere("co.id != :id")
 			   ->setParameter("id", $entity->getId());
 		}
+
 		return $qb->execute()->fetchColumn();
 	}
 }
