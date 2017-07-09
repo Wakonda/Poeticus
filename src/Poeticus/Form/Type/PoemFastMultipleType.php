@@ -19,6 +19,8 @@ class PoemFastMultipleType extends AbstractType
     {
 		$collectionArray = $options['collections'];
 		$poeticFormArray = $options["poeticForms"];
+		$languageArray = $options["languages"];
+		$locale = $options["locale"];
 
         $builder
 			->add('ipProxy', TextType::class, array(
@@ -61,6 +63,16 @@ class PoemFastMultipleType extends AbstractType
 				'placeholder' => 'main.field.ChooseAnOption',
 				'choices' => $poeticFormArray
 			))
+			->add('language', ChoiceType::class, array(
+				'label' => 'admin.form.Language', 
+				'multiple' => false,
+				'required' => true,
+				'expanded' => false,
+				'placeholder' => 'main.field.ChooseAnOption',
+				'choices' => $languageArray,
+				'data' => $locale,
+				'constraints' => new Assert\NotBlank()
+			))
             ->add('save', SubmitType::class, array('label' => 'Ajouter', 'attr' => array('class' => 'btn btn-success')));
     }
 
@@ -71,7 +83,9 @@ class PoemFastMultipleType extends AbstractType
 	{
 		$resolver->setDefaults(array(
 			"poeticForms" => null,
-			"collections" => null
+			"collections" => null,
+			"languages" => null,
+			"locale" => null
 		));
 	}
 

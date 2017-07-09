@@ -304,6 +304,9 @@ $app->get('/admin/page/edit/{id}', 'controllers.pageadmin:editAction')
 $app->post('/admin/page/upate/{id}', 'controllers.pageadmin:updateAction')
     ->bind('pageadmin_update');
 
+$app->post('/admin/page/upload_image_mce', 'controllers.pageadmin:uploadImageMCEAction')
+	->bind('pageadmin_upload_image_mce');
+
 // ADMIN COLLECTION
 $app->get('/admin/collection/index', 'controllers.collectionadmin:indexAction')
     ->bind('collectionadmin_index');

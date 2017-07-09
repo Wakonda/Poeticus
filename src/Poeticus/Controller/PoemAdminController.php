@@ -330,9 +330,12 @@ class PoemAdminController
 	{
 		$poeticForms = $app['repository.poeticform']->findAllForChoice($app['generic_function']->getLocaleTwigRenderController());
 		$collectionForms = $app['repository.collection']->findAllForChoice($app['generic_function']->getLocaleTwigRenderController());
-		
-		$form = $app['form.factory']->create(PoemFastMultipleType::class, null, array('collections' => $collectionForms, 'poeticForms' => $poeticForms));
 		$language = $app['repository.language']->findOneByAbbreviation($app['generic_function']->getLocaleTwigRenderController());
+		$localeForms = $language->getId();
+		$languageForms = $app['repository.language']->findAllForChoice();
+		
+		$form = $app['form.factory']->create(PoemFastMultipleType::class, null, array('collections' => $collectionForms, 'poeticForms' => $poeticForms, "locale" => $localeForms, 'languages' => $languageForms));
+
 
 		return $app['twig']->render('Poem/fastMultiple.html.twig', array('form' => $form->createView(), 'language' => $language));
 	}
@@ -342,9 +345,11 @@ class PoemAdminController
 		$entity = new Poem();
 		$poeticForms = $app['repository.poeticform']->findAllForChoice($app['generic_function']->getLocaleTwigRenderController());
 		$collectionForms = $app['repository.collection']->findAllForChoice($app['generic_function']->getLocaleTwigRenderController());
-		
-		$form = $app['form.factory']->create(PoemFastMultipleType::class, $entity, array('collections' => $collectionForms, 'poeticForms' => $poeticForms));
+		$languageForms = $app['repository.language']->findAllForChoice();
 		$language = $app['repository.language']->findOneByAbbreviation($app['generic_function']->getLocaleTwigRenderController());
+		$localeForms = $language->getId();
+		
+		$form = $app['form.factory']->create(PoemFastMultipleType::class, $entity, array('collections' => $collectionForms, 'poeticForms' => $poeticForms, "locale" => $localeForms, 'languages' => $languageForms));
 		
 		$form->handleRequest($request);
 		$req = $request->request->get($form->getName());
@@ -354,7 +359,7 @@ class PoemAdminController
 			$url = $req["url"];
 			$url_array = parse_url($url);
 			
-			$authorizedURLs = ['d3d3LnBvZXNpZS1mcmFuY2Fpc2UuZnI='];
+			$authorizedURLs = ['d3d3LnBvZXNpZS1mcmFuY2Fpc2UuZnI=', 'd3d3LnBlbnNpZXJpcGFyb2xlLml0'];
 			
 			if(!in_array(base64_encode($url_array['host']), $authorizedURLs))
 				$form->get("url")->addError(new FormError('URL inconnue'));
@@ -364,18 +369,16 @@ class PoemAdminController
 		{
 			$entity->setAuthorType("biography");
 			$entity->setCountry($app['repository.biography']->find($entity->getBiography())->getCountry());
+			$number = $req['number'];
+			$i = 0;
+			if(!empty($ipProxy = $form->get('ipProxy')->getData()))
+				$html = str_get_html($app['generic_function']->file_get_contents_proxy($url, $ipProxy));
+			else
+				$html = file_get_html($url, false, null, 0);
 			
 			switch(base64_encode($url_array['host']))
 			{
 				case 'd3d3LnBvZXNpZS1mcmFuY2Fpc2UuZnI=':
-					$number = $req['number'];
-					$i = 0;
-					
-					if(!empty($ipProxy = $form->get('ipProxy')->getData()))
-						$html = str_get_html($app['generic_function']->file_get_contents_proxy($url, $ipProxy));
-					else
-						$html = file_get_html($url, false, null, 0);
-
 					foreach($html->find('div.poemes-auteurs') as $div)
 					{					
 						$entityPoem = clone $entity;
@@ -411,6 +414,33 @@ class PoemAdminController
 						$id = $app['repository.poem']->save($entityPoem);
 					}
 					break;
+				case 'd3d3LnBlbnNpZXJpcGFyb2xlLml0':
+					foreach($html->find('article') as $article)
+					{
+						$title = $article->find("h2", 0)->plaintext;
+						$blockquote = $article->find('blockquote', 0);
+						$a = $blockquote->find('a', 0);
+						
+						$content = $a->plaintext;
+						$content = utf8_encode(str_replace(chr(150), '-', $content));    // Replace "en dash" by simple "dash"
+						$content = str_replace("\n", "<br>", $content);
+						$entityPoem = clone $entity;
+						$entityPoem->setTitle($title);
+						$entityPoem->setText($content);
+						
+						$entityPoem->setLanguage($app['repository.language']->findOneByAbbreviation('it')->getId());
+						
+						if($app['repository.poem']->checkForDoubloon($entityPoem) >= 1)
+							continue;
+						
+						if($number == $i)
+							break;
+	
+						$i++;
+
+						$id = $app['repository.poem']->save($entityPoem);
+					}
+				break;
 			}
 
 			

@@ -148,6 +148,16 @@ class PageAdminController
 		return $app['twig']->render('Page/edit.html.twig', array('form' => $form->createView(), 'entity' => $entity));
 	}
 	
+	public function uploadImageMCEAction(Request $request)
+	{
+		$file = $request->files->get('image');
+		$file->move('photo/page', $file->getClientOriginalName());
+		
+		$path = $request->getBaseUrl()."/photo/page/".$file->getClientOriginalName();
+		
+		return new Response(sprintf("<script>top.$('.mce-btn.mce-open').parent().find('.mce-textbox').val('%s');</script>", $path));
+	}
+	
 	private function createForm($app, $entity)
 	{
 		$languageForms = $app['repository.language']->findAllForChoice();
