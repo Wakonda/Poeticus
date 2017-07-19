@@ -78,6 +78,7 @@ class Collection
     public function setTitle($title)
     {
         $this->title = $title;
+		$this->setSlug();
     }
 
     public function getText()
@@ -95,9 +96,10 @@ class Collection
         return $this->slug;
     }
 
-    public function setSlug($slug)
+    public function setSlug()
     {
-		$this->slug = GenericFunction::slugify($this->title);
+		if(empty($this->slug))
+			$this->slug = GenericFunction::slugify($this->title);
     }
 
     public function getImage()

@@ -43,6 +43,8 @@ main:
         PoeticForm: "Type"
         ChooseAnOption: "Choisissez une option"
         Search: "Rechercher"
+        YourPoems: "Vos poésies"
+        GreatWriters: "Grands auteurs"
 biography:
     index:
         ByAuthors: "Par auteurs"

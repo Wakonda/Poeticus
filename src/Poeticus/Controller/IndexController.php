@@ -47,7 +47,17 @@ class IndexController
 	public function indexSearchAction(Request $request, Application $app)
 	{
 		$search = $request->request->get("index_search");
+		$search['country'] = (empty($search['country'])) ? null : $app['repository.country']->find($search['country'])->getTitle();
+		
+		$translator = $app['translator'];
+		
+		if($search['type'] == "biography")
+			$search['type'] =  $translator->trans('main.field.GreatWriters');
+		elseif($search['type'] == "user")
+			$search['type'] =  $translator->trans('main.field.YourPoems');
+
 		$criteria = array_filter(array_values($search));
+		$criteria = empty($criteria) ? "Aucun" : $criteria;
 
 		return $app['twig']->render('Index/resultIndexSearch.html.twig', array('search' => base64_encode(json_encode($search)), 'criteria' => $criteria));
 	}

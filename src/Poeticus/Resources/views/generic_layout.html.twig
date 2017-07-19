@@ -22,8 +22,7 @@
 		
 		{% block style_additional %}
 		{% endblock %}
-		
-		<script src="{{ app.request_stack.currentrequest.basepath }}/js/jquery.js"></script>
+
 		{% block script_additional_sup %}
 		{% endblock %}
 	</head>
@@ -152,6 +151,7 @@
 			<!-- Footer Element Ends Here -->
 		</div>
 		<!-- Div Wrapper Element ends Here -->
+		<script src="{{ app.request_stack.currentrequest.basepath }}/js/jquery.js"></script>
 		<script src="{{ app.request_stack.currentrequest.basepath }}/css/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
 		<script src="{{ minify_file('js/cookiechoices/cookiechoices.js', app.request_stack.currentrequest.basepath) }}"></script>
 		<script type="text/javascript">

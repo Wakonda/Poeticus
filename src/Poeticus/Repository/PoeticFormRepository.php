@@ -11,9 +11,6 @@ class PoeticFormRepository extends GenericRepository implements iRepository
 {
 	public function save($entity, $id = null)
 	{
-		if(empty($entity->getSlug()))
-			$entity->setSlug($entity->getTitle());
-
 		$entityData = array(
 			'title' => $entity->getTitle(),
 			'text' => $entity->getText(),
@@ -126,7 +123,6 @@ class PoeticFormRepository extends GenericRepository implements iRepository
         $entity->setText($data['text']);
         $entity->setImage($data['image']);
         $entity->setTypeContentPoem($data['typeContentPoem']);
-		$entity->setSlug($data['slug']);
 
 		if($show)
 		{
@@ -168,8 +164,8 @@ class PoeticFormRepository extends GenericRepository implements iRepository
 		$qb->select("COUNT(*) AS number")
 		   ->from("poeticform", "pf")
 		   ->leftjoin("pf", "language", "la", "pf.language_id = la.id")
-		   ->where("pf.title = :title")
-		   ->setParameter('title', $entity->getTitle())
+		   ->where("pf.slug = :slug")
+		   ->setParameter('slug', $entity->getSlug())
 		   ->andWhere("la.id = :id")
 		   ->setParameter("id", $entity->getLanguage());
 

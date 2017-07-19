@@ -11,9 +11,6 @@ class CountryRepository extends GenericRepository implements iRepository
 {
 	public function save($entity, $id = null)
 	{
-		if(empty($entity->getSlug()))
-			$entity->setSlug($entity->getTitle());
-
 		$entityData = array(
 			'title' => $entity->getTitle(),
 			'internationalName' => $entity->getInternationalName(),
@@ -102,7 +99,6 @@ class CountryRepository extends GenericRepository implements iRepository
         $entity->setTitle($data['title']);
         $entity->setInternationalName($data['internationalName']);
         $entity->setFlag($data['flag']);
-		$entity->setSlug($data['slug']);
 
 		if($show)
 		{
@@ -166,8 +162,8 @@ class CountryRepository extends GenericRepository implements iRepository
 		$qb->select("COUNT(*) AS number")
 		   ->from("country", "co")
 		   ->leftjoin("co", "language", "la", "co.language_id = la.id")
-		   ->where("co.title = :title")
-		   ->setParameter('title', $entity->getTitle())
+		   ->where("co.slug = :slug")
+		   ->setParameter('slug', $entity->getSlug())
 		   ->andWhere("la.id = :id")
 		   ->setParameter("id", $entity->getLanguage())
 		   ;

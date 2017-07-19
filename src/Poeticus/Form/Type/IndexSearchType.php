@@ -31,7 +31,7 @@ class IndexSearchType extends AbstractType
 			
 			
 			->add('collection', TextType::class, array("label" => "main.field.Collection", "required" => false))
-			->add('type', ChoiceType::class, array("label" => "main.field.PoeticForm", "choices" => array("biography" => "Grands auteurs", "user" => "Vos poésies"), "required" => false, "expanded" => false, "multiple" => false, "placeholder" => "main.field.ChooseAnOption"))
+			->add('type', ChoiceType::class, array("label" => "main.field.PoeticForm", "choices" => array("main.field.GreatWriters" => "biography", "main.field.YourPoems" => "user"), "required" => false, "expanded" => false, "multiple" => false, "placeholder" => "main.field.ChooseAnOption"))
             ->add('search', SubmitType::class, array('label' => 'main.field.Search', "attr" => array("class" => "btn btn-primary")))
 			;
     }
