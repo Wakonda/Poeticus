@@ -130,12 +130,12 @@
 	<a href="{{ path('country', {'id' : entity.country.id, 'slug' : entity.country.slug }) }}" alt=""><img class="flag" src="{{ app.request_stack.currentrequest.basepath }}/photo/country/{{ entity.country.flag }}" alt="" height="8" /></a>
 	{% if entity.collection is not null %}
 		-
-		<a class="underline italic" href="{{ path('collection', {'id' : entity.collection.id }) }}" alt="">{{ entity.collection.title }}</a>
+		<a class="underline italic" href="{{ path('collection', {'id' : entity.collection.id, 'slug' : entity.slug }) }}" alt="">{{ entity.collection.title }}</a>
 	{% endif %}
 
 	{% if entity.poeticform is not null %}
 		- 
-		<a href="{{ path('poeticform', { 'id' : entity.poeticform.id }) }}" alt="">{{ entity.poeticform.title }}</a>
+		<a href="{{ path('poeticform', { 'id' : entity.poeticform.id, 'slug' : entity.slug }) }}" alt="">{{ entity.poeticform.title }}</a>
 	{% endif %}
 	</p>
 	<table class="hidden_print">
