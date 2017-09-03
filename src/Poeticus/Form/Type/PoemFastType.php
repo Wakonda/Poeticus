@@ -32,18 +32,18 @@ class PoemFastType extends AbstractType
             ))
 
 			->add('releasedDate', IntegerType::class, array(
-                'label' => 'Date de publication'
+                'label' => 'admin.poem.PublicationDate'
             ))
 			
 			->add('unknownReleasedDate', CheckboxType::class, array(
-                'mapped' => false, 'label' => 'Date inconnue'
+                'mapped' => false, 'label' => 'admin.poem.UnknownDate'
             ))
             ->add('biography', TextType::class, array(
-                'label' => 'Biographie',
+                'label' => 'admin.poem.Biography',
 				'constraints' => new Assert\NotBlank()
             ))
 			->add('collection', ChoiceType::class, array(
-				'label' => 'Recueil', 
+				'label' => 'admin.poem.Collection', 
 				'multiple' => false,
 				'required' => false,
 				'expanded' => false,
@@ -68,7 +68,7 @@ class PoemFastType extends AbstractType
 				'placeholder' => 'main.field.ChooseAnOption',
 				'choices' => $poeticFormArray
 			))
-            ->add('save', SubmitType::class, array('label' => 'Ajouter', 'attr' => array('class' => 'btn btn-success')));
+            ->add('save', SubmitType::class, array('label' => 'admin.index.Add', 'attr' => array('class' => 'btn btn-success')));
     }
 
 	/**

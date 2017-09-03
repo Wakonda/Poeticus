@@ -13,15 +13,18 @@ $app->get('/result_search/{search}', 'controllers.index:indexSearchDatatablesAct
     ->bind('index_search_datatables');
 
 $app->get('/read/{id}/{slug}', 'controllers.index:readAction')
+	->value('slug', null)
 	->bind('read');
 
 $app->get('/read_pdf/{id}/{slug}', 'controllers.index:readPDFAction')
+	->value('slug', null)
 	->bind('read_pdf');
 
 $app->get('/last_poem', 'controllers.index:lastPoemAction')
 	->bind('last_poem');
 
 $app->get('/author/{id}/{slug}', 'controllers.index:authorAction')
+	->value('slug', null)
 	->bind('author');
 
 $app->get('/author_poem_datatables/{authorId}', 'controllers.index:authorDatatablesAction')
@@ -34,6 +37,7 @@ $app->get('/byauthors_datatables', 'controllers.index:byAuthorsDatatablesAction'
     ->bind('byauthors_datatables');
 	
 $app->get('/collection/{id}/{slug}', 'controllers.index:collectionAction')
+	->value('slug', null)
 	->bind('collection');
 	
 $app->get('/collection_poem_datatables/{collectionId}', 'controllers.index:collectionDatatablesAction')
@@ -49,6 +53,7 @@ $app->get('/bycollections_datatables', 'controllers.index:byCollectionsDatatable
     ->bind('bycollections_datatables');
 
 $app->get('/poeticform/{id}/{slug}', 'controllers.index:poeticFormAction')
+	->value('slug', null)
 	->bind('poeticform');
 	
 $app->get('/poeticform_poem_datatables/{poeticformId}', 'controllers.index:poeticformDatatablesAction')
@@ -61,6 +66,7 @@ $app->get('/bypoeticforms_datatables', 'controllers.index:byPoeticFormsDatatable
     ->bind('bypoeticforms_datatables');
 
 $app->get('/country/{id}/{slug}', 'controllers.index:countryAction')
+	->value('slug', null)
 	->bind('country');
 
 $app->get('/bycountries', 'controllers.index:byCountriesAction')
@@ -377,7 +383,11 @@ $app->get('/admin/poem/edit/{id}', 'controllers.poemadmin:editAction')
 $app->post('/admin/poem/upate/{id}', 'controllers.poemadmin:updateAction')
     ->bind('poemadmin_update');
 
-$app->get('/admin/poem/newfast', 'controllers.poemadmin:newFastAction')
+$app->get('/admin/poem/newfast/{biographyId}/{collectionId}', 'controllers.poemadmin:newFastAction')
+	->assert('biographyId', '\d+')
+	->assert('collectionId', '\d+')
+	->value('biographyId', null)
+	->value('collectionId', null)
     ->bind('poemadmin_newfast');
 
 $app->post('/admin/poem/addfast', 'controllers.poemadmin:addFastAction')

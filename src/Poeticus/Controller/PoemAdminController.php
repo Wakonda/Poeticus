@@ -178,7 +178,7 @@ class PoemAdminController
 		return $app['twig']->render('Poem/edit.html.twig', array('form' => $form->createView(), 'entity' => $entity));
 	}
 	
-	public function newFastAction(Request $request, Application $app)
+	public function newFastAction(Request $request, Application $app, $biographyId, $collectionId)
 	{
 		$entity = new Poem();
 		$poeticForms = $app['repository.poeticform']->findAllForChoice($app['generic_function']->getLocaleTwigRenderController());
@@ -186,6 +186,12 @@ class PoemAdminController
 		$languageForms = $app['repository.language']->findAllForChoice();
 		$language = $app['repository.language']->findOneByAbbreviation($app['generic_function']->getLocaleTwigRenderController());
 		$localeForms = $language->getId();
+		
+		if(!empty($biographyId))
+			$entity->setBiography($biographyId);
+
+		if(!empty($collectionId))
+			$entity->setCollection($collectionId);
 		
 		$form = $app['form.factory']->create(PoemFastType::class, $entity, array('collections' => $collectionForms, 'languages' => $languageForms, "locale" => $localeForms, 'poeticForms' => $poeticForms));
 	

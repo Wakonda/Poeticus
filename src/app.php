@@ -119,7 +119,7 @@ $app->before(function () use ($app) {
 }, \Silex\Application::EARLY_EVENT);
 
 // Register the error handler.
-$app->error(function (\Exception $e, $code) use ($app) {
+$app->error(function (\Exception $e, Request $request, $code) use ($app) {
     if ($app['debug']) {
         return;
     }

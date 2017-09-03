@@ -200,6 +200,7 @@ admin:
         Create: "Criar"
         Read: "Ler"
         Update: "Modificar"
+        Add: "Adicionar"
         QuicklyCreation: "Rápida criação"
         GenerateSitemap: "Gerar o mapa do site"
         Yes: "Sim"
@@ -235,6 +236,7 @@ admin:
         RapidCreation: "Rápida criação"
         ForSameBiography: "para a mesmo autor"
         ForSameCollection: "para a mesma coleção"
+        Number: "Número"
     biography:
         Title: "Título"
         Text: "Texto"
