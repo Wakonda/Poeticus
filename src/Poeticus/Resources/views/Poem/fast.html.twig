@@ -42,12 +42,14 @@
 						else
 							$("td.poem-country").html("-");
 
+						var collectionId = "{{ entity.collection }}";
+						console.log(collectionId);
 						var collections = data.collections;
 						$("#{{ form.collection.vars.id }} option").remove();
 						$("#{{ form.collection.vars.id }}").append('<option value="">{{ 'main.field.ChooseAnOption'|trans }}</option>');
 						$.each(collections, function(index, element)
 						{
-							$("#{{ form.collection.vars.id }}").append('<option value="'+ element.id +'">'+ element.title +'</option>');
+							$("#{{ form.collection.vars.id }}").append('<option '+ ((element.id == collectionId) ? "selected" : "") +' value="'+ element.id +'">'+ element.title +'</option>');
 						});
 					}
 				});
@@ -102,6 +104,7 @@
 {% endblock %}
 
 {% block main_content %}
+
 	{% form_theme form 'Form/fields.html.twig' %}
 	<form action="{{ path('poemadmin_addfast') }}" method="post" novalidate>
 		<table class="form_grid">

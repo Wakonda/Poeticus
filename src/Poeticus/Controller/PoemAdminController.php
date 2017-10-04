@@ -226,7 +226,7 @@ class PoemAdminController
 			$entity->setAuthorType("biography");
 			$entity->setCountry($app['repository.biography']->find($entity->getBiography())->getCountry());
 			$poemArray = array();
-// die(var_dump($url_array['host'], base64_encode($url_array['host'])));
+
 			switch(base64_encode($url_array['host']))
 			{
 				case 'cG9lc2llLndlYm5ldC5mcg==':
@@ -324,17 +324,20 @@ class PoemAdminController
 					
 					// Remove <br> at the end of string
 					$content = preg_replace('[^([\n\r\s]*<br( \/)?>[\n\r\s]*)*|([\n\r\s]*<br( \/)?>[\n\r\s]*)*$]', '', $content);
-					$content = utf8_encode(str_replace(chr(150), '-', $content)); // Replace "en dash" by simple "dash"
+
+					$content = str_replace(chr(150), "-", $content);// Replace "en dash" by simple "dash"
+					$content = str_replace(chr(151), '-', $content);// Replace "em dash" by simple "dash"
+					$content = utf8_encode($content); 
 
 					$subPoemArray['text'] = $content;
 					
 					$poemArray[] = $subPoemArray;
 					break;
 			}
-
-			if($app['repository.poem']->checkForDoubloon($entity) >= 1)
-				$form->get("url")->addError(new FormError('Cette entrée existe déjà !'));
 		}
+		
+		$numberDoubloons = 0;
+		$numberAdded = 0;
 
 		if($form->isValid())
 		{
@@ -343,9 +346,19 @@ class PoemAdminController
 				$entityPoem = clone $entity;
 				$entityPoem->setTitle($poem['title']);
 				$entityPoem->setText($poem['text']);
-				$id = $app['repository.poem']->save($entityPoem);
+
+				if($app['repository.poem']->checkForDoubloon($entityPoem) >= 1)
+					$numberDoubloons++;
+				else
+				{
+					$id = $app['repository.poem']->save($entityPoem);
+					$numberAdded++;
+				}
 			}
-			$redirect = $app['url_generator']->generate('poemadmin_show', array('id' => $id));
+			if(!empty($id))
+				$redirect = $app['url_generator']->generate('poemadmin_show', array('id' => $id));
+			else
+				$redirect = $app['url_generator']->generate('poemadmin_index');
 
 			return $app->redirect($redirect);
 		}

@@ -627,6 +627,7 @@ class PoemRepository extends GenericRepository implements iRepository
 			$qb->andWhere("pf.id != :id")
 			   ->setParameter("id", $entity->getId());
 		}
+
 		return $qb->execute()->fetchColumn();
 	}
 	
