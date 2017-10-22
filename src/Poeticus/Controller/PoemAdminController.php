@@ -310,11 +310,44 @@ class PoemAdminController
 					}
 					break;
 				case 'd3d3LmNpdGFkb3IucHQ=':
-					$html = file_get_html($url);
+					$dom = new \DOMDocument();
+					libxml_use_internal_errors(true); 
+					$dom->loadHTML(file_get_contents($url));
+					libxml_clear_errors();
+
+					$xpath = new \DOMXpath($dom);
+
+					$div = $xpath->query("//div[@class='panel panel-default']/div[@class='panel-body']/div")->item(0);
+					
+					$subPoemArray = [];
+					$subPoemArray['title'] = $xpath->query("//div[@class='panel panel-default']/div[@class='panel-body']/h2")->item(0)->textContent;
+
+					$html="";
+					foreach($div->childNodes as $node) {
+						$html .= str_replace("&nbsp;", '', $dom->saveHTML($node));
+					}
+
+					$htmlArray = preg_split('/<i[^>]*>([\s\S]*?)<\/i[^>]*>/', $html);
+
+					array_pop($htmlArray);
+					$content = $htmlArray[0];
+
+					$content = preg_replace('/<font[^>]*>([\s\S]*?)<\/font[^>]*>/', '', $content);
+
+					// Remove <br> at the end of string
+					$content = preg_replace('[^([\n\r\s]*<br( \/)?>[\n\r\s]*)*|([\n\r\s]*<br( \/)?>[\n\r\s]*)*$]', '', $content);
+
+					$content = str_replace(chr(150), "-", utf8_decode($content));// Replace "en dash" by simple "dash"
+					$content = str_replace(chr(151), '-', $content);// Replace "em dash" by simple "dash"
+					$content = str_replace("\xc2\xa0", '', utf8_encode($content));// Remove nbsp
+				
+					$subPoemArray['text'] = $content;
+				
+					/*$html = file_get_html($url);
 					
 					$divPanelDefault = $html->find("div.panel-default", 0);
 					$div = $divPanelDefault->find("div.panel-body", 0);
-					$subPoemArray = [];
+					
 					
 					$subPoemArray['title'] = $div->find("h2", 0)->plaintext;
 					$content = $div->find("div", 0)->innertext;
@@ -329,7 +362,7 @@ class PoemAdminController
 					$content = str_replace(chr(151), '-', $content);// Replace "em dash" by simple "dash"
 					$content = utf8_encode($content); 
 
-					$subPoemArray['text'] = $content;
+					$subPoemArray['text'] = $content;*/
 					
 					$poemArray[] = $subPoemArray;
 					break;
