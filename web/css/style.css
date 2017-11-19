@@ -355,6 +355,19 @@ width:80px;
 	}
 }
 
+@media screen and (max-width: 640px) {
+	div#Wrapper2 {
+		display: flex;
+		flex-direction: column;
+	}
+	div#Wrapper2 aside {
+		order: 2;
+	}
+	div#Wrapper2 article {
+		order: 1;
+	}
+}
+
 #logo{ font-family: Magneto, "Times New Roman", "Script MT Bold"; font-size: 60px; }
 
 /*** FORM ***/
