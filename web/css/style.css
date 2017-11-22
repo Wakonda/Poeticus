@@ -4,7 +4,6 @@
 /*HTML5 Tags Styles starts here */
 header, hgroup, nav, article, section, footer, aside, address{ display:block;}
 time{  font-style:italic; padding:0px 5px;}
-address{ font-size:11px; padding:10px 10px; text-align:right }
 body{
 	font-family: "Times New Roman", Cambria, Palatino, "Palatino Linotype", "Palatino LT STD", Georgia, serif !important;
 	font-weight: 400;
@@ -216,7 +215,7 @@ footer#copyrights
 #copyrights{
 	border-top:3px solid #CCC;border-bottom:3px solid #CCC;
 }
-#copyrights p{ float:left; margin:10px 15px 0px 0px;}
+#copyrights p{ margin:10px 15px 10px 0px;}
 
 .resize { position:fixed;
 bottom:0px;
@@ -625,7 +624,7 @@ h2.subtitle_show_user {
 }
 progress {
 	display: block;
-	width: 250px;
+	width: 200px;
 	height: 20px;
 	margin: .5em 0;
 	border: 3px solid white;
@@ -870,10 +869,15 @@ blockquote::before{
 }
 
 blockquote::after{
-  /*Reset to make sure*/
   content: "";
 }
 
 blockquote em{
   font-style: italic;
+}
+
+div.social_network_container {
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
 }
