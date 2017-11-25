@@ -255,20 +255,13 @@ width:80px;
 @media screen and (min-width: 859px) and (max-width: 960px) {
 	#Wrapper{ width: 830px; margin:0px auto;}
 	#navigation ul li a{ font-size:12px; padding:0px 11px;}
-	#contents{
-	width: 63%;
-	}
 	#contents h1{ line-height:40px;}
 }
 @media screen and (min-width: 761px) and (max-width: 860px) {
 	#Wrapper{ width: 740px; margin:0px auto;}
 	#navigation ul li a{ font-size:12px; padding:0px 11px;}
-	#contents{
-	width: 63%;
-	}
 	#contents h1{ font-size:30px; text-align:left; line-height:30px;}
 }
-
 
 @media screen and (min-width: 641px) and (max-width: 760px) {	
 	#Wrapper{ width: 620px; margin:0px auto;}
@@ -277,7 +270,7 @@ width:80px;
 	#navigation ul li{ float:none; text-align:center; border-bottom:1px solid #dedede; }
 	#navigation ul li a{ font-size:11px; padding:0px 0px; width:100%;}
 	#contents{
-	width: 55%;
+	width: 70%;
 	font-size:16px;
 	}
 	#contents h1{ font-size:25px; text-align:left; line-height:30px;}
@@ -296,7 +289,7 @@ width:80px;
 	#navigation ul li{ float:none; text-align:center; border-bottom:1px solid #dedede; }
 	/*.navigation a{ float:none; font-size:16px; padding:0px 0px; width:100%; text-align:center; text-transform:uppercase;}*/
 	#contents{
-	width: 95%;
+	width: 100%;
 	font-size:14px;position:relative;
 	}
 	#contents h1{ font-size:22px; text-align:left; font-weight:bold; line-height:normal;}
@@ -316,7 +309,7 @@ width:80px;
 	#navigation ul li{ float:none; text-align:center; border-bottom:1px solid #dedede; }
 	.navigation a{ float:none; font-size:13px; padding:0px 0px; width:100%; text-align:center; text-transform:uppercase;}
 	#contents{
-	width: 95%;
+	width: 100%;
 	font-size:14px;position:relative;
 	}
 	#contents h1{ font-size:18px; text-align:left; font-weight:bold; line-height:normal;}
@@ -791,11 +784,6 @@ div.advert {
 	margin-top: 20px;
 }
 
-/** Datatables **/
-.datatables-bt {
-	display: initial !important;
-}
-
 /** Poem Browsing **/
 div#poem_browsing {
 	font-size: 19px;
@@ -881,3 +869,6 @@ div.social_network_container {
 	justify-content: space-between;
 	flex-wrap: wrap;
 }
+
+/* Datatables */
+.filter-dt { width: 150px !important;}
