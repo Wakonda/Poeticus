@@ -244,7 +244,7 @@ class UserController implements ControllerProviderInterface
 		$entity->setSalt($salt);
 		$entity->setPassword($encoder->encodePassword($temporaryPassword, $salt));
 		$id = $app['repository.user']->save($entity, $entity->getId());
-		
+
 		// Send email
 		$body = $app['twig']->render('User/forgottenpassword_mail.html.twig', array("entity" => $entity, "temporaryPassword" => $temporaryPassword));
 	

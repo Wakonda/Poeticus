@@ -43,14 +43,18 @@
 							$("td.poem-country").html("-");
 
 						var collectionId = "{{ entity.collection }}";
-						console.log(collectionId);
 						var collections = data.collections;
+
 						$("#{{ form.collection.vars.id }} option").remove();
 						$("#{{ form.collection.vars.id }}").append('<option value="">{{ 'main.field.ChooseAnOption'|trans }}</option>');
-						$.each(collections, function(index, element)
+						
+						if(collections.length > 0)
 						{
-							$("#{{ form.collection.vars.id }}").append('<option '+ ((element.id == collectionId) ? "selected" : "") +' value="'+ element.id +'">'+ element.title +'</option>');
-						});
+							$.each(collections, function(index, element)
+							{
+								$("#{{ form.collection.vars.id }}").append('<option '+ ((element.id == collectionId) ? "selected" : "") +' value="'+ element.id +'">'+ element.title +'</option>');
+							});
+						}
 					}
 				});
 			}
@@ -66,7 +70,7 @@
 					success: function(data)
 					{
 						$("#{{ form.releasedDate.vars.id }}").val(data.releasedDate);
-						
+
 						if(data.releasedDate != null)
 							$('input#{{ form.unknownReleasedDate.vars.id }}').prop('checked', false);
 						else
@@ -74,6 +78,8 @@
 					}
 				});
 			});
+			
+			$("#{{ form.collection.vars.id }}").change();
 			
 			$("select#{{ form.language.vars.id }}").change(function() {
 				var input = $(".container_{{ form.biography.vars.id }} > .input-group > input[type='hidden']");
