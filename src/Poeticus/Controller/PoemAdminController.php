@@ -219,9 +219,12 @@ class PoemAdminController
 			$url_array = parse_url($url);
 
 			if(!empty($ipProxy = $form->get('ipProxy')->getData()))
-				$content = str_get_html($app['generic_function']->file_get_contents_proxy($url, $ipProxy));
+				$html = $app['generic_function']->getContentURL($url, $ipProxy);
 			else
-				$content = file_get_html($url, false, null, 0);
+				$html = $app['generic_function']->getContentURL($url);
+
+			$dom = new \simple_html_dom();
+			$dom->load($html);
 
 			$entity->setAuthorType("biography");
 			$entity->setCountry($app['repository.biography']->find($entity->getBiography())->getCountry());
@@ -230,8 +233,8 @@ class PoemAdminController
 			switch(base64_encode($url_array['host']))
 			{
 				case 'cG9lc2llLndlYm5ldC5mcg==':
-					$title = $content->find('h1'); 
-					$text = $content->find('p[class=last]'); 
+					$title = $dom->find('h1'); 
+					$text = $dom->find('p[class=last]'); 
 
 					$title = html_entity_decode($title[0]->plaintext);
 					$title = (preg_match('!!u', $title)) ? $title : utf8_encode($title);
@@ -242,12 +245,12 @@ class PoemAdminController
 					$poemArray[] = $subPoemArray;
 					break;
 				case 'd3d3LnBvZXNpZS1mcmFuY2Fpc2UuZnI=':
-					$title_node = $content->find('article h1');
+					$title_node = $dom->find('article h1');
 					$title_str = $title_node[0]->plaintext;
 					$title_array = explode(":", $title_str);
 					$title = trim($title_array[1]);
 
-					$text_node = $content->find('div.postpoetique p');
+					$text_node = $dom->find('div.postpoetique p');
 					$text_init = strip_tags($text_node[0]->plaintext, "<br><br /><br/>");
 					$text_array = explode("\n", $text_init);
 					$text = "";
@@ -263,9 +266,9 @@ class PoemAdminController
 					$poemArray[] = $subPoemArray;
 					break;
 				case 'd3d3LnBvZXRpY2EuZnI=':
-					$title = current($content->find("h1.entry-title"))->innertext;
+					$title = current($dom->find("h1.entry-title"))->innertext;
 					
-					$text = $content->find("main article div.entry-content");
+					$text = $dom->find("main article div.entry-content");
 					$text = $text[1]->innertext;
 					
 					$text = str_replace("<p>", "", $text);
@@ -283,9 +286,8 @@ class PoemAdminController
 					$poemArray[] = $subPoemArray;
 					break;
 				case 'd3d3LnRvdXRlbGFwb2VzaWUuY29t':
-					$html = file_get_html($url);
-					$title = trim(current(explode("<br>", current($html->find('h1.ipsType_pagetitle'))->innertext)));					
-					$text = current($html->find('div.poemeanthologie p.last'))->innertext;
+					$title = trim(current(explode("<br>", current($dom->find('h1.ipsType_pagetitle'))->innertext)));			
+					$text = current($dom->find('div.poemeanthologie'))->innertext;
 					$text =preg_replace('#</?span[^>]*>#is', '', $text);
 
 					$subPoemArray = array();
@@ -294,7 +296,7 @@ class PoemAdminController
 					$poemArray[] = $subPoemArray;
 					break;
 				case 'd3d3LnVuaGFpa3UuY29t':
-					foreach($content->find('ul#chunkLast > li') as $li)
+					foreach($dom->find('ul#chunkLast > li') as $li)
 					{
 						$text = current($li->find("div#texte"));
 						
@@ -312,7 +314,7 @@ class PoemAdminController
 				case 'd3d3LmNpdGFkb3IucHQ=':
 					$dom = new \DOMDocument();
 					libxml_use_internal_errors(true); 
-					$dom->loadHTML(file_get_contents($url));
+					$dom->loadHTML($html);
 					libxml_clear_errors();
 
 					$xpath = new \DOMXpath($dom);
@@ -445,14 +447,17 @@ class PoemAdminController
 			$number = $req['number'];
 			$i = 0;
 			if(!empty($ipProxy = $form->get('ipProxy')->getData()))
-				$html = str_get_html($app['generic_function']->file_get_contents_proxy($url, $ipProxy));
+				$html = $app['generic_function']->getContentURL($url, $ipProxy);
 			else
-				$html = file_get_html($url, false, null, 0);
-			
+				$html = $app['generic_function']->getContentURL($url);
+
+			$dom = new \simple_html_dom();
+			$dom->load($html);
+
 			switch(base64_encode($url_array['host']))
 			{
 				case 'd3d3LnBvZXNpZS1mcmFuY2Fpc2UuZnI=':
-					foreach($html->find('div.poemes-auteurs') as $div)
+					foreach($dom->find('div.poemes-auteurs') as $div)
 					{					
 						$entityPoem = clone $entity;
 						$a = current($div->find("a"));
@@ -488,7 +493,7 @@ class PoemAdminController
 					}
 					break;
 				case 'd3d3LnBlbnNpZXJpcGFyb2xlLml0':
-					foreach($html->find('article') as $article)
+					foreach($dom->find('article') as $article)
 					{
 						$title = $article->find("h2", 0)->plaintext;
 						$blockquote = $article->find('blockquote', 0);
@@ -515,8 +520,6 @@ class PoemAdminController
 					}
 				break;
 			}
-
-			
 			
 			if(isset($id))
 				$redirect = $app['url_generator']->generate('poemadmin_show', array('id' => $id));
